@@ -1,5 +1,5 @@
 package client.model;
-
+//Mario is a putz
 import client.model.card.*;
 import client.model.map.*;
 import client.model.player.*;
