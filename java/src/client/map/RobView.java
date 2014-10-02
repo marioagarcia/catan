@@ -10,7 +10,7 @@ import java.util.*;
 
 import shared.definitions.PieceType;
 import client.base.*;
-import client.data.*;
+import client.model.player.RobPlayerInfo;
 
 
 /**

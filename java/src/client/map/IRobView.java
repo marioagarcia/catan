@@ -1,7 +1,7 @@
 package client.map;
 
 import client.base.*;
-import client.data.*;
+import client.model.player.RobPlayerInfo;
 
 /**
  * Interface for the rob view, which lets the user select a player to rob

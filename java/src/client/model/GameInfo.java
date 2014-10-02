@@ -1,6 +1,8 @@
-package client.data;
+package client.model;
 
 import java.util.*;
+
+import client.model.player.PlayerInfo;
 
 /**
  * Used to pass game information into views<br>
@@ -54,6 +56,11 @@ public class GameInfo
 	public List<PlayerInfo> getPlayers()
 	{
 		return Collections.unmodifiableList(players);
+	}
+	
+	public boolean playerCanJoin(PlayerInfo player) {
+		//TODO implement this method
+		return false;
 	}
 }
 

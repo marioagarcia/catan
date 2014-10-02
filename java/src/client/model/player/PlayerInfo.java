@@ -1,6 +1,6 @@
-package client.data;
+package client.model.player;
 
-import shared.definitions.*;
+import java.awt.Color;
 
 /**
  * Used to pass player information into views<br>
@@ -14,7 +14,7 @@ import shared.definitions.*;
  * </ul>
  * 
  */
-public class PlayerInfo
+public class PlayerInfo implements PlayerInterface
 {
 	
 	private int id;
@@ -60,6 +60,7 @@ public class PlayerInfo
 		this.name = name;
 	}
 	
+	@Override
 	public CatanColor getColor()
 	{
 		return color;
@@ -90,6 +91,12 @@ public class PlayerInfo
 		final PlayerInfo other = (PlayerInfo) obj;
 		
 		return this.id == other.id;
+	}
+
+	@Override
+	public int getPoints() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
 

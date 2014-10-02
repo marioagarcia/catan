@@ -1,5 +1,5 @@
-package client.model;
-//Mario is a putz
+package client.manager;
+import client.model.GameInfo;
 import client.model.card.*;
 import client.model.map.*;
 import client.model.player.*;
@@ -8,7 +8,7 @@ import shared.locations.*;
  * This class ensures that the preconditions for the actions the differenct model classes
  * attempt are met.
  */
-public interface CatanModelInterface 
+public interface GameManagerInterface 
 {
 	/**
 	 * Checks that the player has a valid catan.user cookie set, the player
@@ -22,7 +22,8 @@ public interface CatanModelInterface
 	 * the game or there is an available spot in the game, and the color
 	 * is valid, false otherwise
 	 */
-	public boolean canJoinGame(PlayerInterface player, CatanModelInterface game, CatanColor color);
+	public boolean canJoinGame(PlayerInfo player, GameInfo game);
+	public void joinGame(int gameId);
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -32,7 +33,7 @@ public interface CatanModelInterface
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise
 	 */
-	public boolean canGetGameModel(PlayerInterface player, CatanModelInterface game);
+	public boolean getGameModel();
 	
 	/**
 	 * Checks that the player has a valid user and a valid game id
@@ -42,7 +43,8 @@ public interface CatanModelInterface
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise 
 	 */
-	public boolean canResetGame(PlayerInterface player, CatanModelInterface game);
+	public boolean resetGame();
+	public void saveGameStatus();
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -52,7 +54,7 @@ public interface CatanModelInterface
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise  
 	 */
-	public boolean canGetGameCommands(PlayerInterface player, CatanModelInterface game);
+	public boolean getGameCommands();
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -62,7 +64,7 @@ public interface CatanModelInterface
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise  
 	 */
-	public boolean canPostGameCommands(PlayerInterface player, CatanModelInterface game);
+	public boolean postGameCommands();
 	
 //	/**
 //	 * Checks that the poster specifies a valid logging level. Valid values
@@ -81,8 +83,8 @@ public interface CatanModelInterface
 	 * @param object representing the conditions of a trade. Resources, etc.
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
-	public boolean canAcceptTrade(PlayerInterface player, TradeInterface trade);
-	
+	public boolean canAcceptTrade(TradeInterface trade);
+	public boolean acceptTrade(TradeInterface trade);
 	/**
 	 * Checks that a player has over 7 cards and that the player has the cards
 	 * being discarded
@@ -91,8 +93,8 @@ public interface CatanModelInterface
 	 * @return true if the player has over 7 cards and the player has the cards
 	 * being discarded, false otherwise
 	 */
-	public boolean canDiscardCards(PlayerInterface player);
-	
+	public boolean canDiscardCards();
+	public boolean discardCards();
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
 	 * 
@@ -100,7 +102,8 @@ public interface CatanModelInterface
 	 * @return true if it is the player's turn and the model status is "rolling",
 	 * false otherwise
 	 */
-	public boolean canRoll(PlayerInterface player);
+	public boolean canRoll();
+	public boolean roll();
 	
 	/**
 	 * Checks that the road location is open, the road location is connected to 
@@ -112,7 +115,8 @@ public interface CatanModelInterface
 	 * @return true if the location is open, connected to another road, is not on water, 
 	 * and if the player has the necessary resources, false otherwise
 	 */
-	public boolean canBuildRoad(PlayerInterface player, EdgeLocation location);
+	public boolean canBuildRoad(EdgeLocation location);
+	public boolean buildRoad(EdgeLocation location);
 	
 	/**
 	 * Checks that the settlement location is open, not on water, connected to 
@@ -125,8 +129,8 @@ public interface CatanModelInterface
 	 * player's roads, and the player has the resources to build a settlement,
 	 * false otherwise
 	 */
-	public boolean canBuildSettlement(PlayerInterface player, VertexLocation location);
-	
+	public boolean canBuildSettlement(VertexLocation location);
+	public boolean buildSettlement(VertexLocation location);
 	/**
 	 * Checks that the player has a settlement on the location where the player wants
 	 * to build a city and that the player has 3 ore and 2 wheat (possibly vice versa)
@@ -135,7 +139,8 @@ public interface CatanModelInterface
 	 * @param location The location where the player wants to build a city
 	 * @return true if it was successful
 	 */
-	public boolean canBuildCity(PlayerInterface player, VertexLocation location);
+	public boolean canBuildCity(VertexLocation location);
+	public boolean buildCity(VertexLocation location);
 	
 	/**
 	 * Checks that the player has the resources that he is offering in the trade
@@ -143,7 +148,8 @@ public interface CatanModelInterface
 	 * @param player The player offering the trade
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
-	public boolean canOfferTrade(PlayerInterface player);
+	public boolean canOfferTrade(TradeInterface trade);
+	public boolean offerTrade(TradeInterface trade, int otherPlayerIndex);
 	
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 
@@ -154,7 +160,8 @@ public interface CatanModelInterface
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
-	public boolean canMaritimeTrade(PlayerInterface player, HexInterface location);
+	public boolean canMaritimeTrade(HexInterface location, MaritimeTrade trade);
+	public boolean maritimeTrade(HexInterface location, MaritimeTrade trade);
 	
 	/**
 	 * Checks that the client model status is "playing"
@@ -162,7 +169,8 @@ public interface CatanModelInterface
 	 * @param model The client model
 	 * @return true if the client model status is "playing", false otherwise
 	 */
-	public boolean canFinishTurn(client.model.CatanModelInterface model);
+	public boolean canFinishTurn(); //do we decide this locally or do we ask the server?
+	public boolean finishTurn();
 	
 	/**
 	 * Checks that the player has 1 sheep, 1 wheat, and 1 ore and that 
@@ -173,9 +181,11 @@ public interface CatanModelInterface
 	 * @return true if the player has the resources to buy a dev card and 
 	 * the bank has dev cards left, false otherwise
 	 */
-	public boolean canBuyDevCard(PlayerInterface player, client.model.card.CardBankInterface CardBank);
+	public boolean canBuyDevCard();
+	public boolean buyDevCard();
 	
 	//dev cards
+	
 	/**
 	 * Checks that the player has the dev card the player wants to play, the
 	 * player hasn't played a dev card in this turn, it's the player's turn,
@@ -187,8 +197,8 @@ public interface CatanModelInterface
 	 * the player hasn't played a dev card in this turn, it's the player's turn,
 	 * and the client model status is "playing", false otherwise
 	 */
-	public boolean canPlayDevCard(PlayerInterface player, client.model.CatanModelInterface model);
-	
+	public boolean canPlayDevCard();
+	public boolean playDevCard();
 	/**
 	 * Checks that the two resources the player specifies are in the bank
 	 * 
@@ -197,8 +207,8 @@ public interface CatanModelInterface
 	 * @return true if the resources the player specifies are in the bank, false
 	 * otherwise
 	 */
-	public boolean canPlayYearOfPlenty(PlayerInterface player, client.model.card.CardBankInterface CardBank);
-	
+	public boolean canPlayYearOfPlenty();
+	public boolean playYearOfPlenty();
 	/**
 	 * Checks that the first road location is connected to one of the player's
 	 * roads, the second road location is connected to one of the player's roads
@@ -213,7 +223,8 @@ public interface CatanModelInterface
 	 * previous location, neither location is on water, and the player has two
 	 * roads, false otherwise
 	 */
-	public boolean canPlayRoadBuilding(PlayerInterface player, EdgeLocation location1, EdgeLocation location2);
+	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2);
+	public boolean playRoadBuilding(EdgeLocation location1, EdgeLocation location2);
 	
 	/**
 	 * Checks that the robber isn't being kept in the same place and that the 
@@ -224,18 +235,28 @@ public interface CatanModelInterface
 	 * @param newLocation The location the robber is going to
 	 * @return true if successful 
 	 */
-	public boolean canPlaySoldier(PlayerInterface player, HexInterface oldLocation, HexInterface newLocation);
-	
+	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation);
+	public boolean playSoldier(HexInterface oldLocation, HexInterface newLocation);
 	/**
 	 * Checks are completed in canPlayDevCard() so always returns true
 	 * @return true
 	 */
 	public boolean canPlayMonopoly();
+	public boolean playMonopoly();
 	
 	/**
 	 * Checks are completed in canPlayDevCar() so always returns true
 	 * @return true
 	 */
 	public boolean canPlayMonument();
+	public boolean playMonument();
+	
+	public void populateGameList();
+	
+	public PlayerInterface registerPlayer(PlayerInfo playerInfo);
+	
+	public PlayerInterface loginPlayer(String username, String password);
+	
+	public void logoutPlayer(int playerId);
 	
 }

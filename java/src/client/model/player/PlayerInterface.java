@@ -17,7 +17,7 @@ public interface PlayerInterface
 	 * Gets the Color representing this Player in the current game
 	 * @return the Color representing this Player
 	 */
-	public Color getColor();
+	public CatanColor getColor();
 	
 	/**
 	 * Gets the id of this Player

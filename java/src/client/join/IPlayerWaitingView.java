@@ -1,7 +1,7 @@
 package client.join;
 
 import client.base.*;
-import client.data.*;
+import client.model.player.PlayerInfo;
 
 /**
  * Interface for the player waiting view, which is displayed when the user is

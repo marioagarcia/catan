@@ -1,6 +1,5 @@
 package client.logging.chat;
 
-import client.logging.MessageInterface;
 
 public interface ChatInterface 
 {

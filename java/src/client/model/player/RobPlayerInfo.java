@@ -1,4 +1,5 @@
-package client.data;
+package client.model.player;
+
 
 /**
  * Used to pass player information into the rob view<br>

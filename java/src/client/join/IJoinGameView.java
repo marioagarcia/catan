@@ -1,7 +1,8 @@
 package client.join;
 
 import client.base.*;
-import client.data.*;
+import client.model.GameInfo;
+import client.model.player.PlayerInfo;
 
 /**
  * Interface for the join game view, which lets the user select a game to join

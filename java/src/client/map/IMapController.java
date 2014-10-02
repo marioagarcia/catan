@@ -1,7 +1,7 @@
 package client.map;
 
 import client.base.*;
-import client.data.*;
+import client.model.player.RobPlayerInfo;
 import shared.definitions.*;
 import shared.locations.*;
 

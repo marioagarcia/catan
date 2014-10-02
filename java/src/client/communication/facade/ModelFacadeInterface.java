@@ -1,6 +1,6 @@
 package client.communication.facade;
 
-import client.model.CatanModelInterface;
+import client.manager.GameManagerInterface;
 
 /**
  * This class ensures the game's data and state are properly stored in the Catan Model
@@ -19,19 +19,19 @@ public interface ModelFacadeInterface {
 	 * @param modelId The id of the model whose state data is being retrieved
 	 * @return CatanModel The data of the CatanModel
 	 */
-	public CatanModelInterface getModelData(int modelId);
+	public GameManagerInterface getModelData(int modelId);
 	
 	/**
 	 * Sets the state/data of the CatanModel on the client side
 	 * 
 	 * @param model The client CatanModel whose state/data is being updated
 	 */
-	public void setClientModelData(CatanModelInterface model);
+	public void setClientModelData(GameManagerInterface model);
 	
 	/**
 	 * Sets the state/data of the CatanModel no the server side
 	 * 
 	 * @param model The server CatanModel whose state/data is being updated
 	 */
-	public void setServerModelData(CatanModelInterface model);
+	public void setServerModelData(GameManagerInterface model);
 }

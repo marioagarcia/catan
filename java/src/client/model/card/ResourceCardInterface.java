@@ -13,4 +13,6 @@ public interface ResourceCardInterface
 		WHEAT,
 		ORE
 	}
+	
+	public ResourceCardType getResourceCardType();
 }

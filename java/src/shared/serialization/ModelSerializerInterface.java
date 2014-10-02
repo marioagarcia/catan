@@ -6,6 +6,7 @@ package shared.serialization;
  */
 public interface ModelSerializerInterface 
 {
+	
 	/**
 	 * Serializes a player's cards and ID to send to the server
 	 * 
@@ -38,5 +39,5 @@ public interface ModelSerializerInterface
 	 * @param data The string from the server that needs to be deserialized
 	 * @return CatanModel The updated CatanModel that was just deserialized
 	 */
-	public client.model.CatanModelInterface deserializeGameModel(String data);
+	public client.manager.GameManagerInterface deserializeGameModel(String data);
 }

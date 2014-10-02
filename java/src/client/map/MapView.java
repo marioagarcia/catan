@@ -2,10 +2,11 @@ package client.map;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import client.base.*;
-import client.data.*;
+import client.model.player.RobPlayerInfo;
 import shared.definitions.*;
 import shared.locations.*;
 

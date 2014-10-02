@@ -1,4 +1,4 @@
-package client.logging;
+package client.logging.chat;
 
 import client.model.player.PlayerInterface;
 

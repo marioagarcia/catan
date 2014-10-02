@@ -14,7 +14,7 @@ import javax.swing.*;
 
 import shared.definitions.*;
 import client.base.*;
-import client.data.*;
+import client.model.player.PlayerInfo;
 
 
 /**
