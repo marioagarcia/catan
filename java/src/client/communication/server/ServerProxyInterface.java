@@ -5,8 +5,7 @@ package client.communication.server;
  * the server's API. This interface calls handles the HTTP connection
  *
  */
-public interface ServerProxyInterface
-{
+public interface ServerProxyInterface{
 	/**
 	 * Attempts to log a player into the game
 	 * @param JSONString that contains a user name and a password

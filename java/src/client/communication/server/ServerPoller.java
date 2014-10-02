@@ -18,8 +18,7 @@ public class ServerPoller implements ServerPollerInterface
 	
 	private transient Collection<ModelStateObserver> modelObservers;
 	
-	public ServerPoller(String current_model_version)
-	{
+	public ServerPoller(String current_model_version){
 		isRunning = false;
 		latestModelVersion = current_model_version;
 		
@@ -30,48 +29,39 @@ public class ServerPoller implements ServerPollerInterface
 		modelObservers = new ArrayList<ModelStateObserver>();
 	}
 	
-	public void startPoller(long interval)
-	{
-		if (!isRunning)
-		{
+	public void startPoller(long interval){
+		if (!isRunning){
 			Date current_time = new Date();
 			pollTimer.scheduleAtFixedRate(pollMethod, current_time, interval);
 			isRunning = true;
 		}
 	}
 	
-	public void registerObserver(ModelStateObserver new_observer)
-	{
+	public void registerObserver(ModelStateObserver new_observer){
 		modelObservers.add(new_observer);
 	}
 	
 	@Override
-	public String getModelState()
-	{
+	public String getModelState(){
 		return latestModel;
 	}
 
 	@Override
-	public void setProxy(ServerProxyInterface proxy)
-	{
+	public void setProxy(ServerProxyInterface proxy){
 		proxyObject = proxy;
 	}
 	
-	private class CatanPoller extends TimerTask
-	{
+	private class CatanPoller extends TimerTask{
 		@Override
-		public void run()
-		{
+		public void run(){
 			//gameId JSON? Where will this come from
 			String model = proxyObject.getGameModel(gameId, latestModelVersion);
 			
-			if (!model.equals("True"))
-			{
+			if (!model.equals("True")){
 				latestModel = model;
 				
 				//Notify listeners
-				for (ModelStateObserver o : modelObservers)
-				{
+				for (ModelStateObserver o : modelObservers){
 					o.modelChanged(latestModel);
 				}
 				
@@ -79,8 +69,7 @@ public class ServerPoller implements ServerPollerInterface
 		}
 	}
 	
-	public interface ModelStateObserver
-	{
+	public interface ModelStateObserver{
 		public void modelChanged(String new_model);	
 	}
 }

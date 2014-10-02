@@ -6,8 +6,7 @@ import client.communication.server.ServerPoller.ModelStateObserver;
  * Communicates with the game server to keep the model state in sync for all players in the game 
  *
  */
-public interface ServerPollerInterface
-{	
+public interface ServerPollerInterface{	
 
 	/**
 	 * Begins the polling process

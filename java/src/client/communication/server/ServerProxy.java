@@ -23,21 +23,18 @@ public class ServerProxy implements ServerProxyInterface
 	 * @param port The port number the server is listening on for requests from the ServerProxy.
 	 * @param host The name of the machine running the server.
 	 */
-	public ServerProxy(String port, String host)
-	{
+	public ServerProxy(String port, String host){
 		this.serverPortNumber = port;
 		this.host = host;
 		link = "http://" + this.host + ":" + serverPortNumber;
 	}
 	
-	private String doGet(String url_path, String json_post_data)
-	{
+	private String doGet(String url_path, String json_post_data){
 		String json_line;
 		String json_result = null;
 		HttpURLConnection connection = null;
 		
-		try 
-		{ 
+		try { 
 			 URL url = new URL(link + url_path);
 			 
 			 connection = (HttpURLConnection)url.openConnection(); 
@@ -49,8 +46,7 @@ public class ServerProxy implements ServerProxyInterface
 			 
 			 connection.connect(); 
 			 
-			 if (json_post_data != null)
-			 {
+			 if (json_post_data != null){
 				 OutputStream request_body = connection.getOutputStream(); 
 				 
 				 request_body.write(json_post_data.getBytes());
@@ -60,30 +56,25 @@ public class ServerProxy implements ServerProxyInterface
 			 StringBuilder server_response = new StringBuilder();
 			 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			 
-			 while ((json_line = reader.readLine()) != null)
-			 {
+			 while ((json_line = reader.readLine()) != null){
 				 server_response.append(json_line + '\n');
 			 }
 			 
 			 json_result = server_response.toString();
 		}
-		catch (MalformedURLException m)
-		{
+		catch (MalformedURLException m){
 	        m.printStackTrace();
 	        return null;
 	    } 
-		catch (ProtocolException p) 
-	    {
+		catch (ProtocolException p){
 	        p.printStackTrace();
 	        return null;
 	    }
-		catch (IOException e)
-		{
+		catch (IOException e){
 			e.printStackTrace();
 			return null;
 		}
-		finally
-		{
+		finally{
 			connection.disconnect();
 		}
 		
@@ -91,197 +82,169 @@ public class ServerProxy implements ServerProxyInterface
 	}
 	
 	@Override
-	public String login(String JSONString)
-	{
+	public String login(String JSONString){
 		methodUrl = "/user/login";	
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String register(String JSONString)
-	{
+	public String register(String JSONString){
 		methodUrl = "/user/register";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String listGames()
-	{
+	public String listGames(){
 		methodUrl = "/games/list";
 		return doGet(methodUrl, null);
 	}
 
 	@Override
-	public String createGame()
-	{
+	public String createGame(){
 		methodUrl = "/games/create";
 		return doGet(methodUrl, null);
 	}
 
 	@Override
-	public String joinGame(String JSONString)
-	{
+	public String joinGame(String JSONString){
 		methodUrl = "/games/join";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String getGameModel(String JSONString, String latest_model)
-	{
+	public String getGameModel(String JSONString, String latest_model){
 		methodUrl = "/games/model?version=" + latest_model;
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String resetGame(String JSONString)
-	{
+	public String resetGame(String JSONString){
 		methodUrl = "/game/reset";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String getGameActionList(String JSONString)
-	{
+	public String getGameActionList(String JSONString){
 		methodUrl = "/game/commands";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String postGameActionList(String JSONString)
-	{
+	public String postGameActionList(String JSONString){
 		methodUrl = "/game/commands";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String getAIList()
-	{
+	public String getAIList(){
 		methodUrl = "/game/listAI";
 		return doGet(methodUrl, null);
 	}
 
 	@Override
-	public String postNewAI(String JSONString)
-	{
+	public String postNewAI(String JSONString){
 		methodUrl = "/game/addAI";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String utilChangeLogLevel(String JSONString)
-	{
+	public String utilChangeLogLevel(String JSONString){
 		methodUrl = "/util/changeLogLevel";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String sendChat(String JSONString)
-	{
+	public String sendChat(String JSONString){
 		methodUrl = "/moves/sendChat";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String acceptTrade(String JSONString)
-	{
+	public String acceptTrade(String JSONString){
 		methodUrl = "/moves/acceptTrade";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String discardCards(String JSONString)
-	{
+	public String discardCards(String JSONString){
 		methodUrl = "/moves/discardCards";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String rollNumber(String JSONString)
-	{
+	public String rollNumber(String JSONString){
 		methodUrl = "/moves/rollNumber";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String buildRoad(String JSONString)
-	{
+	public String buildRoad(String JSONString){
 		methodUrl = "/moves/buildRoad";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String buildSettlement(String JSONString)
-	{
+	public String buildSettlement(String JSONString){
 		methodUrl = "/moves/buildSettlement";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String buildCity(String JSONString)
-	{
+	public String buildCity(String JSONString){
 		methodUrl = "/moves/buildCity";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String offerTrade(String JSONString)
-	{
+	public String offerTrade(String JSONString){
 		methodUrl = "/moves/offerTrade";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String maritimeTrade(String JSONString)
-	{
+	public String maritimeTrade(String JSONString){
 		methodUrl = "/moves/maritimeTrade";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String finishTurn(String JSONString)
-	{
+	public String finishTurn(String JSONString){
 		methodUrl = "/moves/finishTurn";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String buyDevCard(String JSONString)
-	{
+	public String buyDevCard(String JSONString){
 		methodUrl = "/moves/buyDevCard";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String playYearOfPlenty(String JSONString)
-	{
+	public String playYearOfPlenty(String JSONString){
 		methodUrl = "/moves/Year_of_Plenty";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String playRoadBuilding(String JSONString)
-	{
+	public String playRoadBuilding(String JSONString){
 		methodUrl = "/moves/Road_Building";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String playSoldier(String JSONString)
-	{
+	public String playSoldier(String JSONString){
 		methodUrl = "/moves/Soldier";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String playMonopoly(String JSONString)
-	{
+	public String playMonopoly(String JSONString){
 		methodUrl = "/moves/Monopoly";
 		return doGet(methodUrl, JSONString);
 	}
 
 	@Override
-	public String playMonument(String JSONString)
-	{
+	public String playMonument(String JSONString){
 		methodUrl = "/moves/Monument";
 		return doGet(methodUrl, JSONString);
 	}
