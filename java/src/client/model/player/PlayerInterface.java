@@ -2,6 +2,8 @@ package client.model.player;
 
 import java.awt.Color;
 
+import shared.definitions.CatanColor;
+
 /**
  * Represents a Player in the game
  */

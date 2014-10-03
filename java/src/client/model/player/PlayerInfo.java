@@ -2,6 +2,8 @@ package client.model.player;
 
 import java.awt.Color;
 
+import shared.definitions.CatanColor;
+
 /**
  * Used to pass player information into views<br>
  * <br>
@@ -63,7 +65,7 @@ public class PlayerInfo implements PlayerInterface
 	@Override
 	public CatanColor getColor()
 	{
-		return color;
+		return this.color;
 	}
 	
 	public void setColor(CatanColor color)
@@ -72,25 +74,37 @@ public class PlayerInfo implements PlayerInterface
 	}
 
 	@Override
-	public int hashCode()
-	{
-		return 31 * this.id;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + playerIndex;
+		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
 		if (obj == null)
-		{
 			return false;
-		}
 		if (getClass() != obj.getClass())
-		{
 			return false;
-		}
-		final PlayerInfo other = (PlayerInfo) obj;
-		
-		return this.id == other.id;
+		PlayerInfo other = (PlayerInfo) obj;
+		if (color != other.color)
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (playerIndex != other.playerIndex)
+			return false;
+		return true;
 	}
 	
 	@Override

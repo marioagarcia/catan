@@ -221,4 +221,22 @@ public class ModelFacade implements ModelFacadeInterface {
 		return this.gameManager.logoutPlayer();
 	}
 
+	@Override
+	public boolean discardCards() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canPlayDevCard() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean playDevCard() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
