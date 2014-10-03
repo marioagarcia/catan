@@ -62,5 +62,14 @@ public class GameInfo
 		//TODO implement this method
 		return false;
 	}
+	
+	public String toString(){
+		String str = "Game Title: " + title + "\n";
+		str += "Game ID: " + id + "\n";
+		for(int i = 0; i < players.size(); i++){
+			str += players.get(i).toString();
+		}
+		return str;
+	}
 }
 

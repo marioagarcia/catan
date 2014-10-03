@@ -26,6 +26,11 @@ public interface PlayerInterface
 	public int getId();
 	
 	/**
+	 * TODO
+	 */
+	public String toString();
+	
+	/**
 	 * Gets the total number of victory points earned by this Player
 	 * @return the number of victory points this Player has earned
 	 */

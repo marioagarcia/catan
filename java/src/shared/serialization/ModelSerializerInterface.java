@@ -1,11 +1,55 @@
 package shared.serialization;
 
+import java.util.ArrayList;
+
+import shared.serialization.parameters.CreateGameRequestParameters;
+import shared.serialization.parameters.CredentialsParameters;
+import shared.serialization.parameters.JoinGameRequestParameters;
+import shared.serialization.parameters.LoadGameRequestParameters;
+import shared.serialization.parameters.AIRequestParameters;
+import shared.serialization.parameters.SaveGameRequestParameters;
+import client.model.GameInfo;
+
 /**
  * This class handles all serialization of data going to the server and 
  * deserialization of data coming from the server.
  */
 public interface ModelSerializerInterface 
 {
+	/**
+	 * @TODO 
+	 */
+	public String serializeCredentials(CredentialsParameters credentials);
+	
+	/**
+	 * @TODO
+	 */
+	public ArrayList<GameInfo> getGamesList(String jsonString);
+	
+	/**
+	 * @TODO
+	 */
+	public String serializeCreateGameRequest(CreateGameRequestParameters params);
+	
+	/**
+	 * @TODO
+	 */
+	public String serializeJoinGameRequest(JoinGameRequestParameters params);
+	
+	/**
+	 * @TODO
+	 */
+	public String serializeSaveGameRequest(SaveGameRequestParameters params);
+	
+	/**
+	 * @TODO
+	 */
+	public String serializeLoadGameRequest(LoadGameRequestParameters params);
+	
+	/**
+	 * @TODO
+	 */
+	public String serializeAIRequest(AIRequestParameters params);
 	
 	/**
 	 * Serializes a player's cards and ID to send to the server
@@ -14,7 +58,7 @@ public interface ModelSerializerInterface
 	 * @param playerId The ID of the player whose inventory contains the cards being serialized
 	 * @return String The player's cards and ID after being serialized
 	 */
-	public String serializeCards(client.model.card.CardInventoryInterface inventory_instance, int playerId);
+	public String serializeCards();
 	
 	/**
 	 * Deserializes a road from a string from the server

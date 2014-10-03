@@ -92,6 +92,14 @@ public class PlayerInfo implements PlayerInterface
 		
 		return this.id == other.id;
 	}
+	
+	@Override
+	public String toString(){
+		String str = "Player Name: " + name + "\n";
+		str += "Player ID: " + id + "\n";
+		str += "Player Color: " + color.toString() + "\n";
+		return str;
+	}
 
 	@Override
 	public int getPoints() {
