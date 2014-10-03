@@ -8,6 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLDecoder;
+
+import com.google.gson.*;
+
+import client.model.player.PlayerInfo;
 
 
 public class ServerProxy implements ServerProxyInterface
@@ -19,6 +24,8 @@ public class ServerProxy implements ServerProxyInterface
 	private String methodUrl;
 	private int gameId;
 	private String cookie;
+	private String plainTextCookie;
+	private int playerId;
 	
 	/**
 	 * Initializes the ServerProxy object with the given port and host name.
@@ -31,11 +38,13 @@ public class ServerProxy implements ServerProxyInterface
 		link = "http://" + this.host + ":" + serverPortNumber;
 		gameId = Integer.MAX_VALUE;
 		cookie = null;
+		plainTextCookie = null;
+		playerId = Integer.MAX_VALUE;
 	}
 	
 	private String doGet(String url_path, String json_post_data){
 		String json_line;
-		String json_result = null;
+		String response = null;
 		HttpURLConnection connection = null;
 		
 		try { 
@@ -59,9 +68,27 @@ public class ServerProxy implements ServerProxyInterface
 				 request_body.write(json_post_data.getBytes());
 				 request_body.close(); 
 			 }
-			
-			 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-			 {
+			 
+			 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
+				 if (url_path.equals("/user/register") || url_path.equals("/user/login")){
+					String cookie = connection.getHeaderField("Set-Cookie");
+					String[] pieces = cookie.split(";");
+					
+					cookie = pieces[0].split("=")[1];
+					plainTextCookie = URLDecoder.decode(cookie, "UTF-8");
+					JsonParser parser = new JsonParser();
+					JsonElement cookie_element = parser.parse(plainTextCookie);
+					JsonObject cookie_object = cookie_element.getAsJsonObject();
+					playerId = cookie_object.get("PlayerID").getAsInt();
+					
+				 }
+				 if (url_path.equals("/game/join")){
+					 String cookie = connection.getHeaderField("Set-Cookie");
+					 String[] pieces = cookie.split(";");
+					
+					 gameId = Integer.parseInt(pieces[0].split("=")[1]);
+				 }
+				 
 				 StringBuilder server_response = new StringBuilder();
 				 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				 
@@ -69,22 +96,10 @@ public class ServerProxy implements ServerProxyInterface
 					 server_response.append(json_line + '\n');
 				 }
 				 
-				 json_result = server_response.toString();
-				 
-				 if (url_path.equals("/user/register") || url_path.equals("/user/login"))
-				 {
-					String cookie = connection.getHeaderField("Set-Cookie");
-					String[] pieces = cookie.split(";");
-					
-					cookie = pieces[0].split("=")[1];
-				 }
-				 if (url_path.equals("/game/join"))
-				 {
-					 String cookie = connection.getHeaderField("Set-Cookie");
-					 String[] pieces = cookie.split(";");
-					
-					 gameId = Integer.parseInt(pieces[0].split("=")[1]);
-				 }
+				 response = server_response.toString();
+			 }
+			 else{
+				 response = Integer.toString(connection.getResponseCode());
 			 }
 		}
 		catch (MalformedURLException m){
@@ -103,7 +118,7 @@ public class ServerProxy implements ServerProxyInterface
 			connection.disconnect();
 		}
 		
-		return json_result;
+		return response;
 	}
 	
 	@Override
@@ -277,6 +292,11 @@ public class ServerProxy implements ServerProxyInterface
 	@Override
 	public int getGameId() {
 		return gameId;
+	}
+
+	@Override
+	public boolean validatePlayer(PlayerInfo player) {
+		return (plainTextCookie != null && player.getId() == playerId);
 	}
 
 
