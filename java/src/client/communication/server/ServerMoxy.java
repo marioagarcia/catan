@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class ServerMoxy implements ServerProxyInterface
 {
@@ -100,8 +101,7 @@ public class ServerMoxy implements ServerProxyInterface
 
 	@Override
 	public String postGameCommands(String JSONString) {
-		// TODO Auto-generated method stub
-		return null;
+		return readFile("test/JSON/postGameCommands.txt");
 	}
 
 	@Override
