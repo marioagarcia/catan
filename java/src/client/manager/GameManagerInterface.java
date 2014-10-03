@@ -94,7 +94,7 @@ public interface GameManagerInterface
 	 * being discarded, false otherwise
 	 */
 	public boolean canDiscardCards(ResourceList list);
-	public boolean discardCards();
+	public boolean discardCards(ResourceList list);
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
 	 * 
@@ -257,6 +257,6 @@ public interface GameManagerInterface
 	
 	public PlayerInterface loginPlayer(String username, String password);
 	
-	public void logoutPlayer(int playerId);
+	public void logoutPlayer();
 	
 }

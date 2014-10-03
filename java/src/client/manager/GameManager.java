@@ -45,12 +45,12 @@ public class GameManager implements GameManagerInterface {
 	}
 	
 	private boolean validatePlayer() {
-		return serverProxy.validatePlayer(localPlayer);
+		return false; //serverProxy.validatePlayer(localPlayer);
 	}
 
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
-		if(validatePlayer() && game.validateColor(color)) {
+		if(validatePlayer() /*&& game.validateColor(color)*/) {
 				return true;
 		}		
 		return false;
@@ -58,7 +58,7 @@ public class GameManager implements GameManagerInterface {
 	
 	@Override
 	public void joinGame(CatanColor color, GameInfo game) {
-		String JSONString = modelSerializer.serializeJoinGameRequest(color, game);
+		String JSONString = null; //modelSerializer.serializeJoinGameRequest(color, game);
 		serverProxy.joinGame(JSONString);		
 	}
 
@@ -224,7 +224,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	}
 
 	@Override
-	public boolean discardCards() {
+	public boolean discardCards(ResourceList list) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -408,7 +408,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	}
 
 	@Override
-	public void logoutPlayer(int playerId) {
+	public void logoutPlayer() {
 		// TODO Auto-generated method stub
 		
 	}
