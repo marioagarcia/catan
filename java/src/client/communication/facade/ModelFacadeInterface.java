@@ -28,7 +28,7 @@ public interface ModelFacadeInterface {
 	 * the game or there is an available spot in the game, and the color
 	 * is valid, false otherwise
 	 */
-	public boolean canJoinGame(PlayerInfo player, GameInfo game);
+	public boolean canJoinGame(shared.definitions.CatanColor color, GameInfo game);
 	public void joinGame(int gameId);
 	
 	/**

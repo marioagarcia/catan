@@ -1,5 +1,6 @@
 package client.communication.facade;
 
+import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.manager.GameManagerInterface;
@@ -21,8 +22,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canJoinGame(PlayerInfo player, GameInfo game) {
-		return this.gameManager.canJoinGame(player, game);
+	public boolean canJoinGame(CatanColor color, GameInfo game) {
+		return this.gameManager.canJoinGame(color, game);
 	}
 
 	@Override
