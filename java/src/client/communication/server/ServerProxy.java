@@ -8,6 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 
 public class ServerProxy implements ServerProxyInterface
@@ -17,6 +20,8 @@ public class ServerProxy implements ServerProxyInterface
 	private String host;
 	private String link;
 	private String methodUrl;
+	private int gameId;
+	private String cookie;
 	
 	/**
 	 * Initializes the ServerProxy object with the given port and host name.
@@ -27,6 +32,8 @@ public class ServerProxy implements ServerProxyInterface
 		this.serverPortNumber = port;
 		this.host = host;
 		link = "http://" + this.host + ":" + serverPortNumber;
+		gameId = Integer.MAX_VALUE;
+		cookie = null;
 	}
 	
 	private String doGet(String url_path, String json_post_data){
@@ -44,23 +51,44 @@ public class ServerProxy implements ServerProxyInterface
 			 connection.setDoInput(true);
 			 connection.setDoOutput(true);
 			 
+			 if (gameId != Integer.MAX_VALUE && cookie != null){
+				 String full_cookie = "catan.game=" + gameId + "; catan.user=" + cookie;
+				 connection.setRequestProperty("Cookie", full_cookie);
+			 }
 			 connection.connect(); 
 			 
 			 if (json_post_data != null){
 				 OutputStream request_body = connection.getOutputStream(); 
-				 
 				 request_body.write(json_post_data.getBytes());
 				 request_body.close(); 
 			 }
-			 
-			 StringBuilder server_response = new StringBuilder();
-			 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			 
-			 while ((json_line = reader.readLine()) != null){
-				 server_response.append(json_line + '\n');
+			
+			 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
+			 {
+				 StringBuilder server_response = new StringBuilder();
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				 
+				 while ((json_line = reader.readLine()) != null){
+					 server_response.append(json_line + '\n');
+				 }
+				 
+				 json_result = server_response.toString();
+				 
+				 if (url_path.equals("/user/register") || url_path.equals("/user/login"))
+				 {
+					String cookie = connection.getHeaderField("Set-Cookie");
+					String[] pieces = cookie.split(";");
+					
+					cookie = pieces[0].split("=")[1];
+				 }
+				 if (url_path.equals("/game/join"))
+				 {
+					 String cookie = connection.getHeaderField("Set-Cookie");
+					 String[] pieces = cookie.split(";");
+					
+					 gameId = Integer.parseInt(pieces[0].split("=")[1]);
+				 }
 			 }
-			 
-			 json_result = server_response.toString();
 		}
 		catch (MalformedURLException m){
 	        m.printStackTrace();
@@ -247,6 +275,11 @@ public class ServerProxy implements ServerProxyInterface
 	public String playMonument(String JSONString){
 		methodUrl = "/moves/Monument";
 		return doGet(methodUrl, JSONString);
+	}
+
+	@Override
+	public int getGameId() {
+		return gameId;
 	}
 
 

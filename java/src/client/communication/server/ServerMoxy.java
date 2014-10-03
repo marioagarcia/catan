@@ -4,13 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServerMoxy implements ServerProxyInterface
 {
+	private int gameId;
+	private String cookie;
 	
 	public ServerMoxy()
 	{
-
+		gameId = 1;
+		cookie = "%7B%22authentication%22%3A%22-798137185%22%2C%22name%22%3A%22blah%22%2C%22password%22%3A%22string%22%2C%22playerID%22%3A12%7D";
 	}
 	
 	private String readFile(String filename)
@@ -182,6 +187,12 @@ public class ServerMoxy implements ServerProxyInterface
 	@Override
 	public String playMonument(String JSONString) {
 		return readFile("test/JSON/playMonument.txt");
+	}
+
+	@Override
+	public int getGameId() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

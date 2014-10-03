@@ -6,6 +6,8 @@ package client.communication.server;
  *
  */
 public interface ServerProxyInterface{
+	
+	abstract int getGameId();
 	/**
 	 * Attempts to log a player into the game
 	 * @param JSONString that contains a user name and a password
