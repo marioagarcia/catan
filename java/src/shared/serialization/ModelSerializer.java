@@ -2,17 +2,42 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import shared.serialization.parameters.AcceptTradeParameters;
+import shared.serialization.parameters.BuildCityParameters;
+import shared.serialization.parameters.BuildRoadParameters;
+import shared.serialization.parameters.BuildSettlementParameters;
+import shared.serialization.parameters.BuyDevCardParameters;
 import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.CredentialsParameters;
+import shared.serialization.parameters.DiscardCardsParameters;
+import shared.serialization.parameters.EdgeLocationParameters;
+import shared.serialization.parameters.FinishTurnParameters;
 import shared.serialization.parameters.JoinGameRequestParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.AIRequestParameters;
+import shared.serialization.parameters.MaritimeTradeParameters;
+import shared.serialization.parameters.MonopolyParameters;
+import shared.serialization.parameters.MonumentParameters;
+import shared.serialization.parameters.OfferTradeParameters;
+import shared.serialization.parameters.RoadBuildingParameters;
+import shared.serialization.parameters.RobPlayerParameters;
+import shared.serialization.parameters.RollNumberParameters;
 import shared.serialization.parameters.SaveGameRequestParameters;
+import shared.serialization.parameters.SendChatParameters;
+import shared.serialization.parameters.SoldierParameters;
+import shared.serialization.parameters.VertexLocationParameters;
+import shared.serialization.parameters.YearOfPlentyParameters;
 
 import com.google.gson.*;
 
 import client.manager.GameData;
 import client.model.GameInfo;
+import client.model.card.ResourceList;
 import client.model.piece.RoadInterface;
 import client.model.player.CatanColor;
 import client.model.player.PlayerInfo;
@@ -136,7 +161,143 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return jsonString;
 	}
 
+	@Override
+	public String serializeSendChat(SendChatParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
 	
+	@Override
+	public String serializeRollNumber(RollNumberParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeRobPlayer(RobPlayerParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeFinishTurn(FinishTurnParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeBuyDevCard(BuyDevCardParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeYearOfPlenty(YearOfPlentyParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeRoadBuilding(RoadBuildingParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeSoldier(SoldierParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeMonopoly(MonopolyParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeMonument(MonumentParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeBuildRoad(BuildRoadParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeBuildSettlement(BuildSettlementParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeBuildCity(BuildCityParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeOfferTrade(OfferTradeParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeAcceptTrade(AcceptTradeParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeMaritimeTrade(MaritimeTradeParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		
+		return jsonString;
+	}
+	
+	@Override
+	public String serializeDiscardCards(DiscardCardsParameters params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		System.out.println(jsonString);
+		return jsonString;
+	}
+	
+	/////////////////
 	@Override
 	public String serializeCards() {
 		// TODO Auto-generated method stub
@@ -176,18 +337,20 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return null;
 	}
 
-/*	public static void main(String[] args){
+	public static void main(String[] args){
 		ModelSerializer ms = new ModelSerializer();
 		
-		//String str = "{\"deck\":{\"yearOfPlenty\":2,\"monopoly\":2,\"soldier\":14,\"roadBuilding\":2,\"monument\":5},\"map\":{\"hexGrid\":{\"hexes\":[[{\"isLand\":false,\"location\":{\"x\":0,\"y\":-1},\"vertexes\":[{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":1,\"ownerID\":0}},{\"value\":{\"worth\":0,\"ownerID\":-1}}],\"edges\":[{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":0}},{\"value\":{\"ownerID\":-1}}]},{\"landtype\":\"Wood\",\"isLand\":true,\"location\":{\"x\":1,\"y\":-1},\"vertexes\":[{\"value\":{\"worth\":1,\"ownerID\":0}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}}],\"edges\":[{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}}]}],[{\"landtype\":\"Ore\",\"isLand\":true,\"location\":{\"x\":-1,\"y\":0},\"vertexes\":[{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":1,\"ownerID\":2}},{\"value\":{\"worth\":0,\"ownerID\":-1}}],\"edges\":[{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}}]},{\"isLand\":true,\"location\":{\"x\":0,\"y\":0},\"vertexes\":[{\"value\":{\"worth\":1,\"ownerID\":2}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":1,\"ownerID\":0}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":1,\"ownerID\":1}},{\"value\":{\"worth\":0,\"ownerID\":-1}}],\"edges\":[{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":0}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":2}}]},{\"landtype\":\"Brick\",\"isLand\":true,\"location\":{\"x\":1,\"y\":0},\"vertexes\":[{\"value\":{\"worth\":1,\"ownerID\":1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":2,\"ownerID\":3}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}}],\"edges\":[{\"value\":{\"ownerID\":1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":3}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}}]}],[{\"landtype\":\"Wheat\",\"isLand\":true,\"location\":{\"x\":-1,\"y\":1},\"vertexes\":[{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":1,\"ownerID\":2}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}}],\"edges\":[{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":2}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}}]},{\"landtype\":\"Sheep\",\"isLand\":true,\"location\":{\"x\":0,\"y\":1},\"vertexes\":[{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":1,\"ownerID\":1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}},{\"value\":{\"worth\":0,\"ownerID\":-1}}],\"edges\":[{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}},{\"value\":{\"ownerID\":-1}}]}]],\"offsets\":[1,0,0],\"radius\":2,\"x0\":1,\"y0\":1},\"radius\":2,\"numbers\":{\"2\":[{\"x\":1,\"y\":-1}],\"3\":[{\"x\":1,\"y\":0}],\"5\":[{\"x\":0,\"y\":1}],\"8\":[{\"x\":-1,\"y\":1}],\"12\":[{\"x\":-1,\"y\":0}]},\"ports\":[{\"ratio\":2,\"inputResource\":\"Ore\",\"validVertex1\":{\"direction\":\"SW\",\"x\":0,\"y\":-1},\"validVertex2\":{\"direction\":\"W\",\"x\":0,\"y\":-1},\"orientation\":\"SW\",\"location\":{\"x\":0,\"y\":-1}}]},\"players\":[{\"MAX_GAME_POINTS\":10,\"resources\":{\"brick\":0,\"wood\":0,\"sheep\":0,\"wheat\":0,\"ore\":0},\"oldDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"newDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"roads\":15,\"cities\":4,\"settlements\":5,\"soldiers\":0,\"victoryPoints\":0,\"monuments\":0,\"longestRoad\":false,\"largestArmy\":false,\"playedDevCard\":false,\"discarded\":false,\"playerID\":12,\"orderNumber\":0,\"name\":\"Pete\",\"color\":\"red\"},{\"MAX_GAME_POINTS\":10,\"resources\":{\"brick\":0,\"wood\":0,\"sheep\":0,\"wheat\":0,\"ore\":0},\"oldDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"newDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"roads\":15,\"cities\":4,\"settlements\":5,\"soldiers\":0,\"victoryPoints\":0,\"monuments\":0,\"longestRoad\":false,\"largestArmy\":false,\"playedDevCard\":false,\"discarded\":false,\"playerID\":12345,\"orderNumber\":1,\"name\":\"Brooke\",\"color\":\"blue\"},{\"MAX_GAME_POINTS\":10,\"resources\":{\"brick\":0,\"wood\":0,\"sheep\":0,\"wheat\":0,\"ore\":0},\"oldDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"newDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"roads\":15,\"cities\":4,\"settlements\":5,\"soldiers\":0,\"victoryPoints\":0,\"monuments\":0,\"longestRoad\":false,\"largestArmy\":false,\"playedDevCard\":false,\"discarded\":false,\"playerID\":3947,\"orderNumber\":2,\"name\":\"Mark\",\"color\":\"green\"},{\"MAX_GAME_POINTS\":10,\"resources\":{\"brick\":0,\"wood\":0,\"sheep\":0,\"wheat\":0,\"ore\":0},\"oldDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"newDevCards\":{\"yearOfPlenty\":0,\"monopoly\":0,\"soldier\":0,\"roadBuilding\":0,\"monument\":0},\"roads\":15,\"cities\":4,\"settlements\":5,\"soldiers\":0,\"victoryPoints\":0,\"monuments\":0,\"longestRoad\":false,\"largestArmy\":false,\"playedDevCard\":false,\"discarded\":false,\"playerID\":8395739,\"orderNumber\":3,\"name\":\"Sam\",\"color\":\"orange\"}],\"log\":{\"lines\":[]},\"chat\":{\"lines\":[]},\"bank\":{\"brick\":24,\"wood\":24,\"sheep\":24,\"wheat\":24,\"ore\":24},\"turnTracker\":{\"status\":\"FirstRound\",\"currentTurn\":0},\"biggestArmy\":2,\"longestRoad\":-1,\"winner\":-1}";
+		//String str = ""brick":1,"ore":2,"sheep":3,"wheat":4,"wood":5},"chat":{"lines":[{"message":"Thanks for nothing","source":"Casey"},{"message":"Thanks for everything","source":]},"log":{"lines":[{; 
+		//System.out.println(str);
 		//String str = "[ { \"title\": \"Default Game\", \"id\": 0, \"players\": [ { \"color\": \"orange\", \"name\": \"Sam\", \"id\": 0 }, { \"color\": \"blue\", \"name\": \"Brooke\", \"id\": 1 }, { \"color\": \"red\", \"name\": \"Pete\", \"id\": 10 }, { \"color\": \"green\", \"name\": \"Mark\", \"id\": 11 } ] }, { \"title\": \"AI Game\", \"id\": 1, \"players\": [ { \"color\": \"orange\", \"name\": \"Pete\", \"id\": 10 }, { \"color\": \"puce\", \"name\": \"Scott\", \"id\": -2 }, { \"color\": \"purple\", \"name\": \"Steve\", \"id\": -2 }, { \"color\": \"green\", \"name\": \"Hannah\", \"id\": -2 } ] }, { \"title\": \"Empty Game\", \"id\": 2, \"players\": [ { \"color\": \"orange\", \"name\": \"Sam\", \"id\": 0 }, { \"color\": \"blue\", \"name\": \"Brooke\", \"id\": 1 }, { \"color\": \"red\", \"name\": \"Pete\", \"id\": 10 }, { \"color\": \"green\", \"name\": \"Mark\", \"id\": 11 } ] } ]";
 		
 		//Gson gson = new Gson();
 		//gson.toJson(str);
 		//ms.deserializeGameModel(str);
-		LoadGameRequestParameters params = new LoadGameRequestParameters("Casey");
-		ms.serializeLoadGameRequest(params);
 		
-	}*/
+		DiscardCardsParameters params = new DiscardCardsParameters(7, new ResourceList(5, 4, 3, 2, 1));
+		ms.serializeDiscardCards(params);
+		
+	}
 	
 }
