@@ -3,9 +3,10 @@ import client.model.GameInfo;
 import client.model.card.*;
 import client.model.map.*;
 import client.model.player.*;
+import shared.definitions.CatanColor;
 import shared.locations.*;
 /**
- * This class ensures that the preconditions for the actions the differenct model classes
+ * This class ensures that the preconditions for the actions the different model classes
  * attempt are met.
  */
 public interface GameManagerInterface 
@@ -22,8 +23,8 @@ public interface GameManagerInterface
 	 * the game or there is an available spot in the game, and the color
 	 * is valid, false otherwise
 	 */
-	public boolean canJoinGame(PlayerInfo player, GameInfo game);
-	public void joinGame(int gameId);
+	public boolean canJoinGame(CatanColor color, GameInfo game);
+	public void joinGame(CatanColor color, GameInfo game);
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -44,7 +45,6 @@ public interface GameManagerInterface
 	 * false otherwise 
 	 */
 	public boolean resetGame();
-	public void saveGameStatus();
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -93,7 +93,7 @@ public interface GameManagerInterface
 	 * @return true if the player has over 7 cards and the player has the cards
 	 * being discarded, false otherwise
 	 */
-	public boolean canDiscardCards();
+	public boolean canDiscardCards(ResourceList list);
 	public boolean discardCards();
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
@@ -103,7 +103,7 @@ public interface GameManagerInterface
 	 * false otherwise
 	 */
 	public boolean canRoll();
-	public boolean roll();
+	public int roll();
 	
 	/**
 	 * Checks that the road location is open, the road location is connected to 
