@@ -5,7 +5,7 @@ import client.model.player.PlayerInterface;
 /**
  * An object representing all the cards currently not owned by a Player
  */
-public interface CardBankInterface
+public interface ResourceCardBankInterface
 {
 	/**
 	 * Removes a card from the CardBank and places it in the given Player's CardInventory.
@@ -13,7 +13,14 @@ public interface CardBankInterface
 	 * @param recipient The Player receiving the Card from the CardBank
 	 * @param card The Card to be given
 	 */
-	public abstract void giveCard(PlayerInterface recipient, CardInterface card);
+	public abstract void addCard(ResourceCardInterface card);
+	
+	/**
+	 * checks if the bank contains a card of the specified type
+	 * @param type ResourceCardType to check for
+	 * @return boolean. true if contains the card/else false
+	 */
+	public abstract boolean containsCard(ResourceCardInterface.ResourceCardType type);
 	
 	/**
 	 * Removes a card from the Player's CardInventory and places it in the CardBank.
@@ -21,5 +28,6 @@ public interface CardBankInterface
 	 * @param giver The Player giving the Card to the CardBank
 	 * @param card The Card to be taken
 	 */
-	public abstract void takeCard(PlayerInterface giver, CardInterface card);
+	public abstract ResourceCardInterface removeCard(ResourceCardInterface.ResourceCardType type) throws NoSuchCardException;
+	
 }
