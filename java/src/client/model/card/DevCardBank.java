@@ -3,8 +3,6 @@ package client.model.card;
 import java.util.HashMap;
 import java.util.Map;
 
-import client.model.card.ResourceCardInterface.ResourceCardType;
-
 public class DevCardBank implements DevCardBankInterface {
 
 	private Map<DevCardInterface.DevCardType, Integer> cards;

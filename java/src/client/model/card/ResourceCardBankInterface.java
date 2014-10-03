@@ -1,7 +1,5 @@
 package client.model.card;
 
-import client.model.player.PlayerInterface;
-
 /**
  * An object representing all the cards currently not owned by a Player
  */

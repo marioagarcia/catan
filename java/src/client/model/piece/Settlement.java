@@ -30,7 +30,7 @@ public class Settlement implements SettlementInterface {
 
 	@Override
 	public void setLocation(HexCorner corner) {
-		this.location = location;
+		this.location = corner;
 	}
 
 	@Override

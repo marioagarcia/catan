@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import client.model.card.ResourceCardInterface.ResourceCardType;
-import client.model.player.PlayerInterface;
 
 public class ResourceCardBank implements ResourceCardBankInterface {
 	

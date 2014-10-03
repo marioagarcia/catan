@@ -1,10 +1,6 @@
 package client.model.player;
 
-import java.util.ArrayList;
-
-import client.model.card.DevCard;
 import client.model.card.DevCardList;
-import client.model.card.ResourceCardInterface;
 import client.model.card.ResourceList;
 
 public class Player {

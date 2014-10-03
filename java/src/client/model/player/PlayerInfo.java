@@ -1,7 +1,5 @@
 package client.model.player;
 
-import java.awt.Color;
-
 import shared.definitions.CatanColor;
 
 /**
