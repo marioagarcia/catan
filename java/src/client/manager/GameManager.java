@@ -7,6 +7,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
 import client.communication.server.ServerProxy;
+import client.logging.GameLog;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
@@ -21,6 +22,8 @@ public class GameManager implements GameManagerInterface {
 	ArrayList<GameInfo> gameList;
 	ModelSerializer modelSerializer;
 	PlayerInfo localPlayer;
+	GameLog gameLog;
+	
 	public GameManager() {
 		serverProxy = null; //serverProxy.getInstance();
 		//serverPoller = serverPoller.getInstance();
@@ -190,19 +193,21 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean getGameCommands() {
-		
+		String JSONString = serverProxy.getGameCommands();
+		//this is where we use the data type that Casey is building from the serializer and update the history log
 		return false;
 	}
 
 	@Override
 	public boolean postGameCommands() {
-		// TODO Auto-generated method stub
+		//String JSONString = modelSerializer
+		//serverProxy.postGameCommands(JSONString);
 		return false;
 	}
 
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

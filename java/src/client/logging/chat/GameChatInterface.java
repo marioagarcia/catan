@@ -1,7 +1,7 @@
 package client.logging.chat;
 
 
-public interface ChatInterface 
+public interface GameChatInterface 
 {
 	/**
 	 * 

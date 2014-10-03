@@ -1,6 +1,6 @@
 package client.logging.history;
 
-public interface HistoryLogInterface 
+public interface GameHistoryLogInterface 
 {
 	/**
 	 * gives you the number of log entries
@@ -15,12 +15,12 @@ public interface HistoryLogInterface
 	 * @return object implementing the MoveLogInterface
 	 * throws LogEntryDoesNotExistException
 	 */
-	public MoveLogInterface getEntry(int messageIndex);
+	public LogLineInterface getLogLine(int logIndex);
 	
 	/**
 	 * adds the given entry to the log
 	 * @param newEntry MoveLogInterface instance representing the new entry
 	 */
-	public void addEntry(MoveLogInterface newEntry);
+	public void addLogLine(LogLineInterface logLine);
 
 }
