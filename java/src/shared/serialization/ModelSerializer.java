@@ -2,6 +2,7 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
+import shared.definitions.CatanColor;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -39,7 +40,6 @@ import client.manager.GameData;
 import client.model.GameInfo;
 import client.model.card.ResourceList;
 import client.model.piece.RoadInterface;
-import client.model.player.CatanColor;
 import client.model.player.PlayerInfo;
 import client.model.player.PlayerInterface;
 
