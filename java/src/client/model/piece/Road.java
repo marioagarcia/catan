@@ -6,10 +6,12 @@ public class Road implements RoadInterface {
 
 	int playerIndex;
 	EdgeLocation location;
+	GamePieceType type;
 	
 	public Road(int id, EdgeLocation loc){
 		playerIndex = id;
 		location = loc;
+		this.type = GamePieceType.ROAD;
 	}
 	
 	@Override
@@ -30,6 +32,11 @@ public class Road implements RoadInterface {
 	@Override
 	public EdgeLocation getLocation() {
 		return location;
+	}
+
+	@Override
+	public GamePieceType getType() {
+		return this.type;
 	}
 
 }

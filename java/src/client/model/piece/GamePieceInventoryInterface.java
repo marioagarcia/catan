@@ -14,8 +14,9 @@ public interface GamePieceInventoryInterface
 	/**
 	 * Removes a single GamePiece from the Player's inventory. 
 	 * @param piece The piece to be removed. An instance of this piece must exist in the Player's current inventory. 
+	 * @throws PieceNotFoundException if the specified piece is not found
 	 */
-	public abstract void removePiece(GamePieceInterface piece);
+	public abstract GamePieceInterface removePiece(GamePieceInterface.GamePieceType type) throws PieceNotFoundException;
 	
 	/**
 	 * Counts all instances of a single type of GamePiece in the Player's inventory
