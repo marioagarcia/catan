@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class CreateGameRequestParameters {
+public class CreateGameRequestParameters extends MasterParameterInterface{
 
 	private boolean randomTiles;
 	private boolean randomNumbers;

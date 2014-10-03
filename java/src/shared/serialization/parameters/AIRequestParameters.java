@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class AIRequestParameters {
+public class AIRequestParameters extends MasterParameterInterface{
 
 	private String AIType;
 	

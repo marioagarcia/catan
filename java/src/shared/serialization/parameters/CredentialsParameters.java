@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class CredentialsParameters {
+public class CredentialsParameters extends MasterParameterInterface{
 	
 	private String username;
 	private String password;

@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class MonumentParameters {
+public class MonumentParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;

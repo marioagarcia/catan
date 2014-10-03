@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class BuildCityParameters {
+public class BuildCityParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;

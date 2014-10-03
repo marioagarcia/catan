@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class SaveGameRequestParameters {
+public class SaveGameRequestParameters extends MasterParameterInterface{
 
 	private int id;
 	private String name;

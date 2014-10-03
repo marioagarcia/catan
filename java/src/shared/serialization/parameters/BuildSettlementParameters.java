@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class BuildSettlementParameters {
+public class BuildSettlementParameters extends MasterParameterInterface{
 	
 	private String type;
 	private int playerIndex;

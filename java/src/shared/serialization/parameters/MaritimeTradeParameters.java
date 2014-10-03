@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class MaritimeTradeParameters {
+public class MaritimeTradeParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;

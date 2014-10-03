@@ -22,6 +22,7 @@ import shared.serialization.parameters.JoinGameRequestParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.AIRequestParameters;
 import shared.serialization.parameters.MaritimeTradeParameters;
+import shared.serialization.parameters.MasterParameterInterface;
 import shared.serialization.parameters.MonopolyParameters;
 import shared.serialization.parameters.MonumentParameters;
 import shared.serialization.parameters.OfferTradeParameters;
@@ -65,6 +66,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		JsonParser parser = new JsonParser();
 		
 		JsonElement element = parser.parse(jsonString);
+		
 		JsonArray gameArray = element.getAsJsonArray();
 		for(int i = 0; i < gameArray.size(); i++){
 			GameInfo gameInfo = new GameInfo();
@@ -153,6 +155,14 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return jsonString;
 	}
 
+	@Override
+	public String serializePostGameCommands(ArrayList<MasterParameterInterface> params){
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(params);
+		System.out.println(jsonString);
+		return jsonString;
+	}
+	
 	@Override
 	public String serializeAIRequest(AIRequestParameters params){
 		Gson gson = new Gson();
@@ -293,7 +303,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	public String serializeDiscardCards(DiscardCardsParameters params){
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(params);
-		System.out.println(jsonString);
+		
 		return jsonString;
 	}
 	
@@ -347,9 +357,14 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Gson gson = new Gson();
 		//gson.toJson(str);
 		//ms.deserializeGameModel(str);
+		ArrayList<MasterParameterInterface> list = new ArrayList<MasterParameterInterface>();
+		SendChatParameters scp = new SendChatParameters(8, "Does this work?");
+		OfferTradeParameters otp = new OfferTradeParameters(96, new ResourceList(5,1,4,2,3), 69);
+		list.add(scp);
+		list.add(otp);
 		
 		DiscardCardsParameters params = new DiscardCardsParameters(7, new ResourceList(5, 4, 3, 2, 1));
-		ms.serializeDiscardCards(params);
+		ms.serializePostGameCommands(list);
 		
 	}
 	

@@ -2,7 +2,7 @@ package shared.serialization.parameters;
 
 import shared.locations.HexLocation;
 
-public class RobPlayerParameters {
+public class RobPlayerParameters extends MasterParameterInterface{
 	
 	private String type;
 	private int playerIndex;

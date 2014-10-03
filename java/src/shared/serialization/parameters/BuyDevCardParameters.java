@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class BuyDevCardParameters {
+public class BuyDevCardParameters extends MasterParameterInterface{
 	
 	private String type;
 	private int playerIndex;

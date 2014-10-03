@@ -15,6 +15,7 @@ import shared.serialization.parameters.JoinGameRequestParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.AIRequestParameters;
 import shared.serialization.parameters.MaritimeTradeParameters;
+import shared.serialization.parameters.MasterParameterInterface;
 import shared.serialization.parameters.MonopolyParameters;
 import shared.serialization.parameters.MonumentParameters;
 import shared.serialization.parameters.OfferTradeParameters;
@@ -62,6 +63,11 @@ public interface ModelSerializerInterface
 	 * @TODO
 	 */
 	public String serializeLoadGameRequest(LoadGameRequestParameters params);
+	
+	/**
+	 * @TODO
+	 */
+	public String serializePostGameCommands(ArrayList<MasterParameterInterface> params);
 	
 	/**
 	 * @TODO

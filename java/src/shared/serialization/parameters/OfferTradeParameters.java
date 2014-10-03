@@ -2,7 +2,7 @@ package shared.serialization.parameters;
 
 import client.model.card.ResourceList;
 
-public class OfferTradeParameters {
+public class OfferTradeParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;

@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class LoadGameRequestParameters {
+public class LoadGameRequestParameters extends MasterParameterInterface{
 
 	private String name;
 	
