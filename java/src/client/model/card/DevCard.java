@@ -1,11 +1,16 @@
 package client.model.card;
 
-public class DevCard implements DevelopmentCardInterface{
+public class DevCard implements DevCardInterface{
+	
+	DevCardType type;
+	
+	public DevCard(DevCardType type){
+		this.type = type;
+	}
 
 	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+	public DevCardType getType() {
+		return this.type;
 	}
 
 }

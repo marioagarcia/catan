@@ -3,7 +3,7 @@ package client.model.card;
 /**
  * This class enumerates the different types of development cards
  */
-public interface DevelopmentCardInterface extends CardInterface
+public interface DevCardInterface
 {
 	/**
 	 * The different types of development cards
@@ -21,4 +21,6 @@ public interface DevelopmentCardInterface extends CardInterface
 		ROAD_BUILD, 
 		MONUMENT
 	}
+	
+	public DevCardType getType();
 }
