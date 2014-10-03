@@ -191,8 +191,7 @@ public class ServerMoxy implements ServerProxyInterface
 
 	@Override
 	public int getGameId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return gameId;
 	}
 	
 	
