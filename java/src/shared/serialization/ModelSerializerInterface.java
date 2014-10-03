@@ -39,5 +39,5 @@ public interface ModelSerializerInterface
 	 * @param data The string from the server that needs to be deserialized
 	 * @return CatanModel The updated CatanModel that was just deserialized
 	 */
-	public client.manager.GameManagerInterface deserializeGameModel(String data);
+	public client.manager.GameData deserializeGameModel(String data);
 }

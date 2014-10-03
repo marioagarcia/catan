@@ -1,5 +1,6 @@
 package client.model.piece;
 
+import shared.locations.EdgeLocation;
 import client.model.map.HexBorder;
 
 /**
@@ -14,7 +15,7 @@ public interface RoadInterface extends GamePieceInterface
 	 * 
 	 * @see HexBorder 
 	 */
-	public abstract void setLocation(HexBorder border);
+	public abstract void setLocation(EdgeLocation location);
 	
 	/**
 	 * @return The HexBorder where this Road is placed on the game board. 
@@ -22,5 +23,5 @@ public interface RoadInterface extends GamePieceInterface
 	 * 
 	 * @see HexBorder
 	 */
-	public abstract HexBorder getLocation();
+	public abstract EdgeLocation getLocation();
 }

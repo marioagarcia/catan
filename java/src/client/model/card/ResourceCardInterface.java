@@ -14,5 +14,5 @@ public interface ResourceCardInterface
 		ORE
 	}
 	
-	public ResourceCardType getResourceCardType();
+	public abstract ResourceCardType getResourceCardType();
 }
