@@ -149,13 +149,13 @@ public class ServerProxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String getGameActionList(){
+	public String getGameCommands(){
 		methodUrl = "/game/commands";
 		return doGet(methodUrl, null);
 	}
 
 	@Override
-	public String postGameActionList(String JSONString){
+	public String postGameCommands(String JSONString){
 		methodUrl = "/game/commands";
 		return doGet(methodUrl, JSONString);
 	}

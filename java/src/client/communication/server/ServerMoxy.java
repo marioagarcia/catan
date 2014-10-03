@@ -81,13 +81,13 @@ public class ServerMoxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String getGameActionList() {
+	public String getGameCommands() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String postGameActionList(String JSONString) {
+	public String postGameCommands(String JSONString) {
 		// TODO Auto-generated method stub
 		return null;
 	}

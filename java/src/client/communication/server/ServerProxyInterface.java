@@ -54,18 +54,18 @@ public interface ServerProxyInterface{
 	abstract String resetGame();
 	
 	/**
-	 * Retrieves a list of all actions taken by a player in the current game
+	 * Retrieves a list of all actions taken by all players in the current game
 	 * @param JSONString a String containing player info and the current game_id
 	 * @return JSONstring with the information requested
 	 */
-	abstract String getGameActionList();
+	abstract String getGameCommands();
 
 	/**
 	 * Adds a list of actions from a specific player to the current game
 	 * @param JSONString with a player cookie and a list of commands
 	 * @return JSONString with the result
 	 */
-	abstract String postGameActionList(String JSONString);
+	abstract String postGameCommands(String JSONString);
 
 	/**
 	 * Retrieves a list of all the available AI players to the list
