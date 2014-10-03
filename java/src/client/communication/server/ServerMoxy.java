@@ -95,8 +95,7 @@ public class ServerMoxy implements ServerProxyInterface
 
 	@Override
 	public String getGameCommands() {
-		// TODO Auto-generated method stub
-		return null;
+		return readFile("test/JSON/postGameCommands.txt");
 	}
 
 	@Override
