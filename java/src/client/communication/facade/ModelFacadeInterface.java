@@ -92,7 +92,7 @@ public interface ModelFacadeInterface {
 	 * being discarded, false otherwise
 	 */
 	public boolean canDiscardCards(ResourceList list);
-	public boolean discardCards();
+	public void discardCards(ResourceList list);
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
 	 * 

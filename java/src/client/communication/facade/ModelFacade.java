@@ -67,8 +67,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean discardCards(ResourceList list) {
-		return this.gameManager.discardCards(list);
+	public void discardCards(ResourceList list) {
+		this.gameManager.discardCards(list);
 	}
 
 	@Override
@@ -218,13 +218,7 @@ public class ModelFacade implements ModelFacadeInterface {
 
 	@Override
 	public void logoutPlayer() {
-		return this.gameManager.logoutPlayer();
-	}
-
-	@Override
-	public boolean discardCards() {
-		// TODO Auto-generated method stub
-		return false;
+		this.gameManager.logoutPlayer();
 	}
 
 	@Override
