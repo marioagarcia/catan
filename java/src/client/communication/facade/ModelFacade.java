@@ -27,8 +27,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public void joinGame(int gameId) {
-		this.gameManager.joinGame(gameId);
+	public void joinGame(CatanColor color, GameInfo game) {
+		this.gameManager.joinGame(color, game);
 	}
 
 	@Override
@@ -36,10 +36,10 @@ public class ModelFacade implements ModelFacadeInterface {
 		return this.resetGame();
 	}
 
-	@Override
-	public void saveGameStatus() {
-		this.gameManager.saveGameStatus();
-	}
+//	@Override
+//	public void saveGameStatus() {
+//		this.gameManager.saveGameStatus();
+//	}
 
 	@Override
 	public boolean getGameCommands() {
@@ -62,8 +62,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canDiscardCards() {
-		return this.gameManager.canDiscardCards();
+	public boolean canDiscardCards(ResourceList list) {
+		return this.gameManager.canDiscardCards(list);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean roll() {
+	public int roll() {
 		return this.gameManager.roll();
 	}
 

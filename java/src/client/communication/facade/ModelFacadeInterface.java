@@ -1,10 +1,12 @@
 package client.communication.facade;
 
+import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.manager.GameManagerInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
+import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.map.HexInterface;
 import client.model.player.PlayerInfo;
@@ -29,7 +31,7 @@ public interface ModelFacadeInterface {
 	 * is valid, false otherwise
 	 */
 	public boolean canJoinGame(shared.definitions.CatanColor color, GameInfo game);
-	public void joinGame(int gameId);
+	public void joinGame(CatanColor color, GameInfo game);
 	
 	/**
 	 * Checks that the player has a valid user and a valid game id
@@ -40,7 +42,7 @@ public interface ModelFacadeInterface {
 	 * false otherwise 
 	 */
 	public boolean resetGame();
-	public void saveGameStatus();
+//	public void saveGameStatus();
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -89,7 +91,7 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has over 7 cards and the player has the cards
 	 * being discarded, false otherwise
 	 */
-	public boolean canDiscardCards();
+	public boolean canDiscardCards(ResourceList list);
 	public boolean discardCards();
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
@@ -99,7 +101,7 @@ public interface ModelFacadeInterface {
 	 * false otherwise
 	 */
 	public boolean canRoll();
-	public boolean roll();
+	public int roll();
 	
 	/**
 	 * Checks that the road location is open, the road location is connected to 
