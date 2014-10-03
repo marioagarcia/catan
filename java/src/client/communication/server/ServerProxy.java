@@ -8,9 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 
 public class ServerProxy implements ServerProxyInterface
@@ -146,15 +143,15 @@ public class ServerProxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String resetGame(String JSONString){
+	public String resetGame(){
 		methodUrl = "/game/reset";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, null);
 	}
 
 	@Override
-	public String getGameActionList(String JSONString){
+	public String getGameActionList(){
 		methodUrl = "/game/commands";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, null);
 	}
 
 	@Override

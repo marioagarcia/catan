@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ServerMoxy implements ServerProxyInterface
 {
@@ -78,12 +76,12 @@ public class ServerMoxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String resetGame(String JSONString) {
+	public String resetGame() {
 		return readFile("test/JSON/resetGame.txt");
 	}
 
 	@Override
-	public String getGameActionList(String JSONString) {
+	public String getGameActionList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -51,14 +51,14 @@ public interface ServerProxyInterface{
 	 * @param JSONString with a player cookie and a game id
 	 * @return String
 	 */
-	abstract String resetGame(String JSONString);
+	abstract String resetGame();
 	
 	/**
 	 * Retrieves a list of all actions taken by a player in the current game
 	 * @param JSONString a String containing player info and the current game_id
 	 * @return JSONstring with the information requested
 	 */
-	abstract String getGameActionList(String JSONString);
+	abstract String getGameActionList();
 
 	/**
 	 * Adds a list of actions from a specific player to the current game
