@@ -61,7 +61,7 @@ public class ServerMoxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String createGame() {
+	public String createGame(String JSONString) {
 		return readFile("test/JSON/createGame.txt");
 	}
 

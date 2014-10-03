@@ -125,9 +125,9 @@ public class ServerProxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String createGame(){
+	public String createGame(String JSONString){
 		methodUrl = "/games/create";
-		return doGet(methodUrl, null);
+		return doGet(methodUrl, JSONString);
 	}
 
 	@Override

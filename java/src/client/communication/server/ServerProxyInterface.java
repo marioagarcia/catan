@@ -28,7 +28,7 @@ public interface ServerProxyInterface{
 	 * Creates a new, empty Settlers of Catan game on the server
 	 * @return JSONString containing the name, id, and list of players for the new game
 	 */
-	abstract String createGame();
+	abstract String createGame(String JSONString);
 	
 	/**
 	 * Adds a player to the game and sets their game cookie
