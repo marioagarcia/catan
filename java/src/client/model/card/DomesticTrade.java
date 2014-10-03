@@ -10,8 +10,8 @@ public class DomesticTrade implements TradeInterface {
 	private int wheat;
 	
 	@Override
-	public void setTradeCard(ResourceCardInterface card, int count) {
-		switch(card.getResourceCardType()) {
+	public void setTradeCard(ResourceCardInterface.ResourceCardType type, int count) {
+		switch( type ) {
 		case BRICK:
 			brick = count;
 			break;
@@ -31,8 +31,8 @@ public class DomesticTrade implements TradeInterface {
 	}
 
 	@Override
-	public int getTradeCard(ResourceCardInterface card) {
-		switch(card.getResourceCardType()) {
+	public int getTradeCard(ResourceCardInterface.ResourceCardType type) {
+		switch( type ) {
 		case BRICK:
 			return brick;
 		case WHEAT:
