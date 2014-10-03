@@ -7,7 +7,7 @@ import client.model.card.ResourceCardInterface.ResourceCardType;
 
 public class DevCardBank implements DevCardBankInterface {
 
-	Map<DevCardInterface.DevCardType, Integer> cards;
+	private Map<DevCardInterface.DevCardType, Integer> cards;
 	
 	public DevCardBank()
 	{

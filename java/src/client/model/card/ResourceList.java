@@ -2,11 +2,11 @@ package client.model.card;
 
 public class ResourceList {
 
-	int brick;
-	int ore;
-	int sheep;
-	int wheat;
-	int wood;
+	private int brick;
+	private int ore;
+	private int sheep;
+	private int wheat;
+	private int wood;
 	
 	public ResourceList(int b, int o, int s, int wh, int wo){
 		brick = b;

@@ -8,7 +8,7 @@ import client.model.player.PlayerInterface;
 
 public class ResourceCardBank implements ResourceCardBankInterface {
 	
-	Map<ResourceCardType, Integer> cards;
+	private Map<ResourceCardType, Integer> cards;
 	
 	public ResourceCardBank()
 	{

@@ -2,7 +2,7 @@ package client.model.card;
 
 public class DevCard implements DevCardInterface{
 	
-	DevCardType type;
+	private DevCardType type;
 	
 	public DevCard(DevCardType type){
 		this.type = type;

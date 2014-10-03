@@ -3,11 +3,11 @@ package client.model.card;
 public class DomesticTrade implements TradeInterface {
 
 	//TODO make private
-	int brick;
-	int sheep;
-	int ore;
-	int wood;
-	int wheat;
+	private int brick;
+	private int sheep;
+	private int ore;
+	private int wood;
+	private int wheat;
 	
 	@Override
 	public void setTradeCard(ResourceCardInterface card, int count) {

@@ -1,11 +1,11 @@
 package client.model.card;
 
 public class DevCardList {
-	int monopoly;
-	int monument;
-	int roadBuilding;
-	int soldier;
-	int yearOfPlenty;
+	private int monopoly;
+	private int monument;
+	private int roadBuilding;
+	private int soldier;
+	private int yearOfPlenty;
 	
 	public DevCardList(){
 		
