@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import shared.serialization.ModelSerializer;
+import client.manager.GameData;
 
 public class ServerPoller implements ServerPollerInterface
 {
@@ -15,6 +17,7 @@ public class ServerPoller implements ServerPollerInterface
 	private Timer pollTimer = null;
 	private TimerTask pollMethod = null;
 	private ServerProxyInterface proxyObject = null;
+	private ModelSerializer serializer = null;
 	
 	private transient Collection<ModelStateObserver> modelObservers;
 	
@@ -27,6 +30,7 @@ public class ServerPoller implements ServerPollerInterface
 		pollMethod = new CatanPoller();
 		
 		modelObservers = new ArrayList<ModelStateObserver>();
+		serializer = new ModelSerializer();
 	}
 	
 	public void startPoller(long interval){
@@ -56,13 +60,14 @@ public class ServerPoller implements ServerPollerInterface
 		public void run(){
 			//gameId JSON? Where will this come from
 			String model = proxyObject.getGameModel(gameId, latestModelVersion);
+			GameData data_object = serializer.deserializeGameModel(model);
 			
 			if (!model.equals("True")){
 				latestModel = model;
 				
 				//Notify listeners
 				for (ModelStateObserver o : modelObservers){
-					o.modelChanged(latestModel);
+					o.modelChanged(data_object);
 				}
 				
 			}
@@ -70,6 +75,6 @@ public class ServerPoller implements ServerPollerInterface
 	}
 	
 	public interface ModelStateObserver{
-		public void modelChanged(String new_model);	
+		public void modelChanged(GameData model_data);	
 	}
 }
