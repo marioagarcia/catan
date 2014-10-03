@@ -13,7 +13,19 @@ public class ServerMoxy implements ServerProxyInterface
 	public ServerMoxy()
 	{
 		gameId = 1;
+		// %7B - "{"
+		// %22 - "\"" 
+		// %3A - ":"
+		// %2C - ","
 		cookie = "%7B%22authentication%22%3A%22-798137185%22%2C%22name%22%3A%22blah%22%2C%22password%22%3A%22string%22%2C%22playerID%22%3A12%7D";
+		StringBuilder sb = new StringBuilder(cookie);
+		Pattern.compile("%7B").matcher(sb).replaceAll("{");
+		Pattern.compile("%22").matcher(sb).replaceAll(" ");
+		Pattern.compile("%3A").matcher(sb).replaceAll(":");
+		Pattern.compile("%2C").matcher(sb).replaceAll(",");
+		Pattern.compile("%7D").matcher(sb).replaceAll("}");
+		
+		String plain_text_cookie = sb.toString();
 	}
 	
 	private String readFile(String filename)
