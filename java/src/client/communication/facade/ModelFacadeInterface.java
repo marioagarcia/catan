@@ -3,7 +3,6 @@ package client.communication.facade;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
-import client.manager.GameManagerInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
@@ -253,7 +252,7 @@ public interface ModelFacadeInterface {
 	
 	public PlayerInterface registerPlayer(PlayerInfo playerInfo);
 	
-	public PlayerInterface loginPlayer(String username, String password);
+	public boolean loginPlayer(String username, String password);
 	
 	public void logoutPlayer();
 }

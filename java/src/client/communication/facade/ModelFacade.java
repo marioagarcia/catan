@@ -212,7 +212,7 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public PlayerInterface loginPlayer(String username, String password) {
+	public boolean loginPlayer(String username, String password) {
 		return this.gameManager.loginPlayer(username, password);
 	}
 
