@@ -27,6 +27,15 @@ public class Hex implements HexInterface {
 		this.resource = type;
 		this.number = number;
 	}
+	
+	public Hex(HexLocation location,
+			HexType type,
+			int number){
+		
+		this.location = location;
+		this.resource = type;
+		this.number = number;
+	}
 
 	@Override
 	public HexLocation getLocation() {
