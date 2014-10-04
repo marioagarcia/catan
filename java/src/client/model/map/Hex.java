@@ -37,4 +37,11 @@ public class Hex {
 	public void setNumber(int number) {
 		this.number = number;
 	}
+	
+	public String toString(){
+		String returnString = resource + "\n";
+		returnString += location.toString() + "\n";
+		returnString += number + "\n";
+		return returnString;
+	}
 }
