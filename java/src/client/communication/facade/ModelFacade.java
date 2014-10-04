@@ -57,8 +57,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean acceptTrade(TradeInterface trade) {
-		return this.gameManager.acceptTrade(trade);
+	public boolean acceptTrade(TradeInterface trade, boolean accept) {
+		return this.gameManager.acceptTrade(trade, accept);
 	}
 
 	@Override
