@@ -14,7 +14,6 @@ import client.model.player.PlayerInfo;
 
 public class ServerProxy implements ServerProxyInterface
 {
-
 	private String serverPortNumber;
 	private String host;
 	private String link;
@@ -101,6 +100,7 @@ public class ServerProxy implements ServerProxyInterface
 			 }
 			 else{
 				 response = Integer.toString(connection.getResponseCode());
+				 //throw exception if bad response code
 			 }
 		}
 		catch (MalformedURLException m){
@@ -125,7 +125,7 @@ public class ServerProxy implements ServerProxyInterface
 	@Override
 	public String login(String JSONString){
 		methodUrl = "/user/login";	
-		return doGet(methodUrl, JSONString, false);
+		return 	doGet(methodUrl, JSONString, false);
 	}
 
 	@Override

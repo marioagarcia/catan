@@ -54,14 +54,16 @@ public class ServerMoxy implements ServerProxyInterface
 		}
 		finally{
 			try {
-				reader.close();
+				if (reader != null){
+					reader.close();
+				}
 			} 
 			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		return builder.toString();
+		return builder.toString().replaceAll("\\s+", "");
 	}
 
 	@Override
@@ -211,10 +213,6 @@ public class ServerMoxy implements ServerProxyInterface
 
 	@Override
 	public boolean validatePlayer(PlayerInfo player) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-	
-	
-
 }
