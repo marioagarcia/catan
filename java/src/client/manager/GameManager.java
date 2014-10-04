@@ -12,6 +12,8 @@ import shared.serialization.parameters.JoinGameRequestParameters;
 import shared.serialization.parameters.RollNumberParameters;
 import client.communication.server.ServerProxy;
 import client.logging.GameLog;
+import client.manager.interfaces.GMBoardMapInterface;
+import client.manager.interfaces.GMPlayerInterface;
 import client.manager.interfaces.GMTurnTrackerInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
@@ -33,6 +35,7 @@ public class GameManager implements GameManagerInterface {
 	GameLog gameLog;
 	GMTurnTrackerInterface turnTracker;
 	DiceRoller diceRoller;
+	GMBoardMapInterface boardMap;
 	
 	public GameManager() {
 		serverProxy = null; //serverProxy.getInstance();
@@ -256,13 +259,14 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 		int player_index = localPlayer.getPlayerIndex();
 		int number = diceRoller.roll();
 		String JSONString = modelSerializer.serializeRollNumber(new RollNumberParameters(player_index, number));
+		serverProxy.rollNumber(JSONString);
 		return 0;
 	}
 
 	@Override
 	public boolean canBuildRoad(EdgeLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		int player_index = localPlayer.getPlayerIndex();
+		return boardMap.canBuildRoad(location, player_index);
 	}
 
 	@Override
@@ -273,8 +277,8 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canBuildSettlement(VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		int player_index = localPlayer.getPlayerIndex();
+		return boardMap.canBuildSettlement(location, player_index);
 	}
 
 	@Override
@@ -285,8 +289,8 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canBuildCity(VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		int player_index = localPlayer.getPlayerIndex();
+		return boardMap.canBuildCity(location, player_index);
 	}
 
 	@Override
@@ -297,20 +301,20 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canOfferTrade(TradeInterface trade) {
-		// TODO Auto-generated method stub
+		GMPlayerInterface player = null;
+		player.canOfferTrade(trade);
 		return false;
 	}
 
 	@Override
 	public boolean offerTrade(TradeInterface trade, int otherPlayerIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean canMaritimeTrade(HexInterface location, MaritimeTrade trade) {
-		// TODO Auto-generated method stub
-		return false;
+		GMPlayerInterface player = null;
+		return player.canOfferTrade(trade);
 	}
 
 	@Override
