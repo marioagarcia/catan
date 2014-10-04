@@ -434,7 +434,10 @@ public class ModelSerializer implements ModelSerializerInterface {
 			subObject = (JsonObject)subObject.get("location");
 			
 			VertexDirection vertexDirection = getVertexDirection((JsonObject)subObject);
+			HexLocation hexLocation = getHexLocation(subObject);
 			
+			//@TODO Set vertexLocation with vertexDirection & hexLocation
+			//@TODO Set city with playerIndex and vertexLocation
 		}
 		
 ///////////////////////////////////////////////////////////////////////////
