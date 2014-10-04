@@ -11,6 +11,10 @@ public class DevCardBank implements DevCardBankInterface {
 	{
 		this.cards = new HashMap<DevCardInterface.DevCardType, Integer>();
 	}
+	
+	public DevCardBank(Map<DevCardInterface.DevCardType, Integer> cards){
+		this.cards = cards;
+	}
 
 	@Override
 	public void addCard(DevCardInterface card) {
