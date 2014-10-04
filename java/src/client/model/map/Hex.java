@@ -2,8 +2,6 @@ package client.model.map;
 
 import java.util.Map;
 
-import client.model.map.HexBorderInterface.HexBorderType;
-import client.model.map.HexCornerInterface.HexCornerType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
