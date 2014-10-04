@@ -1,6 +1,6 @@
 package client.model.piece;
 
-import client.model.map.HexCorner;
+import client.model.map.HexCornerInterface;
 
 /**
  * Represents an upgraded Settlement in the game. Provides double resources.
@@ -9,13 +9,13 @@ public interface CityInterface extends BuildingInterface
 {
 	/**
 	 * @param corner The HexCorner that this City will be placed on. Must not be currently occupied by another game piece.
-	 * @see HexCorner 
+	 * @see HexCornerInterface 
 	 */
-	public abstract void setLocation(HexCorner corner);
+	public abstract void setLocation(HexCornerInterface corner);
 	
 	/**
 	 * @return The HexCorner where this City is placed on the game board. Null if this City is not on the board.
-	 * @see HexCorner
+	 * @see HexCornerInterface
 	 */
-	public abstract HexCorner getLocation();
+	public abstract HexCornerInterface getLocation();
 }

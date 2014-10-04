@@ -1,12 +1,12 @@
 package client.model.piece;
 
-import client.model.map.HexCorner;
+import client.model.map.HexCornerInterface;
 
 public class Settlement implements SettlementInterface {
 	
 	GamePieceType type;
 	int playerId;
-	HexCorner location;
+	HexCornerInterface location;
 	
 	public Settlement(){
 		this.type = GamePieceType.SETTLEMENT;
@@ -29,12 +29,12 @@ public class Settlement implements SettlementInterface {
 	}
 
 	@Override
-	public void setLocation(HexCorner corner) {
+	public void setLocation(HexCornerInterface corner) {
 		this.location = corner;
 	}
 
 	@Override
-	public HexCorner getLocation() {
+	public HexCornerInterface getLocation() {
 		return this.location;
 	}
 

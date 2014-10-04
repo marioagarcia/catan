@@ -1,7 +1,7 @@
 package client.model.piece;
 
 import shared.locations.EdgeLocation;
-import client.model.map.HexBorder;
+import client.model.map.HexBorderInterface;
 
 /**
  * Represents a Road on the board. Roads provide connections between a Player's City and Settlement pieces. 
@@ -13,7 +13,7 @@ public interface RoadInterface extends GamePieceInterface
 	 * Must not be currently occupied by another GamePiece, 
 	 * and must be adjacent to another Road or Settlement/City owned by the Player.
 	 * 
-	 * @see HexBorder 
+	 * @see HexBorderInterface 
 	 */
 	public abstract void setLocation(EdgeLocation location);
 	
@@ -21,7 +21,7 @@ public interface RoadInterface extends GamePieceInterface
 	 * @return The HexBorder where this Road is placed on the game board. 
 	 * Null if this Road is not on the board.
 	 * 
-	 * @see HexBorder
+	 * @see HexBorderInterface
 	 */
 	public abstract EdgeLocation getLocation();
 }
