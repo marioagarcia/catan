@@ -1,40 +1,68 @@
 package client.model.map;
 
-import shared.locations.HexLocation;
+import java.util.Map;
 
-public class Hex {
+import client.model.map.HexBorderInterface.HexBorderType;
+import client.model.map.HexCornerInterface.HexCornerType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+
+public class Hex implements HexInterface {
 	
 	private HexLocation location;
-	private String resource; // If not a desert, Optional
-	private int number; // If not a desert, Optional
+	private HexType type;
+	private int number;
+	private Map<VertexDirection, HexCornerInterface> corners;
+	private Map<EdgeLocation, HexBorderInterface> borders;
 	
-	public Hex(HexLocation loc, String rsrc, int num){
-		location = loc;
-		resource = rsrc;
-		number = num;
-	}
-
-	public HexLocation getLocation() {
-		return location;
-	}
-
-	public void setLocation(HexLocation location) {
+	public Hex(Map<VertexDirection, HexCornerInterface> corners,
+			Map<EdgeLocation, HexBorderInterface> borders,
+			HexLocation location,
+			HexType type,
+			int number){
+		
+		this.corners = corners;
+		this.borders = borders;
 		this.location = location;
+		this.type = type;
+		this.number = number;
 	}
 
-	public String getResource() {
-		return resource;
+	@Override
+	public HexLocation getLocation() {
+		return this.location;
 	}
 
-	public void setResource(String resource) {
-		this.resource = resource;
+	@Override
+	public HexType getType() {
+		return this.type;
 	}
 
+	@Override
+	public void setType(HexType type) {
+		this.type = type;
+	}
+
+	@Override
 	public int getNumber() {
-		return number;
+		return this.number;
 	}
 
+	@Override
 	public void setNumber(int number) {
 		this.number = number;
 	}
+
+	@Override
+	public HexCornerInterface getCorner(VertexDirection type) {
+		return this.corners.get(type);
+	}
+
+	@Override
+	public HexBorderInterface getBorder(EdgeDirection type) {
+		return this.borders.get(type);
+	}
+
 }

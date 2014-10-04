@@ -1,31 +1,59 @@
 package client.model.map;
 
-/**
- * Base Interface for all the different Hexes that constitute the map
- *
- */
+import shared.locations.EdgeDirection;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+
 public interface HexInterface {
+	
+	/**
+	 * returns the location object with the location of the Hex
+	 * @return HexLocation
+	 */
+	public abstract HexLocation getLocation();
+	
+	/**
+	 * this returns the HexType of the hex
+	 * @return HexType
+	 */
+	public abstract HexType getType();
+	/**
+	 * sets the type of hex
+	 * @param type HexType representing the kind of hex that it is
+	 */
+	public abstract void setType(HexType type);
+	
+	/**
+	 * gets the dice number which activates this hex
+	 * @return int
+	 */
+	public abstract int getNumber();
 
 	/**
-	 * Queries the hex for it's type
-	 * @return enum type
+	 * sets the dice roll number which will activate this hex
+	 * @param number
 	 */
-	public abstract int getType();
+	public abstract void setNumber(int number);
 	
-	public abstract int getX();
+	/**
+	 * gets the given corner of the HexInterface object
+	 * @param type the corner position (top right, etc)
+	 * @return HexCorner
+	 */
+	public abstract HexCornerInterface getCorner(VertexDirection direction);
 	
-	public abstract int setX(int x);
+	/**
+	 * returns the border given border of the Hex
+	 * @param type HexBorderInterface.HexBorderType
+	 * @return HexBorderInterface
+	 */
+	public abstract HexBorderInterface getBorder(EdgeDirection location);
 	
-	public abstract int getY();
-	
-	public abstract int setY(int y);
-	
-	//TODO This method should return a Location (not void) and take a Direction as a parameter
-	public void getNeighborLocation(Object obj);
-	
-	@Override 
-	public String toString();
-	
-	@Override
-	public boolean equals(Object obj);
+	public enum HexType{
+		BRICK,
+		WHEAT,
+		SHEEP,
+		ORE,
+		WOOD
+	}
 }
