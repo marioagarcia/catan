@@ -353,21 +353,13 @@ public class ModelSerializer implements ModelSerializerInterface {
 		JsonObject mainObject = element.getAsJsonObject();
 		JsonObject subObject = mainObject.getAsJsonObject("deck");
 		
-		Map<DevCardInterface.DevCardType, Integer> devCards = new HashMap<DevCardInterface.DevCardType, Integer>();
-		
 		int yearOfPlenty = subObject.getAsJsonPrimitive("yearOfPlenty").getAsInt();
 		int monopoly = subObject.getAsJsonPrimitive("monopoly").getAsInt();
 		int soldier = subObject.getAsJsonPrimitive("soldier").getAsInt();
-		int roadBuilding = subObject.getAsJsonPrimitive("roadBuilding").getAsInt();
+		int roadBuild = subObject.getAsJsonPrimitive("roadBuilding").getAsInt();
 		int monument = subObject.getAsJsonPrimitive("monument").getAsInt();
 		
-		devCards.put(DevCardInterface.DevCardType.YEAR_OF_PLENTY, yearOfPlenty);
-		devCards.put(DevCardInterface.DevCardType.MONOPOLY, monopoly);
-		devCards.put(DevCardInterface.DevCardType.SOLDIER, soldier);
-		devCards.put(DevCardInterface.DevCardType.ROAD_BUILD, roadBuilding);
-		devCards.put(DevCardInterface.DevCardType.MONUMENT, monument);
-		
-		gameData.setDeck(new DevCardBank(devCards));
+		//@TODO Set the deck in GameData
 		//Done building DevCardBank
 		
 		//Parse the map into an arraylist of hexes
@@ -379,7 +371,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		for(int i = 0; i < array.size(); i++){
 			subObject = (JsonObject)array.get(i);
 			
-			HexInterface.HexType resource = null;
+			ResourceType resource = null;
 			if(subObject.getAsJsonPrimitive("resource") == null){
 				resource = null;
 			}else{
@@ -387,6 +379,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			}
 			
 			HexLocation hexLocation = getHexLocation((JsonObject)subObject.get("location"));
+			//TODO Set hex location in GameData
 			
 			int number;
 			if(resource == null){
@@ -395,10 +388,11 @@ public class ModelSerializer implements ModelSerializerInterface {
 				number = subObject.get("number").getAsInt();
 			}
 			
-			hexList.add(new Hex(hexLocation, resource, number));
+			//@TODO Add the HexInterface object to the hex list
+			//hexList.add(new Hex(hexLocation, resource, number));
 		}
 		
-		gameData.setHexList(hexList);
+		//@TODO Set hexes in GameData
 		//Done building the list of hexes
 		
 		//Parse roads and build a list of roads
@@ -423,7 +417,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 			roadList.add(road);
 		}
 		
-		gameData.setRoadList(roadList);
+		//@TODO Set road list in gameData
+		//gameData.setRoadList(roadList);
 		//Done building the list of roads
 		
 		//Parse cities and build list of cities
@@ -443,25 +438,25 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return gameData;
 	}
 	
-	public HexInterface.HexType getResource(JsonObject object){
+	public ResourceType getResource(JsonObject object){
 		
-		HexInterface.HexType resource = null;
+		ResourceType resource = null;
 		
 		switch(object.getAsJsonPrimitive("resource").getAsString()){
 		case "brick":
-			resource = HexInterface.HexType.BRICK;
+			resource = ResourceType.BRICK;
 			break;
 		case "wood":
-			resource = HexInterface.HexType.WOOD;
+			resource = ResourceType.WOOD;
 			break;
 		case "ore":
-			resource = HexInterface.HexType.ORE;
+			resource = ResourceType.ORE;
 			break;
 		case "sheep":
-			resource = HexInterface.HexType.SHEEP;
+			resource = ResourceType.SHEEP;
 			break;
 		case "wheat":
-			resource = HexInterface.HexType.WHEAT;
+			resource = ResourceType.WHEAT;
 			break;
 		}
 		
