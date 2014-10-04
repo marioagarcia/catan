@@ -1,6 +1,9 @@
 package shared.serialization;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import shared.definitions.CatanColor;
 import shared.locations.EdgeDirection;
@@ -40,6 +43,7 @@ import com.google.gson.*;
 import client.manager.GameData;
 import client.model.GameInfo;
 import client.model.card.ResourceList;
+import client.model.map.Hex;
 import client.model.piece.RoadInterface;
 import client.model.player.PlayerInfo;
 import client.model.player.PlayerInterface;
@@ -159,7 +163,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	public String serializePostGameCommands(ArrayList<MasterParameterInterface> params){
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(params);
-		System.out.println(jsonString);
+		
 		return jsonString;
 	}
 	
@@ -328,18 +332,48 @@ public class ModelSerializer implements ModelSerializerInterface {
 
 	@Override
 	public GameData deserializeGameModel(String data) {
-		System.out.println(data);
+		GameData gameData = new GameData();
+		Gson gson = new Gson();
+		
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(data);
 		 
-		JsonObject object = element.getAsJsonObject();
-		object = object.getAsJsonObject("deck");
-		System.out.println(object);
-		object = element.getAsJsonObject();
-		object = object.getAsJsonObject("map");
-		System.out.println(object);
+		JsonObject mainObject = element.getAsJsonObject();
+		JsonObject subObject = mainObject.getAsJsonObject("deck");
+		int yop = subObject.getAsJsonPrimitive("yearOfPlenty").getAsInt();
+		int mply = subObject.getAsJsonPrimitive("monopoly").getAsInt();
+		int sold = subObject.getAsJsonPrimitive("soldier").getAsInt();
+		int rdblg = subObject.getAsJsonPrimitive("roadBuilding").getAsInt();
+		int mnmt = subObject.getAsJsonPrimitive("monument").getAsInt();
 		
-		return null;
+		//Parse the map into an arraylist of hexes
+		ArrayList<Hex> hexes = new ArrayList<Hex>();
+		subObject = mainObject.getAsJsonObject("map");
+		JsonArray array = subObject.getAsJsonArray("hexes");
+		for(int i = 0; i < array.size(); i++){
+			subObject = (JsonObject)array.get(i);
+			
+			String resource;
+			if(subObject.getAsJsonPrimitive("resource") == null){
+				resource = "desert";
+			}else{
+				resource = subObject.getAsJsonPrimitive("resource").getAsString();
+			}
+			
+			//subObject = (JsonObject)subObject.get("location");
+			int x = ((JsonObject)subObject.get("location")).getAsJsonPrimitive("x").getAsInt();
+			int y = ((JsonObject)subObject.get("location")).getAsJsonPrimitive("y").getAsInt();
+			int number;
+			if(resource.equals("desert")){
+				number = Integer.MAX_VALUE;
+			}else{
+				number = subObject.get("number").getAsInt();
+			}
+			
+			//hexes.add(new Hex(new HexLocation(x, y), resource, number));
+		}
+		System.out.println(hexes);
+		return gameData;
 	}
 	
 	public Object deserialize(String JSONString, ObjectType objectType) {
@@ -350,21 +384,18 @@ public class ModelSerializer implements ModelSerializerInterface {
 	public static void main(String[] args){
 		ModelSerializer ms = new ModelSerializer();
 		
-		//String str = ""brick":1,"ore":2,"sheep":3,"wheat":4,"wood":5},"chat":{"lines":[{"message":"Thanks for nothing","source":"Casey"},{"message":"Thanks for everything","source":]},"log":{"lines":[{; 
-		//System.out.println(str);
-		//String str = "[ { \"title\": \"Default Game\", \"id\": 0, \"players\": [ { \"color\": \"orange\", \"name\": \"Sam\", \"id\": 0 }, { \"color\": \"blue\", \"name\": \"Brooke\", \"id\": 1 }, { \"color\": \"red\", \"name\": \"Pete\", \"id\": 10 }, { \"color\": \"green\", \"name\": \"Mark\", \"id\": 11 } ] }, { \"title\": \"AI Game\", \"id\": 1, \"players\": [ { \"color\": \"orange\", \"name\": \"Pete\", \"id\": 10 }, { \"color\": \"puce\", \"name\": \"Scott\", \"id\": -2 }, { \"color\": \"purple\", \"name\": \"Steve\", \"id\": -2 }, { \"color\": \"green\", \"name\": \"Hannah\", \"id\": -2 } ] }, { \"title\": \"Empty Game\", \"id\": 2, \"players\": [ { \"color\": \"orange\", \"name\": \"Sam\", \"id\": 0 }, { \"color\": \"blue\", \"name\": \"Brooke\", \"id\": 1 }, { \"color\": \"red\", \"name\": \"Pete\", \"id\": 10 }, { \"color\": \"green\", \"name\": \"Mark\", \"id\": 11 } ] } ]";
+		File file = new File(args[0]);
 		
-		//Gson gson = new Gson();
-		//gson.toJson(str);
-		//ms.deserializeGameModel(str);
-		ArrayList<MasterParameterInterface> list = new ArrayList<MasterParameterInterface>();
-		SendChatParameters scp = new SendChatParameters(8, "Does this work?");
-		OfferTradeParameters otp = new OfferTradeParameters(96, new ResourceList(5,1,4,2,3), 69);
-		list.add(scp);
-		list.add(otp);
+		String content = "";
+		try {
+			content = new Scanner(file).useDelimiter("\\Z").next();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		DiscardCardsParameters params = new DiscardCardsParameters(7, new ResourceList(5, 4, 3, 2, 1));
-		ms.serializePostGameCommands(list);
+		ms.deserializeGameModel(content);
+		
 		
 	}
 	
