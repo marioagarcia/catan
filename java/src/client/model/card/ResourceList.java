@@ -2,6 +2,40 @@ package client.model.card;
 
 public class ResourceList {
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + brick;
+		result = prime * result + ore;
+		result = prime * result + sheep;
+		result = prime * result + wheat;
+		result = prime * result + wood;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ResourceList other = (ResourceList) obj;
+		if (brick != other.brick)
+			return false;
+		if (ore != other.ore)
+			return false;
+		if (sheep != other.sheep)
+			return false;
+		if (wheat != other.wheat)
+			return false;
+		if (wood != other.wood)
+			return false;
+		return true;
+	}
+
 	private int brick;
 	private int ore;
 	private int sheep;
