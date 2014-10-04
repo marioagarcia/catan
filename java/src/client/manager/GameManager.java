@@ -9,8 +9,10 @@ import shared.serialization.ModelSerializer;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.DiscardCardsParameters;
 import shared.serialization.parameters.JoinGameRequestParameters;
+import shared.serialization.parameters.RollNumberParameters;
 import client.communication.server.ServerProxy;
 import client.logging.GameLog;
+import client.manager.interfaces.GMTurnTrackerInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
@@ -18,6 +20,8 @@ import client.model.card.TradeInterface;
 import client.model.map.HexInterface;
 import client.model.player.PlayerInfo;
 import client.model.player.PlayerInterface;
+import client.model.turntracker.TurnTracker;
+import client.roll.DiceRoller;
 
 public class GameManager implements GameManagerInterface {
 	
@@ -27,6 +31,8 @@ public class GameManager implements GameManagerInterface {
 	PlayerInfo localPlayer;
 	GameInfo currentGame;
 	GameLog gameLog;
+	GMTurnTrackerInterface turnTracker;
+	DiceRoller diceRoller;
 	
 	public GameManager() {
 		serverProxy = null; //serverProxy.getInstance();
@@ -235,19 +241,21 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	public boolean discardCards(ResourceList list) {
 		int player_index = localPlayer.getPlayerIndex();
 		String JSONString = modelSerializer.serializeDiscardCards(new DiscardCardsParameters(player_index, list));
-		
-		return false;
+		serverProxy.discardCards(JSONString); //this should throw an exception	
+		return true;
 	}
 
 	@Override
 	public boolean canRoll() {
-		// TODO Auto-generated method stub
-		return false;
+		int player_index = localPlayer.getPlayerIndex();
+		return turnTracker.canRoll(player_index);
 	}
 
 	@Override
 	public int roll() {
-		// TODO Auto-generated method stub
+		int player_index = localPlayer.getPlayerIndex();
+		int number = diceRoller.roll();
+		String JSONString = modelSerializer.serializeRollNumber(new RollNumberParameters(player_index, number));
 		return 0;
 	}
 
