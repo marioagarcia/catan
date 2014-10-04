@@ -255,8 +255,8 @@ public interface GameManagerInterface
 	
 	public PlayerInterface registerPlayer(PlayerInfo playerInfo);
 	
-	public PlayerInterface loginPlayer(String username, String password);
-	
 	public void logoutPlayer();
+	
+	public boolean loginPlayer(String username, String password);
 	
 }

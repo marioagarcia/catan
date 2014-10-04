@@ -1,11 +1,11 @@
 package client.model.piece;
 
-import client.model.map.HexCorner;
+import client.model.map.HexCornerInterface;
 
 public class City implements CityInterface {
 	
 	private int playerId;
-	private HexCorner corner;
+	private HexCornerInterface corner;
 	GamePieceType type;
 	
 	public City(){
@@ -23,12 +23,12 @@ public class City implements CityInterface {
 	}
 
 	@Override
-	public void setLocation(HexCorner corner) {
+	public void setLocation(HexCornerInterface corner) {
 		this.corner = corner;
 	}
 
 	@Override
-	public HexCorner getLocation() {
+	public HexCornerInterface getLocation() {
 		return this.corner;
 	}
 

@@ -1,4 +1,9 @@
 package client.model.map;
+
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+
 /**
  * This class models the Map composed of the different hexes
  *
@@ -6,8 +11,23 @@ package client.model.map;
 public interface BoardMapInterface {
 
 	/**
-	 * Returns whether or not a GamePiece can be added
-	 * @return true if successful
+	 * returns the hex at the following location
+	 * @return
+	 * @throws HexNotFoundException 
 	 */
-	public abstract boolean CanPlaceGamePiece();
+	public HexInterface getHex(HexLocation location) throws HexNotFoundException;
+	
+	/**
+	 * gets a vertex by location
+	 * @param location VertexLocation
+	 * @return HexCornerInterface
+	 */
+	public HexCornerInterface getVertex(VertexLocation location);
+	
+	/**
+	 * gets a hex border by location
+	 * @param location EdgeLocation
+	 * @return HexBorderInterface
+	 */
+	public HexBorderInterface getHexBorder(EdgeLocation location);
 }

@@ -6,6 +6,8 @@ import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
+import shared.serialization.parameters.AcceptTradeParameters;
+import shared.serialization.parameters.JoinGameRequestParameters;
 import client.communication.server.ServerProxy;
 import client.logging.GameLog;
 import client.model.GameInfo;
@@ -22,6 +24,7 @@ public class GameManager implements GameManagerInterface {
 	ArrayList<GameInfo> gameList;
 	ModelSerializer modelSerializer;
 	PlayerInfo localPlayer;
+	GameInfo currentGame;
 	GameLog gameLog;
 	
 	public GameManager() {
@@ -37,15 +40,8 @@ public class GameManager implements GameManagerInterface {
 		gameList = (ArrayList<GameInfo>)modelSerializer.deserialize(gameListStr, ModelSerializer.ObjectType.GAME_LIST);
 	}
 	
-	@Override
-	public PlayerInterface loginPlayer(String username, String password) {
-		
-		
-		return null;
-	}
-	
 	private boolean validatePlayer() {
-		return false; //serverProxy.validatePlayer(localPlayer);
+		return serverProxy.validatePlayer(localPlayer);
 	}
 
 	@Override
@@ -58,13 +54,20 @@ public class GameManager implements GameManagerInterface {
 	
 	@Override
 	public void joinGame(CatanColor color, GameInfo game) {
-		String JSONString = null; //modelSerializer.serializeJoinGameRequest(color, game);
-		serverProxy.joinGame(JSONString);		
+		JoinGameRequestParameters param = new JoinGameRequestParameters(game.getId(), color.toString().toLowerCase());
+		String JSONString = modelSerializer.serializeJoinGameRequest(param);
+		String result = serverProxy.joinGame(JSONString);
+		if(result == "Success") {
+			currentGame = game;
+		}
+		else {
+			//figure out how to respond with the bad response that 			
+		}
 	}
 
 	@Override
 	public boolean getGameModel() {
-		//TODO make data holding class and merge method
+		
 		return false;
 	}
 	
@@ -180,7 +183,8 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean resetGame() { 
-		if(serverProxy.resetGame() == "success") {
+		String result = serverProxy.resetGame();
+		if(result == "success") {
 			resetModel();
 			return true;
 		}
@@ -207,7 +211,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade) {
-		
+		String JSONString = modelSerializer.serializeAcceptTrade(new AcceptTradeParameters(index, accept))
 		return false;
 	}
 
@@ -411,6 +415,12 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	public void logoutPlayer() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean loginPlayer(String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

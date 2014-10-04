@@ -9,9 +9,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLDecoder;
-
 import com.google.gson.*;
-
 import client.model.player.PlayerInfo;
 
 
@@ -42,7 +40,7 @@ public class ServerProxy implements ServerProxyInterface
 		playerId = Integer.MAX_VALUE;
 	}
 	
-	private String doGet(String url_path, String json_post_data){
+	private String doGet(String url_path, String json_post_data, boolean needs_id){
 		String json_line;
 		String response = null;
 		HttpURLConnection connection = null;
@@ -57,8 +55,11 @@ public class ServerProxy implements ServerProxyInterface
 			 connection.setDoInput(true);
 			 connection.setDoOutput(true);
 			 
-			 if (gameId != Integer.MAX_VALUE && cookie != null){
-				 String full_cookie = "catan.game=" + gameId + "; catan.user=" + cookie;
+			 if (cookie != null){
+				 String full_cookie = "catan.user=" + cookie;
+				 if (gameId != Integer.MAX_VALUE && needs_id){
+					 full_cookie += ("; catan.game=" + gameId);
+				 }
 				 connection.setRequestProperty("Cookie", full_cookie);
 			 }
 			 connection.connect(); 
@@ -71,21 +72,21 @@ public class ServerProxy implements ServerProxyInterface
 			 
 			 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
 				 if (url_path.equals("/user/register") || url_path.equals("/user/login")){
-					String cookie = connection.getHeaderField("Set-Cookie");
-					String[] pieces = cookie.split(";");
+					String local_cookie = connection.getHeaderField("Set-Cookie");
+					String[] pieces = local_cookie.split(";");
 					
 					cookie = pieces[0].split("=")[1];
 					plainTextCookie = URLDecoder.decode(cookie, "UTF-8");
 					JsonParser parser = new JsonParser();
 					JsonElement cookie_element = parser.parse(plainTextCookie);
 					JsonObject cookie_object = cookie_element.getAsJsonObject();
-					playerId = cookie_object.get("PlayerID").getAsInt();
+					playerId = cookie_object.get("playerID").getAsInt();
 					
 				 }
-				 if (url_path.equals("/game/join")){
-					 String cookie = connection.getHeaderField("Set-Cookie");
-					 String[] pieces = cookie.split(";");
-					
+				 if (url_path.equals("/games/join")){
+					 String local_cookie = connection.getHeaderField("Set-Cookie");
+					 String[] pieces = local_cookie.split(";");
+					 String[] temp = pieces[0].split("=");
 					 gameId = Integer.parseInt(pieces[0].split("=")[1]);
 				 }
 				 
@@ -124,169 +125,169 @@ public class ServerProxy implements ServerProxyInterface
 	@Override
 	public String login(String JSONString){
 		methodUrl = "/user/login";	
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, false);
 	}
 
 	@Override
 	public String register(String JSONString){
 		methodUrl = "/user/register";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, false);
 	}
 
 	@Override
 	public String listGames(){
 		methodUrl = "/games/list";
-		return doGet(methodUrl, null);
+		return doGet(methodUrl, null, false);
 	}
 
 	@Override
 	public String createGame(String JSONString){
 		methodUrl = "/games/create";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, false);
 	}
 
 	@Override
 	public String joinGame(String JSONString){
 		methodUrl = "/games/join";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, false);
 	}
 
 	@Override
 	public String getGameModel(String JSONString, String latest_model){
 		methodUrl = "/games/model?version=" + latest_model;
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String resetGame(){
 		methodUrl = "/game/reset";
-		return doGet(methodUrl, null);
+		return doGet(methodUrl, null, true);
 	}
 
 	@Override
 	public String getGameCommands(){
 		methodUrl = "/game/commands";
-		return doGet(methodUrl, null);
+		return doGet(methodUrl, null, true);
 	}
 
 	@Override
 	public String postGameCommands(String JSONString){
 		methodUrl = "/game/commands";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String getAIList(){
 		methodUrl = "/game/listAI";
-		return doGet(methodUrl, null);
+		return doGet(methodUrl, null, false);
 	}
 
 	@Override
 	public String postNewAI(String JSONString){
 		methodUrl = "/game/addAI";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, false);
 	}
 
 	@Override
 	public String utilChangeLogLevel(String JSONString){
 		methodUrl = "/util/changeLogLevel";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, false);
 	}
 
 	@Override
 	public String sendChat(String JSONString){
 		methodUrl = "/moves/sendChat";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String acceptTrade(String JSONString){
 		methodUrl = "/moves/acceptTrade";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String discardCards(String JSONString){
 		methodUrl = "/moves/discardCards";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String rollNumber(String JSONString){
 		methodUrl = "/moves/rollNumber";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String buildRoad(String JSONString){
 		methodUrl = "/moves/buildRoad";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String buildSettlement(String JSONString){
 		methodUrl = "/moves/buildSettlement";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String buildCity(String JSONString){
 		methodUrl = "/moves/buildCity";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String offerTrade(String JSONString){
 		methodUrl = "/moves/offerTrade";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String maritimeTrade(String JSONString){
 		methodUrl = "/moves/maritimeTrade";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String finishTurn(String JSONString){
 		methodUrl = "/moves/finishTurn";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String buyDevCard(String JSONString){
 		methodUrl = "/moves/buyDevCard";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String playYearOfPlenty(String JSONString){
 		methodUrl = "/moves/Year_of_Plenty";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String playRoadBuilding(String JSONString){
 		methodUrl = "/moves/Road_Building";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String playSoldier(String JSONString){
 		methodUrl = "/moves/Soldier";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String playMonopoly(String JSONString){
 		methodUrl = "/moves/Monopoly";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String playMonument(String JSONString){
 		methodUrl = "/moves/Monument";
-		return doGet(methodUrl, JSONString);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
@@ -298,6 +299,4 @@ public class ServerProxy implements ServerProxyInterface
 	public boolean validatePlayer(PlayerInfo player) {
 		return (plainTextCookie != null && player.getId() == playerId);
 	}
-
-
 }
