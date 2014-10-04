@@ -53,6 +53,7 @@ import client.model.card.DevCardInterface;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.HexInterface;
+import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.RoadInterface;
 import client.model.player.PlayerInfo;
@@ -381,28 +382,12 @@ public class ModelSerializer implements ModelSerializerInterface {
 			HexInterface.HexType resource = null;
 			if(subObject.getAsJsonPrimitive("resource") == null){
 				resource = null;
-			}else{//brick wood ore sheep wheat
-				switch(subObject.getAsJsonPrimitive("resource").getAsString()){
-					case "brick":
-						resource = HexInterface.HexType.BRICK;
-						break;
-					case "wood":
-						resource = HexInterface.HexType.WOOD;
-						break;
-					case "ore":
-						resource = HexInterface.HexType.ORE;
-						break;
-					case "sheep":
-						resource = HexInterface.HexType.SHEEP;
-						break;
-					case "wheat":
-						resource = HexInterface.HexType.WHEAT;
-						break;
-				}
+			}else{
+				resource = getResource((JsonObject)subObject);
 			}
 			
-			int x = ((JsonObject)subObject.get("location")).getAsJsonPrimitive("x").getAsInt();
-			int y = ((JsonObject)subObject.get("location")).getAsJsonPrimitive("y").getAsInt();
+			HexLocation hexLocation = getHexLocation((JsonObject)subObject.get("location"));
+			
 			int number;
 			if(resource == null){
 				number = -1;
@@ -410,12 +395,12 @@ public class ModelSerializer implements ModelSerializerInterface {
 				number = subObject.get("number").getAsInt();
 			}
 			
-			hexList.add(new Hex(new HexLocation(x, y), resource, number));
+			hexList.add(new Hex(hexLocation, resource, number));
 		}
 		
 		gameData.setHexList(hexList);
 		//Done building the list of hexes
-
+		
 		//Parse roads and build a list of roads
 		ArrayList<Road> roadList = new ArrayList<Road>();
 		
@@ -427,32 +412,10 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			int playerIndex = subObject.get("owner").getAsInt();
 			subObject = (JsonObject)subObject.get("location");
+
+			HexLocation hexLocation = getHexLocation(subObject);
 			
-			int x = subObject.get("x").getAsInt();
-			int y = subObject.get("y").getAsInt();
-			HexLocation hexLocation = new HexLocation(x, y);
-			
-			EdgeDirection edgeDirection = null;
-			switch(subObject.get("direction").getAsString()){
-				case "N":
-					edgeDirection = EdgeDirection.North;
-					break;
-				case "NE":
-					edgeDirection = EdgeDirection.NorthEast;
-					break;
-				case "NW":
-					edgeDirection = EdgeDirection.NorthWest;
-					break;
-				case "S":
-					edgeDirection = EdgeDirection.South;
-					break;
-				case "SE":
-					edgeDirection = EdgeDirection.SouthEast;
-					break;
-				case "SW":
-					edgeDirection = EdgeDirection.SouthWest;
-					break;
-			}
+			EdgeDirection edgeDirection = getEdgeDirection(subObject);
 			
 			EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
 			
@@ -460,8 +423,84 @@ public class ModelSerializer implements ModelSerializerInterface {
 			roadList.add(road);
 		}
 		
+		gameData.setRoadList(roadList);
+		//Done building the list of roads
+		
+		//Parse cities and build list of cities
+		ArrayList<City> cityList = new ArrayList();
+		
+		subObject = mainObject.getAsJsonObject("map");
+		array = subObject.getAsJsonArray("cities");
+		
+		for(int i = 0; i < array.size(); i++){
+			subObject = array.get(i).getAsJsonObject();
+			
+			int playerIndex = subObject.get("owner").getAsInt();
+			subObject = (JsonObject)subObject.get("location");
+		}
+		
 ///////////////////////////////////////////////////////////////////////////
 		return gameData;
+	}
+	
+	public HexInterface.HexType getResource(JsonObject object){
+		
+		HexInterface.HexType resource = null;
+		
+		switch(object.getAsJsonPrimitive("resource").getAsString()){
+		case "brick":
+			resource = HexInterface.HexType.BRICK;
+			break;
+		case "wood":
+			resource = HexInterface.HexType.WOOD;
+			break;
+		case "ore":
+			resource = HexInterface.HexType.ORE;
+			break;
+		case "sheep":
+			resource = HexInterface.HexType.SHEEP;
+			break;
+		case "wheat":
+			resource = HexInterface.HexType.WHEAT;
+			break;
+		}
+		
+		return resource;
+	}
+	
+	public HexLocation getHexLocation(JsonObject object){
+		
+		int x = object.get("x").getAsInt();
+		int y = object.get("y").getAsInt();
+		
+		return new HexLocation(x, y);
+	}
+	
+	public EdgeDirection getEdgeDirection(JsonObject object){
+		
+		EdgeDirection edgeDirection = null;
+		
+		switch(object.get("direction").getAsString()){
+			case "N":
+				edgeDirection = EdgeDirection.North;
+				break;
+			case "NE":
+				edgeDirection = EdgeDirection.NorthEast;
+				break;
+			case "NW":
+				edgeDirection = EdgeDirection.NorthWest;
+				break;
+			case "S":
+				edgeDirection = EdgeDirection.South;
+				break;
+			case "SE":
+				edgeDirection = EdgeDirection.SouthEast;
+				break;
+			case "SW":
+				edgeDirection = EdgeDirection.SouthWest;
+				break;
+		}
+		return edgeDirection;
 	}
 	
 	public Object deserialize(String JSONString, ObjectType objectType) {

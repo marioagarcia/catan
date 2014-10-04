@@ -14,6 +14,11 @@ public class HexCorner implements HexCornerInterface {
 	public HexCorner(){
 		
 	}
+	
+	public HexCorner(int index, EdgeLocation loc){
+		ownerIndex = index;
+		location = loc;
+	}
 
 	public int getOwnerIndex() {
 		return ownerIndex;
