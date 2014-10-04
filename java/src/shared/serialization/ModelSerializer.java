@@ -53,6 +53,7 @@ import client.model.card.DevCardInterface;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.HexInterface;
+import client.model.piece.Road;
 import client.model.piece.RoadInterface;
 import client.model.player.PlayerInfo;
 import client.model.player.PlayerInterface;
@@ -347,7 +348,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(data);
 		
-		//Parse and build DevCardBank with deck
+		//Parse deck and build DevCardBank
 		JsonObject mainObject = element.getAsJsonObject();
 		JsonObject subObject = mainObject.getAsJsonObject("deck");
 		
@@ -366,12 +367,14 @@ public class ModelSerializer implements ModelSerializerInterface {
 		devCards.put(DevCardInterface.DevCardType.MONUMENT, monument);
 		
 		gameData.setDeck(new DevCardBank(devCards));
-		DevCardBank dvb = new DevCardBank(devCards);
+		//Done building DevCardBank
 		
 		//Parse the map into an arraylist of hexes
-		ArrayList<Hex> hexes = new ArrayList<Hex>();
+		ArrayList<Hex> hexList = new ArrayList<Hex>();
+		
 		subObject = mainObject.getAsJsonObject("map");
 		JsonArray array = subObject.getAsJsonArray("hexes");
+		
 		for(int i = 0; i < array.size(); i++){
 			subObject = (JsonObject)array.get(i);
 			
@@ -407,10 +410,55 @@ public class ModelSerializer implements ModelSerializerInterface {
 				number = subObject.get("number").getAsInt();
 			}
 			
-			hexes.add(new Hex(new HexLocation(x, y), resource, number));
+			hexList.add(new Hex(new HexLocation(x, y), resource, number));
 		}
 		
-		gameData.setHexList(hexes);
+		gameData.setHexList(hexList);
+		//Done building the list of hexes
+
+		//Parse roads and build a list of roads
+		ArrayList<Road> roadList = new ArrayList<Road>();
+		
+		subObject = mainObject.getAsJsonObject("map");
+		array = subObject.getAsJsonArray("roads");
+		
+		for(int i = 0; i < array.size(); i++){
+			subObject = array.get(i).getAsJsonObject();
+			
+			int playerIndex = subObject.get("owner").getAsInt();
+			subObject = (JsonObject)subObject.get("location");
+			
+			int x = subObject.get("x").getAsInt();
+			int y = subObject.get("y").getAsInt();
+			HexLocation hexLocation = new HexLocation(x, y);
+			
+			EdgeDirection edgeDirection = null;
+			switch(subObject.get("direction").getAsString()){
+				case "N":
+					edgeDirection = EdgeDirection.North;
+					break;
+				case "NE":
+					edgeDirection = EdgeDirection.NorthEast;
+					break;
+				case "NW":
+					edgeDirection = EdgeDirection.NorthWest;
+					break;
+				case "S":
+					edgeDirection = EdgeDirection.South;
+					break;
+				case "SE":
+					edgeDirection = EdgeDirection.SouthEast;
+					break;
+				case "SW":
+					edgeDirection = EdgeDirection.SouthWest;
+					break;
+			}
+			
+			EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
+			
+			Road road = new Road(playerIndex, edgeLocation);
+			roadList.add(road);
+		}
 		
 ///////////////////////////////////////////////////////////////////////////
 		return gameData;

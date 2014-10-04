@@ -14,7 +14,7 @@ import client.model.player.Player;
 public class GameData {
 
 	//Deck - DevCardBank
-	DevCardBank deck;
+	DevCardBank deck; //Done
 	
 	//Bank - Resource List
 	ResourceList bankResourceList;
@@ -26,7 +26,7 @@ public class GameData {
 	ArrayList<Message> logMessageList;
 	
 	//Map
-	ArrayList<Hex> hexList;
+	ArrayList<Hex> hexList; //Done
 	ArrayList<Port> portList;
 	ArrayList<Road> roadList;
 	//ArrayList<VertexObject> settlementList;

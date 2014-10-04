@@ -38,5 +38,14 @@ public class Road implements RoadInterface {
 	public GamePieceType getType() {
 		return this.type;
 	}
+	
+	@Override
+	public String toString(){
+		String returnString = "";
+		returnString += (playerIndex + "\n");
+		returnString += location.toString();
+		
+		return returnString;
+	}
 
 }
