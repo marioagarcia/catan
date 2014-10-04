@@ -10,7 +10,7 @@ import shared.locations.VertexDirection;
 public class Hex implements HexInterface {
 	
 	private HexLocation location;
-	private HexType type;
+	private HexType resource;
 	private int number;
 	private Map<VertexDirection, HexCornerInterface> corners;
 	private Map<EdgeLocation, HexBorderInterface> borders;
@@ -24,7 +24,7 @@ public class Hex implements HexInterface {
 		this.corners = corners;
 		this.borders = borders;
 		this.location = location;
-		this.type = type;
+		this.resource = type;
 		this.number = number;
 	}
 
@@ -35,12 +35,12 @@ public class Hex implements HexInterface {
 
 	@Override
 	public HexType getType() {
-		return this.type;
+		return this.resource;
 	}
 
 	@Override
 	public void setType(HexType type) {
-		this.type = type;
+		this.resource = type;
 	}
 
 	@Override
@@ -52,15 +52,13 @@ public class Hex implements HexInterface {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-<<<<<<< HEAD
 	
 	public String toString(){
-		String returnString = resource + "\n";
+		String returnString = resource.toString() + "\n";
 		returnString += location.toString() + "\n";
 		returnString += number + "\n";
 		return returnString;
 	}
-=======
 
 	@Override
 	public HexCornerInterface getCorner(VertexDirection type) {
@@ -72,5 +70,4 @@ public class Hex implements HexInterface {
 		return this.borders.get(type);
 	}
 
->>>>>>> 27df1795a0de1cb279e9cc03fcf6f7779b9a73d5
 }

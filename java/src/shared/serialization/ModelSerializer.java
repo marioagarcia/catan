@@ -370,7 +370,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 				number = subObject.get("number").getAsInt();
 			}
 			
-			hexes.add(new Hex(new HexLocation(x, y), resource, number));
+			//hexes.add(new Hex(new HexLocation(x, y), resource, number));
 		}
 		System.out.println(hexes);
 		return gameData;

@@ -7,7 +7,6 @@ import client.model.Message;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.Port;
-import client.model.map.VertexObject;
 import client.model.piece.Road;
 import client.model.player.Player;
 
@@ -26,8 +25,8 @@ public class GameData {
 	ArrayList<Hex> hexList;
 	ArrayList<Port> portList;
 	ArrayList<Road> roadList;
-	ArrayList<VertexObject> settlementList;
-	ArrayList<VertexObject> cityList;
+	//ArrayList<VertexObject> settlementList;
+	//ArrayList<VertexObject> cityList;
 	int radius;
 	HexLocation robber;
 	
@@ -110,7 +109,7 @@ public class GameData {
 		this.roadList = roadList;
 	}
 
-	public ArrayList<VertexObject> getSettlementList() {
+/*	public ArrayList<VertexObject> getSettlementList() {
 		return settlementList;
 	}
 
@@ -124,7 +123,7 @@ public class GameData {
 
 	public void setCityList(ArrayList<VertexObject> cityList) {
 		this.cityList = cityList;
-	}
+	}*/
 
 	public int getRadius() {
 		return radius;
