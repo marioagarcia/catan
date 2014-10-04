@@ -417,4 +417,10 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 		
 	}
 
+	@Override
+	public boolean loginPlayer(String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

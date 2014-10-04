@@ -257,4 +257,6 @@ public interface GameManagerInterface
 	
 	public void logoutPlayer();
 	
+	public boolean loginPlayer(String username, String password);
+	
 }
