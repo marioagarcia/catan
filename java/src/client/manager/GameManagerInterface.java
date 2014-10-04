@@ -84,7 +84,7 @@ public interface GameManagerInterface
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
 	public boolean canAcceptTrade(TradeInterface trade);
-	public boolean acceptTrade(TradeInterface trade);
+	public boolean acceptTrade(TradeInterface trade, boolean accept);
 	/**
 	 * Checks that a player has over 7 cards and that the player has the cards
 	 * being discarded
