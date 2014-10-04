@@ -432,6 +432,9 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			int playerIndex = subObject.get("owner").getAsInt();
 			subObject = (JsonObject)subObject.get("location");
+			
+			VertexDirection vertexDirection = getVertexDirection((JsonObject)subObject);
+			
 		}
 		
 ///////////////////////////////////////////////////////////////////////////
@@ -476,6 +479,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		EdgeDirection edgeDirection = null;
 		
 		switch(object.get("direction").getAsString()){
+			
 			case "N":
 				edgeDirection = EdgeDirection.North;
 				break;
@@ -496,6 +500,35 @@ public class ModelSerializer implements ModelSerializerInterface {
 				break;
 		}
 		return edgeDirection;
+	}
+	
+	public VertexDirection getVertexDirection(JsonObject object){
+		
+		VertexDirection vertexDirection = null;
+		
+		switch(object.get("direction").getAsString()){
+		
+			case "NE":
+				vertexDirection = VertexDirection.NorthEast;
+				break;
+			case "E":
+				vertexDirection = VertexDirection.East;
+				break;
+			case "SE":
+				vertexDirection = VertexDirection.SouthEast;
+				break;
+			case "SW":
+				vertexDirection = VertexDirection.SouthWest;
+				break;
+			case "W":
+				vertexDirection = VertexDirection.West;
+				break;
+			case "NW":
+				vertexDirection = VertexDirection.NorthWest;
+				break;
+		}
+		
+		return vertexDirection;
 	}
 	
 	public Object deserialize(String JSONString, ObjectType objectType) {
