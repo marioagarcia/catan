@@ -11,8 +11,6 @@ import client.manager.GameData;
 public class ServerPoller implements ServerPollerInterface
 {
 	private boolean isRunning;
-	private String latestModelVersion;
-	private String gameId;
 	private String latestModel;
 	private Timer pollTimer = null;
 	private TimerTask pollMethod = null;
@@ -21,9 +19,8 @@ public class ServerPoller implements ServerPollerInterface
 	
 	private transient Collection<ModelStateObserver> modelObservers;
 	
-	public ServerPoller(String current_model_version){
+	public ServerPoller(){
 		isRunning = false;
-		latestModelVersion = current_model_version;
 		
 		boolean is_daemon = true;
 		pollTimer = new Timer(is_daemon);
@@ -59,7 +56,7 @@ public class ServerPoller implements ServerPollerInterface
 		@Override
 		public void run(){
 			//gameId JSON? Where will this come from
-			String model = proxyObject.getGameModel(gameId, latestModelVersion);
+			String model = proxyObject.getGameModel();
 			GameData data_object = serializer.deserializeGameModel(model);
 			
 			if (!model.equals("True")){
@@ -69,7 +66,6 @@ public class ServerPoller implements ServerPollerInterface
 				for (ModelStateObserver o : modelObservers){
 					o.modelChanged(data_object);
 				}
-				
 			}
 		}
 	}

@@ -14,6 +14,7 @@ public class ServerMoxy implements ServerProxyInterface
 {
 	private int gameId;
 	private String cookie;
+	private int latestVersion;
 	
 	public ServerMoxy()
 	{
@@ -30,6 +31,8 @@ public class ServerMoxy implements ServerProxyInterface
 		catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		
+		latestVersion = 1;
 	}
 	
 	private String readFile(String filename)
@@ -87,7 +90,7 @@ public class ServerMoxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String getGameModel(String JSONString, String latest_model) {
+	public String getGameModel() {
 		return readFile("test/JSON/getGameModel.txt");
 	}
 
