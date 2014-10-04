@@ -39,4 +39,9 @@ public class TurnTracker implements TurntrackerInterface {
 		return this.playerWithLargestArmy;
 	}
 
+	@Override
+	public boolean canRoll(int player_index){
+		return (currentPlayerIndex == player_index && this.status == Status.ROLLING);
+	}
+
 }
