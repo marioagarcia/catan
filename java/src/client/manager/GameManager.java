@@ -7,6 +7,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
 import shared.serialization.parameters.AcceptTradeParameters;
+import shared.serialization.parameters.DiscardCardsParameters;
 import shared.serialization.parameters.JoinGameRequestParameters;
 import client.communication.server.ServerProxy;
 import client.logging.GameLog;
@@ -211,25 +212,30 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade) {
-		String JSONString = modelSerializer.serializeAcceptTrade(new AcceptTradeParameters(index, accept))
+		//localPlayer.canAcceptTrade(trade);
+		//turnTracker.isPlayerTurn(localPlayer.getPlayerIndex());
 		return false;
 	}
 
 	@Override
-	public boolean acceptTrade(TradeInterface trade) {
-		// TODO Auto-generated method stub
+	public boolean acceptTrade(TradeInterface trade, boolean accept) {
+		int player_index = localPlayer.getPlayerIndex();
+		String JSONString = modelSerializer.serializeAcceptTrade(new AcceptTradeParameters(player_index, accept));
+		serverProxy.acceptTrade(JSONString);
 		return false;
 	}
 
 	@Override
 	public boolean canDiscardCards(ResourceList list) {
-		// TODO Auto-generated method stub
+		//return localPlayer.canDiscardCards(list);
 		return false;
 	}
 
 	@Override
 	public boolean discardCards(ResourceList list) {
-		// TODO Auto-generated method stub
+		int player_index = localPlayer.getPlayerIndex();
+		String JSONString = modelSerializer.serializeDiscardCards(new DiscardCardsParameters(player_index, list));
+		
 		return false;
 	}
 
