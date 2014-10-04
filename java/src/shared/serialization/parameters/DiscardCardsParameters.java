@@ -2,7 +2,7 @@ package shared.serialization.parameters;
 
 import client.model.card.ResourceList;
 
-public class DiscardCardsParameters {
+public class DiscardCardsParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;

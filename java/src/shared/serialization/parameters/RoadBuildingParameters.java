@@ -2,7 +2,7 @@ package shared.serialization.parameters;
 
 import shared.locations.EdgeLocation;
 
-public class RoadBuildingParameters {
+public class RoadBuildingParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;

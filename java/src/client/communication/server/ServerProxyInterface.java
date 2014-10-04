@@ -1,5 +1,7 @@
 package client.communication.server;
 
+import client.model.player.PlayerInfo;
+
 /**
  * This interface is our last step to communicating with the server. It contains the methods that implement
  * the server's API. This interface calls handles the HTTP connection
@@ -213,4 +215,6 @@ public interface ServerProxyInterface{
 	 * @return JSONString with the result
 	 */
 	abstract String playMonument(String JSONString);
+	
+	abstract boolean validatePlayer(PlayerInfo player);
 }

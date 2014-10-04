@@ -2,7 +2,7 @@ package shared.serialization.parameters;
 
 import shared.locations.VertexLocation;
 
-public class VertexLocationParameters {
+public class VertexLocationParameters extends MasterParameterInterface{
 
 	private int x;
 	private int y;

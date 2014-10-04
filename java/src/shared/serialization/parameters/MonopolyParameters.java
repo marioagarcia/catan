@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class MonopolyParameters {
+public class MonopolyParameters extends MasterParameterInterface{
 	
 	private String type;
 	private String resource;

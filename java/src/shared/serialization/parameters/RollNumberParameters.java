@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class RollNumberParameters {
+public class RollNumberParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;

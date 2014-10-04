@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class BuildRoadParameters {
+public class BuildRoadParameters extends MasterParameterInterface{
 	
 	private String type;
 	private int playerIndex;

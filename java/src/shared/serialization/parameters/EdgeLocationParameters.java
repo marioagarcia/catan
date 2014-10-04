@@ -2,7 +2,7 @@ package shared.serialization.parameters;
 
 import shared.locations.EdgeLocation;
 
-public class EdgeLocationParameters {
+public class EdgeLocationParameters extends MasterParameterInterface{
 
 	private int x;
 	private int y;

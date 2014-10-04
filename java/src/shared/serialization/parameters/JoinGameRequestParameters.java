@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class JoinGameRequestParameters {
+public class JoinGameRequestParameters extends MasterParameterInterface{
 	
 	private int id;
 	private String color;

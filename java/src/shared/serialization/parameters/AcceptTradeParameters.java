@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-public class AcceptTradeParameters {
+public class AcceptTradeParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;
