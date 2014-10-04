@@ -3,9 +3,15 @@ package shared.serialization;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -42,8 +48,11 @@ import com.google.gson.*;
 
 import client.manager.GameData;
 import client.model.GameInfo;
+import client.model.card.DevCardBank;
+import client.model.card.DevCardInterface;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
+import client.model.map.HexInterface;
 import client.model.piece.RoadInterface;
 import client.model.player.PlayerInfo;
 import client.model.player.PlayerInterface;
@@ -337,14 +346,27 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(data);
-		 
+		
+		//Parse and build DevCardBank with deck
 		JsonObject mainObject = element.getAsJsonObject();
 		JsonObject subObject = mainObject.getAsJsonObject("deck");
-		int yop = subObject.getAsJsonPrimitive("yearOfPlenty").getAsInt();
-		int mply = subObject.getAsJsonPrimitive("monopoly").getAsInt();
-		int sold = subObject.getAsJsonPrimitive("soldier").getAsInt();
-		int rdblg = subObject.getAsJsonPrimitive("roadBuilding").getAsInt();
-		int mnmt = subObject.getAsJsonPrimitive("monument").getAsInt();
+		
+		Map<DevCardInterface.DevCardType, Integer> devCards = new HashMap<DevCardInterface.DevCardType, Integer>();
+		
+		int yearOfPlenty = subObject.getAsJsonPrimitive("yearOfPlenty").getAsInt();
+		int monopoly = subObject.getAsJsonPrimitive("monopoly").getAsInt();
+		int soldier = subObject.getAsJsonPrimitive("soldier").getAsInt();
+		int roadBuilding = subObject.getAsJsonPrimitive("roadBuilding").getAsInt();
+		int monument = subObject.getAsJsonPrimitive("monument").getAsInt();
+		
+		devCards.put(DevCardInterface.DevCardType.YEAR_OF_PLENTY, yearOfPlenty);
+		devCards.put(DevCardInterface.DevCardType.MONOPOLY, monopoly);
+		devCards.put(DevCardInterface.DevCardType.SOLDIER, soldier);
+		devCards.put(DevCardInterface.DevCardType.ROAD_BUILD, roadBuilding);
+		devCards.put(DevCardInterface.DevCardType.MONUMENT, monument);
+		
+		gameData.setDeck(new DevCardBank(devCards));
+		DevCardBank dvb = new DevCardBank(devCards);
 		
 		//Parse the map into an arraylist of hexes
 		ArrayList<Hex> hexes = new ArrayList<Hex>();
@@ -353,26 +375,44 @@ public class ModelSerializer implements ModelSerializerInterface {
 		for(int i = 0; i < array.size(); i++){
 			subObject = (JsonObject)array.get(i);
 			
-			String resource;
+			HexInterface.HexType resource = null;
 			if(subObject.getAsJsonPrimitive("resource") == null){
-				resource = "desert";
-			}else{
-				resource = subObject.getAsJsonPrimitive("resource").getAsString();
+				resource = null;
+			}else{//brick wood ore sheep wheat
+				switch(subObject.getAsJsonPrimitive("resource").getAsString()){
+					case "brick":
+						resource = HexInterface.HexType.BRICK;
+						break;
+					case "wood":
+						resource = HexInterface.HexType.WOOD;
+						break;
+					case "ore":
+						resource = HexInterface.HexType.ORE;
+						break;
+					case "sheep":
+						resource = HexInterface.HexType.SHEEP;
+						break;
+					case "wheat":
+						resource = HexInterface.HexType.WHEAT;
+						break;
+				}
 			}
 			
-			//subObject = (JsonObject)subObject.get("location");
 			int x = ((JsonObject)subObject.get("location")).getAsJsonPrimitive("x").getAsInt();
 			int y = ((JsonObject)subObject.get("location")).getAsJsonPrimitive("y").getAsInt();
 			int number;
-			if(resource.equals("desert")){
-				number = Integer.MAX_VALUE;
+			if(resource == null){
+				number = -1;
 			}else{
 				number = subObject.get("number").getAsInt();
 			}
 			
-			//hexes.add(new Hex(new HexLocation(x, y), resource, number));
+			hexes.add(new Hex(new HexLocation(x, y), resource, number));
 		}
-		System.out.println(hexes);
+		
+		gameData.setHexList(hexes);
+		
+///////////////////////////////////////////////////////////////////////////
 		return gameData;
 	}
 	

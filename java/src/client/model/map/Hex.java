@@ -63,7 +63,9 @@ public class Hex implements HexInterface {
 	}
 	
 	public String toString(){
-		String returnString = resource.toString() + "\n";
+		String returnString = "";
+		if(resource != null)
+			returnString += resource.toString() + "\n";
 		returnString += location.toString() + "\n";
 		returnString += number + "\n";
 		return returnString;

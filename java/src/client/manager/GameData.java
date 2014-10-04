@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import shared.locations.HexLocation;
 import client.model.Message;
+import client.model.card.DevCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.Port;
@@ -12,6 +13,9 @@ import client.model.player.Player;
 
 public class GameData {
 
+	//Deck - DevCardBank
+	DevCardBank deck;
+	
 	//Bank - Resource List
 	ResourceList bankResourceList;
 	
@@ -61,6 +65,14 @@ public class GameData {
 		
 	}
 
+	public DevCardBank getDeck(){
+		return deck;
+	}
+	
+	public void setDeck(DevCardBank deck){
+		this.deck = deck;
+	}
+	
 	public ResourceList getBankResourceList() {
 		return bankResourceList;
 	}
