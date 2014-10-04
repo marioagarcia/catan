@@ -1,5 +1,7 @@
 package client.model.player;
 
+import client.model.card.ResourceList;
+import client.model.card.TradeInterface;
 import shared.definitions.CatanColor;
 
 /**
@@ -35,4 +37,18 @@ public interface PlayerInterface
 	 * @return the number of victory points this Player has earned
 	 */
 	public int getPoints();
+	
+	/**
+	 * 
+	 * @param trade
+	 * @return
+	 */
+	public boolean canAcceptTrade(TradeInterface trade);
+	
+	/**
+	 * verifies that the player has the correct cards to be able to discard
+	 * @param list
+	 * @return
+	 */
+	public boolean canDiscardCards(ResourceList list);
 }

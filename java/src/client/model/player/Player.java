@@ -144,22 +144,6 @@ public class Player {
 
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
-	}
+	}	
 	
-	/**
-	 * 
-	 * @param trade
-	 * @return
-	 */
-	public boolean canAcceptTrade(TradeInterface trade){
-		if( (-1 * trade.getTradeCard(ResourceCardType.ORE) )  < this.resourceList.getOre() ||
-			(-1 * trade.getTradeCard(ResourceCardType.BRICK) ) < this.resourceList.getBrick() ||
-			(-1 * trade.getTradeCard(ResourceCardType.SHEEP) ) < this.resourceList.getSheep() ||
-			(-1 * trade.getTradeCard(ResourceCardType.WHEAT) ) < this.resourceList.getWheat() ||
-			(-1 * trade.getTradeCard(ResourceCardType.WOOD) ) < this.resourceList.getWood() ){
-			return false;
-		}
-		
-		return true;
-	}
 }
