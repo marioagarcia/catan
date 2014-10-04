@@ -20,34 +20,22 @@ public interface TurntrackerInterface {
 	public int getCurrentTurn();
 	
 	/**
-	 * transitions to the next turn
-	 * this should also reset the status
-	 * this should only be called at the end of your own turn,
-	 */
-	public void incrementTurn();
-	
-	/**
 	 * player's status with regards to the longestRoad card
 	 * @return status
 	 */
-	public SpecialStatus getLongestRoadStatus();
+	public int getLongestRoadStatus();
 	
 	/**
 	 * player's status with regards to the largestArmy card
 	 * @return status
 	 */
-	public SpecialStatus getLargestArmy();
+	public int getLargestArmy();
 	
 	
 	public enum Status{
-		FIRST_ROUND
+		FIRST_ROUND,
+		PLAYING,
+		ROBBING,
+		DISCARDING
 	}
-	
-	public enum SpecialStatus{
-		DOES_NOT_HAVE_SPECIAL,
-		HAS_SPECIAL,
-		SPECIAL_NOT_ISSUED
-		
-	}
-
 }

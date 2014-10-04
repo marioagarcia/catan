@@ -3,15 +3,15 @@ package client.model.turntracker;
 public class TurnTracker implements TurntrackerInterface {
 	
 	private Status status;
-	private int currentTurnNumber;
-	private SpecialStatus longestRoad;
-	private SpecialStatus largestArmy;
+	private int currentPlayerIndex;
+	private int playerWithLongestRoad;
+	private int playerWithLargestArmy;
 	
-	public TurnTracker(Status status, int currentTurnNumber, SpecialStatus longestRoad, SpecialStatus largestArmy){
+	public TurnTracker(Status status, int currentTurnNumber, int longestRoad, int largestArmy){
 		this.status = status;
-		this.currentTurnNumber = currentTurnNumber;
-		this.longestRoad = longestRoad;
-		this.largestArmy = largestArmy;
+		this.currentPlayerIndex = currentTurnNumber;
+		this.playerWithLongestRoad = longestRoad;
+		this.playerWithLargestArmy = largestArmy;
 	}
 
 	@Override
@@ -26,23 +26,17 @@ public class TurnTracker implements TurntrackerInterface {
 
 	@Override
 	public int getCurrentTurn() {
-		return this.currentTurnNumber;
-	}
-	
-	@Override
-	public void incrementTurn(){
-		this.currentTurnNumber++;
-		//TODO change the turn status to reflect the new turn
+		return this.currentPlayerIndex;
 	}
 
 	@Override
-	public SpecialStatus getLongestRoadStatus() {
-		return this.longestRoad;
+	public int getLongestRoadStatus() {
+		return this.playerWithLongestRoad;
 	}
 
 	@Override
-	public SpecialStatus getLargestArmy() {
-		return this.largestArmy;
+	public int getLargestArmy() {
+		return this.playerWithLargestArmy;
 	}
 
 }

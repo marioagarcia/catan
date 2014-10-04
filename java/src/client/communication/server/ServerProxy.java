@@ -12,7 +12,6 @@ import java.net.URLDecoder;
 import com.google.gson.*;
 import client.model.player.PlayerInfo;
 
-
 public class ServerProxy implements ServerProxyInterface
 {
 
@@ -24,6 +23,7 @@ public class ServerProxy implements ServerProxyInterface
 	private String cookie;
 	private String plainTextCookie;
 	private int playerId;
+	private int latestVersion;
 	
 	/**
 	 * Initializes the ServerProxy object with the given port and host name.
@@ -38,6 +38,7 @@ public class ServerProxy implements ServerProxyInterface
 		cookie = null;
 		plainTextCookie = null;
 		playerId = Integer.MAX_VALUE;
+		latestVersion = -1;
 	}
 	
 	private String doGet(String url_path, String json_post_data, boolean needs_id){
@@ -86,7 +87,6 @@ public class ServerProxy implements ServerProxyInterface
 				 if (url_path.equals("/games/join")){
 					 String local_cookie = connection.getHeaderField("Set-Cookie");
 					 String[] pieces = local_cookie.split(";");
-					 String[] temp = pieces[0].split("=");
 					 gameId = Integer.parseInt(pieces[0].split("=")[1]);
 				 }
 				 
@@ -153,9 +153,17 @@ public class ServerProxy implements ServerProxyInterface
 	}
 
 	@Override
-	public String getGameModel(String JSONString, String latest_model){
-		methodUrl = "/games/model?version=" + latest_model;
-		return doGet(methodUrl, JSONString, true);
+	public String getGameModel(){
+		methodUrl = "/games/model?version=" + latestVersion;
+		String model_string = doGet(methodUrl, null, true);
+		
+		//pull out the latest version number for future calls
+		JsonParser parser = new JsonParser();
+		JsonElement model_element = parser.parse(model_string);
+		JsonObject model_object = model_element.getAsJsonObject();
+		latestVersion = model_object.get("version").getAsInt();
+		
+		return model_string;
 	}
 
 	@Override

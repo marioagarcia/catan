@@ -42,11 +42,10 @@ public interface ServerProxyInterface{
 	/**
 	 * Requests the model of a given game
 	 * @param JSONString A String containing the game id
-	 * @param latest_model a String representing the current version of the model
 	 * received by the client
 	 * @return JSONString for the model of the current game
 	 */
-	abstract String getGameModel(String JSONString, String latest_model);
+	abstract String getGameModel();
 	
 	/**
 	 * Resets the game to its initial state immediately after players joined
