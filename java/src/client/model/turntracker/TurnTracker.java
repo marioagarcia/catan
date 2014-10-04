@@ -1,6 +1,8 @@
 package client.model.turntracker;
 
-public class TurnTracker implements TurntrackerInterface {
+import client.manager.interfaces.GMTurnTrackerInterface;
+
+public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface {
 	
 	private Status status;
 	private int currentPlayerIndex;
