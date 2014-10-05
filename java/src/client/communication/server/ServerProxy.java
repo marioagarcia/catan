@@ -104,7 +104,7 @@ public class ServerProxy implements ServerProxyInterface
 			 }
 		}
 		catch (MalformedURLException m){
-	        m.printStackTrace();
+			m.printStackTrace();
 	        return null;
 	    } 
 		catch (ProtocolException p){
@@ -156,8 +156,6 @@ public class ServerProxy implements ServerProxyInterface
 	public String getGameModel(){
 		methodUrl = "/game/model";
 		String model_string = doGet(methodUrl, null, true);
-		
-		System.out.println("Received Game Model: |" + model_string + "|");
 		
 		//pull out the latest version number for future calls
 		if (!model_string.equals("400")){

@@ -12,13 +12,13 @@ import client.communication.server.ServerProxy;
 
 public class ServerProxyTest {
 
-	private ServerProxy proxy_test;
+	private ServerProxy proxyTest;
 	String result = null;
 	String param = null;
 	
 	@Before
 	public void setUp(){
-		proxy_test = new ServerProxy("8081", "localhost");
+		proxyTest = new ServerProxy("8081", "localhost");
 		result = null;
 		param = null;
 	}
@@ -42,13 +42,13 @@ public class ServerProxyTest {
 				 + "\"username\": \"Sam\","
 				 + "\"password\": \"sam\""
 				 + "}";
-		proxy_test.login(param);
+		proxyTest.login(param);
 		
 		param = "{"
 				  + "\"id\": 0,"
 				  + "\"color\": \"orange\""
 				  + "}";
-		proxy_test.joinGame(param);
+		proxyTest.joinGame(param);
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class ServerProxyTest {
 				 + "\"username\": \"Sam\","
 				 + "\"password\": \"sam\""
 				 + "}";
-		result = proxy_test.login(param);
+		result = proxyTest.login(param);
 		System.out.println("Good login: |" + result + "|");
 		assertTrue(result.equals("Success"));
 		
@@ -67,7 +67,7 @@ public class ServerProxyTest {
 				 + "\"username\": \"Sam\","
 				 + "\"password\": \"Mas\""
 				 + "}";
-		result = proxy_test.login(param);
+		result = proxyTest.login(param);
 		System.out.println("Bad login: |" + result + "|");
 		assertTrue(!result.equals("Success"));
 	}
@@ -85,7 +85,7 @@ public class ServerProxyTest {
 				 + "\"username\": \"" + username + "\","
 				 + "\"password\": \"" + password + "\""
 				 + "}";
-		result = proxy_test.register(param);
+		result = proxyTest.register(param);
 		System.out.println("Good register: |" + result + "|");
 		assertTrue(result.equals("Success"));
 		
@@ -94,14 +94,14 @@ public class ServerProxyTest {
 				 + "\"username\": \"Sam\","
 				 + "\"password\": \"test\""
 				 + "}";
-		result = proxy_test.register(param);
+		result = proxyTest.register(param);
 		System.out.println("Bad register: |" + result + "|");
 		assertTrue(!result.equals("Success"));
 	}
 	
 	@Test
 	public void testListGames(){
-		result = proxy_test.listGames();
+		result = proxyTest.listGames();
 		System.out.println("Games List: |" + result + "|");
 		assertTrue(!result.equals(null));
 	}
@@ -118,7 +118,7 @@ public class ServerProxyTest {
 				+ "}";
 
 
-		result = proxy_test.createGame(param);
+		result = proxyTest.createGame(param);
 		System.out.println("Create Game: |" + result + "|");
 		
 		JsonParser parser = new JsonParser();
@@ -136,13 +136,13 @@ public class ServerProxyTest {
 				 + "\"username\": \"Sam\","
 				 + "\"password\": \"sam\""
 				 + "}";
-		result = proxy_test.login(param);
+		result = proxyTest.login(param);
 		
 		param = "{"
 				  + "\"id\": 0,"
 				  + "\"color\": \"orange\""
 				  + "}";
-		result = proxy_test.joinGame(param);
+		result = proxyTest.joinGame(param);
 		System.out.println("Good Join Response: |" + result + "|");
 		
 		assertTrue(result.equals("Success"));
@@ -151,7 +151,7 @@ public class ServerProxyTest {
 				  + "\"id\": 24,"
 				  + "\"color\": \"blue\""
 				  + "}";
-		result = proxy_test.joinGame(param);
+		result = proxyTest.joinGame(param);
 		System.out.println("Bad Join Response: |" + result + "|");
 		assertTrue(!result.equals("Success"));
 	}
@@ -161,23 +161,23 @@ public class ServerProxyTest {
 	{
 		// Trying to get a game model while not logged in/in a game should fail. Server should respond
 		// with 400 code, and proxy should not have a latest model version
-		result = proxy_test.getGameModel();
+		result = proxyTest.getGameModel();
 		System.out.println("Bad Game Model Result: |" + result + "|");
 		assertTrue(result.equals("400"));
-		assertTrue(proxy_test.getLatestVersionNumber() == -1);
-		System.out.println("Proxy Model Version: " + proxy_test.getLatestVersionNumber());
+		assertTrue(proxyTest.getLatestVersionNumber() == -1);
+		System.out.println("Proxy Model Version: " + proxyTest.getLatestVersionNumber());
 		
 		//Successfully login, join game, and get current model
 		loginAndJoinGame();
-		result = proxy_test.getGameModel();
+		result = proxyTest.getGameModel();
 		System.out.println("Game Model Result: |" + result + "|");
-		assertTrue(proxy_test.getLatestVersionNumber() != Integer.MAX_VALUE);
+		assertTrue(proxyTest.getLatestVersionNumber() != Integer.MAX_VALUE);
 	}
 	
 	@Test
 	public void testResetGame()
 	{
-		result = proxy_test.resetGame();
+		result = proxyTest.resetGame();
 		System.out.println("Bad Reset Result: |" + result + "|");
 		assertTrue(result.equals("400"));
 		
@@ -187,10 +187,10 @@ public class ServerProxyTest {
 				  + "\"message\": \"Adding content to model\""
 				  + "\"source\": \"Kevin\""
 				  + "}";
-		proxy_test.sendChat(param);
+		proxyTest.sendChat(param);
 		
-		String modified_client = proxy_test.getGameModel();
-		result = proxy_test.resetGame();
+		String modified_client = proxyTest.getGameModel();
+		result = proxyTest.resetGame();
 		
 		JsonParser parser = new JsonParser();
 		JsonElement game_element = parser.parse(result);
