@@ -153,12 +153,12 @@ public class ModelFacade implements ModelFacadeInterface {
 
 	@Override
 	public boolean canPlayYearOfPlenty() {
-		return this.gameManager.canPlayYearOfPlenty();
+		return false; //this.gameManager.canPlayYearOfPlenty();
 	}
 
 	@Override
 	public boolean playYearOfPlenty() {
-		return this.gameManager.playYearOfPlenty();
+		return false; //this.gameManager.playYearOfPlenty();
 	}
 
 	@Override
@@ -173,12 +173,12 @@ public class ModelFacade implements ModelFacadeInterface {
 
 	@Override
 	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation) {
-		return this.gameManager.canPlaySoldier(oldLocation, newLocation);
+		return false; //this.gameManager.canPlaySoldier(oldLocation, newLocation);
 	}
 
 	@Override
 	public boolean playSoldier(HexInterface oldLocation, HexInterface newLocation) {
-		return this.gameManager.playSoldier(oldLocation, newLocation);
+		return false; //this.gameManager.playSoldier(oldLocation, newLocation);
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class ModelFacade implements ModelFacadeInterface {
 
 	@Override
 	public boolean playMonopoly() {
-		return this.gameManager.playMonopoly();
+		return false; //this.gameManager.playMonopoly();
 	}
 
 	@Override

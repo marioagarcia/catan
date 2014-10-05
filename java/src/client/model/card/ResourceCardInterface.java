@@ -1,18 +1,9 @@
 package client.model.card;
 
+import shared.definitions.ResourceType;
+
 public interface ResourceCardInterface 
 {
-	/**
-	 * The types of resource cards available
-	 */
-	public enum ResourceCardType
-	{
-		BRICK,
-		WOOD,
-		SHEEP,
-		WHEAT,
-		ORE
-	}
 	
-	public abstract ResourceCardType getResourceCardType();
+	public abstract ResourceType getResourceCardType();
 }

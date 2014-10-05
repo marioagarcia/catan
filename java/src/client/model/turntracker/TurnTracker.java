@@ -46,4 +46,16 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 		return (currentPlayerIndex == player_index && this.status == Status.ROLLING);
 	}
 
+	@Override
+	public boolean canBuyDevCard(int player_index) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canPlayDevCard(int player_index) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

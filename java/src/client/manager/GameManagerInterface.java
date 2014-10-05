@@ -4,6 +4,7 @@ import client.model.card.*;
 import client.model.map.*;
 import client.model.player.*;
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.locations.*;
 /**
  * This class ensures that the preconditions for the actions the different model classes
@@ -187,19 +188,6 @@ public interface GameManagerInterface
 	//dev cards
 	
 	/**
-	 * Checks that the player has the dev card the player wants to play, the
-	 * player hasn't played a dev card in this turn, it's the player's turn,
-	 * and that the client model status is "playing"
-	 * 
-	 * @param player The player wanting to play the dev card
-	 * @param model The client model
-	 * @return true if the player has the dev card the player is trying to play,
-	 * the player hasn't played a dev card in this turn, it's the player's turn,
-	 * and the client model status is "playing", false otherwise
-	 */
-	public boolean canPlayDevCard();
-	public boolean playDevCard();
-	/**
 	 * Checks that the two resources the player specifies are in the bank
 	 * 
 	 * @param player The player wanting to play the year of plenty card
@@ -207,8 +195,8 @@ public interface GameManagerInterface
 	 * @return true if the resources the player specifies are in the bank, false
 	 * otherwise
 	 */
-	public boolean canPlayYearOfPlenty();
-	public boolean playYearOfPlenty();
+	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2);
+	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2);
 	/**
 	 * Checks that the first road location is connected to one of the player's
 	 * roads, the second road location is connected to one of the player's roads
@@ -235,14 +223,14 @@ public interface GameManagerInterface
 	 * @param newLocation The location the robber is going to
 	 * @return true if successful 
 	 */
-	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation);
-	public boolean playSoldier(HexInterface oldLocation, HexInterface newLocation);
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victimIndex);
+	public boolean playSoldier(HexLocation newLocation, int victimIndex);
 	/**
 	 * Checks are completed in canPlayDevCard() so always returns true
 	 * @return true
 	 */
 	public boolean canPlayMonopoly();
-	public boolean playMonopoly();
+	public boolean playMonopoly(ResourceType resourceType);
 	
 	/**
 	 * Checks are completed in canPlayDevCar() so always returns true

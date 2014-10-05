@@ -1,15 +1,17 @@
 package client.model.card;
 
+import shared.definitions.ResourceType;
+
 public class ResourceCard implements ResourceCardInterface {
 
-	private ResourceCardType type;
+	private ResourceType type;
 	
-	public ResourceCard(ResourceCardType type){
+	public ResourceCard(ResourceType type){
 		this.type = type;
 	}
 	
 	@Override
-	public ResourceCardType getResourceCardType() {
+	public ResourceType getResourceCardType() {
 		return this.type;
 	}
 

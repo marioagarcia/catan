@@ -1,5 +1,7 @@
 package client.model.card;
 
+import shared.definitions.ResourceType;
+
 /**
  * An object representing all the cards currently not owned by a Player
  */
@@ -16,13 +18,13 @@ public interface ResourceCardBankInterface
 	 * @param type ResourceCardType to check for
 	 * @return boolean. true if contains the card/else false
 	 */
-	public abstract boolean containsCard(ResourceCardInterface.ResourceCardType type);
+	public abstract boolean containsCard(ResourceType type);
 	
 	/**
 	 * Removes a card from the Player's CardInventory and places it in the CardBank.
 	 * The Player must have at least one of the given Card objects when this method is called. 
 	 * @param type The Card type to be removed
 	 */
-	public abstract ResourceCardInterface removeCard(ResourceCardInterface.ResourceCardType type) throws NoSuchCardException;
+	public abstract ResourceCardInterface removeCard(ResourceType type) throws NoSuchCardException;
 	
 }

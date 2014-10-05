@@ -3,15 +3,15 @@ package client.model.card;
 import java.util.HashMap;
 import java.util.Map;
 
-import client.model.card.ResourceCardInterface.ResourceCardType;
+import shared.definitions.ResourceType;
 
 public class ResourceCardBank implements ResourceCardBankInterface {
 	
-	private Map<ResourceCardType, Integer> cards;
+	private Map<ResourceType, Integer> cards;
 	
 	public ResourceCardBank()
 	{
-		this.cards = new HashMap<ResourceCardType, Integer>();
+		this.cards = new HashMap<ResourceType, Integer>();
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class ResourceCardBank implements ResourceCardBankInterface {
 	}
 
 	@Override
-	public ResourceCardInterface removeCard(ResourceCardType type) throws NoSuchCardException {
+	public ResourceCardInterface removeCard(ResourceType type) throws NoSuchCardException {
 		if(!this.cards.containsKey(type)){
 			throw new NoSuchCardException();
 		}
@@ -35,7 +35,7 @@ public class ResourceCardBank implements ResourceCardBankInterface {
 	}
 
 	@Override
-	public boolean containsCard(ResourceCardInterface.ResourceCardType type) {
+	public boolean containsCard(ResourceType type) {
 		return this.cards.containsKey(type);
 	}
 

@@ -1,6 +1,6 @@
 package client.model.card;
 
-import client.model.card.ResourceCardInterface;
+import shared.definitions.ResourceType;
 
 public interface TradeInterface {
 	
@@ -11,7 +11,7 @@ public interface TradeInterface {
 	 * a positive number means that we will give them the cards
 	 * a negative number means that we expect cards in return
 	 */
-	public void setTradeCard(ResourceCardInterface.ResourceCardType type, int count);
+	public void setTradeCard(ResourceType type, int count);
 	
 	/**
 	 * gets the number of a give card type that we will be trading
@@ -20,6 +20,6 @@ public interface TradeInterface {
 	 * positive means that you will be giving cards
 	 * negative means that you expect cards in return
 	 */
-	public int getTradeCard(ResourceCardInterface.ResourceCardType type);
+	public int getTradeCard(ResourceType type);
 	
 }

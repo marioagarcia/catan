@@ -3,7 +3,7 @@ package client.model.player;
 import client.model.card.DevCardList;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
-import client.model.card.ResourceCardInterface.ResourceCardType;
+import shared.definitions.ResourceType;
 import shared.definitions.CatanColor;
 
 /**
@@ -246,11 +246,11 @@ public class PlayerInfo implements PlayerInterface
 	 */
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade){
-		if( (-1 * trade.getTradeCard(ResourceCardType.ORE) )  < this.resourceList.getOre() ||
-			(-1 * trade.getTradeCard(ResourceCardType.BRICK) ) < this.resourceList.getBrick() ||
-			(-1 * trade.getTradeCard(ResourceCardType.SHEEP) ) < this.resourceList.getSheep() ||
-			(-1 * trade.getTradeCard(ResourceCardType.WHEAT) ) < this.resourceList.getWheat() ||
-			(-1 * trade.getTradeCard(ResourceCardType.WOOD) ) < this.resourceList.getWood() ){
+		if( (-1 * trade.getTradeCard(ResourceType.ORE) )  < this.resourceList.getOre() ||
+			(-1 * trade.getTradeCard(ResourceType.BRICK) ) < this.resourceList.getBrick() ||
+			(-1 * trade.getTradeCard(ResourceType.SHEEP) ) < this.resourceList.getSheep() ||
+			(-1 * trade.getTradeCard(ResourceType.WHEAT) ) < this.resourceList.getWheat() ||
+			(-1 * trade.getTradeCard(ResourceType.WOOD) ) < this.resourceList.getWood() ){
 			return false;
 		}
 		

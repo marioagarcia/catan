@@ -1,5 +1,7 @@
 package client.model.card;
 
+import shared.definitions.ResourceType;
+
 public class DomesticTrade implements TradeInterface {
 
 	//TODO make private
@@ -10,7 +12,7 @@ public class DomesticTrade implements TradeInterface {
 	private int wheat;
 	
 	@Override
-	public void setTradeCard(ResourceCardInterface.ResourceCardType type, int count) {
+	public void setTradeCard(ResourceType type, int count) {
 		switch( type ) {
 		case BRICK:
 			brick = count;
@@ -31,7 +33,7 @@ public class DomesticTrade implements TradeInterface {
 	}
 
 	@Override
-	public int getTradeCard(ResourceCardInterface.ResourceCardType type) {
+	public int getTradeCard(ResourceType type) {
 		switch( type ) {
 		case BRICK:
 			return brick;

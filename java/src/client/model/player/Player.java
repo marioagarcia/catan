@@ -1,9 +1,7 @@
 package client.model.player;
 
 import client.model.card.DevCardList;
-import client.model.card.ResourceCardInterface.ResourceCardType;
 import client.model.card.ResourceList;
-import client.model.card.TradeInterface;
 
 public class Player {
 	int cities;
