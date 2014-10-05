@@ -15,6 +15,7 @@ import shared.serialization.interfaces.CityInterface;
 import shared.serialization.interfaces.DevCardListInterface;
 import shared.serialization.interfaces.GameInfoInterface;
 import shared.serialization.interfaces.HexInterface;
+import shared.serialization.interfaces.MessageInterface;
 import shared.serialization.interfaces.PlayerInterface;
 import shared.serialization.interfaces.RoadInterface;
 import shared.serialization.interfaces.SettlementInterface;
@@ -460,7 +461,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 		for(int i = 0; i < array.size(); i++){
 			subObject = array.get(i).getAsJsonObject();
 			
-			//subObject.getAsJsonObject("resources");
 			JsonObject playerObject = subObject.getAsJsonObject("resources");
 			int brick = playerObject.get("brick").getAsInt();
 			int ore = playerObject.get("ore").getAsInt();
@@ -493,20 +493,82 @@ public class ModelSerializer implements ModelSerializerInterface {
 			String color = subObject.get("color").getAsString();
 			CatanColor playerColor = getPlayerColor(color);
 			
-			System.out.println("Roads: " + roads);
-			System.out.println("Cities: " + cities);
-			System.out.println("Settlements: " + settlements);
-			System.out.println("Soldiers: " + soldiers);
-			System.out.println("Victory Points: " + victoryPoints);
-			System.out.println("Monuments: " + monuments);
-			System.out.println("Played Dev Card: " + playedDevCard);
-			System.out.println("Discarded: " + discarded);
-			System.out.println("Player ID: " + playerID);
-			System.out.println("Player Index: " + playerIndex);
-			System.out.println("Name: " + name);
-			System.out.println("Player Color: " + playerColor + "\n");
-
+			//@TODO Build a player with all of this crap
+			//@TODO Add the player to the player list
 		}
+		//@TODO Set the player list in gameData
+		//Done parsing players
+		
+		//Parse Log
+		ArrayList<MessageInterface> messageList = new ArrayList();
+		subObject = mainObject.getAsJsonObject("log");
+		array = subObject.getAsJsonArray("lines");
+		
+		for(int i = 0; i < array.size(); i++){
+			subObject = array.get(i).getAsJsonObject();
+			String source = subObject.get("source").getAsString();
+			String message = subObject.get("message").getAsString();
+			
+			//@TODO Create message out of source and message
+			//@TODO Add message to messageList
+		}
+		//@TODO Set logMessageList in GameData; consider creating a getMessage()
+		//Done parsing Log
+		
+		//Parse Chat
+		messageList.clear();
+		subObject = mainObject.getAsJsonObject("chat");
+		array = subObject.getAsJsonArray("lines");
+		
+		for(int i = 0; i < array.size(); i++){
+			subObject = array.get(i).getAsJsonObject();
+			String source = subObject.get("source").getAsString();
+			String message = subObject.get("message").getAsString();
+			
+			//@TODO Create message out of source and message
+			//@TODO Add message to messageList
+		}
+		//@TODO Set chatMessageList in GameData; consider creating a getMessage()
+		//Done parsing Chat
+		
+		//Parse Bank
+		subObject = mainObject.getAsJsonObject("bank");
+		
+		int brick = subObject.get("brick").getAsInt();
+		int wood = subObject.get("wood").getAsInt();
+		int sheep = subObject.get("sheep").getAsInt();
+		int wheat = subObject.get("wheat").getAsInt();
+		int ore = subObject.get("ore").getAsInt();
+		
+		//@TODO Create a bank with the resources; create getResource()
+		//@TODO Set bank in GameData
+		//Done parsing bank
+		
+		//Parse Turn Tracker
+		subObject = mainObject.getAsJsonObject("turnTracker");
+		
+		String status = subObject.get("status").getAsString();
+		int currentTurn = subObject.get("currentTurn").getAsInt();
+		int longestRoad = subObject.get("longestRoad").getAsInt();
+		int largestArmy = subObject.get("largestArmy").getAsInt();
+		
+		//@TODO Create a turn tracker with status, currentTurn, longestRoad, largestArmy
+		//@TODO Set turn tracker in GameData
+		//Done parsing turn tracker
+		
+		int winner = mainObject.get("winner").getAsInt();
+		int version = mainObject.get("version").getAsInt();
+		
+		
+		System.out.println("Turn Tracker");
+		System.out.println("\tStatus: " + status);
+		System.out.println("\tCurrent Turn: " + currentTurn);
+		System.out.println("\tLongest Road: " + longestRoad);
+		System.out.println("\tLargest Army: " + largestArmy);
+
+		System.out.println("Winner: " + winner);
+		System.out.println("Version: " + version);
+		
 		
 ///////////////////////////////////////////////////////////////////////////
 		return gameData;
