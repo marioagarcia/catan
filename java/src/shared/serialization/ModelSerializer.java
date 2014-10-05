@@ -365,6 +365,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building DevCardBank
 	
 	//Parse Map
+		
 		//Parse hexes and build list of hexes
 		ArrayList<Hex> hexList = new ArrayList<Hex>();
 		
@@ -496,8 +497,21 @@ public class ModelSerializer implements ModelSerializerInterface {
 			HexLocation hexLocation = getHexLocation(subObject);
 			
 			//@TODO Create port with ratio, resource (optional), direction, hexLocation
+			//@TODO Add port to port list
 		}
+		//@TODO Set the port list in GameData
+		//Done building port list
 		
+		//Parse robber
+		subObject = mainObject.getAsJsonObject("map");
+		subObject = (JsonObject)subObject.get("robber");
+		
+		HexLocation robberLocation = getHexLocation(subObject);
+		//Done parsing robber
+		
+	//Done parsing map
+		
+		//Parse players and build player list
 		
 ///////////////////////////////////////////////////////////////////////////
 		return gameData;
