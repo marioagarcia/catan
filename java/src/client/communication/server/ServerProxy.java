@@ -154,14 +154,18 @@ public class ServerProxy implements ServerProxyInterface
 
 	@Override
 	public String getGameModel(){
-		methodUrl = "/games/model?version=" + latestVersion;
+		methodUrl = "/game/model";
 		String model_string = doGet(methodUrl, null, true);
 		
+		System.out.println("Received Game Model: |" + model_string + "|");
+		
 		//pull out the latest version number for future calls
-		JsonParser parser = new JsonParser();
-		JsonElement model_element = parser.parse(model_string);
-		JsonObject model_object = model_element.getAsJsonObject();
-		latestVersion = model_object.get("version").getAsInt();
+		if (!model_string.equals("400")){
+			JsonParser parser = new JsonParser();
+			JsonElement model_element = parser.parse(model_string);
+			JsonObject model_object = model_element.getAsJsonObject();
+			latestVersion = model_object.get("version").getAsInt();
+		}
 		
 		return model_string;
 	}
@@ -301,6 +305,11 @@ public class ServerProxy implements ServerProxyInterface
 	@Override
 	public int getGameId() {
 		return gameId;
+	}
+	
+	@Override
+	public int getLatestVersionNumber() {
+		return latestVersion;
 	}
 
 	@Override

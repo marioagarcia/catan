@@ -210,6 +210,10 @@ public class ServerMoxy implements ServerProxyInterface
 	public int getGameId() {
 		return gameId;
 	}
+	
+	public int getLatestVersionNumber(){
+		return latestVersion;
+	}
 
 	@Override
 	public boolean validatePlayer(PlayerInfo player) {

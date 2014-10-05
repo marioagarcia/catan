@@ -10,6 +10,8 @@ import client.model.player.PlayerInfo;
 public interface ServerProxyInterface{
 	
 	abstract int getGameId();
+	abstract int getLatestVersionNumber();
+	
 	/**
 	 * Attempts to log a player into the game
 	 * @param JSONString that contains a user name and a password
