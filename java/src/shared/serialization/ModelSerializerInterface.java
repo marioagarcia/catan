@@ -2,6 +2,7 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
+import shared.serialization.interfaces.GameInfoInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -26,7 +27,6 @@ import shared.serialization.parameters.SaveGameRequestParameters;
 import shared.serialization.parameters.SendChatParameters;
 import shared.serialization.parameters.SoldierParameters;
 import shared.serialization.parameters.YearOfPlentyParameters;
-import client.model.GameInfo;
 
 /**
  * This class handles all serialization of data going to the server and 
@@ -42,7 +42,7 @@ public interface ModelSerializerInterface
 	/**
 	 * @TODO
 	 */
-	public ArrayList<GameInfo> getGamesList(String jsonString);
+	public ArrayList<GameInfoInterface> getGamesList(String jsonString);
 	
 	/**
 	 * @TODO
@@ -166,7 +166,7 @@ public interface ModelSerializerInterface
 	 * @param playerId The ID of the player whose inventory contains the cards being serialized
 	 * @return String The player's cards and ID after being serialized
 	 */
-	public String serializeCards();
+	//public String serializeCards();
 	
 	/**
 	 * Deserializes a road from a string from the server
@@ -174,7 +174,7 @@ public interface ModelSerializerInterface
 	 * @param data The serialized version of the road 
 	 * @return Road The road that was just deserialized
 	 */
-	public client.model.piece.RoadInterface deserializeRoad(String data);
+	//public client.model.piece.RoadInterface deserializeRoad(String data);
 	
 	/**
 	 * Deserializes a player from a string from the server
@@ -182,7 +182,7 @@ public interface ModelSerializerInterface
 	 * @param data The serialized version of the player
 	 * @return Player The player that was just deserialized
 	 */
-	public client.model.player.PlayerInterface deserializePlayer(String data);
+	//public client.model.player.PlayerInterface deserializePlayer(String data);
 	
 	/**
 	 * Deserializes a CatanModel's current state/data and populates/updates a CatanModel with

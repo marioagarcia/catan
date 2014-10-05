@@ -3,21 +3,20 @@ package shared.serialization;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import shared.definitions.CatanColor;
-import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
 import shared.serialization.interfaces.CityInterface;
+import shared.serialization.interfaces.DevCardListInterface;
+import shared.serialization.interfaces.GameInfoInterface;
+import shared.serialization.interfaces.HexInterface;
+import shared.serialization.interfaces.PlayerInterface;
+import shared.serialization.interfaces.RoadInterface;
 import shared.serialization.interfaces.SettlementInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
@@ -27,7 +26,6 @@ import shared.serialization.parameters.BuyDevCardParameters;
 import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.CredentialsParameters;
 import shared.serialization.parameters.DiscardCardsParameters;
-import shared.serialization.parameters.EdgeLocationParameters;
 import shared.serialization.parameters.FinishTurnParameters;
 import shared.serialization.parameters.JoinGameRequestParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
@@ -43,29 +41,13 @@ import shared.serialization.parameters.RollNumberParameters;
 import shared.serialization.parameters.SaveGameRequestParameters;
 import shared.serialization.parameters.SendChatParameters;
 import shared.serialization.parameters.SoldierParameters;
-import shared.serialization.parameters.VertexLocationParameters;
 import shared.serialization.parameters.YearOfPlentyParameters;
 
 import com.google.gson.*;
 
 import client.manager.GameData;
-import client.model.GameInfo;
-import client.model.card.DevCardBank;
-import client.model.card.DevCardInterface;
-import client.model.card.ResourceList;
-import client.model.map.Hex;
-import client.model.map.HexInterface;
-import client.model.piece.City;
-import client.model.piece.Road;
-import client.model.piece.RoadInterface;
-import client.model.player.PlayerInfo;
-import client.model.player.PlayerInterface;
 
 public class ModelSerializer implements ModelSerializerInterface {
-
-	public enum ObjectType {
-		GAME_LIST
-	}
 	
 	@Override
 	public String serializeCredentials(CredentialsParameters credentials){
@@ -76,9 +58,11 @@ public class ModelSerializer implements ModelSerializerInterface {
 	}
 	
 	@Override
-	public ArrayList<GameInfo> getGamesList(String jsonString){
+	public ArrayList<GameInfoInterface> getGamesList(String jsonString){
 		
-		ArrayList<GameInfo> gamesList = new ArrayList<GameInfo>();
+		//@TODO All commented lines in this method must be implemented with new classes
+		
+		ArrayList<GameInfoInterface> gamesList = new ArrayList();
 		
 		JsonParser parser = new JsonParser();
 		
@@ -86,55 +70,28 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		JsonArray gameArray = element.getAsJsonArray();
 		for(int i = 0; i < gameArray.size(); i++){
-			GameInfo gameInfo = new GameInfo();
+			//GameInfo gameInfo = new GameInfo();
 			
 			JsonObject gameObject = (JsonObject)gameArray.get(i);
-			gameInfo.setTitle(gameObject.get("title").getAsString());
-			gameInfo.setId(gameObject.get("id").getAsInt());
+			//gameInfo.setTitle(gameObject.get("title").getAsString());
+			//gameInfo.setId(gameObject.get("id").getAsInt());
 			
 			JsonArray playerArray = (JsonArray)gameObject.get("players");
 			for(int j = 0; j < playerArray.size(); j++){
-				PlayerInfo playerInfo = new PlayerInfo();
+				//PlayerInfo playerInfo = new PlayerInfo();
 				
 				JsonObject playerObject = (JsonObject)playerArray.get(j);
 				
-				playerInfo.setId(playerObject.get("id").getAsInt());
-				playerInfo.setName(playerObject.get("name").getAsString());
+				//playerInfo.setId(playerObject.get("id").getAsInt());
+				//playerInfo.setName(playerObject.get("name").getAsString());
 				
 				String color = playerObject.get("color").getAsString();
 				
-				switch (color){
-					case "red":
-						playerInfo.setColor(CatanColor.RED);
-						break;
-					case "orange":
-						playerInfo.setColor(CatanColor.ORANGE);
-						break;
-					case "yellow":
-						playerInfo.setColor(CatanColor.YELLOW);
-						break;
-					case "blue":
-						playerInfo.setColor(CatanColor.BLUE);
-						break;
-					case "green":
-						playerInfo.setColor(CatanColor.GREEN);
-						break;
-					case "purple":
-						playerInfo.setColor(CatanColor.PURPLE);
-						break;
-					case "puce":
-						playerInfo.setColor(CatanColor.PUCE);
-						break;
-					case "white":
-						playerInfo.setColor(CatanColor.WHITE);
-						break;
-					case "brown":
-						playerInfo.setColor(CatanColor.BROWN);
-						break;
-				}
-				gameInfo.addPlayer(playerInfo);
+				CatanColor playerColor = getPlayerColor(color);
+				
+				//gameInfo.addPlayer(playerInfo);
 			}
-			gamesList.add(gameInfo);
+			//gamesList.add(gameInfo);
 		}
 		
 		return gamesList;
@@ -325,23 +282,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	}
 	
 	/////////////////
-	@Override
-	public String serializeCards() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public RoadInterface deserializeRoad(String data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PlayerInterface deserializePlayer(String data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public GameData deserializeGameModel(String data) {
@@ -355,6 +296,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		JsonObject mainObject = element.getAsJsonObject();
 		JsonObject subObject = mainObject.getAsJsonObject("deck");
 		
+		//@TODO Use getDevCardList()
 		int yearOfPlenty = subObject.getAsJsonPrimitive("yearOfPlenty").getAsInt();
 		int monopoly = subObject.getAsJsonPrimitive("monopoly").getAsInt();
 		int soldier = subObject.getAsJsonPrimitive("soldier").getAsInt();
@@ -367,7 +309,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	//Parse Map
 		
 		//Parse hexes and build list of hexes
-		ArrayList<Hex> hexList = new ArrayList<Hex>();
+		ArrayList<HexInterface> hexList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		JsonArray array = subObject.getAsJsonArray("hexes");
@@ -400,7 +342,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building the list of hexes
 		
 		//Parse roads and build a list of roads
-		ArrayList<Road> roadList = new ArrayList<Road>();
+		ArrayList<RoadInterface> roadList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("roads");
@@ -417,8 +359,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
 			
-			Road road = new Road(playerIndex, edgeLocation);
-			roadList.add(road);
+			//@TODO create road with player index and edgeLocation
+			//@TODO add road to roadList
 		}
 		
 		//@TODO Set road list in gameData
@@ -512,9 +454,99 @@ public class ModelSerializer implements ModelSerializerInterface {
 	//Done parsing map
 		
 		//Parse players and build player list
+		ArrayList<PlayerInterface> playerList = new ArrayList();
+		
+		array = mainObject.getAsJsonArray("players");
+		for(int i = 0; i < array.size(); i++){
+			subObject = array.get(i).getAsJsonObject();
+			
+			//subObject.getAsJsonObject("resources");
+			JsonObject playerObject = subObject.getAsJsonObject("resources");
+			int brick = playerObject.get("brick").getAsInt();
+			int ore = playerObject.get("ore").getAsInt();
+			int sheep = playerObject.get("sheep").getAsInt();
+			int wheat = playerObject.get("wheat").getAsInt();
+			int wood = playerObject.get("wood").getAsInt();
+			
+			//@TODO Fill this in
+			//ResourceList resourceList = new ResourceList(brick, ore, sheep, wheat, wood);
+			
+			playerObject = subObject.getAsJsonObject("oldDevCards");
+			//@TODO Fill this in, don't forget to return a value from getDevCardList()!!!!!!!
+			DevCardListInterface oldDevCardList = getDevCardList(playerObject);
+			
+			playerObject = subObject.getAsJsonObject("newDevCards");
+			//@TODO Fill this in, don't forget to return a value from getDevCardList()!!!!!!!
+			DevCardListInterface newDevCardList = getDevCardList(playerObject);
+			
+			int roads = subObject.get("roads").getAsInt();
+			int cities = subObject.get("cities").getAsInt();
+			int settlements = subObject.get("settlements").getAsInt();
+			int soldiers = subObject.get("soldiers").getAsInt();
+			int victoryPoints = subObject.get("victoryPoints").getAsInt();
+			int monuments = subObject.get("monuments").getAsInt();
+			boolean playedDevCard = subObject.get("playedDevCard").getAsBoolean();
+			boolean discarded = subObject.get("discarded").getAsBoolean();
+			int playerID = subObject.get("playerID").getAsInt();
+			int playerIndex = subObject.get("playerIndex").getAsInt();
+			String name = subObject.get("name").getAsString();
+			String color = subObject.get("color").getAsString();
+			CatanColor playerColor = getPlayerColor(color);
+			
+			System.out.println("Roads: " + roads);
+			System.out.println("Cities: " + cities);
+			System.out.println("Settlements: " + settlements);
+			System.out.println("Soldiers: " + soldiers);
+			System.out.println("Victory Points: " + victoryPoints);
+			System.out.println("Monuments: " + monuments);
+			System.out.println("Played Dev Card: " + playedDevCard);
+			System.out.println("Discarded: " + discarded);
+			System.out.println("Player ID: " + playerID);
+			System.out.println("Player Index: " + playerIndex);
+			System.out.println("Name: " + name);
+			System.out.println("Player Color: " + playerColor + "\n");
+
+		}
 		
 ///////////////////////////////////////////////////////////////////////////
 		return gameData;
+	}
+	
+	public CatanColor getPlayerColor(String color){
+		
+		CatanColor playerColor = null;
+		
+		switch (color){
+			case "red":
+				playerColor = CatanColor.RED;
+				break;
+			case "orange":
+				playerColor = CatanColor.ORANGE;
+				break;
+			case "yellow":
+				playerColor = CatanColor.YELLOW;
+				break;
+			case "blue":
+				playerColor = CatanColor.BLUE;
+				break;
+			case "green":
+				playerColor = CatanColor.GREEN;
+				break;
+			case "purple":
+				playerColor = CatanColor.PURPLE;
+				break;
+			case "puce":
+				playerColor = CatanColor.PUCE;
+				break;
+			case "white":
+				playerColor = CatanColor.WHITE;
+				break;
+			case "brown":
+				playerColor = CatanColor.BROWN;
+				break;
+		}
+		
+		return playerColor;
 	}
 	
 	public ResourceType getResource(JsonObject object){
@@ -607,7 +639,13 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return vertexDirection;
 	}
 	
-	public Object deserialize(String JSONString, ObjectType objectType) {
+	public DevCardListInterface getDevCardList(JsonObject object){
+		
+		int yearOfPlenty = object.getAsJsonPrimitive("yearOfPlenty").getAsInt();
+		int monopoly = object.getAsJsonPrimitive("monopoly").getAsInt();
+		int soldier = object.getAsJsonPrimitive("soldier").getAsInt();
+		int roadBuild = object.getAsJsonPrimitive("roadBuilding").getAsInt();
+		int monument = object.getAsJsonPrimitive("monument").getAsInt();
 		
 		return null;
 	}
