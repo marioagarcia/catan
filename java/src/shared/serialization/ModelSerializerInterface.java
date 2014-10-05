@@ -35,7 +35,7 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 public interface ModelSerializerInterface 
 {
 	/**
-	 * Serializes a users credentials
+	 * Serializes a users credentials into a Json string
 	 * 
 	 * @param credentials The userame and password of the user
 	 * @return A Json string of the serialized credentials
@@ -43,122 +43,231 @@ public interface ModelSerializerInterface
 	public String serializeCredentials(CredentialsParameters credentials);
 	
 	/**
+	 * Deserializes and parses the Json string into a list of games
 	 * 
+	 *  @param jsonString The string representation of the list of games
+	 *  @return The list of games that was just deserialized
 	 */
 	public ArrayList<GameInfoInterface> deserializeGamesList(String jsonString);
 	
 	/**
-	 * @TODO
+	 * Serializes a create games request into a Json string
+	 * 
+	 * @param params An object containing the game's name (string) as well as 3
+	 * booleans that signify whether you want to randomize tiles, numbers, and ports
+	 * @return A Json string of the serialized create game request
 	 */
 	public String serializeCreateGameRequest(CreateGameRequestParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a join game request into a Json string
+	 * 
+	 * @param params An object containing a player's ID and a player's chosen color
+	 * @return A Json string of the serialized join game request
 	 */
 	public String serializeJoinGameRequest(JoinGameRequestParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a save game request into a Json string
+	 * 
+	 * @param params An object containing the game ID and the name you want to save
+	 * the game under
+	 * @return A Json string of the serialized save game request
 	 */
 	public String serializeSaveGameRequest(SaveGameRequestParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a load game request into a Json string
+	 * 
+	 * @param params An object containing the name of the saved game you want 
+	 * to restore
+	 * @return A Json string of the serialized load game request
 	 */
 	public String serializeLoadGameRequest(LoadGameRequestParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a post game commands request into a Json string
+	 * 
+	 * @param params A list of all of the game commands that have occurred in the game
+	 * @return A Json string of the serialized list of game commands
 	 */
 	public String serializePostGameCommands(ArrayList<MasterParameterInterface> params);
 	
 	/**
-	 * @TODO
+	 * Serializes an AI request into a Json string
+	 * 
+	 * @param params An object containing the name of the requested AI player (string)
+	 * @return A Json string of the serialized AI request
 	 */
 	public String serializeAIRequest(AIRequestParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a send chat request into a Json string
+	 * 
+	 * @param params An object containing the type of action (string) being taken,
+	 * the index of the player sending the chat (int), and the content of the chat (string)
+	 * @return A Json string of the serialized send chat request
 	 */
 	public String serializeSendChat(SendChatParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a roll number request into a Json string
+	 * 
+	 * @param params An object containing the type of action (string) being taken,
+	 * the index of the player sending the roll request (int), and the number the
+	 * player rolled (int)
+	 * @return A Json string of the serialized roll number request
 	 */
 	public String serializeRollNumber(RollNumberParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a rob player request into a Json string
+	 * 
+	 * @param params An object containing the type of action (string) being taken,
+	 * the index of the player doing the robbing (int), the index of the player
+	 * being robbed (int), and the new location of the robber (HexLocation)
+	 * @return A Json string of the serialized rob player request
 	 */
 	public String serializeRobPlayer(RobPlayerParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a finish turn request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * and the index of the player sending the request (int)
+	 * @return A Json string of the serialized finish turn request
 	 */
 	public String serializeFinishTurn(FinishTurnParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a buy dev card request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * and the index of the player sending the request (int)
+	 * @return A Json string of the serialized buy dev card request
 	 */
 	public String serializeBuyDevCard(BuyDevCardParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a play year of plenty request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request, and the two resources being
+	 * requested (2 strings, one for each resource)
+	 * @return A Json string of the serialized play year of plenty request
 	 */
 	public String serializeYearOfPlenty(YearOfPlentyParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a play road build request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request (int), and the two edge locations where
+	 * you want to build the roads (2 EdgeLocations - an EdgeLocation contains an x (int), y (int), 
+	 * and direction (string)) 
+	 * @return A Json string of the serialized play road build request
 	 */
 	public String serializeRoadBuilding(RoadBuildingParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a play soldier request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request (int), the index of the player being
+	 * robbed (int), the new location of the robber (HexLocation)
+	 * @return A Json string of the serialied play soldier request
 	 */
 	public String serializeSoldier(SoldierParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a play monopoly request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request (int), and the resource being
+	 * requested (string)
+	 * @return A Json string of the serialized play monopoly request 
 	 */
 	public String serializeMonopoly(MonopolyParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a play monument request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * and the index of the player sending the request (int)
+	 * @return A Json string of the serialized play monument request
 	 */
 	public String serializeMonument(MonumentParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a build road request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request (int), the location where the player
+	 * wants to build a road (EdgeLocation), and a boolean representing whether 
+	 * it is the setup round or not
+	 * @return A Json string of the serialized build road request
 	 */
 	public String serializeBuildRoad(BuildRoadParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a build settlement request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string), 
+	 * the index of the player sending the request (int), the location where the player
+	 * wants to build a settlement (VertexLocation), and a boolean representing whether
+	 * it is the setup round or not
+	 * @return A Json string of the serialized build settlement request
 	 */
 	public String serializeBuildSettlement(BuildSettlementParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a build city request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request (int), and the location where the 
+	 * player wants to build a city (VertexLocation)
+	 * @return A Json string of the serialized build city request
 	 */
 	public String serializeBuildCity(BuildCityParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes an offer trade request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request (int), the index of the player
+	 * the trade is being offered to (int), and 5 ints representing the resources
+	 * in the trade, positive ints for cards being offered and negative ints for
+	 * cards being requested
+	 * @return A Json string of the serialized offer trade request
 	 */
 	public String serializeOfferTrade(OfferTradeParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes an accept trade request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player accepting or rejecting the trade, and a boolean
+	 * representing whether the player accepts or rejects the trade
+	 * @return A Json string of the serialized accept trade request
 	 */
 	public String serializeAcceptTrade(AcceptTradeParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a maritime trade request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request, the ratio of the trade (int, optional),
+	 * the resource being given (string, optional), the resource being requested (string)
+	 * @return A Json string of the serialized maritime trade request
 	 */
 	public String serializeMaritimeTrade(MaritimeTradeParameters params);
 	
 	/**
-	 * @TODO
+	 * Serializes a discard cards request into a Json string
+	 * 
+	 * @param params An object containing the type of action being taken (string),
+	 * the index of the player sending the request, and 5 ints representing the resources
+	 * being discarded
 	 */
 	public String serializeDiscardCards(DiscardCardsParameters params);
 	
