@@ -55,7 +55,6 @@ public class ServerPoller implements ServerPollerInterface
 	private class CatanPoller extends TimerTask{
 		@Override
 		public void run(){
-			//gameId JSON? Where will this come from
 			String model = proxyObject.getGameModel();
 			GameData data_object = serializer.deserializeGameModel(model);
 			

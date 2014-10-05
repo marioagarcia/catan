@@ -93,7 +93,7 @@ public class ServerProxy implements ServerProxyInterface
 				 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				 
 				 while ((json_line = reader.readLine()) != null){
-					 server_response.append(json_line + '\n');
+					 server_response.append(json_line);
 				 }
 				 
 				 response = server_response.toString();
