@@ -363,8 +363,9 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		//@TODO Set the deck in GameData
 		//Done building DevCardBank
-		
-		//Parse the map into an arraylist of hexes
+	
+	//Parse Map
+		//Parse hexes and build list of hexes
 		ArrayList<Hex> hexList = new ArrayList<Hex>();
 		
 		subObject = mainObject.getAsJsonObject("map");
@@ -443,6 +444,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		}
 		
 		//@TODO Set city list in GameData
+		//Done building list of cities
 		
 		//Parse settlements and build list of settlements
 		ArrayList<SettlementInterface> settlementList = new ArrayList();
@@ -464,6 +466,37 @@ public class ModelSerializer implements ModelSerializerInterface {
 		}
 		
 		//@TODO Set settlement list in GameData
+		//@TODO create function to handle cities and settlements; they are identical
+		//Done building list of settlements
+		
+		//Parse radius
+		subObject = mainObject.getAsJsonObject("map");
+		int radius = subObject.get("radius").getAsInt();
+		//Done getting radius
+		
+		//Parse ports and build list of ports
+		array = subObject.getAsJsonArray("ports");
+		
+		for(int i = 0; i < array.size(); i++){
+			subObject = array.get(i).getAsJsonObject();
+			
+			int ratio = subObject.get("ratio").getAsInt();
+			
+			ResourceType resource;
+			if(subObject.getAsJsonPrimitive("resource") == null){
+				resource = null;
+			}else{
+				resource = getResource(subObject);
+			}
+			
+			String direction = subObject.get("direction").getAsString();
+			//@TODO Get the direction as a type; figure out what that means
+			
+			subObject = (JsonObject)subObject.get("location");
+			HexLocation hexLocation = getHexLocation(subObject);
+			
+			//@TODO Create port with ratio, resource (optional), direction, hexLocation
+		}
 		
 		
 ///////////////////////////////////////////////////////////////////////////
