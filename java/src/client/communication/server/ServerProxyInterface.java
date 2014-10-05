@@ -51,7 +51,6 @@ public interface ServerProxyInterface{
 	
 	/**
 	 * Resets the game to its initial state immediately after players joined
-	 * @param JSONString with a player cookie and a game id
 	 * @return String
 	 */
 	abstract String resetGame();

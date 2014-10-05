@@ -173,5 +173,33 @@ public class ServerProxyTest {
 		System.out.println("Game Model Result: |" + result + "|");
 		assertTrue(proxy_test.getLatestVersionNumber() != Integer.MAX_VALUE);
 	}
+	
+	@Test
+	public void testResetGame()
+	{
+		result = proxy_test.resetGame();
+		System.out.println("Bad Reset Result: |" + result + "|");
+		assertTrue(result.equals("400"));
+		
+		loginAndJoinGame();
+		
+		param = "{"
+				  + "\"message\": \"Adding content to model\""
+				  + "\"source\": \"Kevin\""
+				  + "}";
+		proxy_test.sendChat(param);
+		
+		String modified_client = proxy_test.getGameModel();
+		result = proxy_test.resetGame();
+		
+		JsonParser parser = new JsonParser();
+		JsonElement game_element = parser.parse(result);
+		JsonObject game_object = game_element.getAsJsonObject();
+		
+		int version = game_object.get("version").getAsInt();
+		
+		assertTrue(!result.equals(modified_client));
+		assertTrue(version == 0);
+	}
 
 }
