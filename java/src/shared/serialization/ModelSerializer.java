@@ -17,6 +17,8 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.serialization.interfaces.CityInterface;
+import shared.serialization.interfaces.SettlementInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -422,7 +424,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building the list of roads
 		
 		//Parse cities and build list of cities
-		ArrayList<City> cityList = new ArrayList();
+		ArrayList<CityInterface> cityList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("cities");
@@ -439,6 +441,30 @@ public class ModelSerializer implements ModelSerializerInterface {
 			//@TODO Set vertexLocation with vertexDirection & hexLocation
 			//@TODO Set city with playerIndex and vertexLocation
 		}
+		
+		//@TODO Set city list in GameData
+		
+		//Parse settlements and build list of settlements
+		ArrayList<SettlementInterface> settlementList = new ArrayList();
+		
+		subObject = mainObject.getAsJsonObject("map");
+		array = subObject.getAsJsonArray("settlements");
+		
+		for(int i = 0; i < array.size(); i++){
+			subObject = array.get(i).getAsJsonObject();
+			
+			int playerIndex = subObject.get("owner").getAsInt();
+			subObject = (JsonObject)subObject.get("location");
+			
+			VertexDirection vertexDirection = getVertexDirection((JsonObject)subObject);
+			HexLocation hexLocation = getHexLocation(subObject);
+			
+			//@TODO Set vertexLocation with vertexDirection & hexLocation
+			//@TODO Set settlement with playerIndex and vertexLocation
+		}
+		
+		//@TODO Set settlement list in GameData
+		
 		
 ///////////////////////////////////////////////////////////////////////////
 		return gameData;
