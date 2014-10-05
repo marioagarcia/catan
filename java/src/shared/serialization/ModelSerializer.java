@@ -59,7 +59,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	}
 	
 	@Override
-	public ArrayList<GameInfoInterface> getGamesList(String jsonString){
+	public ArrayList<GameInfoInterface> deserializeGamesList(String jsonString){
 		
 		//@TODO All commented lines in this method must be implemented with new classes
 		

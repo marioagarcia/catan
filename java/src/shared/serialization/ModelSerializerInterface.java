@@ -35,14 +35,17 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 public interface ModelSerializerInterface 
 {
 	/**
-	 * @TODO 
+	 * Serializes a users credentials
+	 * 
+	 * @param credentials The userame and password of the user
+	 * @return A Json string of the serialized credentials
 	 */
 	public String serializeCredentials(CredentialsParameters credentials);
 	
 	/**
-	 * @TODO
+	 * 
 	 */
-	public ArrayList<GameInfoInterface> getGamesList(String jsonString);
+	public ArrayList<GameInfoInterface> deserializeGamesList(String jsonString);
 	
 	/**
 	 * @TODO
