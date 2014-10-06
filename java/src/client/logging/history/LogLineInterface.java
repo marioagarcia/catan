@@ -6,18 +6,18 @@ public interface LogLineInterface
 	 * gives you the String form of the MoveLogInterface object
 	 * @return String containing a readable version of the object
 	 */
-	public String getCommand();
+	public String getMove();
 	
-	public void setCommand(String command);
+	public void setMove(String move);
 	
 	/**
 	 * allows you to view the player corresponding
 	 * to the log entry
-	 * @return int the player's id
+	 * @return String the corresponding player's name
 	 */
-	public int getPlayerId();
+	public String getPlayerName();
 	
-	public void setPlayerId(int playerId);
+	public void setPlayerName(String playerName);
 	
 	
 }

@@ -8,7 +8,6 @@ import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.map.HexInterface;
-import client.model.player.PlayerInfo;
 import client.model.player.PlayerInterface;
 
 /**
@@ -250,9 +249,7 @@ public interface ModelFacadeInterface {
 	
 	public void populateGameList();
 	
-	public PlayerInterface registerPlayer(PlayerInfo playerInfo);
+	public boolean registerPlayer(String username, String password);
 	
 	public boolean loginPlayer(String username, String password);
-	
-	public void logoutPlayer();
 }

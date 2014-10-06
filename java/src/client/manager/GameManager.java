@@ -16,6 +16,7 @@ import client.manager.interfaces.GMPlayerInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
+import client.model.card.DevCardInterface.DevCardType;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
@@ -51,7 +52,7 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public void populateGameList() {
 		String gameListStr = serverProxy.listGames();
-		gameList = null; //modelSerializer.getGamesList(gameListStr);
+		//gameList = modelSerializer.deserializeGamesList(gameListStr);
 	}
 	
 	private boolean validatePlayer() {
@@ -81,11 +82,12 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean getGameModel() {
-		
+		//TODO
 		return false;
 	}
-	
-	private boolean merge() {
+
+	//TODO
+	private boolean resetFromGameModel(GameData gameModel) {
 		//reset model classes
 		/*
 		 * ClientModel {
@@ -197,23 +199,19 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean resetGame() { 
-		String result = serverProxy.resetGame();
-		if(result == "success") {
-			resetModel();
+		String JSONString = serverProxy.resetGame();
+		GameData reset_game_data = modelSerializer.deserializeGameModel(JSONString);
+		if(resetFromGameModel(reset_game_data))
 			return true;
-		}
-		return false;
-	}
-	
-	private void resetModel() {
-		//reset all the model classes 
+		else
+			return false;
 	}
 
 	@Override
 	public boolean getGameCommands() {
 		String JSONString = serverProxy.getGameCommands();
-		//this is where we use the data type that Casey is building from the serializer and update the history log
-		return false;
+		modelSerializer.deserializeGetGameCommands(JSONString);
+		return true;
 	}
 
 	@Override
@@ -225,9 +223,9 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade) {
-		//localPlayer.canAcceptTrade(trade);
-		//turnTracker.isPlayerTurn(localPlayer.getPlayerIndex());
-		return false;
+		boolean player_condition_met = localPlayer.canAcceptTrade(trade);
+		boolean turn_condition_met = (turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		return (player_condition_met && turn_condition_met);
 	}
 
 	@Override
@@ -240,8 +238,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canDiscardCards(ResourceList list) {
-		//return localPlayer.canDiscardCards(list);
-		return false;
+		return localPlayer.canDiscardCards(list);
 	}
 
 	@Override
@@ -322,11 +319,10 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canOfferTrade(TradeInterface trade) {
-		GMPlayerInterface player = null;
-		player.canOfferTrade(trade);
-		return false;
+		return localPlayer.canOfferTrade(trade);
 	}
 
+	//TODO
 	@Override
 	public boolean offerTrade(TradeInterface trade, int otherPlayerIndex) {
 		GMDomesticTradeInterface trade_i = null;
@@ -342,8 +338,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canMaritimeTrade(HexInterface location, MaritimeTrade trade) {
-		GMPlayerInterface player = null;
-		return player.canOfferTrade(trade);
+		return localPlayer.canOfferTrade(trade);
 	}
 
 	@Override
@@ -380,10 +375,10 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canBuyDevCard() {
-		GMPlayerInterface player = null;
-		boolean player_condition_met = player.canBuyDevCard();
-		boolean turn_condition_met = true; //turnTracker.canBuyDevCard(localPlayer.getPlayerIndex());
+		boolean player_condition_met = localPlayer.canBuyDevCard();
+		boolean turn_condition_met = turnTracker.canBuyDevCard(localPlayer.getPlayerIndex());
 		boolean deck_condition_met = true; //devCardBank.containsAnyCard();
+		
 		return (player_condition_met && turn_condition_met && deck_condition_met );
 	}
 
@@ -401,7 +396,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2) {
-		boolean player_condition_met = true;//localPlayer.canPlayYearOfPlenty(ResourceList resourceList);
+		boolean player_condition_met = localPlayer.canPlayYearOfPlenty();
 		boolean resource_bank_condition_met = (resCardBank.containsCard(type1) && resCardBank.containsCard(type2));
 		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
  
@@ -424,7 +419,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2) {
-		boolean player_condition_met = true;//localPlayer.canPlayRoadBuilding(devCardType);
+		boolean player_condition_met = localPlayer.canPlayRoadBuilding();
 		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
 		boolean map_condition_met = true; //boardMap.canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, localPlayer.getPlayerIndex());
 		
@@ -447,7 +442,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canPlaySoldier(HexLocation oldLocation,	HexLocation newLocation, int victimIndex) {
-		boolean player_condition_met = true;//localPlayer.canPlaySoldier();
+		boolean player_condition_met = localPlayer.canPlaySoldier();
 		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
 		boolean map_condition_met = true; //boardMap.canPlaySoldier(HexInterface oldLocation, HexInterface newLocation);
 		boolean robbed_player_condition_met = true; //currentGame.playerCanBeRobbed(victimIndex);
@@ -490,7 +485,7 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 
 	@Override
 	public boolean canPlayMonument() {
-		boolean player_condition_met = true;//localPlayer.canPlayDevCard(devCardType);
+		boolean player_condition_met = localPlayer.canPlayMonument();
 		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
 		
 		return (player_condition_met && turn_condition_met);
@@ -508,21 +503,25 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	}
 
 	@Override
-	public PlayerInterface registerPlayer(PlayerInfo playerInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void logoutPlayer() {
-		// TODO Auto-generated method stub
+	public boolean registerPlayer(String username, String password) {
+		CredentialsParameters credentials = new CredentialsParameters(username, password);
 		
+		String JSONString = modelSerializer.serializeCredentials(credentials);
+		
+		serverProxy.register(JSONString);
+		
+		return true;
 	}
 
 	@Override
 	public boolean loginPlayer(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		CredentialsParameters credentials = new CredentialsParameters(username, password);
+		
+		String JSONString = modelSerializer.serializeCredentials(credentials);
+		
+		serverProxy.login(JSONString);
+		
+		return true;
 	}
 
 }
