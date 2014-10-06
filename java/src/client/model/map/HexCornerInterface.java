@@ -4,12 +4,6 @@ import client.model.piece.BuildingInterface;
 import client.model.player.PlayerInterface;
 
 public interface HexCornerInterface {
-
-	/**
-	 * returns the building currently built on the corner
-	 * @return BuildingInterface
-	 */
-	public abstract BuildingInterface getBuilding();
 	
 	/**
 	 * tells us whether or not we can build a Settlement on this HexCorner

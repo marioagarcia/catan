@@ -1,72 +1,55 @@
 package client.model.map;
 
-import shared.locations.EdgeLocation;
+import shared.locations.VertexLocation;
 import client.model.piece.BuildingInterface;
-import client.model.piece.GamePieceInterface.GamePieceType;
 import client.model.player.PlayerInterface;
 
 public class HexCorner implements HexCornerInterface {
 	
-	private BuildingInterface building;
 	private int ownerIndex;
-	private EdgeLocation location;
+	private VertexLocation location;
 	
 	public HexCorner(){
 		
 	}
 	
-	public HexCorner(int index, EdgeLocation loc){
-		ownerIndex = index;
-		location = loc;
+	public HexCorner(int ownerIndex, VertexLocation location){
+		this.ownerIndex = ownerIndex;
+		this.location = location;
 	}
 
 	public int getOwnerIndex() {
-		return ownerIndex;
+		return this.ownerIndex;
 	}
 
 	public void setOwnerIndex(int ownerIndex) {
 		this.ownerIndex = ownerIndex;
 	}
 
-	public EdgeLocation getLocation() {
+	public VertexLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(EdgeLocation location) {
+	public void setLocation(VertexLocation location) {
 		this.location = location;
 	}
 
 	@Override
-	public BuildingInterface getBuilding() {
-		return this.building;
-	}
-
-	@Override
 	public boolean canBuildSettlement(PlayerInterface player) {
-		if(this.building == null){
-			return true;
-		}
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean canBuildCity(PlayerInterface player) {
-		if(this.building == null){
-			return false;
-		}
-		if(this.building.getPlayerId() != player.getId()){
-			return false;
-		}
-		if(this.building.getType() != GamePieceType.SETTLEMENT){
-			return false;
-		}
-		
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public void buildBuilding(BuildingInterface building) {
-		this.building = building;
+		// TODO Auto-generated method stub
+		
 	}
 
 }
