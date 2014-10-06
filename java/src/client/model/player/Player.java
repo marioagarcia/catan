@@ -220,8 +220,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public boolean canDiscardCards(ResourceList list){
-		//Resourcelist should have a size method to verify this.
-		return (!discarded /*&& resourceList.size() > 7*/);
+		return (!discarded && resourceList.totalNumberCards() > 7);
 	}
 
 	
