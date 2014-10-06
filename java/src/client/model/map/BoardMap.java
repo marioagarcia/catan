@@ -31,13 +31,17 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public HexCornerInterface getVertex(VertexLocation location) {
-		return this.hexes.get(location.getHexLoc()).getCorner(location.getDir());
+	public VertexLocation getVertex(VertexLocation location) {
+		//TODO
+		return null;
+//		return this.hexes.get(location.getHexLoc()).getCorner(location.getDir());
 	}
 
 	@Override
-	public HexBorderInterface getHexBorder(EdgeLocation location) {
-		return this.hexes.get(location.getHexLoc()).getBorder(location.getDir());
+	public VertexLocation getHexBorder(EdgeLocation location) {
+		//TODO
+		return null;
+//		return this.hexes.get(location.getHexLoc()).getBorder(location.getDir());
 	}
 
 	@Override

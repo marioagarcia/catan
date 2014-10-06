@@ -2,8 +2,6 @@ package client.model.piece;
 
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerCityInterface;
-import shared.serialization.interfaces.SerializerVertexLocationInterface;
-import client.model.map.HexCornerInterface;
 
 public class City implements CityInterface, SerializerCityInterface {
 	

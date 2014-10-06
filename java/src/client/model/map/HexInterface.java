@@ -35,19 +35,5 @@ public interface HexInterface {
 	 * @param number
 	 */
 	public abstract void setNumber(int number);
-	
-	/**
-	 * gets the given corner of the HexInterface object
-	 * @param type the corner position (top right, etc)
-	 * @return HexCorner
-	 */
-	public abstract HexCornerInterface getCorner(VertexDirection direction);
-	
-	/**
-	 * returns the border given border of the Hex
-	 * @param type HexBorderInterface.HexBorderType
-	 * @return HexBorderInterface
-	 */
-	public abstract HexBorderInterface getBorder(EdgeDirection location);
 
 }

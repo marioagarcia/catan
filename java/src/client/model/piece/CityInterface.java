@@ -1,7 +1,6 @@
 package client.model.piece;
 
 import shared.locations.VertexLocation;
-import client.model.map.HexCornerInterface;
 
 /**
  * Represents an upgraded Settlement in the game. Provides double resources.

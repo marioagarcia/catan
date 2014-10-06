@@ -1,12 +1,14 @@
 package client.model.piece;
 
-import client.model.map.HexCornerInterface;
+import shared.locations.VertexLocation;
+import shared.serialization.interfaces.SerializerSettlementInterface;
 
-public class Settlement implements SettlementInterface {
+
+public class Settlement implements SettlementInterface, SerializerSettlementInterface {
 	
 	GamePieceType type;
 	int playerIndex;
-	HexCornerInterface location;
+	VertexLocation location;
 	
 	public Settlement(){
 		this.type = GamePieceType.SETTLEMENT;
@@ -29,13 +31,19 @@ public class Settlement implements SettlementInterface {
 	}
 
 	@Override
-	public void setLocation(HexCornerInterface corner) {
+	public void setLocation(VertexLocation corner) {
 		this.location = corner;
 	}
 
 	@Override
-	public HexCornerInterface getLocation() {
+	public VertexLocation getLocation() {
 		return this.location;
+	}
+
+	@Override
+	public void setCity(int playerIndex, VertexLocation vertexLocation) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

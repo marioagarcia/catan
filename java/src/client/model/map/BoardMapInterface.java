@@ -22,12 +22,12 @@ public interface BoardMapInterface {
 	 * @param location VertexLocation
 	 * @return HexCornerInterface
 	 */
-	public HexCornerInterface getVertex(VertexLocation location);
+	public VertexLocation getVertex(VertexLocation location);
 	
 	/**
 	 * gets a hex border by location
 	 * @param location EdgeLocation
 	 * @return HexBorderInterface
 	 */
-	public HexBorderInterface getHexBorder(EdgeLocation location);
+	public VertexLocation getHexBorder(EdgeLocation location);
 }

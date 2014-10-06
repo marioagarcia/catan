@@ -15,21 +15,7 @@ public class Hex implements HexInterface, SerializerHexInterface {
 	private HexLocation location;
 	private HexType resource;
 	private int number;
-	private Map<VertexDirection, HexCornerInterface> corners;
-	private Map<EdgeLocation, HexBorderInterface> borders;
-	
-	public Hex(Map<VertexDirection, HexCornerInterface> corners,
-			Map<EdgeLocation, HexBorderInterface> borders,
-			HexLocation location,
-			HexType type,
-			int number){
-		
-		this.corners = corners;
-		this.borders = borders;
-		this.location = location;
-		this.resource = type;
-		this.number = number;
-	}
+
 	
 	public Hex(HexLocation location,
 			HexType type,
@@ -65,6 +51,7 @@ public class Hex implements HexInterface, SerializerHexInterface {
 		this.number = number;
 	}
 	
+	@Override
 	public String toString(){
 		String returnString = "";
 		if(resource != null)
@@ -72,16 +59,6 @@ public class Hex implements HexInterface, SerializerHexInterface {
 		returnString += location.toString() + "\n";
 		returnString += number + "\n";
 		return returnString;
-	}
-
-	@Override
-	public HexCornerInterface getCorner(VertexDirection type) {
-		return this.corners.get(type);
-	}
-
-	@Override
-	public HexBorderInterface getBorder(EdgeDirection type) {
-		return this.borders.get(type);
 	}
 
 	@Override

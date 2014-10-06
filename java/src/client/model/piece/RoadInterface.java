@@ -1,7 +1,6 @@
 package client.model.piece;
 
 import shared.locations.EdgeLocation;
-import client.model.map.HexBorderInterface;
 
 /**
  * Represents a Road on the board. Roads provide connections between a Player's City and Settlement pieces. 
