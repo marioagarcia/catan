@@ -68,11 +68,11 @@ public class DevCardList implements SerializerDevCardListInterface {
 	public String toString(){
 		String returnString = "";
 		
-		returnString += "Year of Plenty: " + yearOfPlenty + "\n";
-		returnString += "Monopoly: " + monopoly + "\n";
-		returnString += "Soldier: " + soldier + "\n";
-		returnString += "RoadBuilding: " + roadBuild + "\n";
-		returnString += "Monument: " + monument;
+		returnString += "\tYear of Plenty: " + yearOfPlenty + "\n";
+		returnString += "\tMonopoly: " + monopoly + "\n";
+		returnString += "\tSoldier: " + soldier + "\n";
+		returnString += "\tRoadBuilding: " + roadBuild + "\n";
+		returnString += "\tMonument: " + monument;
 		
 		return returnString;
 	}

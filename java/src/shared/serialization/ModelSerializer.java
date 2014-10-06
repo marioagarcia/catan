@@ -497,7 +497,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 			DevCardList newDevCards = getDevCardList(playerObject);
 			//SerializerDevCardListInterface newDevCardList = getDevCardList(playerObject);
 			
-			
+			System.out.println("Old Dev Cards: ");
+			System.out.println()
 			
 			int roads = subObject.get("roads").getAsInt();
 			int cities = subObject.get("cities").getAsInt();
