@@ -1,8 +1,9 @@
 package client.model.turntracker;
 
+import shared.serialization.interfaces.TurnTrackerInterface;
 import client.manager.interfaces.GMTurnTrackerInterface;
 
-public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface {
+public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, TurnTrackerInterface {
 	
 	private Status status;
 	private int currentPlayerIndex;
@@ -48,14 +49,33 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 
 	@Override
 	public boolean canBuyDevCard(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		return (player_index == currentPlayerIndex && status == Status.PLAYING);
 	}
 
 	@Override
 	public boolean canPlayDevCard(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		return (player_index == currentPlayerIndex && status == Status.PLAYING);
 	}
+
+	@Override
+	public void setTurnTracker(String status, int currentTurn, int longestRoad,
+			int largestArmy){
+		
+		this.status = statusFromString(status);
+		this.currentPlayerIndex = currentTurn;
+		this.playerWithLongestRoad = longestRoad;
+		this.playerWithLargestArmy = largestArmy;	
+	}
+	
+	private static Status statusFromString(String text) {
+	    if (text != null) {
+	    	for (Status s : Status.values()) {
+	    		if (text.equalsIgnoreCase(s.toString())) {
+	    			return s;
+	    		}
+	    	}
+	    }
+	    return null;
+	  }
 
 }
