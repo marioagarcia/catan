@@ -1,7 +1,6 @@
 package client.manager;
 
 import java.util.ArrayList;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -12,19 +11,15 @@ import shared.serialization.parameters.*;
 import client.communication.server.ServerProxy;
 import client.logging.GameLog;
 import client.manager.interfaces.GMBoardMapInterface;
-import client.manager.interfaces.GMPlayerInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
-import client.model.card.DevCardInterface.DevCardType;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.map.HexInterface;
 import client.model.player.Player;
-import client.model.player.PlayerInfo;
-import client.model.player.PlayerInterface;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 import client.roll.DiceRoller;
@@ -37,6 +32,7 @@ public class GameManager implements GameManagerInterface {
 	Player localPlayer;
 	GameInfo currentGame;
 	GameLog gameLog;
+	GameCommands gameCommands;
 	TurnTracker turnTracker;
 	DiceRoller diceRoller;
 	GMBoardMapInterface boardMap;
@@ -210,29 +206,33 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	@Override
 	public boolean getGameCommands() {
 		String JSONString = serverProxy.getGameCommands();
-		modelSerializer.deserializeGetGameCommands(JSONString);
+		//gameCommands = modelSerializer.deserializeGetGameCommands(JSONString);
 		return true;
 	}
 
 	@Override
 	public boolean postGameCommands() {
-		//String JSONString = modelSerializer
-		//serverProxy.postGameCommands(JSONString);
-		return false;
+		String JSONString = null; //modelSerializer.serializePostGameCommands(gameCommands);
+		serverProxy.postGameCommands(JSONString);
+		
+		return true;
 	}
 
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade) {
 		boolean player_condition_met = localPlayer.canAcceptTrade(trade);
 		boolean turn_condition_met = (turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		
 		return (player_condition_met && turn_condition_met);
 	}
 
 	@Override
 	public boolean acceptTrade(TradeInterface trade, boolean accept) {
 		int player_index = localPlayer.getPlayerIndex();
+		
 		String JSONString = modelSerializer.serializeAcceptTrade(new AcceptTradeParameters(player_index, accept));
 		serverProxy.acceptTrade(JSONString);
+		
 		return false;
 	}
 
@@ -244,14 +244,18 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	@Override
 	public boolean discardCards(ResourceList list) {
 		int player_index = localPlayer.getPlayerIndex();
+		
 		String JSONString = modelSerializer.serializeDiscardCards(new DiscardCardsParameters(player_index, list));
+		
 		serverProxy.discardCards(JSONString); //this should throw an exception	
+		
 		return true;
 	}
 
 	@Override
 	public boolean canRoll() {
 		int player_index = localPlayer.getPlayerIndex();
+		
 		return turnTracker.canRoll(player_index);
 	}
 
@@ -259,14 +263,18 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	public int roll() {
 		int player_index = localPlayer.getPlayerIndex();
 		int number = diceRoller.roll();
+		
 		String JSONString = modelSerializer.serializeRollNumber(new RollNumberParameters(player_index, number));
+		
 		serverProxy.rollNumber(JSONString);
+		
 		return 0;
 	}
 
 	@Override
 	public boolean canBuildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
+		
 		return boardMap.canBuildRoad(location, player_index);
 	}
 
@@ -274,15 +282,19 @@ largestArmy (index, optional): The index of who has the biggest army (3 or more)
 	public boolean buildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus());
+		
 		BuildRoadParameters param = new BuildRoadParameters(player_index, new EdgeLocationParameters(location), isFree);
 		String JSONString = modelSerializer.serializeBuildRoad(param);
+		
 		serverProxy.rollNumber(JSONString);
+		
 		return true;
 	}
 
 	@Override
 	public boolean canBuildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
+		
 		return boardMap.canBuildSettlement(location, player_index);
 	}
 
