@@ -149,18 +149,16 @@ public class Player implements PlayerInterface, GMPlayerInterface, shared.serial
 		this.victoryPoints = victoryPoints;
 	}
 
-	//Parameters should not be interface objects or ResourceListInterface needs to add all the methods needed in this class
 	@Override
-	public void setPlayer(ResourceListInterface resourceList,
-			DevCardListInterface oldDevCards, DevCardListInterface newDevCards,
-			int roads, int cities, int settlements, int soldiers,
-			int victoryPoints, int monuments, boolean playedDevCard,
-			boolean discarded, int playerID, int playerIndex,
-			String playerName, CatanColor playerColor){
+	public void setPlayer(ResourceList resourceList, DevCardList oldDevCards,
+			DevCardList newDevCards, int roads, int cities, int settlements,
+			int soldiers, int victoryPoints, int monuments,
+			boolean playedDevCard, boolean discarded, int playerID,
+			int playerIndex, String playerName, CatanColor playerColor) {
 		
-		//this.resourceList = resourceList;
-		//this.oldDevCards = oldDevCards;
-		//this.newDevCards = newDevCards;
+		this.resourceList = resourceList;
+		this.oldDevCards = oldDevCards;
+		this.newDevCards = newDevCards;
 		this.roads = roads;
 		this.cities = cities;
 		this.settlements = settlements;
@@ -225,6 +223,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, shared.serial
 	public boolean canDiscardCards(ResourceList list){
 		//Resourcelist should have a size method to verify this.
 		return (!discarded /*&& resourceList.size() > 7*/);
-	}	
+	}
+
 	
 }
