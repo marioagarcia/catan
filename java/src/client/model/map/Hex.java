@@ -7,10 +7,9 @@ import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
-import shared.serialization.interfaces.HexInterface;
-import shared.serialization.interfaces.HexLocationInterface;
+import shared.serialization.interfaces.SerializerHexInterface;
 
-public class Hex implements HexInterface, client.model.map.HexInterface {
+public class Hex implements HexInterface, SerializerHexInterface {
 	
 	private HexLocation location;
 	private HexType resource;
@@ -85,7 +84,7 @@ public class Hex implements HexInterface, client.model.map.HexInterface {
 	}
 
 	@Override
-	public void setHex(HexLocationInterface hexLocation, ResourceType resource, int number) {
+	public void setHex(HexLocation hexLocation, ResourceType resource, int number) {
 		this.location = hexLocation;
 		
 		switch(resource){
