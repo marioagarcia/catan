@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import shared.definitions.ResourceType;
+import shared.serialization.interfaces.SerializerBankInterface;
 
-public class ResourceCardBank implements ResourceCardBankInterface {
+public class ResourceCardBank implements ResourceCardBankInterface, SerializerBankInterface {
 	
 	private Map<ResourceType, Integer> cards;
 	
@@ -37,6 +38,15 @@ public class ResourceCardBank implements ResourceCardBankInterface {
 	@Override
 	public boolean containsCard(ResourceType type) {
 		return this.cards.containsKey(type);
+	}
+
+	@Override
+	public void setBank(int brick, int wood, int sheep, int wheat, int ore) {
+		cards.put(ResourceType.BRICK, brick);
+		cards.put(ResourceType.WOOD, wood);
+		cards.put(ResourceType.SHEEP, sheep);
+		cards.put(ResourceType.WHEAT, wheat);
+		cards.put(ResourceType.ORE, ore);
 	}
 
 

@@ -2,8 +2,9 @@ package client.model.card;
 
 import java.util.HashMap;
 import java.util.Map;
+import shared.serialization.interfaces.SerializerDeckInterface;
 
-public class DevCardBank implements DevCardBankInterface {
+public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface {
 
 	private Map<DevCardInterface.DevCardType, Integer> cards;
 	
@@ -39,6 +40,17 @@ public class DevCardBank implements DevCardBankInterface {
 	@Override
 	public boolean containsCard(DevCardInterface.DevCardType type) {
 		return this.cards.containsKey(type);
+	}
+
+	@Override
+	public void setDeck(int yearOfPlenty, int monopoly, int soldier,
+			int roadBuild, int monument) {
+		
+		cards.put(DevCardInterface.DevCardType.YEAR_OF_PLENTY, yearOfPlenty);
+		cards.put(DevCardInterface.DevCardType.MONOPOLY, monopoly);
+		cards.put(DevCardInterface.DevCardType.SOLDIER, soldier);
+		cards.put(DevCardInterface.DevCardType.ROAD_BUILD, roadBuild);
+		cards.put(DevCardInterface.DevCardType.MONUMENT, monument);
 	}
 
 }
