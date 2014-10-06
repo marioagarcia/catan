@@ -241,9 +241,7 @@ public interface GameManagerInterface
 	
 	public void populateGameList();
 	
-	public PlayerInterface registerPlayer(PlayerInfo playerInfo);
-	
-	public void logoutPlayer();
+	public boolean registerPlayer(String username, String password);
 	
 	public boolean loginPlayer(String username, String password);
 	

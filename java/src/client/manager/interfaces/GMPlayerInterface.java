@@ -35,4 +35,16 @@ public interface GMPlayerInterface {
 	 * @return true if the player has the soldier card and it hasn't played a dev card this turn
 	 */
 	public boolean canPlaySoldier();
+	
+	/**
+	 * Determines that the player has the Monument card and it hasn't played a dev card this turn
+	 * @return true if the player has the Monument card and it hasn't played a dev card this turn
+	 */
+	public boolean canPlayMonument();
+	
+	/**
+	 * Determines that the player has the Monopoly card and it hasn't played a dev card this turn
+	 * @return true if the player has the Monopoly card and it hasn't played a dev card this turn
+	 */
+	public boolean canPlayMonopoly();
 }

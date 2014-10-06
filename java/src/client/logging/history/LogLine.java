@@ -2,32 +2,32 @@ package client.logging.history;
 
 public class LogLine implements LogLineInterface {
 
-	int playerId;
-	String gameCommand;
+	String playerName;
+	String move;
 	
-	LogLine(int playerId, String gameCommand) {
-		setPlayerId(playerId);
-		setCommand(gameCommand);
+	LogLine(String playerName, String move) {
+		setPlayerName(playerName);
+		setMove(move);
 	}
 
 	@Override
-	public int getPlayerId() {
-		return playerId;
+	public String getMove() {
+		return move;
 	}
 
 	@Override
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
+	public void setMove(String move) {
+		this.move = move;
 	}
 
 	@Override
-	public String getCommand() {
-		return gameCommand;
+	public String getPlayerName() {
+		return playerName;
 	}
 
 	@Override
-	public void setCommand(String command) {
-		this.gameCommand = command;
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
 	}
 
 }

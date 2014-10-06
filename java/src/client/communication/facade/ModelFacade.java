@@ -207,18 +207,13 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public PlayerInterface registerPlayer(PlayerInfo playerInfo) {
-		return this.gameManager.registerPlayer(playerInfo);
+	public boolean registerPlayer(String username, String password) {
+		return this.gameManager.registerPlayer(username, password);
 	}
 
 	@Override
 	public boolean loginPlayer(String username, String password) {
 		return this.gameManager.loginPlayer(username, password);
-	}
-
-	@Override
-	public void logoutPlayer() {
-		this.gameManager.logoutPlayer();
 	}
 
 	@Override
