@@ -1,5 +1,6 @@
 package client.model.map;
 
+import shared.definitions.HexType;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -48,12 +49,5 @@ public interface HexInterface {
 	 * @return HexBorderInterface
 	 */
 	public abstract HexBorderInterface getBorder(EdgeDirection location);
-	
-	public enum HexType{
-		BRICK,
-		WHEAT,
-		SHEEP,
-		ORE,
-		WOOD
-	}
+
 }

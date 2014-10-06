@@ -2,6 +2,7 @@ package client.model.map;
 
 import java.util.Map;
 
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
