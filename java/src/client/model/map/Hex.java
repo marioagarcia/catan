@@ -62,30 +62,9 @@ public class Hex implements HexInterface, SerializerHexInterface {
 	}
 
 	@Override
-	public void setHex(HexLocation hexLocation, ResourceType resource, int number) {
+	public void setHex(HexLocation hexLocation, HexType resource, int number) {
 		this.location = hexLocation;
-		
-		switch(resource){
-			case WOOD:
-				this.resource = HexType.WOOD;
-				break;
-			case BRICK:
-				this.resource = HexType.BRICK;
-				break;
-			case SHEEP:
-				this.resource = HexType.SHEEP;
-				break;
-			case WHEAT:
-				this.resource = HexType.WHEAT;
-				break;
-			case ORE:
-				this.resource = HexType.ORE;
-				break;
-			default:
-				//should never happen
-				break;
-		}
-		
+		this.resource = resource;
 		this.number = number;
 		
 	}
