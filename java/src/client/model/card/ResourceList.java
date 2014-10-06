@@ -112,4 +112,16 @@ public class ResourceList implements SerializerResourceListInterface {
 				this.wheat +
 				this.wood;
 	}
+	
+	@Override
+	public String toString(){
+		String returnString = "";
+		
+		returnString += "\tBrick: " + brick + "\n";
+		returnString += "\tWood: " + wood + "\n";
+		returnString += "\tSheep: " + sheep + "\n";
+		returnString += "\tWheat: " + wheat + "\n";
+		returnString += "\tOre: " + ore;
+		return returnString;
+	}
 }

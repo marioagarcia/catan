@@ -59,6 +59,7 @@ import client.model.card.DevCardList;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.HexCorner;
+import client.model.player.Player;
 
 public class ModelSerializer implements ModelSerializerInterface {
 	
@@ -479,7 +480,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	//Done parsing map
 		
 		//Parse players and build player list
-		ArrayList<SerializerPlayerInterface> playerList = new ArrayList();
+		ArrayList<Player> playerList = new ArrayList();
 		
 		array = mainObject.getAsJsonArray("players");
 		for(int i = 0; i < array.size(); i++){
@@ -490,15 +491,9 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			playerObject = subObject.getAsJsonObject("oldDevCards");
 			DevCardList oldDevCards = getDevCardList(playerObject);
-			//@TODO Fill this in, don't forget to return a value from getDevCardList()!!!!!!!
-			//SerializerDevCardListInterface oldDevCardList = getDevCardList(playerObject);
 			
 			playerObject = subObject.getAsJsonObject("newDevCards");
 			DevCardList newDevCards = getDevCardList(playerObject);
-			//SerializerDevCardListInterface newDevCardList = getDevCardList(playerObject);
-			
-			System.out.println("Old Dev Cards: ");
-			System.out.println()
 			
 			int roads = subObject.get("roads").getAsInt();
 			int cities = subObject.get("cities").getAsInt();
@@ -511,13 +506,23 @@ public class ModelSerializer implements ModelSerializerInterface {
 			int playerID = subObject.get("playerID").getAsInt();
 			int playerIndex = subObject.get("playerIndex").getAsInt();
 			String name = subObject.get("name").getAsString();
-			String color = subObject.get("color").getAsString();
-			CatanColor playerColor = getPlayerColor(color);
+			CatanColor playerColor = getPlayerColor(subObject.get("color").getAsString());
 			
-			//@TODO Build a player with all of this crap
-			//@TODO Add the player to the player list
+			Player player = new Player();
+			player.setPlayer(resourceList, oldDevCards, newDevCards, roads, 
+							 cities, settlements, soldiers, victoryPoints, 
+							 monuments, playedDevCard, discarded, playerID, 
+							 playerIndex, name, playerColor);
+			playerList.add(player);
 		}
-		//@TODO Set the player list in gameData
+		gameData.setPlayerList(playerList);
+		
+		for(int i = 0; i < playerList.size(); i++){
+			System.out.println(playerList.get(i).getName() + "\n" + 
+							   playerList.get(i).getPlayerId() + "\n" +
+							   playerList.get(i).getPlayerIndex() + "\n" + 
+							   playerList.get(i).getResourceList().toString() + "\n");
+		}
 		//Done parsing players
 		
 		//Parse Log
@@ -623,7 +628,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		int yearOfPlenty = object.get("yearOfPlenty").getAsInt();
 		int monopoly = object.get("monopoly").getAsInt();
 		int soldier = object.get("soldier").getAsInt();
-		int roadBuild = object.get("roadBuild").getAsInt();
+		int roadBuild = object.get("roadBuilding").getAsInt();
 		int monument = object.get("monument").getAsInt();
 		
 		devCardList.setDevCardList(yearOfPlenty, monopoly, soldier, roadBuild, monument);
