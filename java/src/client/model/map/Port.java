@@ -2,10 +2,9 @@ package client.model.map;
 
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
-import shared.serialization.interfaces.HexLocationInterface;
-import shared.serialization.interfaces.PortInterface;
+import shared.serialization.interfaces.SerializerPortInterface;
 
-public class Port implements PortInterface {
+public class Port implements SerializerPortInterface {
 
 	private String resource; // If omitted, then it's for any resource, Optional
 	private HexLocation location;
@@ -53,7 +52,7 @@ public class Port implements PortInterface {
 
 	@Override
 	public void setPort(int ratio, ResourceType resource, String direction,
-			HexLocationInterface hexLocation) {
+			HexLocation hexLocation) {
 		// TODO Auto-generated method stub
 		
 	}
