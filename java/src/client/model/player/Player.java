@@ -311,19 +311,22 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public boolean canPlayMonument() {
-		// TODO Auto-generated method stub
-		return false;
+		return (!playedDevCard && newDevCards.getMonument() >=1);
 	}
 
 	@Override
 	public boolean canPlayMonopoly() {
-		// TODO Auto-generated method stub
-		return false;
+		return (!playedDevCard && newDevCards.getMonopoly() >=1);
 	}
 
 	@Override
 	public int getNumberOfCards() {
 		return resourceList.totalNumberCards();
+	}
+
+	@Override
+	public boolean canBeRobbed() {
+		return (resourceList.totalNumberCards() >= 1);
 	}
 
 	

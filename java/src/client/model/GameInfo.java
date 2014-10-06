@@ -4,7 +4,6 @@ import java.util.*;
 
 import shared.serialization.interfaces.SerializerGameInfoInterface;
 import shared.serialization.interfaces.SerializerPlayerInterface;
-import client.manager.interfaces.GMGameInfoInterface;
 import client.model.player.PlayerInfo;
 
 /**
@@ -18,7 +17,7 @@ import client.model.player.PlayerInfo;
  * </ul>
  * 
  */
-public class GameInfo implements GMGameInfoInterface, SerializerGameInfoInterface
+public class GameInfo implements SerializerGameInfoInterface
 {
 	private int id;
 	private String title;
