@@ -1,6 +1,6 @@
 package client.communication.server;
 
-import client.model.player.PlayerInfo;
+import client.model.player.Player;
 
 /**
  * This interface is our last step to communicating with the server. It contains the methods that implement
@@ -216,5 +216,5 @@ public interface ServerProxyInterface{
 	 */
 	abstract String playMonument(String JSONString);
 	
-	abstract boolean validatePlayer(PlayerInfo player);
+	abstract boolean validatePlayer(Player player);
 }

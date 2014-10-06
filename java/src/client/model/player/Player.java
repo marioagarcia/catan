@@ -1,7 +1,6 @@
 package client.model.player;
 
 import shared.definitions.CatanColor;
-import shared.serialization.interfaces.SerializerDevCardListInterface;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMPlayerInterface;
 import client.model.card.DevCardList;
@@ -187,9 +186,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, shared.serial
 				resourceList.getWheat() >= 1);
 	}
 
-	//Why is this being given a resource list? They get resources by playing this card, they don't need them.
 	@Override
-	public boolean canPlayYearOfPlenty(ResourceList resourceList){
+	public boolean canPlayYearOfPlenty(){
 		return (!playedDevCard && newDevCards.getYearOfPlenty() >=1);
 	}
 
