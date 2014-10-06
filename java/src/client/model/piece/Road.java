@@ -16,12 +16,12 @@ public class Road implements RoadInterface, SerializerRoadInterface {
 	}
 	
 	@Override
-	public void setPlayerId(int id) {
-		this.playerIndex = id;
+	public void setPlayerIndex(int index) {
+		this.playerIndex = index;
 	}
 
 	@Override
-	public int getPlayerId() {
+	public int getPlayerIndex() {
 		return playerIndex;
 	}
 

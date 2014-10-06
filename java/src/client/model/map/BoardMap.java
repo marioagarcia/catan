@@ -8,14 +8,14 @@ import client.manager.interfaces.GMBoardMapInterface;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.serialization.interfaces.CityInterface;
-import shared.serialization.interfaces.HexLocationInterface;
-import shared.serialization.interfaces.MapInterface;
-import shared.serialization.interfaces.PortInterface;
-import shared.serialization.interfaces.RoadInterface;
-import shared.serialization.interfaces.SettlementInterface;
+import shared.serialization.interfaces.SerializerCityInterface;
+import shared.serialization.interfaces.SerializerHexInterface;
+import shared.serialization.interfaces.SerializerMapInterface;
+import shared.serialization.interfaces.SerializerPortInterface;
+import shared.serialization.interfaces.SerializerRoadInterface;
+import shared.serialization.interfaces.SerializerSettlementInterface;
 
-public class BoardMap implements BoardMapInterface, GMBoardMapInterface, MapInterface {
+public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
 	Map<HexLocation, HexInterface> hexes;
 	
 	public BoardMap(){
@@ -76,19 +76,19 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, MapInte
 		return false;
 	}
 
+
 	@Override
-	public void setMap(
-			ArrayList<shared.serialization.interfaces.HexInterface> hexList,
-			ArrayList<RoadInterface> roadList,
-			ArrayList<CityInterface> cityList,
-			ArrayList<SettlementInterface> settlementList, int radius,
-			ArrayList<PortInterface> portList,
-			HexLocationInterface robberLocation) {
+	public void setMap(ArrayList<SerializerHexInterface> hexList,
+			ArrayList<SerializerRoadInterface> roadList,
+			ArrayList<SerializerCityInterface> cityList,
+			ArrayList<SerializerSettlementInterface> settlementList,
+			int radius, ArrayList<SerializerPortInterface> portList,
+			HexLocation robberLocation) {
+		// TODO Auto-generated method stub
 		
 		
 		
 		
 	}
-	//TODO
 
 }

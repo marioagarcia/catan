@@ -5,7 +5,7 @@ import client.model.map.HexCornerInterface;
 public class Settlement implements SettlementInterface {
 	
 	GamePieceType type;
-	int playerId;
+	int playerIndex;
 	HexCornerInterface location;
 	
 	public Settlement(){
@@ -19,13 +19,13 @@ public class Settlement implements SettlementInterface {
 	}
 
 	@Override
-	public void setPlayerId(int id) {
-		this.playerId = id;
+	public void setPlayerIndex(int index) {
+		this.playerIndex = index;
 	}
 
 	@Override
-	public int getPlayerId() {
-		return this.playerId;
+	public int getPlayerIndex() {
+		return this.playerIndex;
 	}
 
 	@Override

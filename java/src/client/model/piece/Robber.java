@@ -5,7 +5,7 @@ import client.model.map.HexInterface;
 public class Robber implements RobberInterface {
 	
 	GamePieceType type;
-	int playerId;
+	int playerIndex;
 	HexInterface location;
 	
 	public Robber()
@@ -19,13 +19,13 @@ public class Robber implements RobberInterface {
 	}
 
 	@Override
-	public void setPlayerId(int id) {
-		this.playerId = id;
+	public void setPlayerIndex(int index) {
+		this.playerIndex = index;
 	}
 
 	@Override
-	public int getPlayerId() {
-		return this.playerId;
+	public int getPlayerIndex() {
+		return this.playerIndex;
 	}
 
 	@Override

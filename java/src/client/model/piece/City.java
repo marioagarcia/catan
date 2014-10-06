@@ -1,13 +1,14 @@
 package client.model.piece;
 
+import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerCityInterface;
 import shared.serialization.interfaces.SerializerVertexLocationInterface;
 import client.model.map.HexCornerInterface;
 
 public class City implements CityInterface, SerializerCityInterface {
 	
-	private int playerId;
-	private HexCornerInterface corner;
+	private int playerIndex;
+	private VertexLocation location;
 	GamePieceType type;
 	
 	public City(){
@@ -15,23 +16,18 @@ public class City implements CityInterface, SerializerCityInterface {
 	}
 
 	@Override
-	public void setPlayerId(int id) {
-		this.playerId = id;
+	public int getPlayerIndex() {
+		return this.playerIndex;
 	}
 
 	@Override
-	public int getPlayerId() {
-		return this.playerId;
+	public void setLocation(VertexLocation location) {
+		this.location = location;
 	}
 
 	@Override
-	public void setLocation(HexCornerInterface corner) {
-		this.corner = corner;
-	}
-
-	@Override
-	public HexCornerInterface getLocation() {
-		return this.corner;
+	public VertexLocation getLocation() {
+		return this.location;
 	}
 
 	@Override
@@ -40,9 +36,14 @@ public class City implements CityInterface, SerializerCityInterface {
 	}
 
 	@Override
-	public void setCity(int playerIndex, SerializerVertexLocationInterface vertexLocation) {
-		// TODO Auto-generated method stub
-		
+	public void setCity(int playerIndex, VertexLocation vertexLocation) {
+		this.location = vertexLocation;
+		this.playerIndex = playerIndex;
+	}
+
+	@Override
+	public void setPlayerIndex(int index) {
+		this.playerIndex = index;
 	}
 
 }

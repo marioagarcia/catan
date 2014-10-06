@@ -15,12 +15,12 @@ public interface GamePieceInterface
 	/**
 	 * @param id The id number of the Player who owns this piece
 	 */
-	public abstract void setPlayerId(int id);
+	public abstract void setPlayerIndex(int index);
 	
 	/**
 	 * @return the id number of the Player who owns this piece
 	 */
-	public abstract int getPlayerId();
+	public abstract int getPlayerIndex();
 	
 	public enum GamePieceType{
 		CITY,
