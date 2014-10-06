@@ -14,6 +14,11 @@ public class Settlement implements SettlementInterface, SerializerSettlementInte
 		this.type = GamePieceType.SETTLEMENT;
 		//TODO this should start out in the desert
 	}
+	
+	public Settlement(int playerIndex, VertexLocation location){
+		this.playerIndex = playerIndex;
+		this.location = location;
+	}
 
 	@Override
 	public GamePieceType getType() {
@@ -42,8 +47,8 @@ public class Settlement implements SettlementInterface, SerializerSettlementInte
 
 	@Override
 	public void setCity(int playerIndex, VertexLocation vertexLocation) {
-		// TODO Auto-generated method stub
-		
+		this.playerIndex = playerIndex;
+		this.location = vertexLocation;
 	}
 
 }
