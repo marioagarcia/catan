@@ -1,8 +1,8 @@
 package client.model.card;
 
-import shared.serialization.interfaces.ResourceListInterface;
+import shared.serialization.interfaces.SerializerResourceListInterface;
 
-public class ResourceList implements ResourceListInterface {
+public class ResourceList implements SerializerResourceListInterface {
 
 
 	private int brick;

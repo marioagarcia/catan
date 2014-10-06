@@ -1,8 +1,8 @@
 package client.model.card;
 
-import shared.serialization.interfaces.DevCardListInterface;
+import shared.serialization.interfaces.SerializerDevCardListInterface;
 
-public class DevCardList implements DevCardListInterface {
+public class DevCardList implements SerializerDevCardListInterface {
 	private int monopoly;
 	private int monument;
 	private int roadBuilding;

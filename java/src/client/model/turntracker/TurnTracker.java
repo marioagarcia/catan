@@ -1,9 +1,9 @@
 package client.model.turntracker;
 
-import shared.serialization.interfaces.TurnTrackerInterface;
+import shared.serialization.interfaces.SerializerTurnTrackerInterface;
 import client.manager.interfaces.GMTurnTrackerInterface;
 
-public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, TurnTrackerInterface {
+public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
 	
 	private Status status;
 	private int currentPlayerIndex;

@@ -1,7 +1,7 @@
 package client.model.player;
 
 import shared.definitions.CatanColor;
-import shared.serialization.interfaces.PlayerInfoInterface;
+import shared.serialization.interfaces.SerializerPlayerInfoInterface;
 
 /**
  * Used to pass player information into views<br>
@@ -15,7 +15,7 @@ import shared.serialization.interfaces.PlayerInfoInterface;
  * </ul>
  * 
  */
-public class PlayerInfo implements PlayerInfoInterface
+public class PlayerInfo implements SerializerPlayerInfoInterface
 {
 	
 	private int id;

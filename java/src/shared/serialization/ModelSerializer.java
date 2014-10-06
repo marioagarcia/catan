@@ -11,15 +11,15 @@ import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
-import shared.serialization.interfaces.CityInterface;
-import shared.serialization.interfaces.DevCardListInterface;
-import shared.serialization.interfaces.GameCommandInterface;
-import shared.serialization.interfaces.GameInfoInterface;
-import shared.serialization.interfaces.HexInterface;
-import shared.serialization.interfaces.MessageInterface;
-import shared.serialization.interfaces.PlayerInterface;
-import shared.serialization.interfaces.RoadInterface;
-import shared.serialization.interfaces.SettlementInterface;
+import shared.serialization.interfaces.SerializerCityInterface;
+import shared.serialization.interfaces.SerializerDevCardListInterface;
+import shared.serialization.interfaces.SerializerGameCommandInterface;
+import shared.serialization.interfaces.SerializerGameInfoInterface;
+import shared.serialization.interfaces.SerializerHexInterface;
+import shared.serialization.interfaces.SerializerMessageInterface;
+import shared.serialization.interfaces.SerializerPlayerInterface;
+import shared.serialization.interfaces.SerializerRoadInterface;
+import shared.serialization.interfaces.SerializerSettlementInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -60,11 +60,11 @@ public class ModelSerializer implements ModelSerializerInterface {
 	}
 	
 	@Override
-	public ArrayList<GameInfoInterface> deserializeGamesList(String jsonString){
+	public ArrayList<SerializerGameInfoInterface> deserializeGamesList(String jsonString){
 		
 		//@TODO All commented lines in this method must be implemented with new classes
 		
-		ArrayList<GameInfoInterface> gamesList = new ArrayList();
+		ArrayList<SerializerGameInfoInterface> gamesList = new ArrayList();
 		
 		JsonParser parser = new JsonParser();
 		
@@ -140,8 +140,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 	}
 	
 	@Override
-	public ArrayList<GameCommandInterface> deserializeGetGameCommands(String jsonString){
-		ArrayList<GameCommandInterface> gameCommandsList = new ArrayList();
+	public ArrayList<SerializerGameCommandInterface> deserializeGetGameCommands(String jsonString){
+		ArrayList<SerializerGameCommandInterface> gameCommandsList = new ArrayList();
 		
 		JsonParser parser = new JsonParser();
 		JsonArray array = parser.parse(jsonString).getAsJsonArray();
@@ -329,7 +329,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	//Parse Map
 		
 		//Parse hexes and build list of hexes
-		ArrayList<HexInterface> hexList = new ArrayList();
+		ArrayList<SerializerHexInterface> hexList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		JsonArray array = subObject.getAsJsonArray("hexes");
@@ -362,7 +362,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building the list of hexes
 		
 		//Parse roads and build a list of roads
-		ArrayList<RoadInterface> roadList = new ArrayList();
+		ArrayList<SerializerRoadInterface> roadList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("roads");
@@ -388,7 +388,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building the list of roads
 		
 		//Parse cities and build list of cities
-		ArrayList<CityInterface> cityList = new ArrayList();
+		ArrayList<SerializerCityInterface> cityList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("cities");
@@ -410,7 +410,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building list of cities
 		
 		//Parse settlements and build list of settlements
-		ArrayList<SettlementInterface> settlementList = new ArrayList();
+		ArrayList<SerializerSettlementInterface> settlementList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("settlements");
@@ -474,7 +474,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	//Done parsing map
 		
 		//Parse players and build player list
-		ArrayList<PlayerInterface> playerList = new ArrayList();
+		ArrayList<SerializerPlayerInterface> playerList = new ArrayList();
 		
 		array = mainObject.getAsJsonArray("players");
 		for(int i = 0; i < array.size(); i++){
@@ -492,11 +492,11 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			playerObject = subObject.getAsJsonObject("oldDevCards");
 			//@TODO Fill this in, don't forget to return a value from getDevCardList()!!!!!!!
-			DevCardListInterface oldDevCardList = getDevCardList(playerObject);
+			SerializerDevCardListInterface oldDevCardList = getDevCardList(playerObject);
 			
 			playerObject = subObject.getAsJsonObject("newDevCards");
 			//@TODO Fill this in, don't forget to return a value from getDevCardList()!!!!!!!
-			DevCardListInterface newDevCardList = getDevCardList(playerObject);
+			SerializerDevCardListInterface newDevCardList = getDevCardList(playerObject);
 			
 			int roads = subObject.get("roads").getAsInt();
 			int cities = subObject.get("cities").getAsInt();
@@ -519,7 +519,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done parsing players
 		
 		//Parse Log
-		ArrayList<MessageInterface> messageList = new ArrayList();
+		ArrayList<SerializerMessageInterface> messageList = new ArrayList();
 		subObject = mainObject.getAsJsonObject("log");
 		array = subObject.getAsJsonArray("lines");
 		
@@ -720,7 +720,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return vertexDirection;
 	}
 	
-	public DevCardListInterface getDevCardList(JsonObject object){
+	public SerializerDevCardListInterface getDevCardList(JsonObject object){
 		
 		int yearOfPlenty = object.getAsJsonPrimitive("yearOfPlenty").getAsInt();
 		int monopoly = object.getAsJsonPrimitive("monopoly").getAsInt();

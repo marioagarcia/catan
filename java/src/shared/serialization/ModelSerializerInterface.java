@@ -2,8 +2,8 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
-import shared.serialization.interfaces.GameCommandInterface;
-import shared.serialization.interfaces.GameInfoInterface;
+import shared.serialization.interfaces.SerializerGameCommandInterface;
+import shared.serialization.interfaces.SerializerGameInfoInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -49,7 +49,7 @@ public interface ModelSerializerInterface
 	 *  @param jsonString The string representation of the list of games
 	 *  @return The list of games that was just deserialized
 	 */
-	public ArrayList<GameInfoInterface> deserializeGamesList(String jsonString);
+	public ArrayList<SerializerGameInfoInterface> deserializeGamesList(String jsonString);
 	
 	/**
 	 * Serializes a create games request into a Json string
@@ -104,7 +104,7 @@ public interface ModelSerializerInterface
 	 * @param jsonString The Json string representation of the game commands
 	 * @return A list of game commands
 	 */
-	public ArrayList<GameCommandInterface> deserializeGetGameCommands(String jsonString);
+	public ArrayList<SerializerGameCommandInterface> deserializeGetGameCommands(String jsonString);
 	
 	/**
 	 * Serializes an AI request into a Json string
