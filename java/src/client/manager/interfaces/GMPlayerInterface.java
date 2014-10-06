@@ -52,5 +52,5 @@ public interface GMPlayerInterface {
 	 * Determines whether a player can be robbed
 	 * @return true if the player of the given index has at least one card 
 	 */
-	public boolean anBeRobbed();
+	public boolean canBeRobbed();
 }
