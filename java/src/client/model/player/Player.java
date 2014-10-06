@@ -1,13 +1,14 @@
 package client.model.player;
 
 import shared.definitions.CatanColor;
+import shared.serialization.interfaces.SerializerPlayerInterface;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMPlayerInterface;
 import client.model.card.DevCardList;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 
-public class Player implements PlayerInterface, GMPlayerInterface, shared.serialization.interfaces.SerializerPlayerInterface {
+public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
 	int cities;
 	CatanColor color;
 	boolean discarded;
