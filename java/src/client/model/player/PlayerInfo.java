@@ -1,10 +1,7 @@
 package client.model.player;
 
-import client.model.card.DevCardList;
-import client.model.card.ResourceList;
-import client.model.card.TradeInterface;
-import shared.definitions.ResourceType;
 import shared.definitions.CatanColor;
+import shared.serialization.interfaces.PlayerInfoInterface;
 
 /**
  * Used to pass player information into views<br>
@@ -18,126 +15,17 @@ import shared.definitions.CatanColor;
  * </ul>
  * 
  */
-public class PlayerInfo implements PlayerInterface
+public class PlayerInfo implements PlayerInfoInterface
 {
 	
 	private int id;
-	private int playerIndex;
 	private String name;
 	private CatanColor color;
-	private int cities;
-	private boolean discarded;
-	private int monuments;
-	private DevCardList newDevCards;
-	private DevCardList oldDevCards;
-	private boolean playedDevCard;
-	private int playerId;
-	private ResourceList resourceList;
-	private int roads;
-	private int settlements;
-	private int soldiers;
-	private int victoryPoints;
 	
-	public int getCities() {
-		return cities;
-	}
-
-	public void setCities(int cities) {
-		this.cities = cities;
-	}
-
-	public boolean isDiscarded() {
-		return discarded;
-	}
-
-	public void setDiscarded(boolean discarded) {
-		this.discarded = discarded;
-	}
-
-	public int getMonuments() {
-		return monuments;
-	}
-
-	public void setMonuments(int monuments) {
-		this.monuments = monuments;
-	}
-
-	public DevCardList getNewDevCards() {
-		return newDevCards;
-	}
-
-	public void setNewDevCards(DevCardList newDevCards) {
-		this.newDevCards = newDevCards;
-	}
-
-	public DevCardList getOldDevCards() {
-		return oldDevCards;
-	}
-
-	public void setOldDevCards(DevCardList oldDevCards) {
-		this.oldDevCards = oldDevCards;
-	}
-
-	public boolean isPlayedDevCard() {
-		return playedDevCard;
-	}
-
-	public void setPlayedDevCard(boolean playedDevCard) {
-		this.playedDevCard = playedDevCard;
-	}
-
-	public int getPlayerId() {
-		return playerId;
-	}
-
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
-	}
-
-	public ResourceList getResourceList() {
-		return resourceList;
-	}
-
-	public void setResourceList(ResourceList resourceList) {
-		this.resourceList = resourceList;
-	}
-
-	public int getRoads() {
-		return roads;
-	}
-
-	public void setRoads(int roads) {
-		this.roads = roads;
-	}
-
-	public int getSettlements() {
-		return settlements;
-	}
-
-	public void setSettlements(int settlements) {
-		this.settlements = settlements;
-	}
-
-	public int getSoldiers() {
-		return soldiers;
-	}
-
-	public void setSoldiers(int soldiers) {
-		this.soldiers = soldiers;
-	}
-
-	public int getVictoryPoints() {
-		return victoryPoints;
-	}
-
-	public void setVictoryPoints(int victoryPoints) {
-		this.victoryPoints = victoryPoints;
-	}
 
 	public PlayerInfo()
 	{
 		setId(-1);
-		setPlayerIndex(-1);
 		setName("");
 		setColor(CatanColor.WHITE);
 	}
@@ -152,16 +40,6 @@ public class PlayerInfo implements PlayerInterface
 		this.id = id;
 	}
 	
-	public int getPlayerIndex()
-	{
-		return playerIndex;
-	}
-	
-	public void setPlayerIndex(int playerIndex)
-	{
-		this.playerIndex = playerIndex;
-	}
-	
 	public String getName()
 	{
 		return name;
@@ -172,7 +50,6 @@ public class PlayerInfo implements PlayerInterface
 		this.name = name;
 	}
 	
-	@Override
 	public CatanColor getColor()
 	{
 		return this.color;
@@ -190,7 +67,6 @@ public class PlayerInfo implements PlayerInterface
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + playerIndex;
 		return result;
 	}
 
@@ -212,8 +88,6 @@ public class PlayerInfo implements PlayerInterface
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (playerIndex != other.playerIndex)
-			return false;
 		return true;
 	}
 	
@@ -226,35 +100,12 @@ public class PlayerInfo implements PlayerInterface
 	}
 
 	@Override
-	public int getPoints() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean canDiscardCards(ResourceList list) {
-		if(this.resourceList != list || this.resourceList.){
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * 
-	 * @param trade
-	 * @return
-	 */
-	@Override
-	public boolean canAcceptTrade(TradeInterface trade){
-		if( (-1 * trade.getTradeCard(ResourceType.ORE) )  < this.resourceList.getOre() ||
-			(-1 * trade.getTradeCard(ResourceType.BRICK) ) < this.resourceList.getBrick() ||
-			(-1 * trade.getTradeCard(ResourceType.SHEEP) ) < this.resourceList.getSheep() ||
-			(-1 * trade.getTradeCard(ResourceType.WHEAT) ) < this.resourceList.getWheat() ||
-			(-1 * trade.getTradeCard(ResourceType.WOOD) ) < this.resourceList.getWood() ){
-			return false;
-		}
+	public void setPlayerInfo(CatanColor playerColor, String playerName,
+			int playerId) {
+		this.color = playerColor;
+		this.name = playerName;
+		this.id = playerId;
 		
-		return true;
 	}
 }
 
