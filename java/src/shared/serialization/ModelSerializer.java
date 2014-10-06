@@ -59,7 +59,6 @@ import client.model.card.DevCardList;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
-import client.model.map.HexCorner;
 import client.model.piece.City;
 import client.model.player.Player;
 
@@ -431,7 +430,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			VertexDirection vertexDirection = getVertexDirection((JsonObject)subObject);
 			HexLocation hexLocation = getHexLocation(subObject);
 			
-			//@TODO Set vertexLocation with vertexDirection & hexLocation
+			VertexLocation vertexLocation = new VertexLocation(hexLocation, vertexDirection);
 			//HexCorner vertexLocation = new HexCorner();
 			//@TODO Set settlement with playerIndex and vertexLocation
 		}
@@ -559,11 +558,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		subObject = mainObject.getAsJsonObject("bank");
 		
 		ResourceCardBank resourceCardBank = getResourceCardBank(subObject);
-		
-		
-		
-		//@TODO Create a bank with the resources; create getResource()
-		//@TODO Set bank in GameData
+		gameData.setResourceCardBank(resourceCardBank);
 		//Done parsing bank
 		
 		//Parse Turn Tracker
@@ -621,8 +616,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 		bank.setBank(resourceList.getBrick(), resourceList.getWood(), 
 					 resourceList.getSheep(), resourceList.getWheat(),
 					 resourceList.getOre());
-		
-		System.out.println("Bank: " + "\n" + resourceList.toString());
 		
 		return bank;
 	}
