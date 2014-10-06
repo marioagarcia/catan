@@ -60,6 +60,8 @@ import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.piece.City;
+import client.model.piece.Road;
+import client.model.piece.Settlement;
 import client.model.player.Player;
 
 public class ModelSerializer implements ModelSerializerInterface {
@@ -357,14 +359,15 @@ public class ModelSerializer implements ModelSerializerInterface {
 				number = subObject.get("number").getAsInt();
 			}
 			
-			//Hex hex = new Hex(hexLocation, resource, number);
-			//hexList.add(new Hex(hexLocation, resource, number));
+			Hex hex = new Hex(hexLocation, resource, number);
+			hexList.add(new Hex(hexLocation, resource, number));
 		}
-		//@TODO Set hexes in GameData
+		
+		gameData.setHexList(hexList);
 		//Done building the list of hexes
 		
 		//Parse roads and build a list of roads
-		ArrayList<SerializerRoadInterface> roadList = new ArrayList();
+		ArrayList<Road> roadList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("roads");
@@ -376,17 +379,14 @@ public class ModelSerializer implements ModelSerializerInterface {
 			subObject = (JsonObject)subObject.get("location");
 
 			HexLocation hexLocation = getHexLocation(subObject);
-			
 			EdgeDirection edgeDirection = getEdgeDirection(subObject);
+			
 			EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
 			
-			
-			//@TODO create road with player index and edgeLocation
-			//@TODO add road to roadList
+			Road road = new Road(playerIndex, edgeLocation);
+			roadList.add(road);
 		}
-		
-		//@TODO Set road list in gameData
-		//gameData.setRoadList(roadList);
+		gameData.setRoadList(roadList);
 		//Done building the list of roads
 		
 		//Parse cities and build list of cities
@@ -416,7 +416,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building list of cities
 		
 		//Parse settlements and build list of settlements
-		ArrayList<SerializerSettlementInterface> settlementList = new ArrayList();
+		ArrayList<Settlement> settlementList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("settlements");
@@ -431,7 +431,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			HexLocation hexLocation = getHexLocation(subObject);
 			
 			VertexLocation vertexLocation = new VertexLocation(hexLocation, vertexDirection);
-			//HexCorner vertexLocation = new HexCorner();
+			Settlement settlement = new Settlement();
 			//@TODO Set settlement with playerIndex and vertexLocation
 		}
 		
