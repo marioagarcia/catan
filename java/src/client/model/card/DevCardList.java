@@ -64,5 +64,17 @@ public class DevCardList implements SerializerDevCardListInterface {
 		setMonument(monument);
 	}
 
+	@Override
+	public String toString(){
+		String returnString = "";
+		
+		returnString += "Year of Plenty: " + yearOfPlenty + "\n";
+		returnString += "Monopoly: " + monopoly + "\n";
+		returnString += "Soldier: " + soldier + "\n";
+		returnString += "RoadBuilding: " + roadBuild + "\n";
+		returnString += "Monument: " + monument;
+		
+		return returnString;
+	}
 
 }

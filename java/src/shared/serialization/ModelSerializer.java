@@ -56,6 +56,7 @@ import client.manager.GameData;
 import client.model.card.DevCardBank;
 import client.model.card.DevCardInterface;
 import client.model.card.DevCardList;
+import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.HexCorner;
 
@@ -348,7 +349,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			HexLocation hexLocation = getHexLocation((JsonObject)subObject.get("location"));
 			
 			int number;
-			if(resource == null){
+			if(resource == HexType.DESERT){
 				number = -1;
 			}else{
 				number = subObject.get("number").getAsInt();
@@ -485,22 +486,18 @@ public class ModelSerializer implements ModelSerializerInterface {
 			subObject = array.get(i).getAsJsonObject();
 			
 			JsonObject playerObject = subObject.getAsJsonObject("resources");
-			int brick = playerObject.get("brick").getAsInt();
-			int ore = playerObject.get("ore").getAsInt();
-			int sheep = playerObject.get("sheep").getAsInt();
-			int wheat = playerObject.get("wheat").getAsInt();
-			int wood = playerObject.get("wood").getAsInt();
-			
-			//@TODO Fill this in
-			//ResourceList resourceList = new ResourceList(brick, ore, sheep, wheat, wood);
+			ResourceList resourceList = getResourceList(playerObject);
 			
 			playerObject = subObject.getAsJsonObject("oldDevCards");
+			DevCardList oldDevCards = getDevCardList(playerObject);
 			//@TODO Fill this in, don't forget to return a value from getDevCardList()!!!!!!!
 			//SerializerDevCardListInterface oldDevCardList = getDevCardList(playerObject);
 			
 			playerObject = subObject.getAsJsonObject("newDevCards");
-			//@TODO Fill this in, don't forget to return a value from getDevCardList()!!!!!!!
+			DevCardList newDevCards = getDevCardList(playerObject);
 			//SerializerDevCardListInterface newDevCardList = getDevCardList(playerObject);
+			
+			
 			
 			int roads = subObject.get("roads").getAsInt();
 			int cities = subObject.get("cities").getAsInt();
@@ -583,16 +580,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 		int version = mainObject.get("version").getAsInt();
 		
 		
-		System.out.println("Turn Tracker");
-		System.out.println("\tStatus: " + status);
-		System.out.println("\tCurrent Turn: " + currentTurn);
-		System.out.println("\tLongest Road: " + longestRoad);
-		System.out.println("\tLargest Army: " + largestArmy);
-
-		System.out.println("Winner: " + winner);
-		System.out.println("Version: " + version);
-		
-		
 ///////////////////////////////////////////////////////////////////////////
 		return gameData;
 	}
@@ -617,9 +604,34 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		return devCardBank;
 	}
+	
+	public ResourceList getResourceList(JsonObject object){
+		
+		int brick = object.get("brick").getAsInt();
+		int ore = object.get("ore").getAsInt();
+		int sheep = object.get("sheep").getAsInt();
+		int wheat = object.get("wheat").getAsInt();
+		int wood = object.get("wood").getAsInt();
+		
+		return new ResourceList(brick, ore, sheep, wheat, wood);
+	}
+	
+	public DevCardList getDevCardList(JsonObject object){
+		DevCardList devCardList = new DevCardList();
+		
+		int yearOfPlenty = object.get("yearOfPlenty").getAsInt();
+		int monopoly = object.get("monopoly").getAsInt();
+		int soldier = object.get("soldier").getAsInt();
+		int roadBuild = object.get("roadBuild").getAsInt();
+		int monument = object.get("monument").getAsInt();
+		
+		devCardList.setDevCardList(yearOfPlenty, monopoly, soldier, roadBuild, monument);
+		return devCardList;
+		
+	}
 
 	public DevCardInterface.DevCardType getDevCardType(String devCard){
-		System.out.println("*" + devCard + "*");
+		
 		DevCardInterface.DevCardType devCardType = null;
 		switch(devCard){
 			case "yearOfPlenty":
