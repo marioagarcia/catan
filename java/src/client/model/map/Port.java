@@ -1,8 +1,11 @@
 package client.model.map;
 
+import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
+import shared.serialization.interfaces.HexLocationInterface;
+import shared.serialization.interfaces.PortInterface;
 
-public class Port {
+public class Port implements PortInterface {
 
 	private String resource; // If omitted, then it's for any resource, Optional
 	private HexLocation location;
@@ -46,6 +49,13 @@ public class Port {
 
 	public void setRatio(int ratio) {
 		this.ratio = ratio;
+	}
+
+	@Override
+	public void setPort(int ratio, ResourceType resource, String direction,
+			HexLocationInterface hexLocation) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
