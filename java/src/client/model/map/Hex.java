@@ -1,13 +1,7 @@
 package client.model.map;
 
-import java.util.Map;
-
 import shared.definitions.HexType;
-import shared.definitions.ResourceType;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 import shared.serialization.interfaces.SerializerHexInterface;
 
 public class Hex implements HexInterface, SerializerHexInterface {

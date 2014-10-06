@@ -1,9 +1,7 @@
 package client.model.map;
 
 import shared.definitions.HexType;
-import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 
 public interface HexInterface {
 	
