@@ -309,5 +309,22 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		return (!discarded && resourceList.totalNumberCards() > 7);
 	}
 
+	@Override
+	public boolean canPlayMonument() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canPlayMonopoly() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getNumberOfCards() {
+		return resourceList.totalNumberCards();
+	}
+
 	
 }

@@ -2,6 +2,9 @@ package client.model;
 
 import java.util.*;
 
+import shared.serialization.interfaces.SerializerGameInfoInterface;
+import shared.serialization.interfaces.SerializerPlayerInterface;
+import client.manager.interfaces.GMGameInfoInterface;
 import client.model.player.PlayerInfo;
 
 /**
@@ -15,7 +18,7 @@ import client.model.player.PlayerInfo;
  * </ul>
  * 
  */
-public class GameInfo
+public class GameInfo implements GMGameInfoInterface, SerializerGameInfoInterface
 {
 	private int id;
 	private String title;
@@ -71,5 +74,14 @@ public class GameInfo
 		}
 		return str;
 	}
+
+	@Override
+	public void setGameInfo(String gameTitle, int gameId,
+			ArrayList<PlayerInfo> playerList) {
+		title = gameTitle;
+		id = gameId;
+		players = playerList;
+	}
+
 }
 
