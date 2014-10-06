@@ -36,7 +36,7 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 public interface ModelSerializerInterface 
 {
 	/**
-	 * Serializes a users credentials into a Json string
+	 * Serializes a users credentials into a Json string.  Used to register and login
 	 * 
 	 * @param credentials The userame and password of the user
 	 * @return A Json string of the serialized credentials
@@ -86,6 +86,10 @@ public interface ModelSerializerInterface
 	 */
 	public String serializeLoadGameRequest(LoadGameRequestParameters params);
 	
+	//Get Game Model is the last method, deserializeGameModel()
+	
+	//Reset Game should go here
+	
 	/**
 	 * Serializes a post game commands request into a Json string
 	 * 
@@ -109,6 +113,8 @@ public interface ModelSerializerInterface
 	 * @return A Json string of the serialized AI request
 	 */
 	public String serializeAIRequest(AIRequestParameters params);
+	
+	//List AI should go here
 	
 	/**
 	 * Serializes a send chat request into a Json string
@@ -279,6 +285,8 @@ public interface ModelSerializerInterface
 	 * being discarded
 	 */
 	public String serializeDiscardCards(DiscardCardsParameters params);
+	
+	//Change Log level should go here
 	
 	/**
 	 * Serializes a player's cards and ID to send to the server

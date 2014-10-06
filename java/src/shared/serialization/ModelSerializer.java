@@ -151,10 +151,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 			String type = array.get(i).getAsJsonObject().get("type").getAsString();
 			int playerIndex = array.get(i).getAsJsonObject().get("playerIndex").getAsInt();
 			
-			System.out.println("Game Command " + i);
-			System.out.println("\tContent: " + content);
-			System.out.println("\tType: " + type);
-			System.out.println("\tPlayer Index: " + playerIndex + "\n");
+			//TODO Create a game command with content, type, and playerIndex
+			//TODO Add game command to gameCommandsList
 		}
 		
 		return gameCommandsList;
