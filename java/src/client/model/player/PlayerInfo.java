@@ -105,7 +105,6 @@ public class PlayerInfo implements PlayerInfoInterface
 		this.color = playerColor;
 		this.name = playerName;
 		this.id = playerId;
-		
 	}
 }
 
