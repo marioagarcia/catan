@@ -1,6 +1,8 @@
 package client.model.card;
 
-public class DevCardList {
+import shared.serialization.interfaces.DevCardListInterface;
+
+public class DevCardList implements DevCardListInterface {
 	private int monopoly;
 	private int monument;
 	private int roadBuilding;
@@ -49,6 +51,17 @@ public class DevCardList {
 
 	public void setYearOfPlenty(int yearOfPlenty) {
 		this.yearOfPlenty = yearOfPlenty;
+	}
+
+	@Override
+	public void setDevCardList(int yearOfPlenty, int monopoly, int soldier,
+			int roadBuild, int monument)
+	{
+		setYearOfPlenty(yearOfPlenty);
+		setMonopoly(monopoly);
+		setSoldier(soldier);
+		setRoadBuilding(roadBuild);
+		setMonument(monument);
 	}
 
 

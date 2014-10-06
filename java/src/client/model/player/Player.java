@@ -1,11 +1,16 @@
 package client.model.player;
 
+import shared.definitions.CatanColor;
+import shared.serialization.interfaces.DevCardListInterface;
+import shared.serialization.interfaces.ResourceListInterface;
+import client.manager.interfaces.GMPlayerInterface;
 import client.model.card.DevCardList;
 import client.model.card.ResourceList;
+import client.model.card.TradeInterface;
 
-public class Player {
+public class Player implements PlayerInterface, GMPlayerInterface, shared.serialization.interfaces.PlayerInterface {
 	int cities;
-	String color;
+	CatanColor color;
 	boolean discarded;
 	int monuments;
 	String name;
@@ -21,7 +26,7 @@ public class Player {
 	int victoryPoints;
 	
 	public Player(){
-		
+		newDevCards = new DevCardList();
 	}
 
 	public int getCities() {
@@ -32,11 +37,11 @@ public class Player {
 		this.cities = cities;
 	}
 
-	public String getColor() {
+	public CatanColor getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
+	public void setColor(CatanColor color) {
 		this.color = color;
 	}
 
@@ -104,7 +109,7 @@ public class Player {
 		this.playerId = playerId;
 	}
 
-	public ResourceList getResourceList() {
+	public ResourceListInterface getResourceList() {
 		return resourceList;
 	}
 
@@ -142,6 +147,84 @@ public class Player {
 
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
+	}
+
+	//Parameters should not be interface objects or ResourceListInterface needs to add all the methods needed in this class
+	@Override
+	public void setPlayer(ResourceListInterface resourceList,
+			DevCardListInterface oldDevCards, DevCardListInterface newDevCards,
+			int roads, int cities, int settlements, int soldiers,
+			int victoryPoints, int monuments, boolean playedDevCard,
+			boolean discarded, int playerID, int playerIndex,
+			String playerName, CatanColor playerColor){
+		
+		//this.resourceList = resourceList;
+		//this.oldDevCards = oldDevCards;
+		//this.newDevCards = newDevCards;
+		this.roads = roads;
+		this.cities = cities;
+		this.settlements = settlements;
+		this.soldiers = soldiers;
+		this.victoryPoints = victoryPoints;
+		this.monuments = monuments;
+		this.playedDevCard = playedDevCard;
+		this.discarded = discarded;
+		this.playerId = playerID;
+		this.playerIndex = playerIndex;
+		this.name = playerName;
+		this.color = playerColor;	
+	}
+
+	@Override
+	public boolean canOfferTrade(TradeInterface trade){
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canBuyDevCard(){
+		
+		return (resourceList.getOre() >=1 && 
+				resourceList.getSheep() >= 1 &&
+				resourceList.getWheat() >= 1);
+	}
+
+	//Why is this being given a resource list? They get resources by playing this card, they don't need them.
+	@Override
+	public boolean canPlayYearOfPlenty(ResourceList resourceList){
+		return (!playedDevCard && newDevCards.getYearOfPlenty() >=1);
+	}
+
+	@Override
+	public boolean canPlayRoadBuilding(){
+		return (!playedDevCard && newDevCards.getRoadBuilding() >=1);
+	}
+
+	@Override
+	public boolean canPlaySoldier(){
+		return (!playedDevCard && newDevCards.getSoldier() >=1);
+	}
+
+	@Override
+	public int getId(){
+		return playerId;
+	}
+
+	@Override
+	public int getPoints(){
+		return victoryPoints;
+	}
+
+	@Override
+	public boolean canAcceptTrade(TradeInterface trade){
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canDiscardCards(ResourceList list){
+		//Resourcelist should have a size method to verify this.
+		return (!discarded /*&& resourceList.size() > 7*/);
 	}	
 	
 }

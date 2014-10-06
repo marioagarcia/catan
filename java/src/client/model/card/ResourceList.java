@@ -1,6 +1,8 @@
 package client.model.card;
 
-public class ResourceList {
+import shared.serialization.interfaces.ResourceListInterface;
+
+public class ResourceList implements ResourceListInterface {
 
 	@Override
 	public int hashCode() {
@@ -88,5 +90,16 @@ public class ResourceList {
 
 	public void setWood(int wood) {
 		this.wood = wood;
+	}
+
+	@Override
+	public void setResourceList(int brick, int ore, int sheep, int wheat,
+			int wood)
+	{
+		setBrick(brick);
+		setOre(ore);
+		setSheep(sheep);
+		setWheat(wheat);
+		setWood(wood);
 	}
 }
