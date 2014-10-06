@@ -1,8 +1,10 @@
 package client.model.piece;
 
+import shared.serialization.interfaces.SerializerCityInterface;
+import shared.serialization.interfaces.SerializerVertexLocationInterface;
 import client.model.map.HexCornerInterface;
 
-public class City implements CityInterface {
+public class City implements CityInterface, SerializerCityInterface {
 	
 	private int playerId;
 	private HexCornerInterface corner;
@@ -35,6 +37,12 @@ public class City implements CityInterface {
 	@Override
 	public GamePieceType getType() {
 		return this.type;
+	}
+
+	@Override
+	public void setCity(int playerIndex, SerializerVertexLocationInterface vertexLocation) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
