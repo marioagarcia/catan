@@ -1,8 +1,9 @@
 package client.model.piece;
 
 import shared.locations.EdgeLocation;
+import shared.serialization.interfaces.SerializerRoadInterface;
 
-public class Road implements RoadInterface {
+public class Road implements RoadInterface, SerializerRoadInterface {
 
 	int playerIndex;
 	EdgeLocation location;
@@ -46,6 +47,12 @@ public class Road implements RoadInterface {
 		returnString += location.toString();
 		
 		return returnString;
+	}
+
+	@Override
+	public void setRoad(int playerIndex, EdgeLocation edgeLocation) {
+		this.playerIndex = playerIndex;
+		this.location = edgeLocation;
 	}
 
 }
