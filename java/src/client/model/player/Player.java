@@ -194,7 +194,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public boolean canPlayRoadBuilding(){
-		return (!playedDevCard && newDevCards.getRoadBuilding() >=1);
+		return (!playedDevCard && newDevCards.getRoadBuild() >=1);
 	}
 
 	@Override

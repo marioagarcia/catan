@@ -3,7 +3,7 @@ package client.manager;
 import java.util.ArrayList;
 
 import shared.locations.HexLocation;
-import client.logging.chat.Message;
+//import client.logging.chat.Message;
 import client.model.card.DevCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
@@ -20,10 +20,10 @@ public class GameData {
 	ResourceList bankResourceList;
 	
 	//Chat Message List
-	ArrayList<Message> chatMessageList;
+	//ArrayList<Message> chatMessageList;
 	
 	//Log Message List
-	ArrayList<Message> logMessageList;
+	//ArrayList<Message> logMessageList;
 	
 	//Map
 	ArrayList<Hex> hexList; //Done

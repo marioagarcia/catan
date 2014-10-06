@@ -3,11 +3,11 @@ package client.model.card;
 import shared.serialization.interfaces.SerializerDevCardListInterface;
 
 public class DevCardList implements SerializerDevCardListInterface {
-	private int monopoly;
-	private int monument;
-	private int roadBuilding;
-	private int soldier;
 	private int yearOfPlenty;
+	private int monopoly;
+	private int soldier;
+	private int roadBuild;
+	private int monument;
 	
 	public DevCardList(){
 		
@@ -29,12 +29,12 @@ public class DevCardList implements SerializerDevCardListInterface {
 		this.monument = monument;
 	}
 
-	public int getRoadBuilding() {
-		return roadBuilding;
+	public int getRoadBuild() {
+		return roadBuild;
 	}
 
-	public void setRoadBuilding(int roadBuilding) {
-		this.roadBuilding = roadBuilding;
+	public void setRoadBuild(int roadBuilding) {
+		this.roadBuild = roadBuilding;
 	}
 
 	public int getSoldier() {
@@ -60,7 +60,7 @@ public class DevCardList implements SerializerDevCardListInterface {
 		setYearOfPlenty(yearOfPlenty);
 		setMonopoly(monopoly);
 		setSoldier(soldier);
-		setRoadBuilding(roadBuild);
+		setRoadBuild(roadBuild);
 		setMonument(monument);
 	}
 
