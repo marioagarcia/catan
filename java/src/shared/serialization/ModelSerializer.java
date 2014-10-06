@@ -13,6 +13,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.serialization.interfaces.CityInterface;
 import shared.serialization.interfaces.DevCardListInterface;
+import shared.serialization.interfaces.GameCommandInterface;
 import shared.serialization.interfaces.GameInfoInterface;
 import shared.serialization.interfaces.HexInterface;
 import shared.serialization.interfaces.MessageInterface;
@@ -136,6 +137,27 @@ public class ModelSerializer implements ModelSerializerInterface {
 		String jsonString = gson.toJson(params);
 		
 		return jsonString;
+	}
+	
+	@Override
+	public ArrayList<GameCommandInterface> deserializeGetGameCommands(String jsonString){
+		ArrayList<GameCommandInterface> gameCommandsList = new ArrayList();
+		
+		JsonParser parser = new JsonParser();
+		JsonArray array = parser.parse(jsonString).getAsJsonArray();
+		
+		for(int i = 0; i < array.size(); i++){
+			String content = array.get(i).getAsJsonObject().get("content").getAsString();
+			String type = array.get(i).getAsJsonObject().get("type").getAsString();
+			int playerIndex = array.get(i).getAsJsonObject().get("playerIndex").getAsInt();
+			
+			System.out.println("Game Command " + i);
+			System.out.println("\tContent: " + content);
+			System.out.println("\tType: " + type);
+			System.out.println("\tPlayer Index: " + playerIndex + "\n");
+		}
+		
+		return gameCommandsList;
 	}
 	
 	@Override
@@ -288,7 +310,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 	@Override
 	public GameData deserializeGameModel(String data) {
 		GameData gameData = new GameData();
-		Gson gson = new Gson();
 		
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(data);
@@ -725,7 +746,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			e.printStackTrace();
 		}
 		
-		ms.deserializeGameModel(content);
+		ms.deserializeGetGameCommands(content);
 		
 		
 	}

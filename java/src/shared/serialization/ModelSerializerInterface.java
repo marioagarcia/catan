@@ -2,6 +2,7 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
+import shared.serialization.interfaces.GameCommandInterface;
 import shared.serialization.interfaces.GameInfoInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
@@ -92,6 +93,14 @@ public interface ModelSerializerInterface
 	 * @return A Json string of the serialized list of game commands
 	 */
 	public String serializePostGameCommands(ArrayList<MasterParameterInterface> params);
+	
+	/**
+	 * Deserializes and parses a Json string into a list of game commands
+	 * 
+	 * @param jsonString The Json string representation of the game commands
+	 * @return A list of game commands
+	 */
+	public ArrayList<GameCommandInterface> deserializeGetGameCommands(String jsonString);
 	
 	/**
 	 * Serializes an AI request into a Json string
