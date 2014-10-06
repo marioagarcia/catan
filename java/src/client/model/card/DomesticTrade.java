@@ -1,10 +1,10 @@
 package client.model.card;
 
+import client.manager.interfaces.GMDomesticTradeInterface;
 import shared.definitions.ResourceType;
 
-public class DomesticTrade implements TradeInterface {
+public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface {
 
-	//TODO make private
 	private int brick;
 	private int sheep;
 	private int ore;
@@ -48,6 +48,31 @@ public class DomesticTrade implements TradeInterface {
 		default:
 			return Integer.MAX_VALUE;
 		}
+	}
+
+	@Override
+	public int getOreCount() {
+		return getTradeCard(ResourceType.ORE);
+	}
+
+	@Override
+	public int getWoodCount() {
+		return getTradeCard(ResourceType.WOOD);
+	}
+
+	@Override
+	public int getSheepCount() {
+		return getTradeCard(ResourceType.SHEEP);
+	}
+
+	@Override
+	public int getBrickCount() {
+		return getTradeCard(ResourceType.BRICK);
+	}
+
+	@Override
+	public int getWheatCount() {
+		return getTradeCard(ResourceType.WHEAT);
 	}
 
 }

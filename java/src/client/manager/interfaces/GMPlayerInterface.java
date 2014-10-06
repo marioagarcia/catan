@@ -1,6 +1,5 @@
 package client.manager.interfaces;
 
-import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 
 public interface GMPlayerInterface {
@@ -19,14 +18,14 @@ public interface GMPlayerInterface {
 	public boolean canBuyDevCard();
 	
 	/**
-	 * Determines that the player has the year of plenty, it hasn't played a dev card this turn, and the resources in the list.
+	 * Determines that the player has the year of plenty, it hasn't played a dev card this turn
 	 * @param resourceList
 	 * @return true if player has the year of plenty card and the resources passed in
 	 */
-	public boolean canPlayYearOfPlenty(ResourceList resourceList);
+	public boolean canPlayYearOfPlenty();
 	
 	/**
-	 * Determines that the player has the road building, player has two roads and it hasn't played a dev card this turn.
+	 * Determines that the player has the road building, player has two roads and it hasn't played a dev card this turn
 	 * @return true if the player has the road building card and it hasn't played a dev card this turn yet
 	 */
 	public boolean canPlayRoadBuilding();

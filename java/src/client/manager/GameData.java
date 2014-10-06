@@ -3,7 +3,7 @@ package client.manager;
 import java.util.ArrayList;
 
 import shared.locations.HexLocation;
-import client.model.Message;
+import client.logging.chat.Message;
 import client.model.card.DevCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;

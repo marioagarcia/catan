@@ -21,6 +21,7 @@ import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.map.HexInterface;
+import client.model.player.Player;
 import client.model.player.PlayerInfo;
 import client.model.player.PlayerInterface;
 import client.model.turntracker.TurnTracker;
@@ -32,7 +33,7 @@ public class GameManager implements GameManagerInterface {
 	ServerProxy serverProxy;
 	ArrayList<GameInfo> gameList;
 	ModelSerializer modelSerializer;
-	PlayerInfo localPlayer;
+	Player localPlayer;
 	GameInfo currentGame;
 	GameLog gameLog;
 	TurnTracker turnTracker;

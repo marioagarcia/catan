@@ -1,17 +1,15 @@
 package client.logging.chat;
 
-import client.model.player.PlayerInterface;
-
 public interface MessageInterface {
 	/**
-	 * Used to extract the message contents
-	 * @return String containing message contents
+	 * Used to extract the message content
+	 * @return String containing message content
 	 */
-	public String getMessageContents();
+	public void setMessageContent(String content);
 	/**
 	 * returns the player who corresponds to this message
 	 * @return client.model.player.PlayerInterface object
 	 *  representing the player who sent the message
 	 */
-	public PlayerInterface getPlayer();
+	public void setPlayerName(String playerName);
 }

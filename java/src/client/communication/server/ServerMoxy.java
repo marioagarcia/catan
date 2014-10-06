@@ -6,9 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.regex.Pattern;
-
-import client.model.player.PlayerInfo;
+import client.model.player.Player;
 
 public class ServerMoxy implements ServerProxyInterface
 {
@@ -212,7 +210,7 @@ public class ServerMoxy implements ServerProxyInterface
 	}
 
 	@Override
-	public boolean validatePlayer(PlayerInfo player) {
+	public boolean validatePlayer(Player player) {
 		return true;
 	}
 }

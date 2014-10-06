@@ -1,14 +1,14 @@
 package client.model.player;
 
 import shared.definitions.CatanColor;
-import shared.serialization.interfaces.SerializerDevCardListInterface;
+import shared.serialization.interfaces.SerializerPlayerInterface;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMPlayerInterface;
 import client.model.card.DevCardList;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 
-public class Player implements PlayerInterface, GMPlayerInterface, shared.serialization.interfaces.SerializerPlayerInterface {
+public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
 	int cities;
 	CatanColor color;
 	boolean discarded;
@@ -187,9 +187,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, shared.serial
 				resourceList.getWheat() >= 1);
 	}
 
-	//Why is this being given a resource list? They get resources by playing this card, they don't need them.
 	@Override
-	public boolean canPlayYearOfPlenty(ResourceList resourceList){
+	public boolean canPlayYearOfPlenty(){
 		return (!playedDevCard && newDevCards.getYearOfPlenty() >=1);
 	}
 
@@ -221,8 +220,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, shared.serial
 
 	@Override
 	public boolean canDiscardCards(ResourceList list){
-		//Resourcelist should have a size method to verify this.
-		return (!discarded /*&& resourceList.size() > 7*/);
+		return (!discarded && resourceList.totalNumberCards() > 7);
 	}
 
 	

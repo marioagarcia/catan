@@ -10,7 +10,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLDecoder;
 import com.google.gson.*;
-import client.model.player.PlayerInfo;
+import client.model.player.Player;
 
 public class ServerProxy implements ServerProxyInterface
 {
@@ -311,7 +311,7 @@ public class ServerProxy implements ServerProxyInterface
 	}
 
 	@Override
-	public boolean validatePlayer(PlayerInfo player) {
+	public boolean validatePlayer(Player player) {
 		return (plainTextCookie != null && player.getId() == playerId);
 	}
 }

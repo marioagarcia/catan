@@ -13,7 +13,7 @@ public interface LogLineInterface
 	/**
 	 * allows you to view the player corresponding
 	 * to the log entry
-	 * @return PlayerInterface object of the player who made the move
+	 * @return int the player's id
 	 */
 	public int getPlayerId();
 	
