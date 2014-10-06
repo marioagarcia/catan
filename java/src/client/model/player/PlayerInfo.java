@@ -233,7 +233,7 @@ public class PlayerInfo implements PlayerInterface
 
 	@Override
 	public boolean canDiscardCards(ResourceList list) {
-		if(this.resourceList == list){
+		if(this.resourceList != list || this.resourceList.){
 			return true;
 		}
 		return false;

@@ -4,6 +4,14 @@ import shared.serialization.interfaces.ResourceListInterface;
 
 public class ResourceList implements ResourceListInterface {
 
+
+	private int brick;
+	private int ore;
+	private int sheep;
+	private int wheat;
+	private int wood;
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -38,11 +46,6 @@ public class ResourceList implements ResourceListInterface {
 		return true;
 	}
 
-	private int brick;
-	private int ore;
-	private int sheep;
-	private int wheat;
-	private int wood;
 	
 	public ResourceList(int b, int o, int s, int wh, int wo){
 		brick = b;
@@ -93,13 +96,20 @@ public class ResourceList implements ResourceListInterface {
 	}
 
 	@Override
-	public void setResourceList(int brick, int ore, int sheep, int wheat,
-			int wood)
+	public void setResourceList(int brick, int ore, int sheep, int wheat, int wood)
 	{
 		setBrick(brick);
 		setOre(ore);
 		setSheep(sheep);
 		setWheat(wheat);
 		setWood(wood);
+	}
+	
+	public int totalNumberCards(){
+		return this.brick +
+				this.ore +
+				this.sheep +
+				this.wheat +
+				this.wood;
 	}
 }
