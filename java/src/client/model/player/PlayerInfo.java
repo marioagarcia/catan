@@ -21,15 +21,24 @@ public class PlayerInfo implements SerializerPlayerInfoInterface
 	private int id;
 	private String name;
 	private CatanColor color;
-	
+	private int playerIndex;
 
 	public PlayerInfo()
 	{
 		setId(-1);
 		setName("");
+		setPlayerIndex(-1);
 		setColor(CatanColor.WHITE);
 	}
 	
+	private void setPlayerIndex(int i) {
+		playerIndex = i;
+	}
+	
+	public int getPlayerIndex(){
+		return playerIndex;
+	}
+
 	public int getId()
 	{
 		return id;
