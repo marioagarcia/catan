@@ -56,9 +56,11 @@ import client.manager.GameData;
 import client.model.card.DevCardBank;
 import client.model.card.DevCardInterface;
 import client.model.card.DevCardList;
+import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.HexCorner;
+import client.model.piece.City;
 import client.model.player.Player;
 
 public class ModelSerializer implements ModelSerializerInterface {
@@ -326,7 +328,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		JsonObject subObject = mainObject.getAsJsonObject("deck");
 		
 		DevCardBank devCardBank = getDevCardBank(subObject);
-		gameData.setDeck(devCardBank);
+		gameData.setDevCardBank(devCardBank);
 		//Done building DevCardBank
 	
 	//Parse Map
@@ -389,7 +391,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building the list of roads
 		
 		//Parse cities and build list of cities
-		ArrayList<SerializerCityInterface> cityList = new ArrayList();
+		ArrayList<City> cityList = new ArrayList();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("cities");
@@ -403,12 +405,15 @@ public class ModelSerializer implements ModelSerializerInterface {
 			VertexDirection vertexDirection = getVertexDirection((JsonObject)subObject);
 			HexLocation hexLocation = getHexLocation(subObject);
 			
-			//@TODO Set vertexLocation with vertexDirection & hexLocation
 			VertexLocation vertexLocation = new VertexLocation(hexLocation, vertexDirection);
-			//@TODO Set city with playerIndex and vertexLocation
+			
+			City city = new City();
+			city.setCity(playerIndex, vertexLocation);
+			
+			cityList.add(city);
 		}
 		
-		//@TODO Set city list in GameData
+		gameData.setCityList(cityList);
 		//Done building list of cities
 		
 		//Parse settlements and build list of settlements
@@ -427,7 +432,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			HexLocation hexLocation = getHexLocation(subObject);
 			
 			//@TODO Set vertexLocation with vertexDirection & hexLocation
-			HexCorner vertexLocation = new HexCorner();
+			//HexCorner vertexLocation = new HexCorner();
 			//@TODO Set settlement with playerIndex and vertexLocation
 		}
 		
@@ -516,13 +521,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 			playerList.add(player);
 		}
 		gameData.setPlayerList(playerList);
-		
-		for(int i = 0; i < playerList.size(); i++){
-			System.out.println(playerList.get(i).getName() + "\n" + 
-							   playerList.get(i).getPlayerId() + "\n" +
-							   playerList.get(i).getPlayerIndex() + "\n" + 
-							   playerList.get(i).getResourceList().toString() + "\n");
-		}
 		//Done parsing players
 		
 		//Parse Log
@@ -560,11 +558,9 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Parse Bank
 		subObject = mainObject.getAsJsonObject("bank");
 		
-		int brick = subObject.get("brick").getAsInt();
-		int wood = subObject.get("wood").getAsInt();
-		int sheep = subObject.get("sheep").getAsInt();
-		int wheat = subObject.get("wheat").getAsInt();
-		int ore = subObject.get("ore").getAsInt();
+		ResourceCardBank resourceCardBank = getResourceCardBank(subObject);
+		
+		
 		
 		//@TODO Create a bank with the resources; create getResource()
 		//@TODO Set bank in GameData
@@ -592,21 +588,15 @@ public class ModelSerializer implements ModelSerializerInterface {
 	
 	public DevCardBank getDevCardBank(JsonObject object){
 		
+		DevCardBank devCardBank = new DevCardBank();
+		
 		int yearOfPlenty = object.getAsJsonPrimitive("yearOfPlenty").getAsInt();
 		int monopoly = object.getAsJsonPrimitive("monopoly").getAsInt();
 		int soldier = object.getAsJsonPrimitive("soldier").getAsInt();
 		int roadBuild = object.getAsJsonPrimitive("roadBuilding").getAsInt();
 		int monument = object.getAsJsonPrimitive("monument").getAsInt();
 		
-		Map<DevCardInterface.DevCardType, Integer> cards = new HashMap<DevCardInterface.DevCardType, Integer>();
-		
-		cards.put(getDevCardType("yearOfPlenty"), yearOfPlenty);
-		cards.put(getDevCardType("monopoly"), monopoly);
-		cards.put(getDevCardType("soldier"), soldier);
-		cards.put(getDevCardType("roadBuild"), roadBuild);
-		cards.put(getDevCardType("monument"), monument);
-		
-		DevCardBank devCardBank = new DevCardBank(cards);
+		devCardBank.setDeck(yearOfPlenty, monopoly, soldier, roadBuild, monument);
 		
 		return devCardBank;
 	}
@@ -620,6 +610,21 @@ public class ModelSerializer implements ModelSerializerInterface {
 		int wood = object.get("wood").getAsInt();
 		
 		return new ResourceList(brick, ore, sheep, wheat, wood);
+	}
+	
+	public ResourceCardBank getResourceCardBank(JsonObject object){
+		
+		ResourceCardBank bank = new ResourceCardBank();
+		
+		ResourceList resourceList = getResourceList(object);
+		
+		bank.setBank(resourceList.getBrick(), resourceList.getWood(), 
+					 resourceList.getSheep(), resourceList.getWheat(),
+					 resourceList.getOre());
+		
+		System.out.println("Bank: " + "\n" + resourceList.toString());
+		
+		return bank;
 	}
 	
 	public DevCardList getDevCardList(JsonObject object){

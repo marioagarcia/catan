@@ -5,19 +5,22 @@ import java.util.ArrayList;
 import shared.locations.HexLocation;
 //import client.logging.chat.Message;
 import client.model.card.DevCardBank;
+import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
 import client.model.map.Port;
+import client.model.piece.City;
 import client.model.piece.Road;
+import client.model.piece.Settlement;
 import client.model.player.Player;
 
 public class GameData {
 
 	//Deck - DevCardBank
-	DevCardBank deck; //Done
+	DevCardBank devCardBank; //Done
 	
 	//Bank - Resource List
-	ResourceList bankResourceList;
+	ResourceCardBank resourceCardBank;
 	
 	//Chat Message List
 	//ArrayList<Message> chatMessageList;
@@ -29,8 +32,8 @@ public class GameData {
 	ArrayList<Hex> hexList; //Done
 	ArrayList<Port> portList;
 	ArrayList<Road> roadList;
-	//ArrayList<VertexObject> settlementList;
-	//ArrayList<VertexObject> cityList;
+	ArrayList<Settlement> settlementList;
+	ArrayList<City> cityList;
 	int radius;
 	HexLocation robber;
 	
@@ -65,20 +68,20 @@ public class GameData {
 		
 	}
 
-	public DevCardBank getDeck(){
-		return deck;
+	public DevCardBank getDevCardBank(){
+		return devCardBank;
 	}
 	
-	public void setDeck(DevCardBank deck){
-		this.deck = deck;
+	public void setDevCardBank(DevCardBank deck){
+		this.devCardBank = deck;
 	}
 	
-	public ResourceList getBankResourceList() {
-		return bankResourceList;
+	public ResourceCardBank getResourceCardBank() {
+		return resourceCardBank;
 	}
 
-	public void setBankResourceList(ResourceList bankResourceList) {
-		this.bankResourceList = bankResourceList;
+	public void setResourceCardBank(ResourceCardBank bank) {
+		this.resourceCardBank = bank;
 	}
 
 	public ArrayList<Message> getChatMessageList() {
@@ -121,21 +124,21 @@ public class GameData {
 		this.roadList = roadList;
 	}
 
-/*	public ArrayList<VertexObject> getSettlementList() {
+	public ArrayList<Settlement> getSettlementList() {
 		return settlementList;
 	}
 
-	public void setSettlementList(ArrayList<VertexObject> settlementList) {
+	public void setSettlementList(ArrayList<Settlement> settlementList) {
 		this.settlementList = settlementList;
 	}
 
-	public ArrayList<VertexObject> getCityList() {
+	public ArrayList<City> getCityList() {
 		return cityList;
 	}
 
-	public void setCityList(ArrayList<VertexObject> cityList) {
+	public void setCityList(ArrayList<City> cityList) {
 		this.cityList = cityList;
-	}*/
+	}
 
 	public int getRadius() {
 		return radius;
