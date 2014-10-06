@@ -22,4 +22,5 @@ public interface TradeInterface {
 	 */
 	public int getTradeCard(ResourceType type);
 	
+	
 }

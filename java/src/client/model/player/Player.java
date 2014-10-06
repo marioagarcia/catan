@@ -1,6 +1,7 @@
 package client.model.player;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerPlayerInterface;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMPlayerInterface;
@@ -175,8 +176,56 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public boolean canOfferTrade(TradeInterface trade){
-		// TODO Auto-generated method stub
-		return false;
+		
+		int brick = trade.getTradeCard(ResourceType.BRICK);
+		int wheat = trade.getTradeCard(ResourceType.WHEAT);
+		int wood = trade.getTradeCard(ResourceType.WOOD);
+		int sheep = trade.getTradeCard(ResourceType.SHEEP);
+		int ore = trade.getTradeCard(ResourceType.ORE);
+		
+		boolean can_offer = true;
+		
+		if (brick > 0)
+		{
+			if (resourceList.getBrick() < brick)
+			{
+				can_offer = false;
+			}
+		}
+		
+		if (wheat > 0)
+		{
+			if (resourceList.getWheat() < wheat)
+			{
+				can_offer = false;
+			}
+		}
+		
+		if (wood > 0)
+		{
+			if (resourceList.getWood() < wood)
+			{
+				can_offer = false;
+			}
+		}
+		
+		if (sheep > 0)
+		{
+			if (resourceList.getSheep() < sheep)
+			{
+				can_offer = false;
+			}
+		}
+		
+		if (ore > 0)
+		{
+			if (resourceList.getOre() < ore)
+			{
+				can_offer = false;
+			}
+		}
+		
+		return can_offer;
 	}
 
 	@Override
@@ -214,8 +263,45 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade){
-		// TODO Auto-generated method stub
-		return false;
+		int brick = trade.getTradeCard(ResourceType.BRICK);
+		int wheat = trade.getTradeCard(ResourceType.WHEAT);
+		int wood = trade.getTradeCard(ResourceType.WOOD);
+		int sheep = trade.getTradeCard(ResourceType.SHEEP);
+		int ore = trade.getTradeCard(ResourceType.ORE);
+		
+		boolean can_accept = true;
+		
+		if (brick < 0){
+			if (resourceList.getBrick() < (-1 * brick)){
+				can_accept = false;
+			}
+		}
+		
+		if (wheat < 0){
+			if (resourceList.getWheat() < (-1 * wheat)){
+				can_accept = false;
+			}
+		}
+		
+		if (wood < 0){
+			if (resourceList.getWood() < (-1 * wood)){
+				can_accept = false;
+			}
+		}
+		
+		if (sheep < 0){
+			if (resourceList.getSheep() < (-1 * sheep)){
+				can_accept = false;
+			}
+		}
+		
+		if (ore < 0){
+			if (resourceList.getOre() < (-1 * ore)){
+				can_accept = false;
+			}
+		}
+		
+		return can_accept;
 	}
 
 	@Override
