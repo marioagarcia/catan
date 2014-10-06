@@ -335,7 +335,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	//Parse Map
 		
 		//Parse hexes and build list of hexes
-		ArrayList<Hex> hexList = new ArrayList();
+		ArrayList<Hex> hexList = new ArrayList<Hex>();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		JsonArray array = subObject.getAsJsonArray("hexes");
@@ -367,7 +367,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building the list of hexes
 		
 		//Parse roads and build a list of roads
-		ArrayList<Road> roadList = new ArrayList();
+		ArrayList<Road> roadList = new ArrayList<Road>();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("roads");
@@ -390,7 +390,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building the list of roads
 		
 		//Parse cities and build list of cities
-		ArrayList<City> cityList = new ArrayList();
+		ArrayList<City> cityList = new ArrayList<City>();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("cities");
@@ -416,7 +416,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building list of cities
 		
 		//Parse settlements and build list of settlements
-		ArrayList<Settlement> settlementList = new ArrayList();
+		ArrayList<Settlement> settlementList = new ArrayList<Settlement>();
 		
 		subObject = mainObject.getAsJsonObject("map");
 		array = subObject.getAsJsonArray("settlements");
@@ -431,12 +431,12 @@ public class ModelSerializer implements ModelSerializerInterface {
 			HexLocation hexLocation = getHexLocation(subObject);
 			
 			VertexLocation vertexLocation = new VertexLocation(hexLocation, vertexDirection);
-			Settlement settlement = new Settlement();
-			//@TODO Set settlement with playerIndex and vertexLocation
+			Settlement settlement = new Settlement(playerIndex, vertexLocation);
+			
+			settlementList.add(settlement);
 		}
 		
-		//@TODO Set settlement list in GameData
-		//@TODO create function to handle cities and settlements; they are identical
+		gameData.setSettlementList(settlementList);
 		//Done building list of settlements
 		
 		//Parse radius
