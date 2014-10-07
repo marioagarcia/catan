@@ -142,5 +142,54 @@ public class EdgeLocation
 		
 		return Arrays.copyOf(result, numberCompletedOverall);
 	}
+
+	public EdgeLocation[] getAdjacent(VertexLocation vertexLocation){
+		
+		VertexDirection[] vertexDirections = new VertexDirection[6];
+		vertexDirections[0] = VertexDirection.NorthEast;
+		vertexDirections[1] = VertexDirection.East;
+		vertexDirections[2] = VertexDirection.SouthEast;
+		vertexDirections[3] = VertexDirection.SouthWest;
+		vertexDirections[4] = VertexDirection.West;
+		vertexDirections[5] = VertexDirection.NorthWest;
+		
+		EdgeDirection[] edgeDirections = new EdgeDirection[6];
+		edgeDirections[0] = EdgeDirection.North;
+		edgeDirections[1] = EdgeDirection.NorthEast;
+		edgeDirections[2] = EdgeDirection.SouthEast;
+		edgeDirections[3] = EdgeDirection.South;
+		edgeDirections[4] = EdgeDirection.SouthWest;
+		edgeDirections[5] = EdgeDirection.NorthWest;
+		
+		int indexFoundAt = 0;
+		for(int i = 0; i < 6; i++)
+			if(vertexDirections[i] == vertexLocation.getDir()){
+				indexFoundAt = i;
+				break;
+			}
+		
+		EdgeLocation[] results = new EdgeLocation[2];
+		
+		HexLocation hexLocation = vertexLocation.getHexLoc();
+		EdgeDirection edgeDirection1;
+		EdgeDirection edgeDirection2;
+		
+		if(indexFoundAt == 5)
+			edgeDirection2 = edgeDirections[0];
+		else
+			edgeDirection2 = edgeDirections[indexFoundAt + 1];
+		
+		if(indexFoundAt == 0)
+			edgeDirection1 = edgeDirections[5];
+		else
+			edgeDirection1 = edgeDirections[indexFoundAt];
+		
+		
+		results[0] = new EdgeLocation(hexLocation, edgeDirection1);
+		results[1] = new EdgeLocation(hexLocation, edgeDirection2);
+		
+		return results;
+	}
+
 }
 
