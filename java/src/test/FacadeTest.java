@@ -27,8 +27,6 @@ public class FacadeTest {
 	public void setUp(){
 		manager = new GameManager(new ServerProxy("8081","localhost"));
 		facade = new ModelFacade(manager);
-		facade.registerPlayer("a", "a");
-		facade.loginPlayer("a", "a");
 	}
 	
 	@Test
@@ -36,6 +34,9 @@ public class FacadeTest {
 		GameInfo gameInfo = new GameInfo();
 		ArrayList<PlayerInfo> playerList = createPlayers(2);
 		gameInfo.setGameInfo("TestGame", 0, playerList);
+		
+		facade.registerPlayer("a", "a");
+		facade.loginPlayer("a", "a");
 		
 		assertTrue(facade.canJoinGame(CatanColor.PUCE, gameInfo));
 		
