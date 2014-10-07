@@ -220,4 +220,9 @@ public class ServerMoxy implements ServerProxyInterface{
 	public boolean validatePlayer(Player player) {
 		return player.getId() == playerId;
 	}
+
+	@Override
+	public int getPlayerId() {
+		return playerId;
+	}
 }
