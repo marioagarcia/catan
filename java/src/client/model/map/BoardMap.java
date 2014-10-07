@@ -101,8 +101,13 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canMaritimeTrade(HexInterface location, int player_index) {
-		// TODO Auto-generated method stub
+	public boolean canMaritimeTrade(VertexLocation location, int player_index) {
+		for(EdgeLocation port : this.ports.keySet()){
+			EdgeLocation[] potentialPorts = EdgeLocation.getAdjacent(location);
+			for(EdgeLocation potentialPort : potentialPorts)
+				if(potentialPort == port)
+					return true;
+		}
 		return false;
 	}
 
