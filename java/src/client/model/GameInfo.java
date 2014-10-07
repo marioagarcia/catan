@@ -4,7 +4,6 @@ import java.util.*;
 
 import shared.definitions.CatanColor;
 import shared.serialization.interfaces.SerializerGameInfoInterface;
-import shared.serialization.interfaces.SerializerPlayerInterface;
 import client.model.player.PlayerInfo;
 
 /**
@@ -62,8 +61,18 @@ public class GameInfo implements SerializerGameInfoInterface
 	}
 	
 	public boolean playerCanJoin(PlayerInfo player) {
-		//TODO implement this method
-		return false;
+		
+		boolean color_available = true;
+		
+		for (PlayerInfo p : players)
+		{
+			if (p.getColor() == player.getColor())
+			{
+				color_available = false;
+			}
+		}
+		
+		return ((players.size() < 4 || players.contains(player)) && color_available);
 	}
 	
 	public String toString(){
