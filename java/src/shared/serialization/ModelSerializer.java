@@ -59,7 +59,6 @@ import client.logging.history.LogLine;
 import client.manager.GameData;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
-import client.model.card.DevCardInterface;
 import client.model.card.DevCardList;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
@@ -683,7 +682,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 	}
 
-	public DevCardInterface.DevCardType getDevCardType(String devCard){
+/*	public DevCardInterface.DevCardType getDevCardType(String devCard){
 		
 		DevCardInterface.DevCardType devCardType = null;
 		switch(devCard){
@@ -705,7 +704,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		}
 		
 		return devCardType;
-	}
+	}*/
 	
 	public CatanColor getPlayerColor(String color){
 		
