@@ -45,10 +45,9 @@ public class GameManager implements GameManagerInterface {
 	private ResourceCardBank resCardBank;
 	private ArrayList<Player> allPlayers;
 
-	public GameManager() {
-		String port = "8081";
-		String host = "localhost";
-		serverProxy = new ServerProxy(port, host);
+	public GameManager(ServerProxy serverProxy) {
+
+		this.serverProxy = serverProxy;
 
 		serverPoller = new ServerPoller();
 		serverPoller.registerObserver(pollerObserver);
