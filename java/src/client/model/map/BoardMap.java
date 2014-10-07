@@ -78,14 +78,25 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canBuildSettlement(VertexLocation location, int player_index) {
-		// TODO Auto-generated method stub
+	public boolean canBuildSettlement(VertexLocation location, int playerIndex) {
+		
+		//if there is already a building there
+		if(this.cities.containsKey(location) || this.settlements.containsKey(location))
+			return false;
+		
+		EdgeLocation[] potentialRoads = EdgeLocation.getAdjacent(location);
+		
+		for(EdgeLocation individualPotentialRoad : potentialRoads)
+			if(this.roads.containsKey(individualPotentialRoad) && this.roads.get(individualPotentialRoad).getPlayerIndex() == playerIndex)
+				return true;
+		
 		return false;
 	}
 
 	@Override
-	public boolean canBuildCity(VertexLocation location, int player_index) {
-		// TODO Auto-generated method stub
+	public boolean canBuildCity(VertexLocation location, int playerIndex) {
+		if(this.settlements.containsKey(location) && this.settlements.get(location).getPlayerIndex() == playerIndex)
+			return true;
 		return false;
 	}
 
