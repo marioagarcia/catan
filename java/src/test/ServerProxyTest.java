@@ -36,8 +36,7 @@ public class ServerProxyTest {
 		return result;
 	}
 	
-	private void loginAndJoinGame()
-	{
+	private void loginAndJoinGame(){
 		param = "{"
 				 + "\"username\": \"Sam\","
 				 + "\"password\": \"sam\""
@@ -157,8 +156,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testGetGameModel()
-	{
+	public void testGetGameModel(){
 		// Trying to get a game model while not logged in/in a game should fail. Server should respond
 		// with 400 code, and proxy should not have a latest model version
 		result = proxyTest.getGameModel();
@@ -175,8 +173,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testResetGame()
-	{
+	public void testResetGame(){
 		result = proxyTest.resetGame();
 		System.out.println("Bad Reset Result: |" + result + "|");
 		assertTrue(result.equals("400"));
@@ -203,8 +200,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testSendChat()
-	{
+	public void testSendChat(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -216,8 +212,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testAcceptTrade()
-	{
+	public void testAcceptTrade(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -231,8 +226,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testDiscardCards()
-	{
+	public void testDiscardCards(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -251,8 +245,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testRollNumber()
-	{
+	public void testRollNumber(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -266,8 +259,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testBuildRoad()
-	{
+	public void testBuildRoad(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -286,8 +278,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testBuildSettlement()
-	{
+	public void testBuildSettlement(){
 		loginAndJoinGame();	
 		
 		param = "{"
@@ -306,8 +297,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testBuildCity()
-	{
+	public void testBuildCity(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -326,8 +316,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testOfferTrade()
-	{
+	public void testOfferTrade(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -348,8 +337,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testMaritimeTrade()
-	{
+	public void testMaritimeTrade(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -365,8 +353,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testFinishTurn()
-	{
+	public void testFinishTurn(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -379,8 +366,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testBuyDevCard()
-	{
+	public void testBuyDevCard(){
 		loginAndJoinGame();
 		
 		param = "{"
@@ -393,8 +379,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testYearOfPlenty()
-	{
+	public void testYearOfPlenty(){
 		loginAndJoinGame();
 		
 		param ="{\n"+
@@ -409,8 +394,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testRoadCard()
-	{
+	public void testRoadCard(){
 		loginAndJoinGame();
 		
 		param = "{\n"+
@@ -433,8 +417,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testSoldier()
-	{
+	public void testSoldier(){
 		loginAndJoinGame();
 		
 		param = "{\n"+
@@ -452,8 +435,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testMonopoly()
-	{
+	public void testMonopoly(){
 		loginAndJoinGame();
 		
 		param = "{\n"+
@@ -467,8 +449,7 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testMonument()
-	{
+	public void testMonument(){
 		loginAndJoinGame();
 		
 		param = "{\n"+
@@ -479,5 +460,4 @@ public class ServerProxyTest {
 		result = proxyTest.playMonument(param);
 		assertTrue(!result.equals(null));
 	}
-	
 }

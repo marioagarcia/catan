@@ -11,8 +11,7 @@ public class ServerPollerTest {
 	public int number_of_polls = 0;
 	
 	@Test
-	public void test()
-	{
+	public void test(){
 		ServerPoller poller = new ServerPoller();
 		
 		poller.setProxy(new ServerMoxy());
@@ -24,8 +23,7 @@ public class ServerPollerTest {
 		
 		Date now = null;
 		
-		while (number_of_polls < 10)
-		{
+		while (number_of_polls < 10){
 			now = new Date();
 			if (now.getTime() - before_test.getTime() >= 30000){
 				break;
