@@ -1,5 +1,7 @@
 package shared.locations;
 
+import java.util.Arrays;
+
 public enum EdgeDirection
 {
 	
@@ -22,7 +24,7 @@ public enum EdgeDirection
 		return opposite;
 	}
 	
-	public EdgeDirection[] getAdjacent(){
+	public EdgeDirection[] getAdjacent(boolean allowClockwisePreceeding, boolean allowClockwiseSucceeding){
 		EdgeDirection[] result = new EdgeDirection[2];
 		
 		EdgeDirection[] directions = new EdgeDirection[10];
@@ -39,18 +41,21 @@ public enum EdgeDirection
 			if(directions[index] == this)
 				break;
 		
+		int numberPushed = 0;
 		//find that item's neighbors
-		if(index == 0)
-			result[0] = directions[5];
-		else
-			result[0] = directions[index - 1];
+		if(allowClockwisePreceeding)
+			if(index == 0)
+				result[numberPushed++] = directions[5];
+			else
+				result[numberPushed++] = directions[index - 1];
 		
-		if(index == 5)
-			result[1] = directions[0];
-		else
-			result[1] = directions[index + 1];
+		if(allowClockwiseSucceeding)
+			if(index == 5)
+				result[numberPushed++] = directions[0];
+			else
+				result[numberPushed++] = directions[index + 1];
 		
-		return result;
+		return Arrays.copyOf(result, numberPushed);
 	}
 }
 

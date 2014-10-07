@@ -109,13 +109,20 @@ public class EdgeLocation
 		}
 	}
 	
-	public EdgeLocation[] getAdjacent(){
+	public EdgeLocation[] getAdjacent(boolean allowClockwisePreceeding, boolean allowClockwiseSucceeding){
 		
 		EdgeLocation[] result = new EdgeLocation[4];
-		EdgeDirection[] interiorDirections = this.getDir().getAdjacent();
+		EdgeDirection[] interiorDirections = this.getDir().getAdjacent(allowClockwisePreceeding, allowClockwiseSucceeding);
 		
-		result[0] = new EdgeLocation(this.getHexLoc(), interiorDirections[0]);
-		result[1] = new EdgeLocation(this.getHexLoc(), interiorDirections[1]);
+		int numberCompletedOverall = 0;
+		int numberCompletedFromFirstSet = 0;
+		if(allowClockwisePreceeding){
+			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]);
+		}
+		
+		if(allowClockwiseSucceeding){
+			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]);
+		}
 		
 		HexLocation sisterHex = this.getHexLoc().getNeighborLoc(this.getDir());
 		
@@ -123,12 +130,17 @@ public class EdgeLocation
 			return Arrays.copyOf(result, 2);
 		
 		EdgeLocation sisterEdgeLocation = new EdgeLocation(sisterHex, this.getDir().getOppositeDirection());
-		EdgeDirection[] exteriorDirections = sisterEdgeLocation.getDir().getAdjacent();
+		EdgeDirection[] exteriorDirections = sisterEdgeLocation.getDir().getAdjacent(allowClockwiseSucceeding, allowClockwisePreceeding);
 		
-		result[2] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[0]);
-		result[3] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[1]);
+		int numberCompletedFromSecondSet = 0;
+		if(allowClockwisePreceeding){
+			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]);
+		}
+		if(allowClockwiseSucceeding){
+			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]);
+		}
 		
-		return result;
+		return Arrays.copyOf(result, numberCompletedOverall);
 	}
 }
 
