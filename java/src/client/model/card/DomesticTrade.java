@@ -5,29 +5,67 @@ import shared.definitions.ResourceType;
 
 public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface {
 
-	private int brick;
-	private int sheep;
-	private int ore;
-	private int wood;
-	private int wheat;
+	private int sender;
+	private int receiver;
+	private ResourceList resourceList;
 	
+	public DomesticTrade(){
+		
+	}
+	
+	public DomesticTrade(int sender, int receiver, ResourceList resourceList){
+		this.sender = sender;
+		this.receiver = receiver;
+		this.resourceList = resourceList;
+	}
+	
+	public int getSender() {
+		return sender;
+	}
+
+
+	public void setSender(int sender) {
+		this.sender = sender;
+	}
+
+
+	public int getReceiver() {
+		return receiver;
+	}
+
+
+	public void setReceiver(int receiver) {
+		this.receiver = receiver;
+	}
+
+
+	public ResourceList getResourceList() {
+		return resourceList;
+	}
+
+
+	public void setResourceList(ResourceList resourceList) {
+		this.resourceList = resourceList;
+	}
+
+
 	@Override
 	public void setTradeCard(ResourceType type, int count) {
 		switch( type ) {
 		case BRICK:
-			brick = count;
+			resourceList.setBrick(count);
 			break;
 		case WHEAT:
-			wheat = count;
+			resourceList.setWheat(count);
 			break;
 		case WOOD:
-			wood = count;
+			resourceList.setWood(count);
 			break;
 		case ORE:
-			ore = count;
+			resourceList.setOre(count);
 			break;
 		case SHEEP:
-			sheep = count;
+			resourceList.setSheep(count);
 			break;
 		}
 	}
@@ -36,15 +74,15 @@ public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface {
 	public int getTradeCard(ResourceType type) {
 		switch( type ) {
 		case BRICK:
-			return brick;
+			return resourceList.getBrick();
 		case WHEAT:
-			return wheat;
+			return resourceList.getWheat();
 		case WOOD:
-			return wood;
+			return resourceList.getWood();
 		case ORE:
-			return ore;
+			return resourceList.getOre();
 		case SHEEP:
-			return sheep;
+			return resourceList.getSheep();
 		default:
 			return Integer.MAX_VALUE;
 		}

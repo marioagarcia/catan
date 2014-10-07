@@ -61,8 +61,10 @@ import client.manager.GameData;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
 import client.model.card.DevCardList;
+import client.model.card.DomesticTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
+import client.model.map.BoardMap;
 import client.model.map.Hex;
 import client.model.map.Port;
 import client.model.piece.City;
@@ -376,7 +378,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done building DevCardBank
 	
 	//Parse Map
-		
 		//Parse hexes and build list of hexes
 		ArrayList<Hex> hexList = new ArrayList<Hex>();
 		
@@ -405,8 +406,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 			Hex hex = new Hex(hexLocation, resource, number);
 			hexList.add(new Hex(hexLocation, resource, number));
 		}
-		
-		gameData.setHexList(hexList);
 		//Done building the list of hexes
 		
 		//Parse roads and build a list of roads
@@ -429,7 +428,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 			Road road = new Road(playerIndex, edgeLocation);
 			roadList.add(road);
 		}
-		gameData.setRoadList(roadList);
 		//Done building the list of roads
 		
 		//Parse cities and build list of cities
@@ -454,8 +452,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			cityList.add(city);
 		}
-		
-		gameData.setCityList(cityList);
 		//Done building list of cities
 		
 		//Parse settlements and build list of settlements
@@ -478,15 +474,11 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			settlementList.add(settlement);
 		}
-		
-		gameData.setSettlementList(settlementList);
 		//Done building list of settlements
 		
 		//Parse radius
 		subObject = mainObject.getAsJsonObject("map");
 		int radius = subObject.get("radius").getAsInt();
-		
-		gameData.setRadius(radius);
 		//Done getting radius
 		
 		//Parse ports and build list of ports
@@ -513,7 +505,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 			Port port = new Port(resource, edgeLocation, ratio);
 			portList.add(port);
 		}
-		gameData.setPortList(portList);
 		//Done building port list
 		
 		//Parse robber
@@ -521,47 +512,17 @@ public class ModelSerializer implements ModelSerializerInterface {
 		subObject = (JsonObject)subObject.get("robber");
 		
 		HexLocation robberLocation = getHexLocation(subObject);
-		gameData.setRobber(robberLocation);
 		//Done parsing robber
 		
+		BoardMap gameMap = new BoardMap();
+		gameMap.setMap(hexList, roadList, cityList, settlementList,
+					   radius, portList, robberLocation);
+		
+		gameData.setBoardMap(gameMap);
 	//Done parsing map
 		
 		//Parse players and build player list
-		ArrayList<Player> playerList = new ArrayList<Player>();
-		
-		array = mainObject.getAsJsonArray("players");
-		for(int i = 0; i < array.size(); i++){
-			subObject = array.get(i).getAsJsonObject();
-			
-			JsonObject playerObject = subObject.getAsJsonObject("resources");
-			ResourceList resourceList = getResourceList(playerObject);
-			
-			playerObject = subObject.getAsJsonObject("oldDevCards");
-			DevCardList oldDevCards = getDevCardList(playerObject);
-			
-			playerObject = subObject.getAsJsonObject("newDevCards");
-			DevCardList newDevCards = getDevCardList(playerObject);
-			
-			int roads = subObject.get("roads").getAsInt();
-			int cities = subObject.get("cities").getAsInt();
-			int settlements = subObject.get("settlements").getAsInt();
-			int soldiers = subObject.get("soldiers").getAsInt();
-			int victoryPoints = subObject.get("victoryPoints").getAsInt();
-			int monuments = subObject.get("monuments").getAsInt();
-			boolean playedDevCard = subObject.get("playedDevCard").getAsBoolean();
-			boolean discarded = subObject.get("discarded").getAsBoolean();
-			int playerID = subObject.get("playerID").getAsInt();
-			int playerIndex = subObject.get("playerIndex").getAsInt();
-			String name = subObject.get("name").getAsString();
-			CatanColor playerColor = getPlayerColor(subObject.get("color").getAsString());
-			
-			Player player = new Player();
-			player.setPlayer(resourceList, oldDevCards, newDevCards, roads, 
-							 cities, settlements, soldiers, victoryPoints, 
-							 monuments, playedDevCard, discarded, playerID, 
-							 playerIndex, name, playerColor);
-			playerList.add(player);
-		}
+		ArrayList<Player> playerList = getPlayers(mainObject);
 		gameData.setPlayerList(playerList);
 		//Done parsing players
 
@@ -601,6 +562,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 		}
 		//Done parsing Chat
 		gameLog.setGameChat(gameChat);
+		
+		gameData.setGameLog(gameLog);
 	//Done parsing GameLog
 		
 		//Parse Bank
@@ -613,17 +576,16 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Parse Turn Tracker
 		subObject = mainObject.getAsJsonObject("turnTracker");
 		
-		Status status = getCurrentStatus(subObject.get("status").getAsString());
-		int currentTurn = subObject.get("currentTurn").getAsInt();
-		int longestRoad = subObject.get("longestRoad").getAsInt();
-		int largestArmy = subObject.get("largestArmy").getAsInt();
-		
-		TurnTracker turnTracker = new TurnTracker(status, currentTurn, longestRoad, largestArmy);
+		TurnTracker turnTracker = getTurnTracker(subObject);
 		gameData.setTurnTracker(turnTracker);
 		//Done parsing turn tracker
 		
 		int winner = mainObject.get("winner").getAsInt();
 		int version = mainObject.get("version").getAsInt();
+		
+		
+		gameData.setDomesticTrade(getTradeOffer(mainObject));
+		DomesticTrade to = getTradeOffer(mainObject);
 		
 		gameData.setWinner(winner);
 		gameData.setVersion(version);
@@ -857,6 +819,81 @@ public class ModelSerializer implements ModelSerializerInterface {
 				break;
 		}
 		return gameStatus;
+	}
+	
+	public ArrayList<Player> getPlayers(JsonObject object){
+		ArrayList<Player> playerList = new ArrayList<Player>();
+		
+		JsonArray array = object.getAsJsonArray("players");
+		for(int i = 0; i < array.size(); i++){
+			JsonObject subObject = array.get(i).getAsJsonObject();
+			
+			JsonObject playerObject = subObject.getAsJsonObject("resources");
+			ResourceList resourceList = getResourceList(playerObject);
+			
+			playerObject = subObject.getAsJsonObject("oldDevCards");
+			DevCardList oldDevCards = getDevCardList(playerObject);
+			
+			playerObject = subObject.getAsJsonObject("newDevCards");
+			DevCardList newDevCards = getDevCardList(playerObject);
+			
+			int roads = subObject.get("roads").getAsInt();
+			int cities = subObject.get("cities").getAsInt();
+			int settlements = subObject.get("settlements").getAsInt();
+			int soldiers = subObject.get("soldiers").getAsInt();
+			int victoryPoints = subObject.get("victoryPoints").getAsInt();
+			int monuments = subObject.get("monuments").getAsInt();
+			boolean playedDevCard = subObject.get("playedDevCard").getAsBoolean();
+			boolean discarded = subObject.get("discarded").getAsBoolean();
+			int playerID = subObject.get("playerID").getAsInt();
+			int playerIndex = subObject.get("playerIndex").getAsInt();
+			String name = subObject.get("name").getAsString();
+			CatanColor playerColor = getPlayerColor(subObject.get("color").getAsString());
+			
+			Player player = new Player();
+			player.setPlayer(resourceList, oldDevCards, newDevCards, roads, 
+							 cities, settlements, soldiers, victoryPoints, 
+							 monuments, playedDevCard, discarded, playerID, 
+							 playerIndex, name, playerColor);
+			playerList.add(player);
+		}
+		
+		return playerList;
+	}
+	
+	public TurnTracker getTurnTracker(JsonObject object){	
+		
+		Status status = getCurrentStatus(object.get("status").getAsString());
+		int currentTurn = object.get("currentTurn").getAsInt();
+		int longestRoad = object.get("longestRoad").getAsInt();
+		int largestArmy = object.get("largestArmy").getAsInt();
+		
+		return new TurnTracker(status, currentTurn, longestRoad, largestArmy);
+	}
+	
+	public DomesticTrade getTradeOffer(JsonObject object){
+		DomesticTrade tradeOffer = null;
+		
+		object = object.getAsJsonObject("tradeOffer");
+		
+		if(object != null){
+			int sender = object.get("sender").getAsInt();
+			int receiver = object.get("receiver").getAsInt();
+			
+			object = object.getAsJsonObject("offer");
+			
+			int brick = object.get("brick").getAsInt();
+			int ore = object.get("ore").getAsInt();
+			int sheep = object.get("sheep").getAsInt();
+			int wheat = object.get("wheat").getAsInt();
+			int wood = object.get("wood").getAsInt();
+			
+			ResourceList resourceList = new ResourceList(brick, ore, sheep, wheat, wood);
+			
+			tradeOffer = new DomesticTrade(sender, receiver, resourceList);
+		}
+		
+		return tradeOffer;
 	}
 	
 //Get DevCardList
