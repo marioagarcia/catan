@@ -4,11 +4,11 @@ import shared.serialization.interfaces.SerializerGameCommandInterface;
 
 public class GameCommand implements SerializerGameCommandInterface{
 	
-	String content;
-	String type;
-	int playerIndex;
+	private String content;
+	private String type;
+	private int playerIndex;
 	
-	GameCommand(String content, String type, int playerIndex) {
+	public GameCommand(String content, String type, int playerIndex) {
 		this.content = content;
 		this.type = type;
 		this.playerIndex = playerIndex;
