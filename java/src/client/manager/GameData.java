@@ -3,6 +3,7 @@ package client.manager;
 import java.util.ArrayList;
 
 import shared.locations.HexLocation;
+import client.logging.GameLog;
 import client.logging.chat.Message;
 import client.model.card.DevCardBank;
 import client.model.card.ResourceCardBank;
@@ -13,6 +14,7 @@ import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
 import client.model.player.Player;
+import client.model.turntracker.TurnTracker;
 
 public class GameData {
 
@@ -40,6 +42,9 @@ public class GameData {
 	//Players
 	ArrayList<Player> playerList;
 	
+	//GameLog
+	GameLog gameLog;
+
 	//Don't know where these fit in
 	//EdgeValue
 	int index;
@@ -53,11 +58,8 @@ public class GameData {
 	ResourceList offer;
 	
 	//TurnTracker
-	int currentTurn;
-	String status;
-	int longestRoad; // Optional
-	int largestArmy; // Optional
-	
+	TurnTracker turnTracker;
+
 	//Version
 	int version;
 	
@@ -163,6 +165,14 @@ public class GameData {
 	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
 	}
+	
+	public GameLog getGameLog() {
+		return gameLog;
+	}
+
+	public void setGameLog(GameLog gameLog) {
+		this.gameLog = gameLog;
+	}
 
 	public int getIndex() {
 		return index;
@@ -212,36 +222,12 @@ public class GameData {
 		this.offer = offer;
 	}
 
-	public int getCurrentTurn() {
-		return currentTurn;
+	public TurnTracker getTurnTracker() {
+		return turnTracker;
 	}
 
-	public void setCurrentTurn(int currentTurn) {
-		this.currentTurn = currentTurn;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public int getLongestRoad() {
-		return longestRoad;
-	}
-
-	public void setLongestRoad(int longestRoad) {
-		this.longestRoad = longestRoad;
-	}
-
-	public int getLargestArmy() {
-		return largestArmy;
-	}
-
-	public void setLargestArmy(int largestArmy) {
-		this.largestArmy = largestArmy;
+	public void setTurnTracker(TurnTracker turnTracker) {
+		this.turnTracker = turnTracker;
 	}
 
 	public int getVersion() {

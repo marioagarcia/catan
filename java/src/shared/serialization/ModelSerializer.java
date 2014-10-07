@@ -52,6 +52,10 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 
 import com.google.gson.*;
 
+import client.logging.GameLog;
+import client.logging.chat.Message;
+import client.logging.history.HistoryLog;
+import client.logging.history.LogLine;
 import client.manager.GameData;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
@@ -60,11 +64,14 @@ import client.model.card.DevCardList;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.map.Hex;
+import client.model.map.Port;
 import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
+import client.model.turntracker.TurnTracker;
+import client.model.turntracker.TurntrackerInterface.Status;
 
 public class ModelSerializer implements ModelSerializerInterface {
 	
@@ -484,6 +491,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		//Parse ports and build list of ports
 		array = subObject.getAsJsonArray("ports");
+		ArrayList<Port> portList = new ArrayList<Port>();
 		
 		for(int i = 0; i < array.size(); i++){
 			subObject = array.get(i).getAsJsonObject();
@@ -497,16 +505,17 @@ public class ModelSerializer implements ModelSerializerInterface {
 				resource = getResourceType(subObject);
 			}
 			
-			String direction = subObject.get("direction").getAsString();
-			//@TODO Get the direction as a type; figure out what that means
-			
 			subObject = (JsonObject)subObject.get("location");
+
+			EdgeDirection edgeDirection = getEdgeDirection((JsonObject)subObject.get("direction"));
 			HexLocation hexLocation = getHexLocation(subObject);
 			
-			//@TODO Create port with ratio, resource (optional), direction, hexLocation
-			//@TODO Add port to port list
+			EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
+			
+			Port port = new Port(resource, edgeLocation, ratio);
+			portList.add(port);
 		}
-		//@TODO Set the port list in GameData
+		gameData.setPortList(portList);
 		//Done building port list
 		
 		//Parse robber
@@ -557,25 +566,28 @@ public class ModelSerializer implements ModelSerializerInterface {
 		}
 		gameData.setPlayerList(playerList);
 		//Done parsing players
+
+	//Parse GameLog
+		GameLog gameLog = new GameLog();
 		
 		//Parse Log
-		ArrayList<SerializerMessageInterface> messageList = new ArrayList();
+		HistoryLog historyLog = new HistoryLog();
+		
 		subObject = mainObject.getAsJsonObject("log");
 		array = subObject.getAsJsonArray("lines");
 		
 		for(int i = 0; i < array.size(); i++){
 			subObject = array.get(i).getAsJsonObject();
 			String source = subObject.get("source").getAsString();
-			String message = subObject.get("message").getAsString();
+			String content = subObject.get("message").getAsString();
 			
-			//@TODO Create message out of source and message
-			//@TODO Add message to messageList
+			LogLine message = new LogLine(content, source);
+			historyLog.addLogLine(message);
 		}
-		//@TODO Set logMessageList in GameData; consider creating a getMessage()
+		gameLog.setGameHistoryLog(historyLog);
 		//Done parsing Log
 		
 		//Parse Chat
-		messageList.clear();
 		subObject = mainObject.getAsJsonObject("chat");
 		array = subObject.getAsJsonArray("lines");
 		
@@ -600,20 +612,21 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Parse Turn Tracker
 		subObject = mainObject.getAsJsonObject("turnTracker");
 		
-		String status = subObject.get("status").getAsString();
+		Status status = getCurrentStatus(subObject.get("status").getAsString());
 		int currentTurn = subObject.get("currentTurn").getAsInt();
 		int longestRoad = subObject.get("longestRoad").getAsInt();
 		int largestArmy = subObject.get("largestArmy").getAsInt();
 		
-		//@TODO Create a turn tracker with status, currentTurn, longestRoad, largestArmy
-		//@TODO Set turn tracker in GameData
+		TurnTracker turnTracker = new TurnTracker(status, currentTurn, longestRoad, largestArmy);
+		gameData.setTurnTracker(turnTracker);
 		//Done parsing turn tracker
 		
 		int winner = mainObject.get("winner").getAsInt();
 		int version = mainObject.get("version").getAsInt();
 		
+		gameData.setWinner(winner);
+		gameData.setVersion(version);
 		
-///////////////////////////////////////////////////////////////////////////
 		return gameData;
 	}
 	
@@ -843,6 +856,30 @@ public class ModelSerializer implements ModelSerializerInterface {
 		}
 		
 		return vertexDirection;
+	}
+	
+	public Status getCurrentStatus(String status){
+
+		Status gameStatus = null;
+		
+		switch(status){
+			case "FirstRound":
+				gameStatus = Status.FIRST_ROUND;
+				break;
+			case "Playing":
+				gameStatus = Status.PLAYING;
+				break;
+			case "Robbing":
+				gameStatus = Status.ROBBING;
+				break;
+			case "Discarding":
+				gameStatus = Status.DISCARDING;
+				break;
+			case "Rolling":
+				gameStatus = Status.ROLLING;
+				break;
+		}
+		return gameStatus;
 	}
 	
 //Get DevCardList

@@ -5,7 +5,7 @@ public class LogLine implements LogLineInterface {
 	String playerName;
 	String move;
 	
-	LogLine(String playerName, String move) {
+	public LogLine(String playerName, String move) {
 		setPlayerName(playerName);
 		setMove(move);
 	}
