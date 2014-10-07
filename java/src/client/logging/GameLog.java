@@ -1,5 +1,6 @@
 package client.logging;
 
+import client.logging.chat.GameChat;
 import client.logging.chat.GameChatInterface;
 import client.logging.history.HistoryLog;
 import client.logging.history.GameHistoryLogInterface;
@@ -11,6 +12,7 @@ public class GameLog implements GameLogInterface {
 	
 	public GameLog() {
 		gameHistoryLog = new HistoryLog();
+		gameChat = new GameChat();
 	}
 	
 	public GameLog(GameHistoryLogInterface historyLog, GameChatInterface gameChat) {

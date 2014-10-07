@@ -6,6 +6,10 @@ public class GameChat implements GameChatInterface {
 
 	ArrayList<MessageInterface> messageList;
 	
+	public GameChat() {
+		messageList = new ArrayList<MessageInterface>();
+	}
+	
 	@Override
 	public MessageInterface getMessage(int messageIndex)
 			throws MessageDoesNotExistException {
