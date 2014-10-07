@@ -11,6 +11,7 @@ import client.model.piece.Road;
 import client.model.piece.Settlement;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerCityInterface;
 import shared.serialization.interfaces.SerializerHexInterface;
@@ -46,9 +47,34 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canBuildRoad(EdgeLocation location, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canBuildRoad(EdgeLocation location, int playerIndex) {
+		if(roads.containsKey(location)){
+			return false;
+		}
+		
+		VertexDirection[] adjacentVertexes = VertexDirection.getAdjacent(location.getDir());
+		
+		boolean canBuildClockwisePrevious = true;
+		boolean canBuildClockwiseNext = true;
+
+		if(this.cities.containsKey(adjacentVertexes[0]) && this.cities.get(adjacentVertexes[0]).getPlayerIndex() != playerIndex)
+			canBuildClockwisePrevious = false;
+		else if(this.settlements.containsKey(adjacentVertexes[0]) && this.settlements.get(adjacentVertexes[0]).getPlayerIndex() != playerIndex)
+			canBuildClockwisePrevious = false;
+		
+		if(this.cities.containsKey(adjacentVertexes[1]) && this.cities.get(adjacentVertexes[1]).getPlayerIndex() != playerIndex)
+			canBuildClockwiseNext = false;
+		else if(this.settlements.containsKey(adjacentVertexes[1]) && this.settlements.get(adjacentVertexes[1]).getPlayerIndex() != playerIndex)
+			canBuildClockwiseNext = false;
+		
+		EdgeLocation[] adjacentLocations = location.getAdjacent(canBuildClockwisePrevious, canBuildClockwiseNext);
+		
+		boolean ownsAdjacentRoad = false;
+		for(EdgeLocation individualLocation : adjacentLocations)
+			if(roads.containsKey(individualLocation) && roads.get(individualLocation).getPlayerIndex() == playerIndex)
+				ownsAdjacentRoad = true;
+		
+		return ownsAdjacentRoad;
 	}
 
 	@Override
