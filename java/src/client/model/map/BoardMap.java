@@ -83,24 +83,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 
 	@Override
-	public void setMap(ArrayList<SerializerHexInterface> hexList,
-			ArrayList<SerializerRoadInterface> roadList,
-			ArrayList<SerializerCityInterface> cityList,
-			ArrayList<SerializerSettlementInterface> settlementList,
-			int radius, ArrayList<SerializerPortInterface> portList,
-			HexLocation robberLocation) {
-		
-		
-		
-		
-		// TODO Auto-generated method stub
-		
-		
-		
-		
-	}
-	
-	public void setMapsssssss(ArrayList<Hex> hexList, ArrayList<Road> roadList, ArrayList<City> cityList, 
+	public void setMap(ArrayList<Hex> hexList, ArrayList<Road> roadList, ArrayList<City> cityList, 
 			ArrayList<Settlement> settlementList, int radius,  ArrayList<Port> portList, HexLocation robberLocation) {
 		
 		//hexes
