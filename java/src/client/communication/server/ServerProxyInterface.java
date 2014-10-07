@@ -9,6 +9,7 @@ import client.model.player.Player;
  */
 public interface ServerProxyInterface{
 	
+	abstract int getPlayerId();
 	abstract int getGameId();
 	abstract int getLatestVersionNumber();
 	

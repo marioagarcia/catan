@@ -312,4 +312,9 @@ public class ServerProxy implements ServerProxyInterface{
 	public boolean validatePlayer(Player player) {
 		return (plainTextCookie != null && player.getId() == playerId);
 	}
+
+	@Override
+	public int getPlayerId() {
+		return playerId;
+	}
 }
