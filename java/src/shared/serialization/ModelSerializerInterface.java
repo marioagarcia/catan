@@ -51,7 +51,7 @@ public interface ModelSerializerInterface
 	 *  @param jsonString The string representation of the list of games
 	 *  @return The list of games that was just deserialized
 	 */
-	public ArrayList<SerializerGameInfoInterface> deserializeGamesList(String jsonString);
+	public ArrayList<GameInfo> deserializeGamesList(String jsonString);
 	
 	/**
 	 * Serializes a create games request into a Json string
