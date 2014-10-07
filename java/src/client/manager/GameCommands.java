@@ -5,10 +5,10 @@ import java.util.Collection;
 
 public class GameCommands {
 
-	ArrayList<GameCommand> commandList;
+	private ArrayList<GameCommand> commandList;
 	
-	GameCommands() {
-		
+	public GameCommands() {
+		commandList = new ArrayList<GameCommand>();
 	}
 	
 	public void addCommand( GameCommand command) {

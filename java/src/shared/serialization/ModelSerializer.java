@@ -57,6 +57,8 @@ import client.logging.chat.GameChat;
 import client.logging.chat.Message;
 import client.logging.history.HistoryLog;
 import client.logging.history.LogLine;
+import client.manager.GameCommand;
+import client.manager.GameCommands;
 import client.manager.GameData;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
@@ -200,8 +202,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 	}
 	
 	@Override
-	public ArrayList<SerializerGameCommandInterface> deserializeGetGameCommands(String jsonString){
-		ArrayList<SerializerGameCommandInterface> gameCommandsList = new ArrayList();
+	public GameCommands deserializeGetGameCommands(String jsonString){
+		GameCommands gameCommands = new GameCommands();
 		
 		JsonParser parser = new JsonParser();
 		JsonArray array = parser.parse(jsonString).getAsJsonArray();
@@ -211,11 +213,11 @@ public class ModelSerializer implements ModelSerializerInterface {
 			String type = array.get(i).getAsJsonObject().get("type").getAsString();
 			int playerIndex = array.get(i).getAsJsonObject().get("playerIndex").getAsInt();
 			
-			//TODO Create a game command with content, type, and playerIndex
-			//TODO Add game command to gameCommandsList
+			GameCommand gameCommand = new GameCommand(content, type, playerIndex);
+			gameCommands.addCommand(gameCommand);
 		}
 		
-		return gameCommandsList;
+		return gameCommands;
 	}
 	
 	@Override
@@ -579,13 +581,12 @@ public class ModelSerializer implements ModelSerializerInterface {
 		TurnTracker turnTracker = getTurnTracker(subObject);
 		gameData.setTurnTracker(turnTracker);
 		//Done parsing turn tracker
+
+		//Parse Trade Offer
+		gameData.setDomesticTrade(getTradeOffer(mainObject));
 		
 		int winner = mainObject.get("winner").getAsInt();
 		int version = mainObject.get("version").getAsInt();
-		
-		
-		gameData.setDomesticTrade(getTradeOffer(mainObject));
-		DomesticTrade to = getTradeOffer(mainObject);
 		
 		gameData.setWinner(winner);
 		gameData.setVersion(version);

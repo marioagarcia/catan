@@ -2,6 +2,7 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
+import client.manager.GameCommands;
 import client.model.GameInfo;
 import shared.serialization.interfaces.SerializerGameCommandInterface;
 import shared.serialization.interfaces.SerializerGameInfoInterface;
@@ -113,7 +114,7 @@ public interface ModelSerializerInterface
 	 * @param jsonString The Json string representation of the game commands
 	 * @return A list of game commands
 	 */
-	public ArrayList<SerializerGameCommandInterface> deserializeGetGameCommands(String jsonString);
+	public GameCommands deserializeGetGameCommands(String jsonString);
 	
 	/**
 	 * Serializes an AI request into a Json string
