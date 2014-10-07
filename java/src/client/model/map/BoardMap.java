@@ -1,7 +1,6 @@
 package client.model.map;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,12 +12,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import shared.serialization.interfaces.SerializerCityInterface;
-import shared.serialization.interfaces.SerializerHexInterface;
 import shared.serialization.interfaces.SerializerMapInterface;
-import shared.serialization.interfaces.SerializerPortInterface;
-import shared.serialization.interfaces.SerializerRoadInterface;
-import shared.serialization.interfaces.SerializerSettlementInterface;
 
 public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
 	private Map<HexLocation, HexInterface> hexes;
@@ -101,7 +95,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canMaritimeTrade(VertexLocation location, int player_index) {
+	public boolean canMaritimeTrade(VertexLocation location, int playerIndex) {
 		for(EdgeLocation port : this.ports.keySet()){
 			EdgeLocation[] potentialPorts = EdgeLocation.getAdjacent(location);
 			for(EdgeLocation potentialPort : potentialPorts)
@@ -112,15 +106,30 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, int player_index) {
-		// TODO Auto-generated method stub
+	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, int playerIndex) {
+		if(this.canBuildRoad(location1, playerIndex)){
+			Road road = new Road(playerIndex, location1);
+			this.roads.put(location1, road);
+			if(this.canBuildRoad(location2,  playerIndex)){
+				roads.remove(location1);
+				return true;
+			}
+		}
+		
+		if(this.canBuildRoad(location2, playerIndex)){
+			Road road = new Road(playerIndex, location2);
+			this.roads.put(location2, road);
+			if(this.canBuildRoad(location1,  playerIndex)){
+				roads.remove(location2);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation) {
-		// TODO Auto-generated method stub
-		return false;
+		return oldLocation == newLocation;
 	}
 
 
