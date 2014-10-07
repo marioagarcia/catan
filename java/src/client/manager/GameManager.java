@@ -125,7 +125,7 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
-		return (validatePlayer() && game.validateColor(color));
+		return (game.validateColor(color));
 	}
 
 	@Override
