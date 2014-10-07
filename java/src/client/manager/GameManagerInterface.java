@@ -2,7 +2,6 @@ package client.manager;
 import client.model.GameInfo;
 import client.model.card.*;
 import client.model.map.*;
-import client.model.player.*;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.*;
@@ -244,5 +243,9 @@ public interface GameManagerInterface
 	public boolean registerPlayer(String username, String password);
 	
 	public boolean loginPlayer(String username, String password);
+	
+	public boolean creatNewGame(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts);
+	
+	public boolean saveGame();
 	
 }
