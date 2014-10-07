@@ -24,6 +24,7 @@ import client.model.card.TradeInterface;
 import client.model.map.BoardMap;
 import client.model.map.HexInterface;
 import client.model.player.Player;
+import client.model.player.PlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 import client.roll.DiceRoller;
@@ -135,7 +136,22 @@ public class GameManager implements GameManagerInterface {
 		String result = serverProxy.joinGame(json_string);
 
 		if(result == "Success") {
+			
+			localPlayer = new Player();
+			
+			for (int i = 0; i < currentGame.getPlayers().size(); i++) {
+				PlayerInfo player_info = currentGame.getPlayers().get(i);
+				
+				if(player_info.getId() == serverProxy.getPlayerId()) {
+					localPlayer.setPlayerId(serverProxy.getPlayerId());
+					localPlayer.setName(player_info.getName());
+					localPlayer.setPlayerIndex(player_info.getPlayerIndex());
+				}
+
+			}
+
 			currentGame = game;
+			
 			return true;
 		}
 
@@ -161,23 +177,23 @@ public class GameManager implements GameManagerInterface {
 
 		//reset model classes 
 		populateGameList();
-		
+
 		int player_index;
 		if(localPlayer != null) {
 			player_index = localPlayer.getPlayerIndex();
 		}
 		else return false;
-		
+
 		localPlayer = game_data.getPlayerList().get(player_index);
-		
+
 		turnTracker = game_data.getTurnTracker();
-		
+
 		boardMap = game_data.getBoardMap();
-		
+
 		devCardBank = game_data.getDevCardBank();
-		
+
 		resCardBank = game_data.getResourceCardBank();
-		
+
 		allPlayers = game_data.getPlayerList();
 
 		return true;
