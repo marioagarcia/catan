@@ -1,4 +1,5 @@
 package client.manager;
+import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.*;
 import client.model.map.*;
@@ -24,17 +25,7 @@ public interface GameManagerInterface
 	 * is valid, false otherwise
 	 */
 	public boolean canJoinGame(CatanColor color, GameInfo game);
-	public void joinGame(CatanColor color, GameInfo game);
-	
-	/**
-	 * Checks that the player has a valid user id and a valid game id
-	 * 
-	 * @param player The player trying to get the game model
-	 * @param game The game the player is participating in
-	 * @return true if the player has a valid user id and a valid game id, 
-	 * false otherwise
-	 */
-	public boolean getGameModel();
+	public boolean joinGame(CatanColor color, GameInfo game);
 	
 	/**
 	 * Checks that the player has a valid user and a valid game id
@@ -149,7 +140,7 @@ public interface GameManagerInterface
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
 	public boolean canOfferTrade(TradeInterface trade);
-	public boolean offerTrade(TradeInterface trade, int otherPlayerIndex);
+	public boolean offerTrade(GMDomesticTradeInterface trade, int otherPlayerIndex);
 	
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 
@@ -238,16 +229,18 @@ public interface GameManagerInterface
 	public boolean canPlayMonument();
 	public boolean playMonument();
 	
-	public void populateGameList();
+	public boolean populateGameList();
 	
 	public boolean registerPlayer(String username, String password);
 	
 	public boolean loginPlayer(String username, String password);
 	
-	public boolean creatNewGame(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts);
+	public boolean createNewGame(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts);
 	
 	public boolean saveGame();
 	
 	public boolean sendChat(String chatMessage);
+	
+	public boolean robPlayer(int victimPlayerIndex, HexLocation location);
 	
 }
