@@ -248,4 +248,6 @@ public interface GameManagerInterface
 	
 	public boolean saveGame();
 	
+	public boolean sendChat(String chatMessage);
+	
 }
