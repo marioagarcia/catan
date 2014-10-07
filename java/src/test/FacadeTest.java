@@ -27,6 +27,9 @@ public class FacadeTest {
 	public void setUp(){
 		manager = new GameManager(new ServerProxy("8081","localhost"));
 		facade = new ModelFacade(manager);
+		
+		//facade.registerPlayer("a", "a");
+		facade.loginPlayer("Sam", "sam");
 	}
 	
 	@Test
@@ -35,8 +38,8 @@ public class FacadeTest {
 		ArrayList<PlayerInfo> playerList = createPlayers(2);
 		gameInfo.setGameInfo("TestGame", 0, playerList);
 		
-		facade.registerPlayer("a", "a");
-		facade.loginPlayer("a", "a");
+		//facade.registerPlayer("a", "a");
+		//facade.loginPlayer("a", "a");
 		
 		assertTrue(facade.canJoinGame(CatanColor.PUCE, gameInfo));
 		
@@ -54,7 +57,15 @@ public class FacadeTest {
 		
 		GameData gameData = new GameData();
 		gameData.setDomesticTrade(null);
-		System.out.println(gameData);
+		
+		GameInfo gameInfo = new GameInfo();
+		ArrayList<PlayerInfo> playerList = createPlayers(2);
+		gameInfo.setGameInfo("TestGame", 0, playerList);
+		
+		//facade.registerPlayer("a", "a");
+		//facade.loginPlayer("a", "a");
+		
+		facade.joinGame(CatanColor.PUCE, gameInfo);
 		
 		
 		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(0, 0, 0, 0, 0));
