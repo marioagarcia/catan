@@ -1,5 +1,7 @@
 package shared.locations;
 
+import java.util.Arrays;
+
 /**
  * Represents the location of an edge on a hex map
  */
@@ -116,6 +118,10 @@ public class EdgeLocation
 		result[1] = new EdgeLocation(this.getHexLoc(), interiorDirections[1]);
 		
 		HexLocation sisterHex = this.getHexLoc().getNeighborLoc(this.getDir());
+		
+		if(Math.abs(sisterHex.getX()) > 2 || Math.abs(sisterHex.getY()) > 2)
+			return Arrays.copyOf(result, 2);
+		
 		EdgeLocation sisterEdgeLocation = new EdgeLocation(sisterHex, this.getDir().getOppositeDirection());
 		EdgeDirection[] exteriorDirections = sisterEdgeLocation.getDir().getAdjacent();
 		

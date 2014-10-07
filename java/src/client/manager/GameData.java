@@ -6,8 +6,10 @@ import shared.locations.HexLocation;
 import client.logging.GameLog;
 import client.logging.chat.Message;
 import client.model.card.DevCardBank;
+import client.model.card.DomesticTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
+import client.model.map.BoardMap;
 import client.model.map.Hex;
 import client.model.map.Port;
 import client.model.piece.City;
@@ -21,44 +23,23 @@ public class GameData {
 	//Deck - DevCardBank
 	DevCardBank devCardBank; //Done
 	
-	//Bank - Resource List
-	ResourceCardBank resourceCardBank;
-	
-	//Chat Message List
-	ArrayList<Message> chatMessageList;
-	
-	//Log Message List
-	ArrayList<Message> logMessageList;
-	
 	//Map
-	ArrayList<Hex> hexList; //Done
-	ArrayList<Port> portList;
-	ArrayList<Road> roadList;
-	ArrayList<Settlement> settlementList;
-	ArrayList<City> cityList;
-	int radius;
-	HexLocation robber;
+	BoardMap boardMap;
 	
 	//Players
 	ArrayList<Player> playerList;
-	
+
 	//GameLog
 	GameLog gameLog;
-
-	//Don't know where these fit in
-	//EdgeValue
-	int index;
-	//EdgeLocation
-	int x;
-	int y;
 	
-	//TradeOffer (if there is one, Optional)
-	int sender;
-	int receiver;
-	ResourceList offer;
+	//Bank - Resource List
+	ResourceCardBank resourceCardBank;
 	
 	//TurnTracker
 	TurnTracker turnTracker;
+
+	//TradeOffer (if there is one, Optional)
+	DomesticTrade domesticTrade;
 
 	//Version
 	int version;
@@ -86,76 +67,12 @@ public class GameData {
 		this.resourceCardBank = bank;
 	}
 
-	public ArrayList<Message> getChatMessageList() {
-		return chatMessageList;
+	public BoardMap getBoardMap() {
+		return boardMap;
 	}
 
-	public void setChatMessageList(ArrayList<Message> chatMessageList) {
-		this.chatMessageList = chatMessageList;
-	}
-
-	public ArrayList<Message> getLogMessageList() {
-		return logMessageList;
-	}
-
-	public void setLogMessageList(ArrayList<Message> logMessageList) {
-		this.logMessageList = logMessageList;
-	}
-
-	public ArrayList<Hex> getHexList() {
-		return hexList;
-	}
-
-	public void setHexList(ArrayList<Hex> hexList) {
-		this.hexList = hexList;
-	}
-
-	public ArrayList<Port> getPortList() {
-		return portList;
-	}
-
-	public void setPortList(ArrayList<Port> portList) {
-		this.portList = portList;
-	}
-
-	public ArrayList<Road> getRoadList() {
-		return roadList;
-	}
-
-	public void setRoadList(ArrayList<Road> roadList) {
-		this.roadList = roadList;
-	}
-
-	public ArrayList<Settlement> getSettlementList() {
-		return settlementList;
-	}
-
-	public void setSettlementList(ArrayList<Settlement> settlementList) {
-		this.settlementList = settlementList;
-	}
-
-	public ArrayList<City> getCityList() {
-		return cityList;
-	}
-
-	public void setCityList(ArrayList<City> cityList) {
-		this.cityList = cityList;
-	}
-
-	public int getRadius() {
-		return radius;
-	}
-
-	public void setRadius(int radius) {
-		this.radius = radius;
-	}
-
-	public HexLocation getRobber() {
-		return robber;
-	}
-
-	public void setRobber(HexLocation robber) {
-		this.robber = robber;
+	public void setBoardMap(BoardMap boardMap) {
+		this.boardMap = boardMap;
 	}
 
 	public ArrayList<Player> getPlayerList() {
@@ -174,52 +91,12 @@ public class GameData {
 		this.gameLog = gameLog;
 	}
 
-	public int getIndex() {
-		return index;
+	public DomesticTrade getDomesticTrade() {
+		return domesticTrade;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getSender() {
-		return sender;
-	}
-
-	public void setSender(int sender) {
-		this.sender = sender;
-	}
-
-	public int getReceiver() {
-		return receiver;
-	}
-
-	public void setReceiver(int receiver) {
-		this.receiver = receiver;
-	}
-
-	public ResourceList getOffer() {
-		return offer;
-	}
-
-	public void setOffer(ResourceList offer) {
-		this.offer = offer;
+	public void setDomesticTrade(DomesticTrade domesticTrade) {
+		this.domesticTrade = domesticTrade;
 	}
 
 	public TurnTracker getTurnTracker() {
