@@ -3,6 +3,7 @@ package client.communication.facade;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
@@ -145,7 +146,7 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
 	public boolean canOfferTrade(TradeInterface trade);
-	public boolean offerTrade(TradeInterface trade, int otherPlayerIndex);
+	public boolean offerTrade(GMDomesticTradeInterface trade, int otherPlayerIndex);
 	
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 
@@ -156,8 +157,8 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
-	public boolean canMaritimeTrade(HexInterface location, MaritimeTrade trade);
-	public boolean maritimeTrade(HexInterface location, MaritimeTrade trade);
+	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade);
+	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade);
 	
 	/**
 	 * Checks that the client model status is "playing"

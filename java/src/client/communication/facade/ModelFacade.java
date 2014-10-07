@@ -4,6 +4,7 @@ import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.manager.GameManagerInterface;
+import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
@@ -117,17 +118,17 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean offerTrade(TradeInterface trade, int otherPlayerIndex) {
+	public boolean offerTrade(GMDomesticTradeInterface trade, int otherPlayerIndex) {
 		return this.gameManager.offerTrade(trade, otherPlayerIndex);
 	}
 
 	@Override
-	public boolean canMaritimeTrade(HexInterface location, MaritimeTrade trade) {
+	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade) {
 		return this.gameManager.canMaritimeTrade(location, trade);
 	}
 
 	@Override
-	public boolean maritimeTrade(HexInterface location, MaritimeTrade trade) {
+	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade) {
 		return this.gameManager.maritimeTrade(location, trade);
 	}
 
