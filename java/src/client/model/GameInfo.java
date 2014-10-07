@@ -2,6 +2,7 @@ package client.model;
 
 import java.util.*;
 
+import shared.definitions.CatanColor;
 import shared.serialization.interfaces.SerializerGameInfoInterface;
 import shared.serialization.interfaces.SerializerPlayerInterface;
 import client.model.player.PlayerInfo;
@@ -72,6 +73,14 @@ public class GameInfo implements SerializerGameInfoInterface
 			str += players.get(i).toString();
 		}
 		return str;
+	}
+	
+	public boolean validateColor(CatanColor color) {
+		for (int i = 0; i < players.size(); i++) {
+			if(players.get(i).getColor() == color)
+				return false;
+		}
+		return true;
 	}
 
 	@Override
