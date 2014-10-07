@@ -28,7 +28,7 @@ public interface PlayerInterface
 	public int getId();
 	
 	/**
-	 * TODO
+	 * 
 	 */
 	public String toString();
 	

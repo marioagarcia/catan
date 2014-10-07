@@ -201,5 +201,283 @@ public class ServerProxyTest {
 		assertTrue(!result.equals(modified_client));
 		assertTrue(version == 0);
 	}
-
+	
+	@Test
+	public void testSendChat()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+				  + "\"message\": \"Adding content to model\""
+				  + "\"source\": \"Kevin\""
+				  + "}";
+		result = proxyTest.sendChat(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testAcceptTrade()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+			  + "\"type\": \"willAccept\","
+			  + "\"playerIndex\": 0,"
+			  + "\"willAccept\": true"
+			  + "}";
+		
+		result = proxyTest.acceptTrade(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testDiscardCards()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+			  + "\"type\": \"discardCards\","
+			  + "\"playerIndex\": 0,"
+			  + "\"discardedCards\": {"
+			  + "\"brick\": 0,"
+			  + "\"ore\": -1,"
+			  + "\"sheep\": -1,"
+			  + "\"wheat\": 0,"
+			  +  "\"wood\": 0"
+			  + "}"
+			  + "}";
+		result = proxyTest.discardCards(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testRollNumber()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+			  + "\"type\": \"rollNumber\","
+			  + "\"playerIndex\": 0,"
+			  + "\"number\": 7"
+			  + "}";
+		
+		result = proxyTest.discardCards(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testBuildRoad()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+			  + "\"type\": \"buildRoad\","
+			  + "\"playerIndex\": 0,"
+			  + "\"roadLocation\": {"
+			  + "\"x\": 1,"
+			  + "\"y\": 2,"
+			  + "\"direction\": \"NE\""
+			  + "},"
+			  + "\"free\": true"
+			  + "}";
+		
+		result = proxyTest.buildRoad(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testBuildSettlement()
+	{
+		loginAndJoinGame();	
+		
+		param = "{"
+			  + "\"type\": \"buildSettlement\","
+			  + "\"playerIndex\": 0,"
+			  + "\"vertexLocation\": {"
+			  + "\"x\": 3,"
+			  + "\"y\": 4,"
+			  + "\"direction\": \"SW\""
+			  + "},"
+			  + "\"free\": false"
+			  + "}";
+		
+		result = proxyTest.buildSettlement(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testBuildCity()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+				  + "\"type\": \"buildCity\","
+				  + "\"playerIndex\": 0,"
+				  + "\"vertexLocation\": {"
+				  + "\"x\": 2,"
+				  + "\"y\": 2,"
+				  + "\"direction\": \"SW\""
+				  + "},"
+				  + "\"free\": false"
+				  + "}";
+			
+			result = proxyTest.buildCity(param);
+			assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testOfferTrade()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+				  + "\"type\": \"offerTrade\","
+				  + "\"playerIndex\": 0,"
+				  + "\"offer\": {"
+				  + "\"brick\": 2,"
+				  + "\"ore\": -2,"
+				  + "\"sheep\": 0,"
+				  + "\"wheat\": 0,"
+				  +  "\"wood\": 0"
+				  + "},"
+				  + "\"reciever\": 2"
+				  + "}";
+		
+			result = proxyTest.offerTrade(param);
+			assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testMaritimeTrade()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+			  + "\"type\": \"maritimeTrade\","
+			  + "\"playerIndex\": 0,"
+			  + "\"ratio\": 3,"
+			  + "\"inputResource\": \"sheep\","
+			  + "\"outputResource\": \"wood\""
+			  + "}";
+		
+		result = proxyTest.maritimeTrade(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testFinishTurn()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+			  + "\"type\": \"finishTurn\","
+			  +  "\"playerIndex\": 0"
+			  + "}";
+		
+		result = proxyTest.finishTurn(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testBuyDevCard()
+	{
+		loginAndJoinGame();
+		
+		param = "{"
+				  + "\"type\": \"buyDevCard\","
+				  +  "\"playerIndex\": 0"
+				  + "}";
+			
+			result = proxyTest.buyDevCard(param);
+			assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testYearOfPlenty()
+	{
+		loginAndJoinGame();
+		
+		param ="{\n"+
+				" \"type\": \"Year_of_Plenty\",\n"+
+				" \"playerIndex\": 0,\n"+
+				" \"resource1\": \"brick\",\n"+
+				" \"resource2\": \"ore\"\n"+
+				"}";
+		
+		result = proxyTest.playYearOfPlenty(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testRoadCard()
+	{
+		loginAndJoinGame();
+		
+		param = "{\n"+
+				" \"type\": \"Road_Building\",\n"+
+				" \"playerIndex\": 0,\n"+
+				" \"spot1\": {\n"+
+				" \"x\": 4,\n"+
+				" \"y\": 5,\n"+
+				" \"direction\": \"NW\"\n"+
+				" },\n"+
+				" \"spot2\": {\n"+
+				" \"x\": 4,\n"+
+				" \"y\": 5,\n"+
+				" \"direction\": \"N\"\n"+
+				" }\n"+
+				"}";
+		
+		result = proxyTest.playRoadBuilding(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testSoldier()
+	{
+		loginAndJoinGame();
+		
+		param = "{\n"+
+				" \"type\": \"Soldier\",\n"+
+				" \"playerIndex\": 0,\n"+
+				" \"victimIndex\": 1,\n"+
+				" \"location\": {\n"+
+				" \"x\": 3,\n"+
+				" \"y\": 2\n"+
+				" }\n"+
+				"}";
+		
+		result = proxyTest.playSoldier(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testMonopoly()
+	{
+		loginAndJoinGame();
+		
+		param = "{\n"+
+				" \"type\": \"Monopoly\",\n"+
+				" \"resource\": \"wood\",\n"+
+				" \"playerIndex\": 0\n"+
+				"}";
+		
+		result = proxyTest.playMonopoly(param);
+		assertTrue(!result.equals(null));
+	}
+	
+	@Test
+	public void testMonument()
+	{
+		loginAndJoinGame();
+		
+		param = "{\n"+
+				" \"type\": \"Monument\",\n"+
+				" \"playerIndex\": 0\n"+
+				"}";
+		
+		result = proxyTest.playMonument(param);
+		assertTrue(!result.equals(null));
+	}
+	
 }

@@ -328,6 +328,4 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	public boolean canBeRobbed() {
 		return (resourceList.totalNumberCards() >= 1);
 	}
-
-	
 }
