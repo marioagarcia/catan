@@ -117,16 +117,21 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	//TODO
-	private boolean resetFromGameModel(GameData gameModel) {
+	private boolean resetFromGameModel(String json_model) {
+
+		GameData reset_game_data = modelSerializer.deserializeGameModel(json_model);
+		
 		//reset model classes
-		return false;
+		
+		
+		return true;
 	}
 
 	@Override
 	public boolean resetGame() { 
-		String json_string = serverProxy.resetGame();
-		GameData reset_game_data = modelSerializer.deserializeGameModel(json_string);
-		if(resetFromGameModel(reset_game_data))
+		String json_model = serverProxy.resetGame();
+		
+		if(resetFromGameModel(json_model))
 			return true;
 		else
 			return false;
@@ -155,10 +160,34 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean sendChat(String chatMessage) {
 		int player_index = localPlayer.getPlayerIndex();
+		
 		SendChatParameters param = new SendChatParameters(player_index, chatMessage);
+		
 		String json_string = modelSerializer.serializeSendChat(param);
-		GameData reset_game_data = modelSerializer.deserializeGameModel(json_string);
-		if(resetFromGameModel(reset_game_data))
+		
+		String json_model = serverProxy.sendChat(json_string);
+		
+		if(resetFromGameModel(json_model))
+			return true;
+		else
+			return false;
+	}
+	
+	@Override
+	public boolean canRoll() {
+		return turnTracker.canRoll(localPlayer.getPlayerIndex());
+	}
+
+	@Override
+	public boolean roll() {
+		int player_index = localPlayer.getPlayerIndex();
+		int number = diceRoller.roll();
+		
+		String json_string = modelSerializer.serializeRollNumber(new RollNumberParameters(player_index, number));
+		
+		String json_model = serverProxy.rollNumber(json_string);
+		
+		if(resetFromGameModel(json_model))
 			return true;
 		else
 			return false;
@@ -193,28 +222,12 @@ public class GameManager implements GameManagerInterface {
 		
 		String json_string = modelSerializer.serializeDiscardCards(new DiscardCardsParameters(player_index, list));
 		
-		serverProxy.discardCards(json_string); //this should throw an exception	
+		String json_model = serverProxy.discardCards(json_string); //this should throw an exception	
 		
-		return true;
-	}
-
-	@Override
-	public boolean canRoll() {
-		int player_index = localPlayer.getPlayerIndex();
-		
-		return turnTracker.canRoll(player_index);
-	}
-
-	@Override
-	public int roll() {
-		int player_index = localPlayer.getPlayerIndex();
-		int number = diceRoller.roll();
-		
-		String json_string = modelSerializer.serializeRollNumber(new RollNumberParameters(player_index, number));
-		
-		serverProxy.rollNumber(json_string);
-		
-		return 0;
+		if(resetFromGameModel(json_model))
+			return true;
+		else
+			return false;
 	}
 
 	@Override
@@ -232,9 +245,12 @@ public class GameManager implements GameManagerInterface {
 		BuildRoadParameters param = new BuildRoadParameters(player_index, new EdgeLocationParameters(location), isFree);
 		String json_string = modelSerializer.serializeBuildRoad(param);
 		
-		serverProxy.rollNumber(json_string);
+		String json_model = serverProxy.buildRoad(json_string);
 		
-		return true;
+		if(resetFromGameModel(json_model))
+			return true;
+		else
+			return false;
 	}
 
 	@Override
@@ -252,7 +268,8 @@ public class GameManager implements GameManagerInterface {
 		BuildSettlementParameters param = new BuildSettlementParameters(player_index, new VertexLocationParameters(location), isFree);
 		
 		String json_string = modelSerializer.serializeBuildSettlement(param);
-		serverProxy.rollNumber(json_string);
+		
+		serverProxy.buildSettlement(json_string);
 		return true;
 	}
 
@@ -270,7 +287,7 @@ public class GameManager implements GameManagerInterface {
 		BuildCityParameters param = new BuildCityParameters(player_index, new VertexLocationParameters(location));
 		
 		String json_string = modelSerializer.serializeBuildCity(param);
-		serverProxy.rollNumber(json_string);
+		serverProxy.buildCity(json_string);
 		
 		return true;
 	}

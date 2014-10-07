@@ -53,13 +53,13 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 import com.google.gson.*;
 
 import client.logging.GameLog;
+import client.logging.chat.GameChat;
 import client.logging.chat.Message;
 import client.logging.history.HistoryLog;
 import client.logging.history.LogLine;
 import client.manager.GameData;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
-import client.model.card.DevCardInterface;
 import client.model.card.DevCardList;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
@@ -504,11 +504,9 @@ public class ModelSerializer implements ModelSerializerInterface {
 			}else{
 				resource = getResourceType(subObject);
 			}
-			
-			subObject = (JsonObject)subObject.get("location");
 
-			EdgeDirection edgeDirection = getEdgeDirection((JsonObject)subObject.get("direction"));
-			HexLocation hexLocation = getHexLocation(subObject);
+			EdgeDirection edgeDirection = getEdgeDirection(subObject);
+			HexLocation hexLocation = getHexLocation((JsonObject)subObject.get("location"));
 			
 			EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
 			
@@ -529,7 +527,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	//Done parsing map
 		
 		//Parse players and build player list
-		ArrayList<Player> playerList = new ArrayList();
+		ArrayList<Player> playerList = new ArrayList<Player>();
 		
 		array = mainObject.getAsJsonArray("players");
 		for(int i = 0; i < array.size(); i++){
@@ -588,19 +586,22 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Done parsing Log
 		
 		//Parse Chat
+		GameChat gameChat = new GameChat();
+		
 		subObject = mainObject.getAsJsonObject("chat");
 		array = subObject.getAsJsonArray("lines");
 		
 		for(int i = 0; i < array.size(); i++){
 			subObject = array.get(i).getAsJsonObject();
 			String source = subObject.get("source").getAsString();
-			String message = subObject.get("message").getAsString();
+			String content = subObject.get("message").getAsString();
 			
-			//@TODO Create message out of source and message
-			//@TODO Add message to messageList
+			Message message = new Message(content, source);
+			gameChat.addMessage(message);
 		}
-		//@TODO Set chatMessageList in GameData; consider creating a getMessage()
 		//Done parsing Chat
+		gameLog.setGameChat(gameChat);
+	//Done parsing GameLog
 		
 		//Parse Bank
 		subObject = mainObject.getAsJsonObject("bank");
@@ -681,30 +682,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 		devCardList.setDevCardList(yearOfPlenty, monopoly, soldier, roadBuild, monument);
 		return devCardList;
 		
-	}
-
-	public DevCardInterface.DevCardType getDevCardType(String devCard){
-		
-		DevCardInterface.DevCardType devCardType = null;
-		switch(devCard){
-			case "yearOfPlenty":
-				devCardType = DevCardInterface.DevCardType.YEAR_OF_PLENTY;
-				break;
-			case "monopoly":
-				devCardType = DevCardInterface.DevCardType.MONOPOLY;
-				break;
-			case "soldier":
-				devCardType = DevCardInterface.DevCardType.SOLDIER;
-				break;
-			case "roadBuild":
-				devCardType = DevCardInterface.DevCardType.ROAD_BUILD;;
-				break;
-			case "monument":
-				devCardType = DevCardInterface.DevCardType.MONUMENT;
-				break;
-		}
-		
-		return devCardType;
 	}
 	
 	public CatanColor getPlayerColor(String color){
