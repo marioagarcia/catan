@@ -45,7 +45,7 @@ public enum EdgeDirection
 		else
 			result[0] = directions[index - 1];
 		
-		if(index == 6)
+		if(index == 5)
 			result[1] = directions[0];
 		else
 			result[1] = directions[index + 1];
