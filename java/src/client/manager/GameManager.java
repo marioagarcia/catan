@@ -30,20 +30,20 @@ import client.roll.DiceRoller;
 
 public class GameManager implements GameManagerInterface {
 
-	ServerProxy serverProxy;
-	ModelSerializer modelSerializer;
-	ServerPoller serverPoller;
-	ArrayList<GameInfo> gameList;
-	Player localPlayer;
-	GameInfo currentGame;
-	GameLog gameLog;
-	GameCommands gameCommands;
-	TurnTracker turnTracker;
-	DiceRoller diceRoller;
-	BoardMap boardMap;
-	DevCardBank devCardBank;
-	ResourceCardBank resCardBank;
-	ArrayList<Player> allPlayers;
+	private ServerProxy serverProxy;
+	private ModelSerializer modelSerializer;
+	private ServerPoller serverPoller;
+	private ArrayList<GameInfo> gameList;
+	private Player localPlayer;
+	private GameInfo currentGame;
+	private GameLog gameLog;
+	private GameCommands gameCommands;
+	private TurnTracker turnTracker;
+	private DiceRoller diceRoller;
+	private BoardMap boardMap;
+	private DevCardBank devCardBank;
+	private ResourceCardBank resCardBank;
+	private ArrayList<Player> allPlayers;
 
 	public GameManager() {
 		String port = "8080";
@@ -585,4 +585,64 @@ public class GameManager implements GameManagerInterface {
 			resetFromGameModel(json_model);
 		}
 	};
+
+	public ServerProxy getServerProxy() {
+		return serverProxy;
+	}
+
+	public ModelSerializer getModelSerializer() {
+		return modelSerializer;
+	}
+
+	public ServerPoller getServerPoller() {
+		return serverPoller;
+	}
+
+	public ArrayList<GameInfo> getGameList() {
+		return gameList;
+	}
+
+	public Player getLocalPlayer() {
+		return localPlayer;
+	}
+
+	public GameInfo getCurrentGame() {
+		return currentGame;
+	}
+
+	public GameLog getGameLog() {
+		return gameLog;
+	}
+
+	public TurnTracker getTurnTracker() {
+		return turnTracker;
+	}
+
+	public DiceRoller getDiceRoller() {
+		return diceRoller;
+	}
+
+	public BoardMap getBoardMap() {
+		return boardMap;
+	}
+
+	public DevCardBank getDevCardBank() {
+		return devCardBank;
+	}
+
+	public ResourceCardBank getResCardBank() {
+		return resCardBank;
+	}
+
+	public ArrayList<Player> getAllPlayers() {
+		return allPlayers;
+	}
+
+	public ServerPoller.ModelStateObserver getPollerObserver() {
+		return pollerObserver;
+	}
+
+	public void setGameCommands(GameCommands gameCommands) {
+		this.gameCommands = gameCommands;
+	}
 }
