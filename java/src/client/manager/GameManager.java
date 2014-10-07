@@ -570,12 +570,12 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean canMaritimeTrade(HexInterface location, MaritimeTrade trade) {
-		return localPlayer.canOfferTrade(trade);
+	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade) {
+		return (localPlayer.canOfferTrade(trade) && boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex()));
 	}
 
 	@Override
-	public boolean maritimeTrade(HexInterface location, MaritimeTrade trade) {
+	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade) {
 		int player_index = localPlayer.getPlayerIndex();
 		String resource_in = trade.getResourceIn().toString().toLowerCase();
 		String resource_out = trade.getResourceOut().toString().toLowerCase();

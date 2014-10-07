@@ -151,8 +151,8 @@ public interface GameManagerInterface
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
-	public boolean canMaritimeTrade(HexInterface location, MaritimeTrade trade);
-	public boolean maritimeTrade(HexInterface location, MaritimeTrade trade);
+	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade);
+	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade);
 	
 	/**
 	 * Checks that the client model status is "playing"
