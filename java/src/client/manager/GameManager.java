@@ -81,10 +81,7 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
-		if(validatePlayer() /*&& game.validateColor(color)*/) {
-				return true;
-		}		
-		return false;
+		return (validatePlayer() && game.validateColor(color));
 	}
 	
 	@Override
@@ -96,8 +93,21 @@ public class GameManager implements GameManagerInterface {
 			currentGame = game;
 		}
 		else {
-			//figure out how to respond with the bad response that 			
+			//TODO: figure out how to respond with the bad response that 			
 		}
+	}
+	
+	@Override
+	public boolean saveGame() {
+		int player_index = localPlayer.getPlayerIndex();
+		
+		SaveGameRequestParameters param = new SaveGameRequestParameters(player_index, currentGame.getTitle());
+		
+		String json_string = modelSerializer.serializeSaveGameRequest(param);
+		
+		//TODO serverProxy.saveGame(json_string);
+		
+		return true;
 	}
 
 	@Override
@@ -136,9 +146,22 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean postGameCommands() {
 		String json_string = null; //modelSerializer.serializePostGameCommands(gameCommands);
+		
 		serverProxy.postGameCommands(json_string);
 		
 		return true;
+	}
+
+	@Override
+	public boolean sendChat(String chatMessage) {
+		int player_index = localPlayer.getPlayerIndex();
+		SendChatParameters param = new SendChatParameters(player_index, chatMessage);
+		String json_string = modelSerializer.serializeSendChat(param);
+		GameData reset_game_data = modelSerializer.deserializeGameModel(json_string);
+		if(resetFromGameModel(reset_game_data))
+			return true;
+		else
+			return false;
 	}
 
 	@Override
@@ -449,12 +472,6 @@ public class GameManager implements GameManagerInterface {
 		
 		currentGame = null; //modelSerializer.deserializeGameInfo(game_info_json);
 		
-		return false;
-	}
-
-	@Override
-	public boolean saveGame() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
