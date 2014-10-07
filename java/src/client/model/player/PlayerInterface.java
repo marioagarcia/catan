@@ -51,4 +51,6 @@ public interface PlayerInterface
 	 * @return
 	 */
 	public boolean canDiscardCards(ResourceList list);
+	
+	public int getNumberOfCards();
 }

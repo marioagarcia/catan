@@ -47,4 +47,10 @@ public interface GMPlayerInterface {
 	 * @return true if the player has the Monopoly card and it hasn't played a dev card this turn
 	 */
 	public boolean canPlayMonopoly();
+	
+	/**
+	 * Determines whether a player can be robbed
+	 * @return true if the player of the given index has at least one card 
+	 */
+	public boolean canBeRobbed();
 }

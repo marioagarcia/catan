@@ -309,5 +309,25 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		return (!discarded && resourceList.totalNumberCards() > 7);
 	}
 
+	@Override
+	public boolean canPlayMonument() {
+		return (!playedDevCard && newDevCards.getMonument() >=1);
+	}
+
+	@Override
+	public boolean canPlayMonopoly() {
+		return (!playedDevCard && newDevCards.getMonopoly() >=1);
+	}
+
+	@Override
+	public int getNumberOfCards() {
+		return resourceList.totalNumberCards();
+	}
+
+	@Override
+	public boolean canBeRobbed() {
+		return (resourceList.totalNumberCards() >= 1);
+	}
+
 	
 }
