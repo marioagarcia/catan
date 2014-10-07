@@ -136,6 +136,8 @@ public class GameManager implements GameManagerInterface {
 		String result = serverProxy.joinGame(json_string);
 
 		if(result == "Success") {
+
+			currentGame = game;
 			
 			localPlayer = new Player();
 			
@@ -149,8 +151,6 @@ public class GameManager implements GameManagerInterface {
 				}
 
 			}
-
-			currentGame = game;
 			
 			return true;
 		}
