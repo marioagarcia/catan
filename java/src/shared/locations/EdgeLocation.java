@@ -106,5 +106,23 @@ public class EdgeLocation
 				return null;
 		}
 	}
+	
+	public EdgeLocation[] getAdjacent(){
+		
+		EdgeLocation[] result = new EdgeLocation[4];
+		EdgeDirection[] interiorDirections = this.getDir().getAdjacent();
+		
+		result[0] = new EdgeLocation(this.getHexLoc(), interiorDirections[0]);
+		result[1] = new EdgeLocation(this.getHexLoc(), interiorDirections[1]);
+		
+		HexLocation sisterHex = this.getHexLoc().getNeighborLoc(this.getDir());
+		EdgeLocation sisterEdgeLocation = new EdgeLocation(sisterHex, this.getDir().getOppositeDirection());
+		EdgeDirection[] exteriorDirections = sisterEdgeLocation.getDir().getAdjacent();
+		
+		result[2] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[0]);
+		result[3] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[1]);
+		
+		return result;
+	}
 }
 
