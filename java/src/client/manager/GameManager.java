@@ -46,7 +46,7 @@ public class GameManager implements GameManagerInterface {
 	private ArrayList<Player> allPlayers;
 
 	public GameManager() {
-		String port = "8080";
+		String port = "8081";
 		String host = "localhost";
 		serverProxy = new ServerProxy(port, host);
 
