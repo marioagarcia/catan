@@ -89,7 +89,7 @@ public class GameManager implements GameManagerInterface {
 		return true;
 	}
 
-	private boolean validatePlayer() {
+	public boolean validatePlayer() {
 		return serverProxy.validatePlayer(localPlayer);
 	}
 
@@ -106,7 +106,7 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean createNewGame(String gameName, boolean randTiles,	boolean randNumbers, boolean randPorts) {
+	public boolean createNewGame(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts) {
 
 		CreateGameRequestParameters param = new CreateGameRequestParameters(randTiles, randNumbers, randPorts, gameName);
 
@@ -156,7 +156,7 @@ public class GameManager implements GameManagerInterface {
 		return true;
 	}
 
-	private boolean resetFromGameModel(String json_model) {
+	public boolean resetFromGameModel(String json_model) {
 
 		GameData game_data = modelSerializer.deserializeGameModel(json_model);
 
