@@ -1,10 +1,14 @@
 package client.model.map;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import client.manager.interfaces.GMBoardMapInterface;
+import client.model.piece.City;
+import client.model.piece.Road;
+import client.model.piece.Settlement;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -16,10 +20,21 @@ import shared.serialization.interfaces.SerializerRoadInterface;
 import shared.serialization.interfaces.SerializerSettlementInterface;
 
 public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
-	Map<HexLocation, HexInterface> hexes;
+	private Map<HexLocation, HexInterface> hexes;
+	private Map<EdgeLocation, Road> roads;
+	private Map<VertexLocation, City> cities;
+	private Map<VertexLocation, Settlement> settlements;
+	private Map<EdgeLocation, Port> ports;
+	
+	private int radius;
+	private HexLocation robberLocation;
 	
 	public BoardMap(){
 		this.hexes = new HashMap<HexLocation, HexInterface>();
+		this.roads = new HashMap<EdgeLocation, Road>();
+		this.cities = new HashMap<VertexLocation, City> ();
+		this.settlements = new HashMap<VertexLocation, Settlement> ();
+		this.ports = new HashMap<EdgeLocation, Port> ();
 	}
 
 	@Override
@@ -28,20 +43,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			throw new HexNotFoundException();
 		
 		return this.hexes.get(location);
-	}
-
-	@Override
-	public VertexLocation getVertex(VertexLocation location) {
-		//TODO
-		return null;
-//		return this.hexes.get(location.getHexLoc()).getCorner(location.getDir());
-	}
-
-	@Override
-	public VertexLocation getHexBorder(EdgeLocation location) {
-		//TODO
-		return null;
-//		return this.hexes.get(location.getHexLoc()).getBorder(location.getDir());
 	}
 
 	@Override
@@ -88,11 +89,48 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			ArrayList<SerializerSettlementInterface> settlementList,
 			int radius, ArrayList<SerializerPortInterface> portList,
 			HexLocation robberLocation) {
+		
+		
+		
+		
 		// TODO Auto-generated method stub
 		
 		
 		
 		
+	}
+	
+	public void setMapsssssss(ArrayList<Hex> hexList, ArrayList<Road> roadList, ArrayList<City> cityList, 
+			ArrayList<Settlement> settlementList, int radius,  ArrayList<Port> portList, HexLocation robberLocation) {
+		
+		//hexes
+		for(int i = 0; i < hexList.size(); i++){
+			this.hexes.put(hexList.get(i).getLocation(), hexList.get(i));
+		}
+		
+		//roads
+		for(int i = 0; i < roadList.size(); i++){
+			this.roads.put(roadList.get(i).getLocation(), roadList.get(i));
+		}
+		
+		//cities
+		for(int i = 0; i < cityList.size(); i++){
+			this.cities.put(cityList.get(i).getLocation(), cityList.get(i));
+		}
+		
+		//settlements
+		for(int i = 0; i < settlementList.size(); i++){
+			this.settlements.put(settlementList.get(i).getLocation(), settlementList.get(i));
+		}
+		
+		//ports
+		for(int i = 0; i < portList.size(); i++){
+			this.ports.put(portList.get(i).getLocation(), portList.get(i));
+		}
+		
+		
+		this.radius = radius;
+		this.robberLocation = robberLocation;
 	}
 
 }

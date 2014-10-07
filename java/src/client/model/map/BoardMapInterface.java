@@ -17,17 +17,4 @@ public interface BoardMapInterface {
 	 */
 	public HexInterface getHex(HexLocation location) throws HexNotFoundException;
 	
-	/**
-	 * gets a vertex by location
-	 * @param location VertexLocation
-	 * @return HexCornerInterface
-	 */
-	public VertexLocation getVertex(VertexLocation location);
-	
-	/**
-	 * gets a hex border by location
-	 * @param location EdgeLocation
-	 * @return HexBorderInterface
-	 */
-	public VertexLocation getHexBorder(EdgeLocation location);
 }

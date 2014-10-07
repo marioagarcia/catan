@@ -1,9 +1,7 @@
 package client.model.map;
 
 import shared.definitions.ResourceType;
-import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
 import shared.serialization.interfaces.SerializerPortInterface;
 
 public class Port implements SerializerPortInterface {

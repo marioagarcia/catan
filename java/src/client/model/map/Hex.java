@@ -11,9 +11,7 @@ public class Hex implements HexInterface, SerializerHexInterface {
 	private int number;
 
 	
-	public Hex(HexLocation location,
-			HexType type,
-			int number){
+	public Hex(HexLocation location, HexType type, int number){
 		
 		this.location = location;
 		this.resource = type;
@@ -44,16 +42,6 @@ public class Hex implements HexInterface, SerializerHexInterface {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	
-	@Override
-	public String toString(){
-		String returnString = "";
-		if(resource != null)
-			returnString += resource.toString() + "\n";
-		returnString += location.toString() + "\n";
-		returnString += number + "\n";
-		return returnString;
-	}
 
 	@Override
 	public void setHex(HexLocation hexLocation, HexType resource, int number) {
@@ -61,6 +49,12 @@ public class Hex implements HexInterface, SerializerHexInterface {
 		this.resource = resource;
 		this.number = number;
 		
+	}
+
+	@Override
+	public String toString() {
+		return "Hex [location=" + location + ", resource=" + resource
+				+ ", number=" + number + "]";
 	}
 
 }
