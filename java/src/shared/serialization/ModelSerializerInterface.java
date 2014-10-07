@@ -2,6 +2,7 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
+import client.model.GameInfo;
 import shared.serialization.interfaces.SerializerGameCommandInterface;
 import shared.serialization.interfaces.SerializerGameInfoInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
@@ -59,6 +60,14 @@ public interface ModelSerializerInterface
 	 * @return A Json string of the serialized create game request
 	 */
 	public String serializeCreateGameRequest(CreateGameRequestParameters params);
+	
+	/**
+	 * Deserializes and parses a Json string into a GameInfo object
+	 * 
+	 * @param jsonString The Json string representation of a GameInfo object
+	 * @return A GameInfo object containing a game title, game ID, and list of PlayerInfos
+	 */
+	public GameInfo deserializeGameInfo(String jsonString);
 	
 	/**
 	 * Serializes a join game request into a Json string

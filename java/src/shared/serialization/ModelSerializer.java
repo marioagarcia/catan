@@ -53,6 +53,7 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 import com.google.gson.*;
 
 import client.manager.GameData;
+import client.model.GameInfo;
 import client.model.card.DevCardBank;
 import client.model.card.DevCardInterface;
 import client.model.card.DevCardList;
@@ -63,6 +64,7 @@ import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
 import client.model.player.Player;
+import client.model.player.PlayerInfo;
 
 public class ModelSerializer implements ModelSerializerInterface {
 	
@@ -87,28 +89,31 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		JsonArray gameArray = element.getAsJsonArray();
 		for(int i = 0; i < gameArray.size(); i++){
-			//GameInfo gameInfo = new GameInfo();
+			GameInfo gameInfo = new GameInfo();
 			
 			JsonObject gameObject = (JsonObject)gameArray.get(i);
-			//gameInfo.setTitle(gameObject.get("title").getAsString());
-			//gameInfo.setId(gameObject.get("id").getAsInt());
+			String gameTitle = gameObject.get("title").getAsString();
+			int gameID = gameObject.get("id").getAsInt();
 			
 			JsonArray playerArray = (JsonArray)gameObject.get("players");
+			ArrayList <PlayerInfo> playerList = new ArrayList<PlayerInfo>();
+			
 			for(int j = 0; j < playerArray.size(); j++){
-				//PlayerInfo playerInfo = new PlayerInfo();
+				PlayerInfo playerInfo = new PlayerInfo();
 				
 				JsonObject playerObject = (JsonObject)playerArray.get(j);
 				
-				//playerInfo.setId(playerObject.get("id").getAsInt());
-				//playerInfo.setName(playerObject.get("name").getAsString());
+				int playerID = playerObject.get("id").getAsInt();
+				String playerName = playerObject.get("name").getAsString();
+				CatanColor playerColor = getPlayerColor(playerObject.get("color").getAsString());
 				
-				String color = playerObject.get("color").getAsString();
+				playerInfo.setPlayerInfo(playerColor, playerName, playerID);
+				playerList.add(playerInfo);
 				
-				CatanColor playerColor = getPlayerColor(color);
-				
-				//gameInfo.addPlayer(playerInfo);
 			}
-			//gamesList.add(gameInfo);
+			
+			gameInfo.setGameInfo(gameTitle, gameID, playerList);
+			gamesList.add(gameInfo);
 		}
 		
 		return gamesList;
@@ -120,6 +125,37 @@ public class ModelSerializer implements ModelSerializerInterface {
 		String jsonString = gson.toJson(params);
 		
 		return jsonString;
+	}
+	
+	@Override
+	public GameInfo deserializeGameInfo(String jsonString){
+		
+		GameInfo gameInfo = new GameInfo();
+		
+		JsonParser parser = new JsonParser();		
+		JsonObject gameObject = parser.parse(jsonString).getAsJsonObject();
+		
+		String gameTitle = gameObject.get("title").getAsString();
+		int gameID = gameObject.get("id").getAsInt();
+		
+		JsonArray playerArray = (JsonArray)gameObject.get("players");
+		ArrayList <PlayerInfo> playerList = new ArrayList<PlayerInfo>();
+		
+		for(int j = 0; j < playerArray.size(); j++){
+			PlayerInfo playerInfo = new PlayerInfo();
+			
+			JsonObject playerObject = (JsonObject)playerArray.get(j);
+			
+			int playerID = playerObject.get("id").getAsInt();
+			String playerName = playerObject.get("name").getAsString();
+			CatanColor playerColor = getPlayerColor(playerObject.get("color").getAsString());
+			
+			playerInfo.setPlayerInfo(playerColor, playerName, playerID);
+			playerList.add(playerInfo);
+		}
+		
+		gameInfo.setGameInfo(gameTitle, gameID, playerList);
+		return gameInfo;
 	}
 	
 	@Override
