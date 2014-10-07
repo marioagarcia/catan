@@ -135,7 +135,7 @@ public class GameManager implements GameManagerInterface {
 
 		String result = serverProxy.joinGame(json_string);
 
-		if(result == "Success") {
+		if(result.equals("Success")) {
 
 			currentGame = game;
 			
