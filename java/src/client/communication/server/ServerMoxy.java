@@ -6,31 +6,38 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import client.model.player.Player;
 
-public class ServerMoxy implements ServerProxyInterface
-{
+public class ServerMoxy implements ServerProxyInterface{
 	private int gameId;
 	private String cookie;
 	private int latestVersion;
+	private int playerId;
 	
-	public ServerMoxy()
-	{
+	public ServerMoxy(){
 		gameId = 1;
 		cookie = "%7B%22authentication%22%3A%22-798137185%22%2C%22name%22%3A%22blah%22%2C%22password%22%3A%22string%22%2C%22playerID%22%3A12%7D";
-		
+		String plain_text_cookie = null;
 		try {
-			String plain_text_cookie = URLDecoder.decode(cookie, "UTF-8");
+			plain_text_cookie = URLDecoder.decode(cookie, "UTF-8");
 		} 
 		catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		
+		JsonParser parser = new JsonParser();
+		JsonElement cookie_element = parser.parse(plain_text_cookie);
+		JsonObject cookie_object = cookie_element.getAsJsonObject();
+		playerId = cookie_object.get("playerID").getAsInt();
 		latestVersion = 1;
 	}
 	
-	private String readFile(String filename)
-	{
+	private String readFile(String filename){
 		BufferedReader reader = null;
 		StringBuilder builder = new StringBuilder();
 		try {
@@ -211,6 +218,6 @@ public class ServerMoxy implements ServerProxyInterface
 
 	@Override
 	public boolean validatePlayer(Player player) {
-		return true;
+		return player.getId() == playerId;
 	}
 }

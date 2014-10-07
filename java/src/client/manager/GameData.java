@@ -41,11 +41,11 @@ public class GameData {
 	//TradeOffer (if there is one, Optional)
 	DomesticTrade domesticTrade;
 
-	//Version
-	int version;
-	
 	//Winner (-1 if there is no winner yet)
 	int winner;
+	
+	//Version
+	int version;
 	
 	public GameData(){
 		

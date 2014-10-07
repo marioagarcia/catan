@@ -12,8 +12,7 @@ import java.net.URLDecoder;
 import com.google.gson.*;
 import client.model.player.Player;
 
-public class ServerProxy implements ServerProxyInterface
-{
+public class ServerProxy implements ServerProxyInterface{
 	private String serverPortNumber;
 	private String host;
 	private String link;
@@ -100,7 +99,6 @@ public class ServerProxy implements ServerProxyInterface
 			 }
 			 else{
 				 response = Integer.toString(connection.getResponseCode());
-				 //throw exception if bad response code
 			 }
 		}
 		catch (MalformedURLException m){

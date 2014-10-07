@@ -3,9 +3,6 @@ package shared.serialization;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Scanner;
 
 import shared.definitions.CatanColor;
@@ -16,15 +13,6 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import shared.serialization.interfaces.SerializerCityInterface;
-import shared.serialization.interfaces.SerializerDevCardListInterface;
-import shared.serialization.interfaces.SerializerGameCommandInterface;
-import shared.serialization.interfaces.SerializerGameInfoInterface;
-import shared.serialization.interfaces.SerializerHexInterface;
-import shared.serialization.interfaces.SerializerMessageInterface;
-import shared.serialization.interfaces.SerializerPlayerInterface;
-import shared.serialization.interfaces.SerializerRoadInterface;
-import shared.serialization.interfaces.SerializerSettlementInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -88,11 +76,9 @@ public class ModelSerializer implements ModelSerializerInterface {
 	}
 	
 	@Override
-	public ArrayList<SerializerGameInfoInterface> deserializeGamesList(String jsonString){
+	public ArrayList<GameInfo> deserializeGamesList(String jsonString){
 		
-		//@TODO All commented lines in this method must be implemented with new classes
-		
-		ArrayList<SerializerGameInfoInterface> gamesList = new ArrayList();
+		ArrayList<GameInfo> gamesList = new ArrayList<GameInfo>();
 		
 		JsonParser parser = new JsonParser();
 		
@@ -896,10 +882,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		return tradeOffer;
 	}
-	
-//Get DevCardList
 
-	public static void main(String[] args){
+/*	public static void main(String[] args){
 		ModelSerializer ms = new ModelSerializer();
 		
 		File file = new File(args[0]);
@@ -914,7 +898,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		ms.deserializeGameModel(content);
 		
-		
-	}
+	}*/
 	
 }
