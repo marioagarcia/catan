@@ -59,6 +59,7 @@ public class GameManager implements GameManagerInterface {
 		gameList = null;
 		localPlayer = null;
 		currentGame = null;
+		gameLog = null;
 		gameCommands = null;
 		turnTracker = null;
 		boardMap = null;
@@ -195,6 +196,8 @@ public class GameManager implements GameManagerInterface {
 		resCardBank = game_data.getResourceCardBank();
 
 		allPlayers = game_data.getPlayerList();
+		
+		gameLog = game_data.getGameLog();
 
 		return true;
 	}
