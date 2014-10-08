@@ -173,6 +173,18 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		this.name = playerName;
 		this.color = playerColor;	
 	}
+	
+	public boolean canBuildRoad(){
+		boolean canBuildRoad = false;
+		
+		if(resourceList.getWood() > 0 &&
+		   resourceList.getBrick() > 0 &&
+		   roads > 0){
+			canBuildRoad = true;
+		}
+		
+		return canBuildRoad;
+	}
 
 	@Override
 	public boolean canOfferTrade(TradeInterface trade){
@@ -308,7 +320,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	public boolean canDiscardCards(ResourceList list){
 		return (!discarded && resourceList.totalNumberCards() > 7);
 	}
-
+	
 	@Override
 	public boolean canPlayMonument() {
 		return (!playedDevCard && newDevCards.getMonument() >=1);

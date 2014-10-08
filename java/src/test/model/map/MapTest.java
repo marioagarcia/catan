@@ -9,12 +9,16 @@ import java.util.Scanner;
 import org.junit.Before;
 import org.junit.Test;
 
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.serialization.ModelSerializer;
 import client.communication.server.ServerProxy;
 import client.manager.GameData;
 import client.manager.GameManager;
 import client.model.GameInfo;
 import client.model.map.BoardMap;
+import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
 
 public class MapTest {
@@ -51,20 +55,38 @@ public class MapTest {
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
-		System.out.println(tt.getCurrentTurn());
 		
-		//@TODO
+		for(int i = 0; i < game.getPlayerList().size(); i++){
+			Player player = game.getPlayerList().get(0);
+			System.out.println("Player " + i + ":\n" + player.getResourceList().toString());
+		}
+		
+		int playerIndex = tt.getCurrentTurn();
+		//Player Index -- RoadLocation:  0 -- EdgeLocation [hexLoc=HexLocation [x=2, y=0], dir=SouthWest]
+		
 		// AssertTrue when the road location is open, is connected to another road, 
 		// it's not on water, the player has 1 wood, brick, and road, it is the player's
 		// turn, the game status is 'Playing'
+		EdgeLocation location = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.South);
+		assertTrue(map.canBuildRoad(location, playerIndex));
 		
-		//assertTrue(map.canBuildRoad(, tt.getCurrentTurn()));
+		location = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthWest);
+		// AssertFalse when the road location is occupied
+		assertFalse(map.canBuildRoad(location, playerIndex));
+		
+		// AssertFalse when the road is not connected to another road
+		location = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthEast);
+		assertFalse(map.canBuildRoad(location, playerIndex));
 		
 		//@TODO
-		// AssertFalse when the road is not connected to another road
+		// AssertFalse when the road is on water
+		
+		
+		// Assert
 		
 		//@TODO
 		// AssertTrue when the game is in "setup" and the road is near a settlement
+		
 		
 		//@TODO
 		// AssertFalse when the game is in "setup" and the road is not near a settlement
