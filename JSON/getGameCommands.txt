@@ -1,0 +1,12 @@
+[
+  {
+    "content": "TESTTEST",
+    "type": "sendChat",
+    "playerIndex": 0
+  },
+  {
+    "content": "Blah",
+    "type": "sendChat",
+    "playerIndex": 0
+  }
+]
