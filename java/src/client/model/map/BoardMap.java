@@ -46,7 +46,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canBuildRoad(EdgeLocation location, int playerIndex, int setupPhase) {
+	public boolean canBuildRoad(EdgeLocation location, int playerIndex, boolean setupPhase) {
 		location = location.getNormalizedLocation();
 		if(roads.containsKey(location)){
 			return false;
