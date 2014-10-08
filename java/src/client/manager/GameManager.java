@@ -449,6 +449,7 @@ public class GameManager implements GameManagerInterface {
 
 		return (boardMap.canBuildRoad(location, player_index) &&
 				localPlayer.canBuildRoad() && 
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
 				turnTracker.getStatus() == Status.PLAYING);
 	}
 
