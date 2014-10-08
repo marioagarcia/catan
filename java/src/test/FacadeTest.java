@@ -28,43 +28,38 @@ public class FacadeTest {
 		manager = new GameManager(new ServerProxy("8081","localhost"));
 		facade = new ModelFacade(manager);
 
-		//facade.registerPlayer("a", "a");
-		//facade.loginPlayer("a", "a");
-		
-
-		
-		//facade.registerPlayer("a", "a");
 		facade.loginPlayer("Sam", "sam");
 		
-		GameData gameData = new GameData();
-		gameData.setDomesticTrade(null);
-		
-		GameInfo gameInfo = new GameInfo();
-		ArrayList<PlayerInfo> playerList = createPlayers(2);
-		gameInfo.setGameInfo("TestGame", 0, playerList);
-		
-		//facade.registerPlayer("a", "a");
-		//facade.loginPlayer("a", "a");
-		
-		facade.joinGame(CatanColor.PUCE, gameInfo);
-		manager.startPoller(1000);
+		GameInfo g = new GameInfo();
+		g.setId(0);
+		g.setTitle("My game");
+		facade.joinGame(CatanColor.ORANGE, g);
 	}
 	
 	@Test
 	public void testCanJoinGame() {
-		GameInfo gameInfo = new GameInfo();
+		
+		GameInfo g = new GameInfo();
+		g.setId(0);
+		g.setTitle("My game");
+		
+		/*GameInfo gameInfo = new GameInfo();
 		ArrayList<PlayerInfo> playerList = createPlayers(2);
 		gameInfo.setGameInfo("TestGame", 0, playerList);
-
-		//facade.registerPlayer("a", "a");
-		//facade.loginPlayer("a", "a");
+		*/
 		
-		assertTrue(facade.canJoinGame(CatanColor.PUCE, gameInfo));
+		assertTrue(facade.canJoinGame(CatanColor.PUCE, g));
 		
+		/*
 		playerList = createPlayers(4);
-		gameInfo.setGameInfo("TestGame", 173, playerList);
+		gameInfo.setGameInfo("TestGame", 173, playerList);*/
 		
-		//assertFalse(facade.canJoinGame(CatanColor.PUCE, gameInfo));
+		g = new GameInfo();
+		g.setId(173);
+		g.setTitle("My game");
+		
+		//Can join game is only verifying color. Since a valid color was given, it returned true, even though the game doesn't exist
+		//assertFalse(facade.canJoinGame(CatanColor.PUCE, g));
 	}
 	
 	public void testSendChat(){
@@ -73,19 +68,6 @@ public class FacadeTest {
 	
 	@Test
 	public void testCanAcceptTrade(){
-		
-		GameData gameData = new GameData();
-		gameData.setDomesticTrade(null);
-		
-		GameInfo gameInfo = new GameInfo();
-		ArrayList<PlayerInfo> playerList = createPlayers(2);
-		gameInfo.setGameInfo("TestGame", 0, playerList);
-		
-		//facade.registerPlayer("a", "a");
-		//facade.loginPlayer("a", "a");
-		
-		facade.joinGame(CatanColor.PUCE, gameInfo);
-		
 		
 		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(0, 0, 0, 0, 0));
 		facade.canAcceptTrade(trade);

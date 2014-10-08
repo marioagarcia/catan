@@ -153,6 +153,7 @@ public class GameManager implements GameManagerInterface {
 
 			}
 			
+			resetFromGameModel(serverProxy.getGameModel());
 			return true;
 		}
 
