@@ -70,15 +70,18 @@ public class FacadeTest {
 	public void testCanAcceptTrade(){
 		
 		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(0, 0, 0, 0, 0));
-		facade.canAcceptTrade(trade);
+		assertTrue(facade.canAcceptTrade(trade));
 	}
 	
 	public void testCanDiscardCards(){
+		//Player get resource list method is returning the wrong type
+		//facade.canDiscardCards(manager.getLocalPlayer().getResourceList());
 		
 	}
 	
+	@Test
 	public void testCanRollNumber(){
-		
+		assertTrue(facade.canRoll());
 	}
 	
 	public void testCanBuildRoad(){

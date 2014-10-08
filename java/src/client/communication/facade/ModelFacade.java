@@ -74,7 +74,7 @@ public class ModelFacade implements ModelFacadeInterface {
 
 	@Override
 	public boolean canRoll() {
-		return this.canRoll();
+		return gameManager.canRoll();
 	}
 
 	@Override
