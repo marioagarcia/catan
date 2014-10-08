@@ -52,7 +52,6 @@ public class GameManager implements GameManagerInterface {
 
 		serverPoller = new ServerPoller();
 		serverPoller.registerObserver(pollerObserver);
-		serverPoller.startPoller(1000);
 
 		modelSerializer = new ModelSerializer();
 
@@ -154,6 +153,7 @@ public class GameManager implements GameManagerInterface {
 
 			}
 			
+			resetFromGameModel(serverProxy.getGameModel());
 			return true;
 		}
 
@@ -604,6 +604,10 @@ public class GameManager implements GameManagerInterface {
 			resetFromGameModel(json_model);
 		}
 	};
+
+	public void startPoller(int interval) {
+		serverPoller.startPoller(interval);
+	}
 
 	public ServerProxy getServerProxy() {
 		return serverProxy;

@@ -27,57 +27,78 @@ public class FacadeTest {
 	public void setUp(){
 		manager = new GameManager(new ServerProxy("8081","localhost"));
 		facade = new ModelFacade(manager);
-		
-		//facade.registerPlayer("a", "a");
+
 		facade.loginPlayer("Sam", "sam");
+		
+		GameInfo g = new GameInfo();
+		g.setId(0);
+		g.setTitle("My game");
+		facade.joinGame(CatanColor.ORANGE, g);
+		
+		//Always start on the local player's turn
+		while (!facade.canRoll())
+		{
+			facade.finishTurn();
+		}
 	}
 	
 	@Test
 	public void testCanJoinGame() {
-		GameInfo gameInfo = new GameInfo();
+		
+		GameInfo g = new GameInfo();
+		
+		/*GameInfo gameInfo = new GameInfo();*/
 		ArrayList<PlayerInfo> playerList = createPlayers(2);
-		gameInfo.setGameInfo("TestGame", 0, playerList);
 		
-		//facade.registerPlayer("a", "a");
-		//facade.loginPlayer("a", "a");
+		g.setGameInfo("TestGame", 0, playerList);
 		
-		assertTrue(facade.canJoinGame(CatanColor.PUCE, gameInfo));
+		//Player with color Brown already exists in game
+		assertFalse(facade.canJoinGame(CatanColor.BROWN, g));
 		
+		//Color Puce is available
+		assertTrue(facade.canJoinGame(CatanColor.PUCE, g));
+		
+		/*
 		playerList = createPlayers(4);
-		gameInfo.setGameInfo("TestGame", 173, playerList);
+		gameInfo.setGameInfo("TestGame", 173, playerList);*/
 		
-		//assertFalse(facade.canJoinGame(CatanColor.PUCE, gameInfo));
+		g = new GameInfo();
+		g.setId(173);
+		g.setTitle("My game");
+		
+		//Can join game is only verifying color. Since a valid color was given, it returned true, even though the game doesn't exist
+		//assertFalse(facade.canJoinGame(CatanColor.PUCE, g));
 	}
 	
 	public void testSendChat(){
 		//Doesn't exist
 	}
 	
+	@Test
 	public void testCanAcceptTrade(){
 		
-		GameData gameData = new GameData();
-		gameData.setDomesticTrade(null);
+		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(1, 0, 0, 0, -1));
+		assertTrue(facade.canAcceptTrade(trade));
 		
-		GameInfo gameInfo = new GameInfo();
-		ArrayList<PlayerInfo> playerList = createPlayers(2);
-		gameInfo.setGameInfo("TestGame", 0, playerList);
-		
-		//facade.registerPlayer("a", "a");
-		//facade.loginPlayer("a", "a");
-		
-		facade.joinGame(CatanColor.PUCE, gameInfo);
-		
-		
-		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(0, 0, 0, 0, 0));
-		facade.canAcceptTrade(trade);
+		//Player does not have the required resources
+		trade = new DomesticTrade(1, 2, new ResourceList(20, 2, 0, -10, -5));
+		assertFalse(facade.canAcceptTrade(trade));
 	}
 	
 	public void testCanDiscardCards(){
+		//Player get resource list method is returning the wrong type
+		//facade.canDiscardCards(manager.getLocalPlayer().getResourceList());
 		
 	}
 	
+	@Test
 	public void testCanRollNumber(){
+
+		assertTrue(facade.canRoll());
 		
+		//Can't roll if it is not your turn
+		facade.finishTurn();
+		assertFalse(facade.canRoll());
 	}
 	
 	public void testCanBuildRoad(){
@@ -100,15 +121,27 @@ public class FacadeTest {
 		
 	}
 	
+	@Test
 	public void testCanFinishTurn(){
 		
+		
+		//Need a game that is already in process
+		//assertTrue(facade.canFinishTurn());
+		
+		//Should not be allowed because game is currently rolling
+		assertFalse(facade.canFinishTurn());	
 	}
 	
 	public void testCanBuyDevCard(){
 		
 	}
 	
+	@Test
 	public void testCanPlayYearOfPlenty(){
+		
+		//Facade canPlayDevCard methods are not finished
+		//Player does not have this card
+		//assertFalse(facade.canPlayYearOfPlenty());
 		
 	}
 	

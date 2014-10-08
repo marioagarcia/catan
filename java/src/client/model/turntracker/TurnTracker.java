@@ -31,6 +31,11 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 	public int getCurrentTurn() {
 		return this.currentPlayerIndex;
 	}
+	
+	@Override
+	public void setCurrentTurn(int currentPlayerIndex) {
+		this.currentPlayerIndex = currentPlayerIndex;
+	}
 
 	@Override
 	public int getLongestRoadStatus() {
