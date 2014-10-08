@@ -51,13 +51,14 @@ public class MapTest {
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
-		
+		System.out.println(tt.getCurrentTurn());
 		
 		//@TODO
 		// AssertTrue when the road location is open, is connected to another road, 
 		// it's not on water, the player has 1 wood, brick, and road, it is the player's
 		// turn, the game status is 'Playing'
-		assertTrue();
+		
+		//assertTrue(map.canBuildRoad(, tt.getCurrentTurn()));
 		
 		//@TODO
 		// AssertFalse when the road is not connected to another road

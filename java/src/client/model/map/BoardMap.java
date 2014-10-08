@@ -166,5 +166,13 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		this.radius = radius;
 		this.robberLocation = robberLocation;
 	}
+	
+	public int getRadius() {
+		return this.radius;
+	}
+	
+	public HexLocation getRobberLocation() {
+		return this.robberLocation;
+	}
 
 }
