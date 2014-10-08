@@ -87,7 +87,7 @@ public class FacadeTest {
 	
 	public void testCanDiscardCards(){
 		//Player get resource list method is returning the wrong type
-		//facade.canDiscardCards(manager.getLocalPlayer().getResourceList());
+		facade.canDiscardCards(manager.getLocalPlayer().getResourceList());
 		
 	}
 	

@@ -3,6 +3,7 @@ package client.communication.facade;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
@@ -90,8 +91,8 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has over 7 cards and the player has the cards
 	 * being discarded, false otherwise
 	 */
-	public boolean canDiscardCards(ResourceList list);
-	public void discardCards(ResourceList list);
+	public boolean canDiscardCards(SerializerResourceListInterface list);
+	public void discardCards(SerializerResourceListInterface list);
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
 	 * 

@@ -6,6 +6,7 @@ import client.model.map.*;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.*;
+import shared.serialization.interfaces.SerializerResourceListInterface;
 /**
  * This class ensures that the preconditions for the actions the different model classes
  * attempt are met.
@@ -84,8 +85,8 @@ public interface GameManagerInterface
 	 * @return true if the player has over 7 cards and the player has the cards
 	 * being discarded, false otherwise
 	 */
-	public boolean canDiscardCards(ResourceList list);
-	public boolean discardCards(ResourceList list);
+	public boolean canDiscardCards(SerializerResourceListInterface list);
+	public boolean discardCards(SerializerResourceListInterface list);
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
 	 * 

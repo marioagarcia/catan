@@ -7,7 +7,9 @@ public class TestMain {
 	{
 		String[] classes = new String[] {
 				"test.ServerPollerTest",
-				"test.ServerProxyTest"
+				"test.ServerProxyTest",
+				"test.GameManagerTest",
+				"test.FacadeTest"
 		};
 		
 		JUnitCore.main(classes);
