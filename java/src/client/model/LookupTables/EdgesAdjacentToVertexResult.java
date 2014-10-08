@@ -1,5 +1,8 @@
 package client.model.LookupTables;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import shared.locations.EdgeLocation;
 
 public class EdgesAdjacentToVertexResult {
@@ -45,6 +48,8 @@ public class EdgesAdjacentToVertexResult {
 	 * @return the exterior
 	 */
 	public EdgeLocation getExterior(boolean normalize) {
+		if(this.exterior == null)
+			return null;
 		if(normalize)
 			return exterior.getNormalizedLocation();
 		return exterior;
@@ -69,6 +74,17 @@ public class EdgesAdjacentToVertexResult {
 		return this.exterior.getNormalizedLocation() == location.getNormalizedLocation() || 
 				this.interiorClockwisePreceeding.getNormalizedLocation() == location.getNormalizedLocation() ||
 				this.interiorClockwiseSucceeding.getNormalizedLocation() == location.getNormalizedLocation();
+	}
+	
+	public Set<EdgeLocation> asSet(){
+		Set<EdgeLocation> result = new HashSet<EdgeLocation>();
+		if( this.getExterior(true) != null )
+			result.add(this.getExterior(true));
+		
+		result.add(this.getInteriorClockwisePreceeding(true));
+		result.add(this.getInteriorClockwiseSucceeding(true));
+		
+		return result;
 	}
 	
 	

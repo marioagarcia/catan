@@ -14,7 +14,7 @@ import shared.locations.VertexLocation;
  * @author christopherbelyeu
  *
  */
-public class EdgesAdjacentToVertexLookupTable {
+class EdgesAdjacentToVertexLookupTable {
 	
 	private Map<VertexDirection, EdgesAdjacentToVertexLookupResult> table;
 	
@@ -42,8 +42,8 @@ public class EdgesAdjacentToVertexLookupTable {
 		return new EdgesAdjacentToVertexResult(exterior, interiorPreceeding, interiorSucceeding);
 	}
 
-	public static EdgesAdjacentToVertexResult getAdjacentEdges(VertexLocation location){
-		return instance.getEdgesAdjacentToVertex(location);
+	public static EdgesAdjacentToVertexLookupTable getInstance(){
+		return instance;
 	}
 
 }

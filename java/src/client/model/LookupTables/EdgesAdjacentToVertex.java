@@ -1,9 +1,13 @@
 package client.model.LookupTables;
 
+import shared.locations.VertexLocation;
+
 public class EdgesAdjacentToVertex {
 	
 	
-	private static EdgesAdjacentToVertex singleton = new EdgesAdjacentToVertex();
+	public static EdgesAdjacentToVertexResult findEdgesAdjacentToVertex(VertexLocation location){
+		return EdgesAdjacentToVertexLookupTable.getInstance().getEdgesAdjacentToVertex(location);
+	}
 	
 	
 }
