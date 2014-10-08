@@ -1,6 +1,7 @@
 package client.communication.server;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -79,12 +80,12 @@ public class ServerMoxy implements ServerProxyInterface{
 
 	@Override
 	public String listGames() {
-		return readFile("test/JSON/listGames.txt");
+		return readFile("JSON" + File.separator + "listGames.txt");
 	}
 
 	@Override
 	public String createGame(String JSONString) {
-		return readFile("test/JSON/createGame.txt");
+		return readFile("JSON" + File.separator + "createGame.txt");
 	}
 
 	@Override
@@ -94,22 +95,22 @@ public class ServerMoxy implements ServerProxyInterface{
 
 	@Override
 	public String getGameModel() {
-		return readFile("test/JSON/getGameModel.txt");
+		return readFile("JSON" + File.separator + "getGameModel.txt");
 	}
 
 	@Override
 	public String resetGame() {
-		return readFile("test/JSON/resetGame.txt");
+		return readFile("JSON" + File.separator + "resetGame.txt");
 	}
 
 	@Override
 	public String getGameCommands() {
-		return readFile("test/JSON/postGameCommands.txt");
+		return readFile("JSON" + File.separator + "postGameCommands.txt");
 	}
 
 	@Override
 	public String postGameCommands(String JSONString) {
-		return readFile("test/JSON/postGameCommands.txt");
+		return readFile("JSON" + File.separator + "postGameCommands.txt");
 	}
 
 	@Override
@@ -129,82 +130,82 @@ public class ServerMoxy implements ServerProxyInterface{
 
 	@Override
 	public String sendChat(String JSONString) {
-		return readFile("test/JSON/sendChat.txt");
+		return readFile("JSON" + File.separator + "sendChat.txt");
 	}
 
 	@Override
 	public String acceptTrade(String JSONString) {
-		return readFile("test/JSON/acceptTrade.txt");
+		return readFile("JSON" + File.separator + "acceptTrade.txt");
 	}
 
 	@Override
 	public String discardCards(String JSONString) {
-		return readFile("test/JSON/discardCards.txt");
+		return readFile("JSON" + File.separator + "discardCards.txt");
 	}
 
 	@Override
 	public String rollNumber(String JSONString) {
-		return readFile("test/JSON/rollNumber.txt");
+		return readFile("JSON" + File.separator + "rollNumber.txt");
 	}
 
 	@Override
 	public String buildRoad(String JSONString) {
-		return readFile("test/JSON/buildRoad.txt");
+		return readFile("JSON" + File.separator + "buildRoad.txt");
 	}
 
 	@Override
 	public String buildSettlement(String JSONString) {
-		return readFile("test/JSON/buildSettlement.txt");
+		return readFile("JSON" + File.separator + "buildSettlement.txt");
 	}
 
 	@Override
 	public String buildCity(String JSONString) {
-		return readFile("test/JSON/buildCity.txt");
+		return readFile("JSON" + File.separator + "buildCity.txt");
 	}
 
 	@Override
 	public String offerTrade(String JSONString) {
-		return readFile("test/JSON/offerTrade.txt");
+		return readFile("JSON" + File.separator + "offerTrade.txt");
 	}
 
 	@Override
 	public String maritimeTrade(String JSONString) {
-		return readFile("test/JSON/maritimeTrade.txt");
+		return readFile("JSON" + File.separator + "maritimeTrade.txt");
 	}
 
 	@Override
 	public String finishTurn(String JSONString) {
-		return readFile("test/JSON/finishTurn.txt");
+		return readFile("JSON" + File.separator + "finishTurn.txt");
 	}
 
 	@Override
 	public String buyDevCard(String JSONString) {
-		return readFile("test/JSON/buyDevCard.txt");
+		return readFile("JSON" + File.separator + "buyDevCard.txt");
 	}
 
 	@Override
 	public String playYearOfPlenty(String JSONString) {
-		return readFile("test/JSON/yearOfPlenty.txt");
+		return readFile("JSON" + File.separator + "yearOfPlenty.txt");
 	}
 
 	@Override
 	public String playRoadBuilding(String JSONString) {
-		return readFile("test/JSON/roadBuilding.txt");
+		return readFile("JSON" + File.separator + "roadBuilding.txt");
 	}
 
 	@Override
 	public String playSoldier(String JSONString) {
-		return readFile("test/JSON/soldier.txt");
+		return readFile("JSON" + File.separator + "soldier.txt");
 	}
 
 	@Override
 	public String playMonopoly(String JSONString) {
-		return readFile("test/JSON/playMonopoly.txt");
+		return readFile("JSON" + File.separator + "playMonopoly.txt");
 	}
 
 	@Override
 	public String playMonument(String JSONString) {
-		return readFile("test/JSON/playMonument.txt");
+		return readFile("JSON" + File.separator + "playMonument.txt");
 	}
 
 	@Override

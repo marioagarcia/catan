@@ -16,7 +16,6 @@
 	<property name="ant-junit.jar" value="${java.dir}/lib/ant-junit.jar"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
 	
-	<property name="build.test" value="${java.dir}/build/test"/>
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
@@ -53,7 +52,7 @@
 			</assertions>
 		</java>
 	</target>
-
+<!--
 <target name="test" depends="compile" description="Runs Junit Tests">
 
 	<junit printsummary="on" haltonfailure="yes">
@@ -76,7 +75,10 @@
 	</junit>
 
 </target>
+-->
+
     
+
     <target name="make-java-doc" description="Generate the Java docs">
         <echo> Making Java documentation </echo>
         <delete dir="${javadoc.dir}"/>
@@ -123,6 +125,7 @@
 		<javac srcdir="${java.src.dir}" destdir="${java.build}" debug="true" includeantruntime="true">
 			<classpath refid="java.lib.classpath" />
 		</javac>
+		
 	</target>
 	
 	<target name="package" depends="compile" description="package the jar file" >
@@ -169,6 +172,17 @@
 			<assertions>
 				<enable/>
 			</assertions>
+		</java>
+	</target>
+	
+	
+	<target name="test" depends="package" description="compiles, packages, and runs the test cases">
+		<java classname="test.TestMain">
+		<arg value="-h"/>
+			<classpath>
+				<path refid="java.lib.classpath"/>
+				<pathelement location="${java.build}"/>
+			</classpath>
 		</java>
 	</target>
     
