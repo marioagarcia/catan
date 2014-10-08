@@ -3,6 +3,7 @@ package client.communication.facade;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.GameManagerInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
@@ -63,12 +64,12 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canDiscardCards(ResourceList list) {
+	public boolean canDiscardCards(SerializerResourceListInterface list) {
 		return this.gameManager.canDiscardCards(list);
 	}
 
 	@Override
-	public void discardCards(ResourceList list) {
+	public void discardCards(SerializerResourceListInterface list) {
 		this.gameManager.discardCards(list);
 	}
 

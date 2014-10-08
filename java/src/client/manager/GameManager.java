@@ -8,6 +8,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
+import shared.serialization.interfaces.SerializerResourceListInterface;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerPollerInterface;
@@ -557,12 +558,12 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean canDiscardCards(ResourceList list) {
+	public boolean canDiscardCards(SerializerResourceListInterface list) {
 		return localPlayer.canDiscardCards(list);
 	}
 
 	@Override
-	public boolean discardCards(ResourceList list) {
+	public boolean discardCards(SerializerResourceListInterface list) {
 		int player_index = localPlayer.getPlayerIndex();
 
 		String json_string = modelSerializer.serializeDiscardCards(new DiscardCardsParameters(player_index, list));
