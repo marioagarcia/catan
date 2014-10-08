@@ -17,6 +17,7 @@ import client.model.card.DomesticTrade;
 import client.model.card.ResourceList;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
+import client.model.turntracker.TurntrackerInterface.Status;
 
 public class FacadeTest {
 
@@ -47,7 +48,6 @@ public class FacadeTest {
 		
 		GameInfo g = new GameInfo();
 		
-		/*GameInfo gameInfo = new GameInfo();*/
 		ArrayList<PlayerInfo> playerList = createPlayers(2);
 		
 		g.setGameInfo("TestGame", 0, playerList);
@@ -77,18 +77,42 @@ public class FacadeTest {
 	@Test
 	public void testCanAcceptTrade(){
 		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		
+		//Player can accept when it is not their turn
+		manager.getTurnTracker().setCurrentTurn(2);
 		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(1, 0, 0, 0, -1));
 		assertTrue(facade.canAcceptTrade(trade));
 		
+		//Player cannot accept trade on their turn
+		manager.getTurnTracker().setCurrentTurn(0);
+		assertFalse(facade.canAcceptTrade(trade));
+		
 		//Player does not have the required resources
+		manager.getTurnTracker().setCurrentTurn(2);
 		trade = new DomesticTrade(1, 2, new ResourceList(20, 2, 0, -10, -5));
 		assertFalse(facade.canAcceptTrade(trade));
 	}
 	
+	@Test
 	public void testCanDiscardCards(){
-		//Player get resource list method is returning the wrong type
-		facade.canDiscardCards(manager.getLocalPlayer().getResourceList());
 		
+		manager.getTurnTracker().setStatus(Status.DISCARDING);
+		manager.getLocalPlayer().setResourceList(new ResourceList(0, 0, 0, 0, 7));
+		assertFalse(facade.canDiscardCards(manager.getLocalPlayer().getResourceList()));
+		
+		manager.getLocalPlayer().setResourceList(new ResourceList(1, 0, 0, 0, 7));
+		assertTrue(facade.canDiscardCards(manager.getLocalPlayer().getResourceList()));
+		
+		manager.getLocalPlayer().setResourceList(new ResourceList(20, 20, 20, 20, 20));
+		assertTrue(facade.canDiscardCards(manager.getLocalPlayer().getResourceList()));
+			
+		facade.finishTurn();
+		assertFalse(facade.canDiscardCards(manager.getLocalPlayer().getResourceList()));
+		
+		manager.getTurnTracker().setStatus(Status.ROLLING);
+		manager.getLocalPlayer().setResourceList(new ResourceList(2, 0, 3, 0, 9));
+		assertFalse(facade.canDiscardCards(manager.getLocalPlayer().getResourceList()));
 	}
 	
 	@Test
@@ -113,6 +137,7 @@ public class FacadeTest {
 		
 	}
 	
+	//
 	public void testCanOfferTrade(){
 		
 	}
@@ -121,6 +146,7 @@ public class FacadeTest {
 		
 	}
 	
+	//
 	@Test
 	public void testCanFinishTurn(){
 		
@@ -132,10 +158,12 @@ public class FacadeTest {
 		assertFalse(facade.canFinishTurn());	
 	}
 	
+	//
 	public void testCanBuyDevCard(){
 		
 	}
 	
+	//
 	@Test
 	public void testCanPlayYearOfPlenty(){
 		
@@ -153,10 +181,12 @@ public class FacadeTest {
 		
 	}
 	
+	//
 	public void testCanPlayMonopoly(){
 		
 	}
 	
+	//
 	public void testCanPlayMonument(){
 		
 	}
