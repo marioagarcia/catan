@@ -46,7 +46,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canBuildRoad(EdgeLocation location, int playerIndex) {
+	public boolean canBuildRoad(EdgeLocation location, int playerIndex, int setupPhase) {
 		location = location.getNormalizedLocation();
 		if(roads.containsKey(location)){
 			return false;
@@ -81,7 +81,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canBuildSettlement(VertexLocation location, int playerIndex) {
+	public boolean canBuildSettlement(VertexLocation location, int playerIndex, boolean setupPhase) {
 		location = location.getNormalizedLocation();
 		//get the edges adjacent to the requested VertexLocation
 		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location);
@@ -154,19 +154,19 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, int playerIndex) {
-		if(this.canBuildRoad(location1, playerIndex)){
+		if(this.canBuildRoad(location1, playerIndex, false)){
 			Road road = new Road(playerIndex, location1);
 			this.roads.put(location1, road);
-			if(this.canBuildRoad(location2,  playerIndex)){
+			if(this.canBuildRoad(location2,  playerIndex, false)){
 				roads.remove(location1);
 				return true;
 			}
 		}
 		
-		if(this.canBuildRoad(location2, playerIndex)){
+		if(this.canBuildRoad(location2, playerIndex,false)){
 			Road road = new Road(playerIndex, location2);
 			this.roads.put(location2, road);
-			if(this.canBuildRoad(location1,  playerIndex)){
+			if(this.canBuildRoad(location1,  playerIndex, false)){
 				roads.remove(location2);
 				return true;
 			}

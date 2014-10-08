@@ -12,7 +12,7 @@ public interface GMBoardMapInterface {
 	 * @param player_index
 	 * @return true if the location is next to another road or a building owned by the player
 	 */
-	public boolean canBuildRoad(EdgeLocation location, int player_index);
+	public boolean canBuildRoad(EdgeLocation location, int player_index, int setupPhase);
 
 	/**
 	 * Queries the location to see if the player can build a Settlement there
@@ -20,7 +20,7 @@ public interface GMBoardMapInterface {
 	 * @param player_index
 	 * @return true if the location is empty and it is not next to any other buildings
 	 */
-	public boolean canBuildSettlement(VertexLocation location, int player_index);
+	public boolean canBuildSettlement(VertexLocation location, int player_index, boolean setupPhase);
 
 	/**
 	 * Queries the location to see if the player can build a City there
