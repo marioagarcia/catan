@@ -35,7 +35,7 @@ public class FacadeTest {
 		g.setTitle("My game");
 		facade.joinGame(CatanColor.ORANGE, g);
 		
-		//Move to the localPlayer's turn
+		//Always start on the local player's turn
 		while (!facade.canRoll())
 		{
 			facade.finishTurn();
@@ -46,14 +46,16 @@ public class FacadeTest {
 	public void testCanJoinGame() {
 		
 		GameInfo g = new GameInfo();
-		g.setId(0);
-		g.setTitle("My game");
 		
-		/*GameInfo gameInfo = new GameInfo();
+		/*GameInfo gameInfo = new GameInfo();*/
 		ArrayList<PlayerInfo> playerList = createPlayers(2);
-		gameInfo.setGameInfo("TestGame", 0, playerList);
-		*/
 		
+		g.setGameInfo("TestGame", 0, playerList);
+		
+		//Player with color Brown already exists in game
+		assertFalse(facade.canJoinGame(CatanColor.BROWN, g));
+		
+		//Color Puce is available
 		assertTrue(facade.canJoinGame(CatanColor.PUCE, g));
 		
 		/*
@@ -78,6 +80,7 @@ public class FacadeTest {
 		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(1, 0, 0, 0, -1));
 		assertTrue(facade.canAcceptTrade(trade));
 		
+		//Player does not have the required resources
 		trade = new DomesticTrade(1, 2, new ResourceList(20, 2, 0, -10, -5));
 		assertFalse(facade.canAcceptTrade(trade));
 	}
@@ -93,7 +96,7 @@ public class FacadeTest {
 
 		assertTrue(facade.canRoll());
 		
-		//Move to the next player
+		//Can't roll if it is not your turn
 		facade.finishTurn();
 		assertFalse(facade.canRoll());
 	}
@@ -118,15 +121,27 @@ public class FacadeTest {
 		
 	}
 	
+	@Test
 	public void testCanFinishTurn(){
 		
+		
+		//Need a game that is already in process
+		//assertTrue(facade.canFinishTurn());
+		
+		//Should not be allowed because game is currently rolling
+		assertFalse(facade.canFinishTurn());	
 	}
 	
 	public void testCanBuyDevCard(){
 		
 	}
 	
+	@Test
 	public void testCanPlayYearOfPlenty(){
+		
+		//Facade canPlayDevCard methods are not finished
+		//Player does not have this card
+		//assertFalse(facade.canPlayYearOfPlenty());
 		
 	}
 	
