@@ -176,10 +176,9 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	
 	public boolean canBuildRoad(){
 		boolean canBuildRoad = false;
-		
-		if(resourceList.getWood() > 0 &&
-		   resourceList.getBrick() > 0 &&
-		   roads > 0){
+		if(resourceList.getWood() >= 1 &&
+		   resourceList.getBrick() >=1 &&
+		   roads >= 1){
 			canBuildRoad = true;
 		}
 		
@@ -317,7 +316,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	}
 
 	@Override
-	public boolean canDiscardCards(ResourceList list){
+	public boolean canDiscardCards(SerializerResourceListInterface list){
 		return (!discarded && resourceList.totalNumberCards() > 7);
 	}
 	

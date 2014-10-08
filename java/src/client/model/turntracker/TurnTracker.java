@@ -72,16 +72,6 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 		this.playerWithLargestArmy = largestArmy;	
 	}
 	
-	public boolean canBuildRoad(int playerIndex){
-		boolean canBuildRoad = false;
-		
-		if(status == Status.PLAYING && currentPlayerIndex == playerIndex){
-			canBuildRoad = true;
-		}
-		
-		return canBuildRoad;
-	}
-	
 	private static Status statusFromString(String text) {
 	    if (text != null) {
 	    	for (Status s : Status.values()) {
