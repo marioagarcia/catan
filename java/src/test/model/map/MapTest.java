@@ -77,17 +77,16 @@ public class MapTest {
 		player.setResourceList(new ResourceList(1, 0, 0, 0, 1));
 		tt.setStatus(Status.PLAYING);
 		
-		assertTrue(map.canBuildRoad(location, playerIndex));
-		assertTrue(player.canBuildRoad());
-		assertTrue(tt.canBuildRoad(playerIndex));
+		//assertTrue(gameManager.canBuildRoad(location));
+		assertTrue(map.canBuildRoad(location, playerIndex) && player.canBuildRoad());
 		
-		location = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthWest);
 		// AssertFalse when the road location is occupied
-		assertFalse(map.canBuildRoad(location, playerIndex));
+		EdgeLocation tempLocation = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthWest);
+		assertFalse(map.canBuildRoad(tempLocation, playerIndex) && player.canBuildRoad());
 		
 		// AssertFalse when the road is not connected to another road
-		location = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthEast);
-		assertFalse(map.canBuildRoad(location, playerIndex));
+		tempLocation = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthEast);
+		assertFalse(map.canBuildRoad(tempLocation, playerIndex));
 		
 		//@TODO
 		// AssertFalse when the road is on water
@@ -99,31 +98,13 @@ public class MapTest {
 		
 		// AssertFalse when the player does not have 1 brick
 		player.setResourceList(new ResourceList(0, 1, 1, 1, 1));
-		assertFalse(map.canBuildRoad(location, playerIndex)); 
-		assertFalse(player.canBuildRoad());
-		
-		player.setResourceList(new ResourceList(1, 1, 1, 1, 1));
-		assertTrue(map.canBuildRoad(location, playerIndex) && player.canBuildRoad());
-		
-		//@TODO
-		// AssertTrue when the game is in "setup" and the road is near a settlement
-		
-		
-		//@TODO
-		// AssertFalse when the game is in "setup" and the road is not near a settlement
-		
-		//@TODO
-		// AssertFalse when the road is connected to an enemy road
-		
-		//@TODO
-		// AssertFalse when the road location already has a road on it
-		
-		//@TODO
-		// AssertFalse when the player does not have 1 wood, brick, and road
+		assertFalse(map.canBuildRoad(location, playerIndex) && player.canBuildRoad()); 
 		
 		//@TODO
 		// AssertFalse if it isn't the player's turn
-		
+		tt.setCurrentTurn(1);
+		player.setResourceList(new ResourceList(1, 0, 0, 0, 1));
+		//assertFalse(gameManager.canBuildRoad(tempLocation));
 		//@TODO
 		// AssertFalse if the game status isn't 'Playing'
 		
