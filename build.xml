@@ -68,7 +68,9 @@
 
 		<batchtest fork="yes" todir="${test_folder}">
 			<fileset dir="${src.tests.dir}">
-				<include name="**/Test*.java"/>
+				<include name="**/*Test*.java"/>
+				<exclude name="**/*Facade*.java"/>
+				<exclude name="**/*Manager*.java"/>
 			</fileset>
 		</batchtest>
 	</junit>
