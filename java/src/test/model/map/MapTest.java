@@ -2,15 +2,24 @@ package test.model.map;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import shared.serialization.ModelSerializer;
 import client.communication.server.ServerProxy;
+import client.manager.GameData;
 import client.manager.GameManager;
+import client.model.GameInfo;
+import client.model.map.BoardMap;
+import client.model.turntracker.TurnTracker;
 
 public class MapTest {
 	
-	GameManager manager;
+	ModelSerializer ms;
 	
 	@Before
 	public void setUp(){
@@ -18,14 +27,37 @@ public class MapTest {
 		//manager = new GameManager(new ServerProxy("8081", "locolhost"));
 		//System.out.println(manager.getServerProxy());
 	}
-
+	
+	public GameData getGameData()
+	{
+		ms = new ModelSerializer();
+		
+		File file = new File("C:\\Users\\Casey\\Documents\\GitHub\\Catan\\java\\src\\test\\JSON\\getGameModel.txt");
+		
+		String content = "";
+		try {
+			content = new Scanner(file).useDelimiter("\\Z").next();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return ms.deserializeGameModel(content);
+	}
+		
 	@Test
 	public void testCanBuildRoad() {
+		
+		GameData game = getGameData();
+		BoardMap map = game.getBoardMap();
+		TurnTracker tt = game.getTurnTracker();
+		
 		
 		//@TODO
 		// AssertTrue when the road location is open, is connected to another road, 
 		// it's not on water, the player has 1 wood, brick, and road, it is the player's
 		// turn, the game status is 'Playing'
+		assertTrue();
 		
 		//@TODO
 		// AssertFalse when the road is not connected to another road

@@ -18,6 +18,7 @@ public interface TurntrackerInterface {
 	 * @return the integer number of the current turn, 0 being the setup phase
 	 */
 	public int getCurrentTurn();
+	public void setCurrentTurn(int currentPlayerIndex);
 	
 	/**
 	 * player's status with regards to the longestRoad card
