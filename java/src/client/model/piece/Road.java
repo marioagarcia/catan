@@ -43,8 +43,8 @@ public class Road implements RoadInterface, SerializerRoadInterface {
 	@Override
 	public String toString(){
 		String returnString = "";
-		returnString += (playerIndex + "\n");
-		returnString += location.toString();
+		returnString += (playerIndex + " -- ");
+		returnString += location.toString() + "\n";
 		
 		return returnString;
 	}
