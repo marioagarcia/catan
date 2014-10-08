@@ -11,7 +11,12 @@
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
     <property name="java.src.dir" value="${java.dir}/src"/>
+    <property name="src.tests.dir" value="${java.dir}/src/test"/>
+	<property name="junit.jar" value="${java.dir}/lib/junit.jar"/>
+	<property name="ant-junit.jar" value="${java.dir}/lib/ant-junit.jar"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
+	
+	<property name="build.test" value="${java.dir}/build/test"/>
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
@@ -23,6 +28,8 @@
     <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
+	
+	<property name="test_folder" value="${java.dir}/src/test/test_results"/>
    
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -46,6 +53,27 @@
 			</assertions>
 		</java>
 	</target>
+
+<target name="test" depends="compile" description="Runs Junit Tests">
+
+	<junit printsummary="on" haltonfailure="yes">
+		<classpath>
+			<pathelement location="${build.test}"/>
+			<pathelement location="${junit.jar}"/>
+			<pathelement location="${ant-junit.jar}"/>
+			<pathelement location="${test_folder}"/>
+		</classpath>
+
+		<formatter type="plain"/>
+
+		<batchtest fork="yes" todir="${test_folder}">
+			<fileset dir="${src.tests.dir}">
+				<include name="**/Test*.java"/>
+			</fileset>
+		</batchtest>
+	</junit>
+
+</target>
     
     <target name="make-java-doc" description="Generate the Java docs">
         <echo> Making Java documentation </echo>
@@ -81,6 +109,7 @@
 		<tstamp/>
 		<mkdir dir="${java.build}"/>
 		<mkdir dir="${java.dist}"/>
+		<mkdir dir="${test_folder}"/>
 	</target>
 		
 	<target name="clean" description="clean build files" >
@@ -88,8 +117,8 @@
 		<delete dir="${java.dist}"/>
 	</target>
     
-	<target name="compile" depends="init" description="compile the source " >
-		<javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
+	<target name="compile" depends="init" description="compile the source">
+		<javac srcdir="${java.src.dir}" destdir="${java.build}" debug="true" includeantruntime="true">
 			<classpath refid="java.lib.classpath" />
 		</javac>
 	</target>

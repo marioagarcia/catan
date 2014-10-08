@@ -52,6 +52,7 @@ public class GameManager implements GameManagerInterface {
 
 		serverPoller = new ServerPoller();
 		serverPoller.registerObserver(pollerObserver);
+		serverPoller.startPoller(1000);
 
 		modelSerializer = new ModelSerializer();
 
