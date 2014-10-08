@@ -446,7 +446,9 @@ public class GameManager implements GameManagerInterface {
 	public boolean canBuildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 
-		return boardMap.canBuildRoad(location, player_index);
+		return (boardMap.canBuildRoad(location, player_index) &&
+				localPlayer.canBuildRoad() && 
+				turnTracker.getStatus() == Status.PLAYING);
 	}
 
 	@Override

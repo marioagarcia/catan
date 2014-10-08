@@ -3,6 +3,7 @@ package client.model.player;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import shared.definitions.CatanColor;
+import shared.serialization.interfaces.SerializerResourceListInterface;
 
 /**
  * Represents a Player in the game
@@ -50,7 +51,7 @@ public interface PlayerInterface
 	 * @param list
 	 * @return
 	 */
-	public boolean canDiscardCards(ResourceList list);
+	public boolean canDiscardCards(SerializerResourceListInterface list);
 	
 	public int getNumberOfCards();
 }
