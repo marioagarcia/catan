@@ -34,6 +34,12 @@ public class FacadeTest {
 		g.setId(0);
 		g.setTitle("My game");
 		facade.joinGame(CatanColor.ORANGE, g);
+		
+		//Move to the localPlayer's turn
+		while (!facade.canRoll())
+		{
+			facade.finishTurn();
+		}
 	}
 	
 	@Test
@@ -69,8 +75,11 @@ public class FacadeTest {
 	@Test
 	public void testCanAcceptTrade(){
 		
-		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(0, 0, 0, 0, 0));
+		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(1, 0, 0, 0, -1));
 		assertTrue(facade.canAcceptTrade(trade));
+		
+		trade = new DomesticTrade(1, 2, new ResourceList(20, 2, 0, -10, -5));
+		assertFalse(facade.canAcceptTrade(trade));
 	}
 	
 	public void testCanDiscardCards(){
@@ -81,7 +90,12 @@ public class FacadeTest {
 	
 	@Test
 	public void testCanRollNumber(){
+
 		assertTrue(facade.canRoll());
+		
+		//Move to the next player
+		facade.finishTurn();
+		assertFalse(facade.canRoll());
 	}
 	
 	public void testCanBuildRoad(){
