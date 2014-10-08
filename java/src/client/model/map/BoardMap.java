@@ -2,9 +2,14 @@ package client.model.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import client.manager.interfaces.GMBoardMapInterface;
+import client.model.LookupTables.EdgesAdjacentToVertex;
+import client.model.LookupTables.EdgesAdjacentToVertexResult;
+import client.model.LookupTables.VertexesAdjacentToEdge;
 import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
@@ -51,6 +56,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		boolean canBuildClockwisePrevious = true;
 		boolean canBuildClockwiseNext = true;
 
+		//check if other players have cities/settlements which interrupt your road
 		if(this.cities.containsKey(adjacentVertexes[0]) && this.cities.get(adjacentVertexes[0]).getPlayerIndex() != playerIndex)
 			canBuildClockwisePrevious = false;
 		else if(this.settlements.containsKey(adjacentVertexes[0]) && this.settlements.get(adjacentVertexes[0]).getPlayerIndex() != playerIndex)
@@ -61,8 +67,10 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		else if(this.settlements.containsKey(adjacentVertexes[1]) && this.settlements.get(adjacentVertexes[1]).getPlayerIndex() != playerIndex)
 			canBuildClockwiseNext = false;
 		
+		
 		EdgeLocation[] adjacentLocations = location.getAdjacent(canBuildClockwisePrevious, canBuildClockwiseNext);
 		
+		//test if the player owns an adjacent road
 		boolean ownsAdjacentRoad = false;
 		for(EdgeLocation individualLocation : adjacentLocations)
 			if(roads.containsKey(individualLocation) && roads.get(individualLocation).getPlayerIndex() == playerIndex)
@@ -74,14 +82,26 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	@Override
 	public boolean canBuildSettlement(VertexLocation location, int playerIndex) {
 		
-		//if there is already a building there
-		if(this.cities.containsKey(location) || this.settlements.containsKey(location))
-			return false;
+		//get the edges adjacent to the requested VertexLocation
+		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location);
 		
-		EdgeLocation[] potentialRoads = EdgeLocation.getAdjacent(location);
+		//get all of the Vertexes around the VertexLocation
+		Set<VertexLocation> pertinentVertexes = new HashSet<VertexLocation>();
+
+		//create a Set of all the neighboring vertexes
+		pertinentVertexes.add(location);
+		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getExterior(true)).asSet());
+		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwisePreceeding(true)).asSet());
+		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwiseSucceeding(true)).asSet());
 		
-		for(EdgeLocation individualPotentialRoad : potentialRoads)
-			if(this.roads.containsKey(individualPotentialRoad) && this.roads.get(individualPotentialRoad).getPlayerIndex() == playerIndex)
+		//check if any of the neighboring locations already have a building on them
+		for(VertexLocation individualPertinentVertex : pertinentVertexes)
+			if(this.cities.containsKey(individualPertinentVertex) || this.settlements.containsKey(individualPertinentVertex))
+				return false;
+		
+		//check if you have a road on an adjacent edge
+		for(EdgeLocation individualPertinentEdge : edges.asSet())
+			if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
 				return true;
 		
 		return false;
@@ -89,9 +109,35 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canBuildCity(VertexLocation location, int playerIndex) {
-		if(this.settlements.containsKey(location) && this.settlements.get(location).getPlayerIndex() == playerIndex)
-			return true;
-		return false;
+		
+		//get the edges adjacent to the requested VertexLocation
+		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location);
+		
+		//get all of the Vertexes around the VertexLocation
+		Set<VertexLocation> pertinentVertexes = new HashSet<VertexLocation>();
+
+		//create a Set of all the neighboring vertexes
+		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getExterior(true)).asSet());
+		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwisePreceeding(true)).asSet());
+		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwiseSucceeding(true)).asSet());
+		pertinentVertexes.remove(location);
+		
+		//check if any of the neighboring locations already have a building on them
+		for(VertexLocation individualPertinentVertex : pertinentVertexes)
+			if(this.cities.containsKey(individualPertinentVertex) || this.settlements.containsKey(individualPertinentVertex))
+				return false;
+		
+		boolean existsAdjacentRoad = false;
+		//check if you have a road on an adjacent edge
+		for(EdgeLocation individualPertinentEdge : edges.asSet())
+			if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
+				existsAdjacentRoad = true;
+		
+		if(!existsAdjacentRoad){
+			return false;
+		}
+		
+		return this.settlements.containsKey(location) && this.settlements.get(location).getPlayerIndex() == playerIndex;
 	}
 
 	@Override
