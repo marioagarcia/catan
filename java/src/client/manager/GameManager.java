@@ -604,7 +604,7 @@ public class GameManager implements GameManagerInterface {
 		}
 	};
 
-	private void startPoller(int interval) {
+	public void startPoller(int interval) {
 		serverPoller.startPoller(interval);
 	}
 

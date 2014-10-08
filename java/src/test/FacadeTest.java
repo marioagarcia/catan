@@ -28,13 +28,26 @@ public class FacadeTest {
 		manager = new GameManager(new ServerProxy("8081","localhost"));
 		facade = new ModelFacade(manager);
 
-		facade.registerPlayer("a", "a");
-		facade.loginPlayer("a", "a");
+		//facade.registerPlayer("a", "a");
+		//facade.loginPlayer("a", "a");
 		
 
 		
 		//facade.registerPlayer("a", "a");
-		//facade.loginPlayer("Sam", "sam");
+		facade.loginPlayer("Sam", "sam");
+		
+		GameData gameData = new GameData();
+		gameData.setDomesticTrade(null);
+		
+		GameInfo gameInfo = new GameInfo();
+		ArrayList<PlayerInfo> playerList = createPlayers(2);
+		gameInfo.setGameInfo("TestGame", 0, playerList);
+		
+		//facade.registerPlayer("a", "a");
+		//facade.loginPlayer("a", "a");
+		
+		facade.joinGame(CatanColor.PUCE, gameInfo);
+		manager.startPoller(1000);
 	}
 	
 	@Test
@@ -58,6 +71,7 @@ public class FacadeTest {
 		//Doesn't exist
 	}
 	
+	@Test
 	public void testCanAcceptTrade(){
 		
 		GameData gameData = new GameData();
