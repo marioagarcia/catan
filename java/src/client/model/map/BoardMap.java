@@ -46,7 +46,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canBuildRoad(EdgeLocation location, int playerIndex, boolean setupPhase) {
+	public boolean canBuildRoad(EdgeLocation location, int playerIndex) {
 		location = location.getNormalizedLocation();
 		if(roads.containsKey(location)){
 			return false;
@@ -99,11 +99,12 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		for(VertexLocation individualPertinentVertex : pertinentVertexes)
 			if(this.cities.containsKey(individualPertinentVertex) || this.settlements.containsKey(individualPertinentVertex))
 				return false;
-		
+
 		//check if you have a road on an adjacent edge
-		for(EdgeLocation individualPertinentEdge : edges.asSet())
-			if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
-				return true;
+		if(!setupPhase)
+			for(EdgeLocation individualPertinentEdge : edges.asSet())
+				if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
+					return true;
 		
 		return false;
 	}
@@ -154,19 +155,19 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, int playerIndex) {
-		if(this.canBuildRoad(location1, playerIndex, false)){
+		if(this.canBuildRoad(location1, playerIndex)){
 			Road road = new Road(playerIndex, location1);
 			this.roads.put(location1, road);
-			if(this.canBuildRoad(location2,  playerIndex, false)){
+			if(this.canBuildRoad(location2,  playerIndex)){
 				roads.remove(location1);
 				return true;
 			}
 		}
 		
-		if(this.canBuildRoad(location2, playerIndex,false)){
+		if(this.canBuildRoad(location2, playerIndex)){
 			Road road = new Road(playerIndex, location2);
 			this.roads.put(location2, road);
-			if(this.canBuildRoad(location1,  playerIndex, false)){
+			if(this.canBuildRoad(location1,  playerIndex)){
 				roads.remove(location2);
 				return true;
 			}
