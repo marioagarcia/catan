@@ -463,7 +463,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			settlementList.add(settlement);
 		}
 		//Done building list of settlements
-		
+//System.out.println(settlementList.toString());		
 		//Parse radius
 		subObject = mainObject.getAsJsonObject("map");
 		int radius = subObject.get("radius").getAsInt();
