@@ -1,8 +1,6 @@
 package client.model.map;
 
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 
 /**
  * This class models the Map composed of the different hexes

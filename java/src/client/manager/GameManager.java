@@ -13,6 +13,7 @@ import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerPollerInterface;
 import client.communication.server.ServerProxy;
+import client.communication.server.ServerProxyInterface;
 import client.logging.GameLog;
 import client.manager.interfaces.GMBoardMapInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
@@ -32,7 +33,7 @@ import client.roll.DiceRoller;
 
 public class GameManager implements GameManagerInterface {
 
-	private ServerProxy serverProxy;
+	private ServerProxyInterface serverProxy;
 	private ModelSerializer modelSerializer;
 	private ServerPoller serverPoller;
 	private ArrayList<GameInfo> gameList;
@@ -47,7 +48,7 @@ public class GameManager implements GameManagerInterface {
 	private ResourceCardBank resCardBank;
 	private ArrayList<Player> allPlayers;
 
-	public GameManager(ServerProxy serverProxy) {
+	public GameManager(ServerProxyInterface serverProxy) {
 
 		this.serverProxy = serverProxy;
 
@@ -613,7 +614,7 @@ public class GameManager implements GameManagerInterface {
 		serverPoller.startPoller(interval);
 	}
 
-	public ServerProxy getServerProxy() {
+	public ServerProxyInterface getServerProxy() {
 		return serverProxy;
 	}
 
