@@ -47,6 +47,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canBuildRoad(EdgeLocation location, int playerIndex) {
+		location = location.getNormalizedLocation();
 		if(roads.containsKey(location)){
 			return false;
 		}
@@ -81,7 +82,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canBuildSettlement(VertexLocation location, int playerIndex) {
-		
+		location = location.getNormalizedLocation();
 		//get the edges adjacent to the requested VertexLocation
 		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location);
 		
@@ -109,7 +110,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canBuildCity(VertexLocation location, int playerIndex) {
-		
+		location = location.getNormalizedLocation();
 		//get the edges adjacent to the requested VertexLocation
 		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location);
 		
@@ -190,6 +191,9 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		
 		//roads
 		for(int i = 0; i < roadList.size(); i++){
+			
+			
+			
 			this.roads.put(roadList.get(i).getLocation(), roadList.get(i));
 		}
 		
