@@ -2,8 +2,6 @@ package test.model.map;
 
 import static org.junit.Assert.*;
 
-import java.io.Console;
-
 import org.junit.Test;
 
 import client.model.map.Hex;
