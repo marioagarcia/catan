@@ -1,16 +1,15 @@
 package client.communication.facade;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
-import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.map.HexInterface;
-import client.model.player.PlayerInterface;
 
 /**
  * This class ensures the game's data and state are properly stored in the Catan Model
@@ -205,8 +204,8 @@ public interface ModelFacadeInterface {
 	 * @return true if the resources the player specifies are in the bank, false
 	 * otherwise
 	 */
-	public boolean canPlayYearOfPlenty();
-	public boolean playYearOfPlenty();
+	public boolean canPlayYearOfPlenty(ResourceType resource1, ResourceType resource2);
+	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2);
 	/**
 	 * Checks that the first road location is connected to one of the player's
 	 * roads, the second road location is connected to one of the player's roads

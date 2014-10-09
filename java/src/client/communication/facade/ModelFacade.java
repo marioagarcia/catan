@@ -1,6 +1,7 @@
 package client.communication.facade;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
@@ -8,11 +9,8 @@ import client.manager.GameManagerInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
-import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.map.HexInterface;
-import client.model.player.PlayerInfo;
-import client.model.player.PlayerInterface;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
@@ -154,13 +152,13 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canPlayYearOfPlenty() {
-		return false; //this.gameManager.canPlayYearOfPlenty();
+	public boolean canPlayYearOfPlenty(ResourceType resource1, ResourceType resource2) {
+		return this.gameManager.canPlayYearOfPlenty(resource1, resource2);
 	}
 
 	@Override
-	public boolean playYearOfPlenty() {
-		return false; //this.gameManager.playYearOfPlenty();
+	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2) {
+		return this.gameManager.playYearOfPlenty(resource1, resource2);
 	}
 
 	@Override
