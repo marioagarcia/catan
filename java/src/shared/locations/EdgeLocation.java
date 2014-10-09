@@ -185,8 +185,8 @@ public class EdgeLocation
 			edgeDirection1 = edgeDirections[indexFoundAt];
 		
 		
-		results[0] = new EdgeLocation(hexLocation, edgeDirection1);
-		results[1] = new EdgeLocation(hexLocation, edgeDirection2);
+		results[0] = new EdgeLocation(hexLocation, edgeDirection1).getNormalizedLocation();
+		results[1] = new EdgeLocation(hexLocation, edgeDirection2).getNormalizedLocation();
 		
 		return results;
 	}
