@@ -319,7 +319,7 @@ public class GameManager implements GameManagerInterface {
 	public boolean canBuyDevCard() {
 		boolean player_condition_met = localPlayer.canBuyDevCard();
 		boolean turn_condition_met = turnTracker.canBuyDevCard(localPlayer.getPlayerIndex());
-		boolean deck_condition_met = true; //devCardBank.containsAnyCard();
+		boolean deck_condition_met = devCardBank.containsAnyCard();
 
 		return (player_condition_met && turn_condition_met && deck_condition_met );
 	}
