@@ -337,7 +337,7 @@ public class MapTest {
 		EdgeLocation tempLocation1 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);//= tempLocation2;
 		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
 		
-		//assertTrue(map.canPlayRoadBuilding(tempLocation1, location2, playerIndex));
+		assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex));
 		assertTrue(player.canPlayRoadBuilding());
 		
 		// AssertFalse if the first road location is not connected to one of the player's roads or the
@@ -410,7 +410,7 @@ public class MapTest {
 		// AssertTrue if the robber is being moved to a new location, the player to rob has at least 1
 		// resource card, the player has a soldier card, the player hasn't played the soldier card yet
 		// this turn, it is the player's turn, the game status is 'Playing'
-		HexLocation newLocation = new HexLocation(0, -2);
+		HexLocation newLocation = new HexLocation(0, 0);
 		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2));
 		
 		// AssertFalse if the robber is not being moved (i.e. being moved to
