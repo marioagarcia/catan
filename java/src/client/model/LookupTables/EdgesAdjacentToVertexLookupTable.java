@@ -3,6 +3,7 @@ package client.model.LookupTables;
 import java.util.HashMap;
 import java.util.Map;
 
+import client.model.map.BoardMap;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -31,14 +32,14 @@ class EdgesAdjacentToVertexLookupTable {
 		table.put(VertexDirection.NorthWest, new EdgesAdjacentToVertexLookupResult(-1, 0, EdgeDirection.NorthEast, EdgeDirection.NorthWest, EdgeDirection.North));
 	}
 
-	public EdgesAdjacentToVertexResult getEdgesAdjacentToVertex(VertexLocation location){
+	public EdgesAdjacentToVertexResult getEdgesAdjacentToVertex(VertexLocation location, BoardMap map){
 		EdgesAdjacentToVertexLookupResult result = table.get(location.getDir());
 		EdgeLocation interiorPreceeding = new EdgeLocation(location.getHexLoc(), result.getClockwisePreceedingInternalEdge());
 		EdgeLocation interiorSucceeding = new EdgeLocation(location.getHexLoc(), result.getClockwiseSucceedingInternalEdge());
 		
 		HexLocation exteriorHexLocation = new HexLocation(location.getHexLoc().getX() + result.getxOffset(), location.getHexLoc().getY() + result.getyOffset());
 		EdgeLocation exterior = new EdgeLocation(exteriorHexLocation, result.getExternalEdge());
-		return new EdgesAdjacentToVertexResult(exterior, interiorPreceeding, interiorSucceeding);
+		return new EdgesAdjacentToVertexResult(exterior, interiorPreceeding, interiorSucceeding, map);
 	}
 
 	public static EdgesAdjacentToVertexLookupTable getInstance(){

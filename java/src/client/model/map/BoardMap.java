@@ -36,6 +36,20 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		this.settlements = new HashMap<VertexLocation, Settlement> ();
 		this.ports = new HashMap<EdgeLocation, Port> ();
 	}
+	
+	public boolean isValid(EdgeLocation location){
+		location = location.getNormalizedLocation();
+		for(HexInterface hex : this.hexes.values()){
+			if(location == new EdgeLocation(hex.getLocation(), EdgeDirection.North).getNormalizedLocation() ||
+					location == new EdgeLocation(hex.getLocation(), EdgeDirection.NorthEast).getNormalizedLocation() ||
+					location == new EdgeLocation(hex.getLocation(), EdgeDirection.NorthWest).getNormalizedLocation() || 
+					location == new EdgeLocation(hex.getLocation(), EdgeDirection.South).getNormalizedLocation() ||
+					location == new EdgeLocation(hex.getLocation(), EdgeDirection.SouthEast).getNormalizedLocation() ||
+					location == new EdgeLocation(hex.getLocation(), EdgeDirection.SouthWest).getNormalizedLocation())
+				return true;
+		}
+		return false;
+	}
 
 	@Override
 	public HexInterface getHex(HexLocation location) throws HexNotFoundException {
@@ -84,7 +98,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	public boolean canBuildSettlement(VertexLocation location, int playerIndex, boolean setupPhase) {
 		location = location.getNormalizedLocation();
 		//get the edges adjacent to the requested VertexLocation
-		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location);
+		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location, this);
 		
 		//get all of the Vertexes around the VertexLocation
 		Set<VertexLocation> pertinentVertexes = new HashSet<VertexLocation>();
@@ -114,13 +128,14 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	public boolean canBuildCity(VertexLocation location, int playerIndex) {
 		location = location.getNormalizedLocation();
 		//get the edges adjacent to the requested VertexLocation
-		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location);
+		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location, this);
 		
 		//get all of the Vertexes around the VertexLocation
 		Set<VertexLocation> pertinentVertexes = new HashSet<VertexLocation>();
 
 		//create a Set of all the neighboring vertexes
-		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getExterior(true)).asSet());
+		if(edges.getExterior(true) != null)
+			pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getExterior(true)).asSet());
 		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwisePreceeding(true)).asSet());
 		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwiseSucceeding(true)).asSet());
 		pertinentVertexes.remove(location);

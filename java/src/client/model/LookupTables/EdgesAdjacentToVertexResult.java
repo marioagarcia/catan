@@ -3,6 +3,7 @@ package client.model.LookupTables;
 import java.util.HashSet;
 import java.util.Set;
 
+import client.model.map.BoardMap;
 import shared.locations.EdgeLocation;
 
 public class EdgesAdjacentToVertexResult {
@@ -57,10 +58,11 @@ public class EdgesAdjacentToVertexResult {
 
 	public EdgesAdjacentToVertexResult(EdgeLocation exterior,
 			EdgeLocation interiorClockwisePreceeding,
-			EdgeLocation interiorClockwiseSucceeding) {
+			EdgeLocation interiorClockwiseSucceeding,
+			BoardMap map) {
 		
 		
-		if(Math.abs(exterior.getHexLoc().getX()) < 3 && Math.abs(exterior.getHexLoc().getY()) < 3){
+		if(map.isValid(exterior)){
 			this.exterior = exterior;
 		}
 		else{
