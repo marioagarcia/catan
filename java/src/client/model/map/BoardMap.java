@@ -219,7 +219,10 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int targetPlayerIndex) {
-		return oldLocation == newLocation;
+		if(oldLocation.equals(newLocation)){
+			return false;
+		}
+		return true;
 	}
 
 

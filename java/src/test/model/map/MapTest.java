@@ -189,7 +189,6 @@ public class MapTest {
 		tt.setCurrentTurn(1);
 		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement() && tt.getCurrentTurn() == playerIndex);
 		
-		//@TODO
 		// AssertFalse if the game status isn't 'Playing'
 		tt.setCurrentTurn(0);
 		tt.setStatus(Status.DISCARDING);
@@ -212,7 +211,6 @@ public class MapTest {
 
 		// AssertTrue when the city location is currently occupied by one of the player's settlements,
 		// the player has 2 wheat, 3 ore, 1 city, it is the player's turn, game status is 'Playing
-		
 		VertexLocation location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast);
 		int playerIndex = player.getPlayerId();
 		player.setResourceList(new ResourceList(0, 3, 0, 2, 0));
@@ -339,7 +337,7 @@ public class MapTest {
 		EdgeLocation tempLocation1 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);//= tempLocation2;
 		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
 		
-		//assertTrue(map.canPlayRoadBuilding(tempLocation1, location2, playerIndex));
+		//assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex));
 		assertTrue(player.canPlayRoadBuilding());
 		
 		// AssertFalse if the first road location is not connected to one of the player's roads or the
@@ -369,7 +367,6 @@ public class MapTest {
 		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		assertFalse(player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if the player does not have a RoadBuild card
 		player.setRoads(25);
 		devCardList.setDevCardList(25, 25, 25, 0, 25);
@@ -409,31 +406,53 @@ public class MapTest {
 		Player player = new Player();
 		player = game.getPlayerList().get(0);
 		
-		HexLocation robberLocation = map.getRobberLocation();
+		HexLocation oldLocation = map.getRobberLocation(); //HexLocation [x=0, y=-2]
+		DevCardList newDevCardList = new DevCardList();
+		newDevCardList.setDevCardList(0, 0, 1, 0, 0);
+		player.setNewDevCards(newDevCardList);
+		
 		// AssertTrue if the robber is being moved to a new location, the player to rob has at least 1
 		// resource card, the player has a soldier card, the player hasn't played the soldier card yet
 		// this turn, it is the player's turn, the game status is 'Playing'
-		//assertTrue(map.canPlaySoldier(oldLocation, newLocation, targetPlayerIndex));
+		HexLocation newLocation = new HexLocation(0, 0);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2) && player.canPlaySoldier());
 		
-		
-		//@TODO
 		// AssertFalse if the robber is not being moved (i.e. being moved to
 		// the same location
+		newLocation = new HexLocation(0, -2);
+		assertFalse(map.canPlaySoldier(oldLocation, newLocation, 3) && player.canPlaySoldier());
 		
 		//@TODO
 		// AssertFalse if the player to rob doesn't have any resource cards
 		
-		//@TODO
 		// AssertFalse if the player doesn't have a soldier card
+		newLocation = new HexLocation(0, 0);
+		newDevCardList.setDevCardList(25, 25, 0, 25, 25);
+		player.setNewDevCards(newDevCardList);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2));
+		assertFalse(player.canPlaySoldier());
+
+		//int yearOfPlenty, int monopoly, int soldier, int roadBuild, int monument
 		
-		//@TODO
 		// AssertFalse if the player has already played the soldier card this turn
+		newDevCardList.setDevCardList(25, 25, 25, 25, 25);
+		player.setNewDevCards(newDevCardList);
+		player.setPlayedDevCard(true);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2));
+		assertFalse(player.canPlaySoldier());
 		
-		//@TODO
 		// AssertFalse if it isn't the player's turn
+		player.setPlayedDevCard(false);
+		tt.setCurrentTurn(1);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2) && player.canPlaySoldier());
+		assertFalse(tt.getCurrentTurn() == player.getPlayerId());
 		
-		//@TODO
 		// AssertFalse if the game status is not 'Playing'
+		tt.setCurrentTurn(0);
+		tt.setStatus(Status.ROLLING);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2) && player.canPlaySoldier());
+		assertTrue(tt.getCurrentTurn() == player.getPlayerId());
+		assertFalse(tt.getStatus() == Status.PLAYING);
 		
 	}
 	
