@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import client.communication.facade.ModelFacade;
 import client.communication.server.ServerProxy;
 import client.manager.GameData;
@@ -176,18 +177,66 @@ public class FacadeTest {
 		assertFalse(facade.canFinishTurn());	
 	}
 	
-	//
+	@Test
 	public void testCanBuyDevCard(){
 		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		manager.getDevCardBank().setDeck(2, 2, 2, 2, 2);
+		
+		//Player can buy on their turn, and they have enough resources to buy dev card
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getLocalPlayer().setResourceList(new ResourceList(20, 20, 20, 20, 20));
+		assertTrue(facade.canBuyDevCard());
+		
+		//Player cannot buy a dev card on another player's turn
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canBuyDevCard());
+		
+		//Player does not have the required resources
+		manager.getTurnTracker().setCurrentTurn(2);
+		manager.getLocalPlayer().setResourceList(new ResourceList(0, 0, 0, 0, 0));
+		assertFalse(facade.canBuyDevCard());
+		
+		//Bank has no dev cards available to buy
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getDevCardBank().setDeck(0, 0, 0, 0, 0);
+		manager.getLocalPlayer().setResourceList(new ResourceList(20, 20, 20, 20, 20));
+		assertFalse(facade.canBuyDevCard());
 	}
 	
-	//
 	@Test
 	public void testCanPlayYearOfPlenty(){
+		//Load bank with enough resources
+		manager.getResCardBank().setBank(10, 10, 10, 10, 10);
 		
-		//Facade canPlayDevCard methods are not finished
-		//Player does not have this card
-		//assertFalse(facade.canPlayYearOfPlenty());
+		//Cannot play dev card during rolling
+		manager.getTurnTracker().setStatus(Status.ROLLING);
+		assertFalse(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
+		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		
+		//Player has the card, and it is their turn
+		manager.getTurnTracker().setCurrentTurn(0);
+		DevCardList dev_cards = new DevCardList();
+		dev_cards.setYearOfPlenty(1);
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertTrue(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
+		
+		 //Not the player's turn
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
+		
+		//Player does not have year_of_plenty card
+		dev_cards.setYearOfPlenty(0);
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertFalse(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
+		
+		//Player has the card, and it is their turn, but the bank doesn't have the cards
+		dev_cards.setYearOfPlenty(1);
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		manager.getResCardBank().setBank(0, 0, 0, 0, 0);
+		assertFalse(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
 		
 	}
 	
@@ -209,25 +258,43 @@ public class FacadeTest {
 		dev_cards.setMonopoly(1);
 		
 		manager.getLocalPlayer().setNewDevCards(dev_cards);
-		assertTrue(facade.canPlayMonopoly());
+		assertTrue(facade.canPlayMonopoly()); //Player has the card, and it is their turn
 		
-		manager.getTurnTracker().setStatus(Status.PLAYING);
-		assertFalse(facade.canPlayMonopoly());
+		manager.getTurnTracker().setStatus(Status.ROLLING);
+		assertFalse(facade.canPlayMonopoly()); //Cannot play dev card during rolling phase
 		
 		manager.getTurnTracker().setCurrentTurn(2);
-		assertFalse(facade.canPlayMonopoly());
+		assertFalse(facade.canPlayMonopoly()); //Cannot play when it is not your turn
 		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
 		dev_cards.setMonopoly(0);
 		manager.getTurnTracker().setCurrentTurn(0);
 		manager.getLocalPlayer().setNewDevCards(dev_cards);
-		assertFalse(facade.canPlayMonopoly());
-		
-		
-		
+		assertFalse(facade.canPlayMonopoly());	//Player does not have monopoly card
 	}
 	
-	//
+	@Test
 	public void testCanPlayMonument(){
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		
+		manager.getTurnTracker().setCurrentTurn(0);
+		DevCardList dev_cards = new DevCardList();
+		dev_cards.setMonument(1);
+		
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertTrue(facade.canPlayMonument()); //Player has the card, and it is their turn
+		
+		manager.getTurnTracker().setStatus(Status.ROLLING);
+		assertFalse(facade.canPlayMonument()); //Cannot play dev card during rolling phase
+		
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canPlayMonument()); //Cannot play when it is not your turn
+		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		dev_cards.setMonument(0);
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertFalse(facade.canPlayMonument());	//Player does not have monument card
 		
 	}
 	
@@ -251,7 +318,6 @@ public class FacadeTest {
 			playerInfo.setPlayerInfo(colorList.get(i), nameList.get(i), i);
 			playerList.add(playerInfo);
 		}
-		System.out.println(playerList);
 		return playerList;
 	}
 

@@ -18,7 +18,7 @@ public interface ResourceCardBankInterface
 	 * @param type ResourceCardType to check for
 	 * @return boolean. true if contains the card/else false
 	 */
-	public abstract boolean containsCard(ResourceType type);
+	public boolean containsCards(ResourceType type1, ResourceType type2);
 	
 	/**
 	 * Removes a card from the Player's CardInventory and places it in the CardBank.
