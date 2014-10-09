@@ -6,6 +6,7 @@ import shared.serialization.interfaces.SerializerPlayerInterface;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMPlayerInterface;
 import client.model.card.DevCardList;
+import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 
@@ -237,6 +238,34 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		}
 		
 		return can_offer;
+	}
+	
+	public boolean canMaritimeTrade(MaritimeTrade trade){
+		boolean result = false;
+		int resourceAmount = 0;
+		
+		switch(trade.getResourceIn()){
+			case BRICK:
+				resourceAmount = resourceList.getBrick();
+				break;
+			case ORE:
+				resourceAmount = resourceList.getOre();
+				break;
+			case SHEEP:
+				resourceAmount = resourceList.getSheep();
+				break;
+			case WHEAT:
+				resourceAmount = resourceList.getWheat();
+				break;
+			case WOOD:
+				resourceAmount = resourceList.getWood();
+				break;
+		}
+		if(trade.getRatio() <= resourceAmount){
+			result = true;
+		}
+		
+		return result;
 	}
 
 	@Override

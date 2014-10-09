@@ -9,6 +9,7 @@ import java.util.Scanner;
 import org.junit.Before;
 import org.junit.Test;
 
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -19,7 +20,9 @@ import client.communication.server.ServerProxy;
 import client.manager.GameData;
 import client.manager.GameManager;
 import client.model.GameInfo;
+import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
+import client.model.card.TradeInterface;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
@@ -202,9 +205,16 @@ public class MapTest {
 		// player's turn, and the game status is 'Playing'
 		int playerIndex = player.getId();
 		VertexLocation location = new VertexLocation(new HexLocation(-2, 1), VertexDirection.SouthWest);
+		MaritimeTrade trade = new MaritimeTrade();
+		trade.setRatio(2);
+		trade.setResourceIn(ResourceType.BRICK);
+		trade.setResourceOut(ResourceType.ORE);
 		
-		System.out.println(playerIndex);
-		assertTrue(map.canMaritimeTrade(location, playerIndex));
+		player.setResourceList(new ResourceList(2, 0, 1, 0, 1));
+		System.out.println(player.getResourceList().toString());
+		
+		//assertTrue(map.canMaritimeTrade(location, playerIndex));
+		assertTrue(player.canMaritimeTrade(trade)); 
 		
 		//@TODO
 		// AssertFalse when the player does not have the resources being given
