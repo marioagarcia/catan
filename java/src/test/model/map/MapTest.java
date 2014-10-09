@@ -128,23 +128,27 @@ public class MapTest {
 		Player player = new Player();
 		player = game.getPlayerList().get(0);
 		
-		//Player Index -- RoadLocation:  0 -- EdgeLocation [hexLoc=HexLocation [x=2, y=0], dir=SouthWest]
+		//Player Index -- RoadLocation:  0 -- EdgeLocation [hexLoc=HexLocation [x=0, y=1], dir=South]
 		
 		// AssertTrue when the settlement location is open, not on water, connected to a road, 
 		// the player has 1 wood, brick, wheat, sheep, settlement, it is the player's turn,
 		// the game status is 'Playing'
-		int playerIndex = 3;//tt.getCurrentTurn();System.out.println("Player Index: " + playerIndex + "\n");
-		VertexLocation location = new VertexLocation(new HexLocation(-1, 1), VertexDirection.West);
-		//assertTrue(map.canBuildSettlement(location, playerIndex, false));
+		int playerIndex = 0;//tt.getCurrentTurn();System.out.println("Player Index: " + playerIndex + "\n");
+		VertexLocation location = new VertexLocation(new HexLocation(-1, 2), VertexDirection.SouthEast);
+		assertTrue(map.canBuildSettlement(location, playerIndex, false));
 		
-		//@TODO
 		// AssertFalse when the settlement location is next to another settlement
+		location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthWest);
+		assertFalse(map.canBuildSettlement(location, playerIndex, false));
 		
-		//@TODO
 		// AssertFalse when the settlement location is occupied
+		location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast);
+		assertFalse(map.canBuildSettlement(location, playerIndex, false));
 		
-		//@TODO 
 		// AssertFalse when the settlement location is on water
+		playerIndex = 1;
+		location = new VertexLocation(new HexLocation(-3, 1), VertexDirection.SouthWest);
+		assertFalse(map.canBuildSettlement(location, playerIndex, false));
 		
 		//@TODO
 		// AssertFalse when the settlement location is not connected to one of the player's roads
@@ -290,10 +294,20 @@ public class MapTest {
 	@Test
 	public void testCanPlaySoldier() {
 		
-		//@TODO
+		GameManager gameManager = new GameManager(null);
+		
+		GameData game = getGameData();
+		BoardMap map = game.getBoardMap();
+		TurnTracker tt = game.getTurnTracker();
+		
+		Player player = new Player();
+		player = game.getPlayerList().get(0);
+		
+		
 		// AssertTrue if the robber is being moved to a new location, the player to rob has at least 1
 		// resource card, the player has a soldier card, the player hasn't played the soldier card yet
 		// this turn, it is the player's turn, the game status is 'Playing'
+		//assertTrue(map.canPlaySoldier(oldLocation, newLocation, targetPlayerIndex));
 		
 		//@TODO
 		// AssertFalse if the robber is not being moved (i.e. being moved to
