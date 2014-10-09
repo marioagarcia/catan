@@ -337,7 +337,7 @@ public class MapTest {
 		EdgeLocation tempLocation1 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);//= tempLocation2;
 		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
 		
-		assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex));
+		//assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex));
 		assertTrue(player.canPlayRoadBuilding());
 		
 		// AssertFalse if the first road location is not connected to one of the player's roads or the
@@ -407,30 +407,52 @@ public class MapTest {
 		player = game.getPlayerList().get(0);
 		
 		HexLocation oldLocation = map.getRobberLocation(); //HexLocation [x=0, y=-2]
+		DevCardList newDevCardList = new DevCardList();
+		newDevCardList.setDevCardList(0, 0, 1, 0, 0);
+		player.setNewDevCards(newDevCardList);
+		
 		// AssertTrue if the robber is being moved to a new location, the player to rob has at least 1
 		// resource card, the player has a soldier card, the player hasn't played the soldier card yet
 		// this turn, it is the player's turn, the game status is 'Playing'
 		HexLocation newLocation = new HexLocation(0, 0);
-		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2));
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2) && player.canPlaySoldier());
 		
 		// AssertFalse if the robber is not being moved (i.e. being moved to
 		// the same location
-		//assertTrue(map.canPlaySoldier(oldLocation, oldLocation, 3));
+		newLocation = new HexLocation(0, -2);
+		assertFalse(map.canPlaySoldier(oldLocation, newLocation, 3) && player.canPlaySoldier());
 		
 		//@TODO
 		// AssertFalse if the player to rob doesn't have any resource cards
 		
-		//@TODO
 		// AssertFalse if the player doesn't have a soldier card
+		newLocation = new HexLocation(0, 0);
+		newDevCardList.setDevCardList(25, 25, 0, 25, 25);
+		player.setNewDevCards(newDevCardList);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2));
+		assertFalse(player.canPlaySoldier());
+
+		//int yearOfPlenty, int monopoly, int soldier, int roadBuild, int monument
 		
-		//@TODO
 		// AssertFalse if the player has already played the soldier card this turn
+		newDevCardList.setDevCardList(25, 25, 25, 25, 25);
+		player.setNewDevCards(newDevCardList);
+		player.setPlayedDevCard(true);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2));
+		assertFalse(player.canPlaySoldier());
 		
-		//@TODO
 		// AssertFalse if it isn't the player's turn
+		player.setPlayedDevCard(false);
+		tt.setCurrentTurn(1);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2) && player.canPlaySoldier());
+		assertFalse(tt.getCurrentTurn() == player.getPlayerId());
 		
-		//@TODO
 		// AssertFalse if the game status is not 'Playing'
+		tt.setCurrentTurn(0);
+		tt.setStatus(Status.ROLLING);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2) && player.canPlaySoldier());
+		assertTrue(tt.getCurrentTurn() == player.getPlayerId());
+		assertFalse(tt.getStatus() == Status.PLAYING);
 		
 	}
 	
