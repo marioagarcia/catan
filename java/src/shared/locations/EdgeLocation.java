@@ -117,11 +117,11 @@ public class EdgeLocation
 		int numberCompletedOverall = 0;
 		int numberCompletedFromFirstSet = 0;
 		if(allowClockwisePreceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]);
+			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]).getNormalizedLocation();
 		}
 		
 		if(allowClockwiseSucceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]);
+			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]).getNormalizedLocation();
 		}
 		
 		HexLocation sisterHex = this.getHexLoc().getNeighborLoc(this.getDir());
@@ -134,10 +134,10 @@ public class EdgeLocation
 		
 		int numberCompletedFromSecondSet = 0;
 		if(allowClockwisePreceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]);
+			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]).getNormalizedLocation();
 		}
 		if(allowClockwiseSucceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]);
+			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]).getNormalizedLocation();
 		}
 		
 		return Arrays.copyOf(result, numberCompletedOverall);
