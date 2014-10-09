@@ -189,7 +189,6 @@ public class MapTest {
 		tt.setCurrentTurn(1);
 		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement() && tt.getCurrentTurn() == playerIndex);
 		
-		//@TODO
 		// AssertFalse if the game status isn't 'Playing'
 		tt.setCurrentTurn(0);
 		tt.setStatus(Status.DISCARDING);
@@ -212,7 +211,6 @@ public class MapTest {
 
 		// AssertTrue when the city location is currently occupied by one of the player's settlements,
 		// the player has 2 wheat, 3 ore, 1 city, it is the player's turn, game status is 'Playing
-		
 		VertexLocation location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast);
 		int playerIndex = player.getPlayerId();
 		player.setResourceList(new ResourceList(0, 3, 0, 2, 0));
@@ -369,7 +367,6 @@ public class MapTest {
 		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		assertFalse(player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if the player does not have a RoadBuild card
 		player.setRoads(25);
 		devCardList.setDevCardList(25, 25, 25, 0, 25);
@@ -409,16 +406,16 @@ public class MapTest {
 		Player player = new Player();
 		player = game.getPlayerList().get(0);
 		
-		HexLocation robberLocation = map.getRobberLocation();
+		HexLocation oldLocation = map.getRobberLocation(); //HexLocation [x=0, y=-2]
 		// AssertTrue if the robber is being moved to a new location, the player to rob has at least 1
 		// resource card, the player has a soldier card, the player hasn't played the soldier card yet
 		// this turn, it is the player's turn, the game status is 'Playing'
-		//assertTrue(map.canPlaySoldier(oldLocation, newLocation, targetPlayerIndex));
+		HexLocation newLocation = new HexLocation(0, -2);
+		assertTrue(map.canPlaySoldier(oldLocation, newLocation, 2));
 		
-		
-		//@TODO
 		// AssertFalse if the robber is not being moved (i.e. being moved to
 		// the same location
+		//assertTrue(map.canPlaySoldier(oldLocation, oldLocation, 3));
 		
 		//@TODO
 		// AssertFalse if the player to rob doesn't have any resource cards
