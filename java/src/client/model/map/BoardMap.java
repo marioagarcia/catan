@@ -41,13 +41,15 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	public boolean isValid(EdgeLocation location){
 		location = location.getNormalizedLocation();
 		for(HexInterface hex : this.hexes.values()){
-			if(location == new EdgeLocation(hex.getLocation(), EdgeDirection.North).getNormalizedLocation() ||
-					location == new EdgeLocation(hex.getLocation(), EdgeDirection.NorthEast).getNormalizedLocation() ||
-					location == new EdgeLocation(hex.getLocation(), EdgeDirection.NorthWest).getNormalizedLocation() || 
-					location == new EdgeLocation(hex.getLocation(), EdgeDirection.South).getNormalizedLocation() ||
-					location == new EdgeLocation(hex.getLocation(), EdgeDirection.SouthEast).getNormalizedLocation() ||
-					location == new EdgeLocation(hex.getLocation(), EdgeDirection.SouthWest).getNormalizedLocation())
+			if(location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.North).getNormalizedLocation()) ||
+					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.NorthEast).getNormalizedLocation()) ||
+					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.NorthWest).getNormalizedLocation()) || 
+					location.equals(new EdgeLocation(hex.getLocation(),     EdgeDirection.South).getNormalizedLocation()) ||
+					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.SouthEast).getNormalizedLocation()) ||
+					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.SouthWest).getNormalizedLocation())){
 				return true;
+			}
+				
 		}
 		return false;
 	}
