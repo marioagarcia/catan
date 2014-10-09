@@ -36,8 +36,15 @@ public class ResourceCardBank implements ResourceCardBankInterface, SerializerBa
 	}
 
 	@Override
-	public boolean containsCard(ResourceType type) {
-		return this.cards.containsKey(type);
+	public boolean containsCards(ResourceType type1, ResourceType type2) {
+		if (type1.equals(type2))
+		{
+			return this.cards.get(type1) >= 2;
+		}
+		else
+		{
+			return (this.cards.get(type1) >= 1 && (this.cards.get(type2) >= 1));
+		}
 	}
 
 	@Override

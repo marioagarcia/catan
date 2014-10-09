@@ -339,7 +339,7 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2) {
 		boolean player_condition_met = localPlayer.canPlayYearOfPlenty();
-		boolean resource_bank_condition_met = (resCardBank.containsCard(type1) && resCardBank.containsCard(type2));
+		boolean resource_bank_condition_met = (resCardBank.containsCards(type1, type2));
 		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
 
 		return (player_condition_met && turn_condition_met && resource_bank_condition_met);
@@ -586,7 +586,10 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade) {
-		return (localPlayer.canOfferTrade(trade) && boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex()));
+		return (localPlayer.canMaritimeTrade(trade) 
+				&& boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex())
+				&& turnTracker.getStatus() == Status.PLAYING 
+				&& turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
 	}
 
 	@Override

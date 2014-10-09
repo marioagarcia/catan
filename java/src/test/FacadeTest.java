@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import client.communication.facade.ModelFacade;
 import client.communication.server.ServerProxy;
 import client.manager.GameData;
@@ -185,9 +186,26 @@ public class FacadeTest {
 	@Test
 	public void testCanPlayYearOfPlenty(){
 		
-		//Facade canPlayDevCard methods are not finished
-		//Player does not have this card
-		//assertFalse(facade.canPlayYearOfPlenty());
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		
+		manager.getTurnTracker().setCurrentTurn(0);
+		DevCardList dev_cards = new DevCardList();
+		dev_cards.setYearOfPlenty(1);
+		
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertTrue(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD)); //Player has the card, and it is their turn
+		
+		manager.getTurnTracker().setStatus(Status.ROLLING);
+		assertTrue(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
+		
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertTrue(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
+		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		dev_cards.setYearOfPlenty(0);
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertFalse(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));	//Player does not have monopoly card
 		
 	}
 	
@@ -245,7 +263,7 @@ public class FacadeTest {
 		dev_cards.setMonument(0);
 		manager.getTurnTracker().setCurrentTurn(0);
 		manager.getLocalPlayer().setNewDevCards(dev_cards);
-		assertFalse(facade.canPlayMonument());	//Player does not have monopoly card
+		assertFalse(facade.canPlayMonument());	//Player does not have monument card
 		
 	}
 	
