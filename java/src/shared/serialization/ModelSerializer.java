@@ -883,7 +883,7 @@ System.out.println("Ports: " + portList.toString());
 		return tradeOffer;
 	}
 
-	public static void main(String[] args){
+/*	public static void main(String[] args){
 		ModelSerializer ms = new ModelSerializer();
 		
 		File file = new File(args[0]);
@@ -898,6 +898,6 @@ System.out.println("Ports: " + portList.toString());
 		
 		ms.deserializeGameModel(content);
 		
-	}
+	}*/
 	
 }

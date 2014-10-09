@@ -43,7 +43,7 @@ public class MapTest {
 	{
 		ms = new ModelSerializer();
 		
-		File file = new File("/Users/christopherbelyeu/Desktop/fall2014/cs340/catan/java/src/test/JSON/getGameModel.txt");
+		File file = new File("C:\\Users\\Casey\\Documents\\GitHub\\Catan\\java\\src\\test\\JSON\\getGameModel.txt");
 		
 		String content = "";
 		try {
@@ -216,8 +216,9 @@ public class MapTest {
 		//assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertTrue(player.canMaritimeTrade(trade)); 
 		
-		//@TODO
 		// AssertFalse when the player does not have the resources being given
+		player.setResourceList(new ResourceList(1, 0, 1, 0, 1));
+		
 		
 		//@TODO
 		// AssertFalse if it isn't the player's turn
@@ -229,6 +230,15 @@ public class MapTest {
 	
 	@Test
 	public void testCanPlayRoadBuild() {
+		
+		GameManager gameManager = new GameManager(null);
+		
+		GameData game = getGameData();
+		BoardMap map = game.getBoardMap();
+		TurnTracker tt = game.getTurnTracker();
+		
+		Player player = new Player();
+		player = game.getPlayerList().get(1);
 		
 		//@TODO
 		// AssertTrue if the first road location is connected to one of the player's roads, the second
