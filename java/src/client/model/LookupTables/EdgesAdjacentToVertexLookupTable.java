@@ -32,8 +32,7 @@ class EdgesAdjacentToVertexLookupTable {
 	}
 
 	public EdgesAdjacentToVertexResult getEdgesAdjacentToVertex(VertexLocation location){
-		EdgesAdjacentToVertexLookupResult result = table.get(location);
-		
+		EdgesAdjacentToVertexLookupResult result = table.get(location.getDir());
 		EdgeLocation interiorPreceeding = new EdgeLocation(location.getHexLoc(), result.getClockwisePreceedingInternalEdge());
 		EdgeLocation interiorSucceeding = new EdgeLocation(location.getHexLoc(), result.getClockwiseSucceedingInternalEdge());
 		
@@ -44,6 +43,14 @@ class EdgesAdjacentToVertexLookupTable {
 
 	public static EdgesAdjacentToVertexLookupTable getInstance(){
 		return instance;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "EdgesAdjacentToVertexLookupTable [table=" + table + "]";
 	}
 
 }
