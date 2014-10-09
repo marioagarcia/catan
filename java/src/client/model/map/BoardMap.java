@@ -162,12 +162,31 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canMaritimeTrade(VertexLocation location, int playerIndex) {
-		for(EdgeLocation port : this.ports.keySet()){
-			EdgeLocation[] potentialPorts = EdgeLocation.getAdjacent(location);
-			for(EdgeLocation potentialPort : potentialPorts)
+		location = location.getNormalizedLocation();
+		
+		boolean buildingValid = false;
+		if(this.settlements.containsKey(location) && this.settlements.get(location).getPlayerIndex() == playerIndex)
+			buildingValid = true;
+		if(this.cities.containsKey(location) && this.cities.get(location).getPlayerIndex() == playerIndex)
+			buildingValid = true;
+		
+		if(!buildingValid)
+			return false;
+		
+		for(EdgeLocation potentialPort : EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location, this).asSet()){
+			for(EdgeLocation port : this.ports.keySet()){
 				if(potentialPort == port)
 					return true;
+			}
 		}
+//		for(EdgeLocation port : this.ports.keySet()){
+//			EdgeLocation[] potentialPorts = EdgeLocation.getAdjacent(location);
+//			for(EdgeLocation pp : potentialPorts)
+//				System.out.println("pp " + pp);
+//			for(EdgeLocation potentialPort : potentialPorts)
+//				if(potentialPort == port)
+//					return true;
+//		}
 		return false;
 	}
 
