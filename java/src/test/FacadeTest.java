@@ -1,13 +1,16 @@
 package test;
 
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import client.communication.facade.ModelFacade;
-import client.communication.server.ServerProxy;
+import client.communication.server.ServerMoxy;
 import client.manager.GameManager;
 import client.model.GameInfo;
 import client.model.card.DevCardList;
@@ -23,7 +26,7 @@ public class FacadeTest {
 	
 	@Before
 	public void setUp(){
-		manager = new GameManager(new ServerProxy("8081","localhost"));
+		manager = new GameManager(new ServerMoxy());
 		facade = new ModelFacade(manager);
 
 		facade.loginPlayer("Sam", "sam");

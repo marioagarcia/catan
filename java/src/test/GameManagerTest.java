@@ -5,7 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import shared.definitions.CatanColor;
-import client.communication.server.ServerProxy;
+import client.communication.server.ServerMoxy;
+import client.communication.server.ServerProxyInterface;
 import client.manager.GameManager;
 import client.model.GameInfo;
 
@@ -14,7 +15,7 @@ public class GameManagerTest {
 
 	@Test
 	public void test() {
-		ServerProxy proxy = new ServerProxy("8081", "localhost");
+		ServerProxyInterface proxy = new ServerMoxy();
 	//	String param = null;
 		
 		GameManager manager = new GameManager(proxy);

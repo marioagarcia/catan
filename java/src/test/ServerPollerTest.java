@@ -31,10 +31,8 @@ public class ServerPollerTest {
 		}
 		
 		long time_taken = now.getTime() - before_test.getTime();
-		//System.out.println("Number of seconds: " + time_taken / 1000);
-		//System.out.println("Number of Polls: " + number_of_polls);
 		
-		assertTrue(number_of_polls == 10 && time_taken / 1000 == 30);
+		assertTrue(number_of_polls == 10 && (time_taken / 1000 >= 27 && time_taken / 1000 <= 32));
 		
 	}
 	
