@@ -407,7 +407,7 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canPlayMonopoly() {
-		boolean player_condition_met = true;//localPlayer.canPlayDevCard(devCardType);
+		boolean player_condition_met = localPlayer.canPlayMonopoly();
 		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
 
 		return (player_condition_met && turn_condition_met);
