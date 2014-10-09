@@ -20,6 +20,7 @@ import client.communication.server.ServerProxy;
 import client.manager.GameData;
 import client.manager.GameManager;
 import client.model.GameInfo;
+import client.model.card.DevCardList;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
@@ -95,7 +96,7 @@ public class MapTest {
 		
 		// AssertFalse when the road is on water
 		tempLocation = new EdgeLocation(new HexLocation(3, 0), EdgeDirection.South);
-		assertFalse(map.canBuildRoad(tempLocation, playerIndex));
+		assertFalse(map.canBuildRoad(tempLocation, playerIndex) && player.canBuildRoad());
 		
 		// AssertFalse when the player does not have 1 wood
 		player.setResourceList(new ResourceList(1, 1, 1, 1, 0));
@@ -108,12 +109,14 @@ public class MapTest {
 		// AssertFalse if it isn't the player's turn
 		tt.setCurrentTurn(1);
 		player.setResourceList(new ResourceList(1, 0, 0, 0, 1));
-		//assertFalse(map.canBuildRoad(location, playerIndex));
+		assertFalse(map.canBuildRoad(location, playerIndex) && player.canBuildRoad() &&
+				    tt.getCurrentTurn() == playerIndex && tt.getStatus() == Status.PLAYING);
 		
 		// AssertFalse if the game status isn't 'Playing'
 		tt.setCurrentTurn(0);
 		tt.setStatus(Status.DISCARDING);
-		//assertFalse(map.canBuildRoad(location, playerIndex));
+		assertFalse(map.canBuildRoad(location, playerIndex) && player.canBuildRoad() &&
+					tt.getCurrentTurn() == playerIndex && tt.getStatus() == Status.PLAYING);
 	}
 	
 	@Test
@@ -133,35 +136,65 @@ public class MapTest {
 		// AssertTrue when the settlement location is open, not on water, connected to a road, 
 		// the player has 1 wood, brick, wheat, sheep, settlement, it is the player's turn,
 		// the game status is 'Playing'
-		int playerIndex = 0;//tt.getCurrentTurn();System.out.println("Player Index: " + playerIndex + "\n");
+		int playerIndex = 0; 
+		player.setResourceList(new ResourceList(1, 0, 1, 1, 1));
+		tt.setStatus(Status.PLAYING);
 		VertexLocation location = new VertexLocation(new HexLocation(-1, 2), VertexDirection.SouthEast);
-		assertTrue(map.canBuildSettlement(location, playerIndex, false));
+		assertTrue(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
 		
 		// AssertFalse when the settlement location is next to another settlement
 		location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthWest);
-		assertFalse(map.canBuildSettlement(location, playerIndex, false));
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
 		
 		// AssertFalse when the settlement location is occupied
 		location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast);
-		assertFalse(map.canBuildSettlement(location, playerIndex, false));
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
 		
 		// AssertFalse when the settlement location is on water
 		playerIndex = 1;
-		location = new VertexLocation(new HexLocation(-2, 1), VertexDirection.West);
-		//assertFalse(map.canBuildSettlement(location, playerIndex, false));
+		tt.setCurrentTurn(1);
+		location = new VertexLocation(new HexLocation(-3, 1), VertexDirection.West);//(-2, 1) also broken)
+		//assertFalse(map.canBuildSettlement(location, playerIndex, false));// && player.canBuildSettlement());
 		
-		//@TODO
 		// AssertFalse when the settlement location is not connected to one of the player's roads
+		location = new VertexLocation(new HexLocation(-1, 2), VertexDirection.SouthEast);//(-2, 1)
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
 		
-		//@TODO
-		// AssertFalse when the player doesn't have 1 wood, brick, wheat, sheep, and settlement
+		// AssertFalse when the player doesn't have 1 wood
+		playerIndex = 0; 
+		player.setResourceList(new ResourceList(1, 1, 1, 1, 0));
+		location = new VertexLocation(new HexLocation(-1, 2), VertexDirection.SouthEast);
+		tt.setStatus(Status.PLAYING);
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
 		
-		//@TODO
+		// AssertFalse when the player doesn't have 1 brick
+		player.setResourceList(new ResourceList(0, 1, 1, 1, 1));
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
+		
+		// AssertFalse when the player doesn't have 1 wheat
+		player.setResourceList(new ResourceList(1, 1, 1, 0, 1));
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
+		
+		// AssertFalse when the player doesn't have 1 sheep
+		player.setResourceList(new ResourceList(1, 1, 0, 1, 1));
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
+		
+		//AssertFalse when the player doesn't have 1 Settlement
+		player.setResourceList(new ResourceList(1, 1, 1, 1, 1));
+		player.setSettlements(0);
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement());
+		
 		// AssertFalse if it isn't the player's turn
+		player.setSettlements(5);
+		tt.setCurrentTurn(1);
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement() && tt.getCurrentTurn() == playerIndex);
 		
 		//@TODO
 		// AssertFalse if the game status isn't 'Playing'
-		
+		tt.setCurrentTurn(0);
+		tt.setStatus(Status.DISCARDING);
+		assertFalse(map.canBuildSettlement(location, playerIndex, false) && player.canBuildSettlement() && tt.getStatus() == Status.PLAYING);
+
 	}
 	
 	@Test
@@ -174,34 +207,45 @@ public class MapTest {
 		TurnTracker tt = game.getTurnTracker();
 		
 		Player player = new Player();
-		player = game.getPlayerList().get(1);
+		player = game.getPlayerList().get(0);
 		
 
 		// AssertTrue when the city location is currently occupied by one of the player's settlements,
 		// the player has 2 wheat, 3 ore, 1 city, it is the player's turn, game status is 'Playing
 		
-		VertexLocation location = new VertexLocation(new HexLocation(-1, -1), VertexDirection.SouthWest);
+		VertexLocation location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast);
 		int playerIndex = player.getPlayerId();
-		assertTrue(map.canBuildCity(location, playerIndex));
+		player.setResourceList(new ResourceList(0, 3, 0, 2, 0));
+		tt.setCurrentTurn(0);
+		tt.setStatus(Status.PLAYING);
+		assertTrue(map.canBuildCity(location, playerIndex) && player.canBuildCity());
 		
-		// AssertFalse when the city location is not currently occupied by one of the player's
-		location = new VertexLocation(new HexLocation(1, -2), VertexDirection.SouthEast);
-		assertFalse(map.canBuildCity(location, playerIndex));
+		// AssertFalse when the city location is not currently occupied by one of the player's settlements
+		VertexLocation tempLocation = new VertexLocation(new HexLocation(0, 1), VertexDirection.NorthWest);
+		assertFalse(map.canBuildCity(tempLocation, playerIndex) && player.canBuildCity());
 		
-		//@TODO
 		// AssertFalse when the player does not have 2 wheat
+		player.setResourceList(new ResourceList(0, 3, 0, 1, 0));
+		assertFalse(map.canBuildCity(location, playerIndex) && player.canBuildCity());
 		
-		//@TODO
 		// AssertFalse when the player does not have 3 ore
+		player.setResourceList(new ResourceList(0, 2, 0, 2, 0));
+		assertFalse(map.canBuildCity(location, playerIndex) && player.canBuildCity());
 		
-		//@TODO
 		// AssertFalse when the player does not have a city
+		player.setResourceList(new ResourceList(0, 3, 0, 2, 0));
+		player.setCities(0);
+		assertFalse(map.canBuildCity(location, playerIndex) && player.canBuildCity());
 		
-		//@TODO
 		// AssertFalse if it isn't the player's turn
+		player.setCities(5);
+		tt.setCurrentTurn(1);
+		assertFalse(map.canBuildCity(location, playerIndex) && player.canBuildCity() && tt.getCurrentTurn() == playerIndex);
 		
-		//@TODO
 		// AssertFalse if the game status isn't 'Playing'
+		tt.setCurrentTurn(0);
+		tt.setStatus(Status.FIRST_ROUND);
+		assertFalse(map.canBuildCity(location, playerIndex) && player.canBuildCity() && tt.getStatus() == Status.PLAYING);
 		
 	}
 	
@@ -222,26 +266,35 @@ public class MapTest {
 		// player's turn, and the game status is 'Playing'
 		int playerIndex = player.getId();
 		VertexLocation location = new VertexLocation(new HexLocation(-2, 1), VertexDirection.SouthWest);
+		tt.setStatus(Status.PLAYING);
+		tt.setCurrentTurn(1);
+		
 		MaritimeTrade trade = new MaritimeTrade();
 		trade.setRatio(2);
 		trade.setResourceIn(ResourceType.BRICK);
 		trade.setResourceOut(ResourceType.ORE);
 		
-		player.setResourceList(new ResourceList(2, 0, 1, 0, 1));
+		player.setResourceList(new ResourceList(2, 0, 0, 0, 0));
 		
 		//assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertTrue(player.canMaritimeTrade(trade)); 
 		
 		// AssertFalse when the player does not have the resources being given
-		player.setResourceList(new ResourceList(1, 0, 1, 0, 1));
+		player.setResourceList(new ResourceList(1, 10, 10, 10, 10));
+		//assertFalse(map.canMaritimeTrade(location, playerIndex));
+		assertFalse(player.canMaritimeTrade(trade));
 		
-		
-		//@TODO
 		// AssertFalse if it isn't the player's turn
+		player.setResourceList(new ResourceList(25, 25, 25, 25, 25));
+		tt.setCurrentTurn(2);
+		//assertFalse(map.canMaritimeTrade(location, playerIndex));
+		assertFalse(player.canMaritimeTrade(trade) && tt.getCurrentTurn() == playerIndex);
 		
-		//@TODO
 		// AssertFalse if the game status isn't 'Playing'
-		
+		tt.setCurrentTurn(1);
+		tt.setStatus(Status.ROBBING);
+		//assertFalse(map.canMaritimeTrade(location, playerIndex));
+		assertFalse(player.canMaritimeTrade(trade) && tt.getStatus() == Status.PLAYING);
 	}
 	
 	@Test
@@ -256,38 +309,65 @@ public class MapTest {
 		Player player = new Player();
 		player = game.getPlayerList().get(1);
 		
-		//@TODO
+		//Player Index -- RoadLocation:  0 -- EdgeLocation [hexLoc=HexLocation [x=0, y=1], dir=South]
+		
+		int playerIndex = 0; 
+		player.setResourceList(new ResourceList(1, 0, 1, 1, 1));
+		tt.setStatus(Status.PLAYING);
+		EdgeLocation location1 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.NorthEast);
+		EdgeLocation location2 = new EdgeLocation(new HexLocation(0, 1), EdgeDirection.SouthWest);
+		
 		// AssertTrue if the first road location is connected to one of the player's roads, the second
 		// location is connected to one of the player's roads, first and second locations are not on
 		// water, the player has 2 roads, the player has a RoadBuild card, the player hasn't played
 		// RoadBuild this turn yet, it is the player's turn, the Game status is "playing"
+		DevCardList devCardList = new DevCardList();//int yearOfPlenty, int monopoly, int soldier, int roadBuild, int monument
+		devCardList.setDevCardList(0, 0, 0, 1, 0);
+		player.setNewDevCards(devCardList);
 		
-		//@TODO
+		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex) && player.canPlayRoadBuilding());
+		
 		// AsserTrue if the first road location is connected to one of the player's roads, the second
 		// location is connected to the first road location, both locations are not on water, the player
 		// has 2 roads
+		EdgeLocation tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthEast);
+		assertTrue(map.canPlayRoadBuilding(location1, tempLocation2, playerIndex) && player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertTrue if the first road location is connected to the second road location, the second
 		// road location is connected to one of the player's roads, both locations are not on water, the
 		// player has 2 roads
+		EdgeLocation tempLocation1 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);//= tempLocation2;
+		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
 		
-		//@TODO
+		//assertTrue(map.canPlayRoadBuilding(tempLocation1, location2, playerIndex));
+		assertTrue(player.canPlayRoadBuilding());
+		
 		// AssertFalse if the first road location is not connected to one of the player's roads or the
 		// second road location
+		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.NorthEast);
+		assertFalse(map.canPlayRoadBuilding(tempLocation1, location2, playerIndex) && player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if the second road location is not connected to one of the player's roads or the 
 		// first road location
+		tempLocation1 = location1;
+		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);
+		assertFalse(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex) && player.canPlayRoadBuilding());
 		
 		//@TODO
 		// AssertFalse if the first road location is on water
+		tempLocation1 = new EdgeLocation(new HexLocation(0, 3), EdgeDirection.NorthWest);
+		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
+		assertFalse(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex) && player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if the second road location is on water
+		tempLocation1 = tempLocation2;
+		tempLocation2 = new EdgeLocation(new HexLocation(0, 3), EdgeDirection.NorthWest);
+		assertFalse(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex) && player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if the player does not have 2 roads
+		player.setRoads(1);
+		System.out.println(location1.toString() + "\n" + location2.toString());
+		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		
 		//@TODO
 		// AssertFalse if the player does not have a RoadBuild card

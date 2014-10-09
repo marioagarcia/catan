@@ -185,6 +185,56 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		
 		return canBuildRoad;
 	}
+	
+	public boolean canBuildSettlement(){
+		boolean canBuildSettlement = false;
+		
+		if(resourceList.getWood() >= 1 && resourceList.getBrick() >= 1 &&
+		   resourceList.getWheat() >= 1 && resourceList.getSheep() >= 1 && 
+		   settlements >= 1){
+			canBuildSettlement = true;
+		}
+		
+		return canBuildSettlement;
+	}
+	
+	public boolean canBuildCity(){
+		boolean canBuildCity = false;
+		//the player has 2 wheat, 3 ore, 1 city
+		if(resourceList.getWheat() >= 2 && resourceList.getOre() >= 3 && cities >= 1){
+			canBuildCity = true;
+		}
+		
+		return canBuildCity;
+	}
+	
+	public boolean canMaritimeTrade(MaritimeTrade trade){
+		boolean result = false;
+		int resourceAmount = 0;
+		
+		switch(trade.getResourceIn()){
+			case BRICK:
+				resourceAmount = resourceList.getBrick();
+				break;
+			case ORE:
+				resourceAmount = resourceList.getOre();
+				break;
+			case SHEEP:
+				resourceAmount = resourceList.getSheep();
+				break;
+			case WHEAT:
+				resourceAmount = resourceList.getWheat();
+				break;
+			case WOOD:
+				resourceAmount = resourceList.getWood();
+				break;
+		}
+		if(trade.getRatio() <= resourceAmount){
+			result = true;
+		}
+		
+		return result;
+	}
 
 	@Override
 	public boolean canOfferTrade(TradeInterface trade){
@@ -239,34 +289,6 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		
 		return can_offer;
 	}
-	
-	public boolean canMaritimeTrade(MaritimeTrade trade){
-		boolean result = false;
-		int resourceAmount = 0;
-		
-		switch(trade.getResourceIn()){
-			case BRICK:
-				resourceAmount = resourceList.getBrick();
-				break;
-			case ORE:
-				resourceAmount = resourceList.getOre();
-				break;
-			case SHEEP:
-				resourceAmount = resourceList.getSheep();
-				break;
-			case WHEAT:
-				resourceAmount = resourceList.getWheat();
-				break;
-			case WOOD:
-				resourceAmount = resourceList.getWood();
-				break;
-		}
-		if(trade.getRatio() <= resourceAmount){
-			result = true;
-		}
-		
-		return result;
-	}
 
 	@Override
 	public boolean canBuyDevCard(){
@@ -283,7 +305,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public boolean canPlayRoadBuilding(){
-		return (!playedDevCard && newDevCards.getRoadBuild() >=1);
+		return (!playedDevCard && newDevCards.getRoadBuild() >=1 && roads >= 2);
 	}
 
 	@Override

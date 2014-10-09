@@ -99,11 +99,9 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		for(VertexLocation individualPertinentVertex : pertinentVertexes)
 			if(this.cities.containsKey(individualPertinentVertex) || this.settlements.containsKey(individualPertinentVertex))
 				return false;
-		System.out.println("one " + this.roads + "\n" + location);
 		//check if you have a road on an adjacent edge
 		if(!setupPhase)
 			for(EdgeLocation individualPertinentEdge : edges.asSet()){
-				System.out.println(individualPertinentEdge.toString());
 				if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
 					return true;
 			}
