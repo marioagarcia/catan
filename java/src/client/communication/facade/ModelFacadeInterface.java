@@ -10,7 +10,6 @@ import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.TradeInterface;
-import client.model.map.HexInterface;
 
 /**
  * This class ensures the game's data and state are properly stored in the Catan Model
@@ -185,19 +184,6 @@ public interface ModelFacadeInterface {
 	//dev cards
 	
 	/**
-	 * Checks that the player has the dev card the player wants to play, the
-	 * player hasn't played a dev card in this turn, it's the player's turn,
-	 * and that the client model status is "playing"
-	 * 
-	 * @param player The player wanting to play the dev card
-	 * @param model The client model
-	 * @return true if the player has the dev card the player is trying to play,
-	 * the player hasn't played a dev card in this turn, it's the player's turn,
-	 * and the client model status is "playing", false otherwise
-	 */
-	public boolean canPlayDevCard();
-	public boolean playDevCard();
-	/**
 	 * Checks that the two resources the player specifies are in the bank
 	 * 
 	 * @param player The player wanting to play the year of plenty card
@@ -254,4 +240,7 @@ public interface ModelFacadeInterface {
 	public boolean registerPlayer(String username, String password);
 	
 	public boolean loginPlayer(String username, String password);
+	
+	public boolean canSendChat(String message);
+	public boolean SendChat(String message);
 }

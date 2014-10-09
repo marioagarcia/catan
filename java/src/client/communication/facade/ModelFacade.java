@@ -11,7 +11,6 @@ import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.TradeInterface;
-import client.model.map.HexInterface;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
@@ -218,15 +217,13 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canPlayDevCard() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canSendChat(String message) {
+		return this.gameManager.canSendChat();
 	}
 
 	@Override
-	public boolean playDevCard() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean SendChat(String message) {
+		return this.gameManager.sendChat(message);
 	}
 
 }

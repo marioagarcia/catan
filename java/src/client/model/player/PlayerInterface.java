@@ -1,6 +1,5 @@
 package client.model.player;
 
-import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import shared.definitions.CatanColor;
 import shared.serialization.interfaces.SerializerResourceListInterface;

@@ -2,19 +2,11 @@ package client.manager;
 
 import java.util.ArrayList;
 
-import shared.locations.HexLocation;
 import client.logging.GameLog;
-import client.logging.chat.Message;
 import client.model.card.DevCardBank;
 import client.model.card.DomesticTrade;
 import client.model.card.ResourceCardBank;
-import client.model.card.ResourceList;
 import client.model.map.BoardMap;
-import client.model.map.Hex;
-import client.model.map.Port;
-import client.model.piece.City;
-import client.model.piece.Road;
-import client.model.piece.Settlement;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
 

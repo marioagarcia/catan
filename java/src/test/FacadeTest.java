@@ -1,23 +1,18 @@
 package test;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import client.communication.facade.ModelFacade;
 import client.communication.server.ServerProxy;
-import client.manager.GameData;
 import client.manager.GameManager;
 import client.model.GameInfo;
 import client.model.card.DevCardList;
 import client.model.card.DomesticTrade;
 import client.model.card.ResourceList;
-import client.model.player.Player;
 import client.model.player.PlayerInfo;
 import client.model.turntracker.TurntrackerInterface.Status;
 
@@ -39,10 +34,7 @@ public class FacadeTest {
 		facade.joinGame(CatanColor.ORANGE, g);
 		
 		//Always start on the local player's turn
-		while (!facade.canRoll())
-		{
-			facade.finishTurn();
-		}
+		manager.getTurnTracker().setCurrentTurn(0);
 	}
 	
 	@Test
@@ -72,8 +64,9 @@ public class FacadeTest {
 		//assertFalse(facade.canJoinGame(CatanColor.PUCE, g));
 	}
 	
+	@Test
 	public void testSendChat(){
-		//Doesn't exist
+			assertTrue(manager.sendChat("Yo, yo, whatup?"));
 	}
 	
 	@Test
@@ -120,11 +113,22 @@ public class FacadeTest {
 	
 	@Test
 	public void testCanRollNumber(){
-
+		
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getTurnTracker().setStatus(Status.ROLLING);
 		assertTrue(facade.canRoll());
 		
 		//Can't roll if it is not your turn
-		facade.finishTurn();
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canRoll());
+		
+		//Correct turn, but wrong state
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getTurnTracker().setStatus(Status.DISCARDING);
+		assertFalse(facade.canRoll());
+		
+		//Wrong turn and wrong state
+		manager.getTurnTracker().setCurrentTurn(2);
 		assertFalse(facade.canRoll());
 	}
 	
@@ -165,16 +169,21 @@ public class FacadeTest {
 		
 	}
 	
-	//
 	@Test
 	public void testCanFinishTurn(){
 		
-		
-		//Need a game that is already in process
-		//assertTrue(facade.canFinishTurn());
-		
-		//Should not be allowed because game is currently rolling
+		//Player's turn but not in the playing state
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getTurnTracker().setStatus(Status.ROLLING);
 		assertFalse(facade.canFinishTurn());	
+		
+		//Player's turn and in the play state
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		assertTrue(facade.canFinishTurn());	
+		
+		//Cannot end turn if it is not currently your turn
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canFinishTurn());
 	}
 	
 	@Test
@@ -236,8 +245,7 @@ public class FacadeTest {
 		dev_cards.setYearOfPlenty(1);
 		manager.getLocalPlayer().setNewDevCards(dev_cards);
 		manager.getResCardBank().setBank(0, 0, 0, 0, 0);
-		assertFalse(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));
-		
+		assertFalse(facade.canPlayYearOfPlenty(ResourceType.BRICK, ResourceType.WOOD));	
 	}
 	
 	public void testCanPlayRoadCard(){
@@ -261,7 +269,7 @@ public class FacadeTest {
 		assertTrue(facade.canPlayMonopoly()); //Player has the card, and it is their turn
 		
 		manager.getTurnTracker().setStatus(Status.ROLLING);
-		assertFalse(facade.canPlayMonopoly()); //Cannot play dev card during rolling phase
+		assertFalse(facade.canPlayMonopoly()); //Cannot play dev card during rolling state
 		
 		manager.getTurnTracker().setCurrentTurn(2);
 		assertFalse(facade.canPlayMonopoly()); //Cannot play when it is not your turn
@@ -285,7 +293,7 @@ public class FacadeTest {
 		assertTrue(facade.canPlayMonument()); //Player has the card, and it is their turn
 		
 		manager.getTurnTracker().setStatus(Status.ROLLING);
-		assertFalse(facade.canPlayMonument()); //Cannot play dev card during rolling phase
+		assertFalse(facade.canPlayMonument()); //Cannot play dev card during rolling state
 		
 		manager.getTurnTracker().setCurrentTurn(2);
 		assertFalse(facade.canPlayMonument()); //Cannot play when it is not your turn
@@ -294,8 +302,7 @@ public class FacadeTest {
 		dev_cards.setMonument(0);
 		manager.getTurnTracker().setCurrentTurn(0);
 		manager.getLocalPlayer().setNewDevCards(dev_cards);
-		assertFalse(facade.canPlayMonument());	//Player does not have monument card
-		
+		assertFalse(facade.canPlayMonument());	//Player does not have monument card	
 	}
 	
 	public ArrayList<PlayerInfo> createPlayers(int numPlayers){

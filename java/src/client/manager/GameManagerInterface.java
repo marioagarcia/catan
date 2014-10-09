@@ -2,7 +2,6 @@ package client.manager;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.*;
-import client.model.map.*;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.*;
@@ -239,6 +238,8 @@ public interface GameManagerInterface
 	public boolean createNewGame(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts);
 	
 	public boolean saveGame();
+	
+	public boolean canSendChat();
 	
 	public boolean sendChat(String chatMessage);
 	

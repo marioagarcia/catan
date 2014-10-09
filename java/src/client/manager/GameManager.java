@@ -1,7 +1,6 @@
 package client.manager;
 
 import java.util.ArrayList;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -11,11 +10,8 @@ import shared.serialization.ModelSerializer;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
-import client.communication.server.ServerPollerInterface;
-import client.communication.server.ServerProxy;
 import client.communication.server.ServerProxyInterface;
 import client.logging.GameLog;
-import client.manager.interfaces.GMBoardMapInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
@@ -24,7 +20,6 @@ import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.map.BoardMap;
-import client.model.map.HexInterface;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
 import client.model.turntracker.TurnTracker;
@@ -241,6 +236,11 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
+	public boolean canSendChat() {
+		return true;
+	}
+	
+	@Override
 	public boolean sendChat(String chatMessage) {
 		int player_index = localPlayer.getPlayerIndex();
 
@@ -296,7 +296,7 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canFinishTurn() {
-		return (turnTracker.getStatus() == Status.PLAYING);
+		return (turnTracker.getStatus() == Status.PLAYING && turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
 	}
 
 	@Override
@@ -682,4 +682,5 @@ public class GameManager implements GameManagerInterface {
 	public void setGameCommands(GameCommands gameCommands) {
 		this.gameCommands = gameCommands;
 	}
+
 }
