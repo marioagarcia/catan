@@ -366,20 +366,34 @@ public class MapTest {
 		
 		// AssertFalse if the player does not have 2 roads
 		player.setRoads(1);
-		System.out.println(location1.toString() + "\n" + location2.toString());
-		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertFalse(player.canPlayRoadBuilding());
 		
 		//@TODO
 		// AssertFalse if the player does not have a RoadBuild card
+		player.setRoads(25);
+		devCardList.setDevCardList(25, 25, 25, 0, 25);
+		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertFalse(player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if the player has played a RoadBuild this turn
+		devCardList.setDevCardList(25, 25, 25, 25, 25);
+		player.setPlayedDevCard(true);
+		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertFalse(player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if it is not the player's turn
+		player.setPlayedDevCard(false);
+		tt.setCurrentTurn(1);
+		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertTrue(player.canPlayRoadBuilding());
+		assertFalse(tt.getCurrentTurn() == playerIndex);
 		
-		//@TODO
 		// AssertFalse if the game status is not 'Playing'
+		tt.setCurrentTurn(0);
+		tt.setStatus(Status.ROBBING);
+		assertTrue(player.canPlayRoadBuilding());
+		assertFalse(tt.getStatus() == Status.PLAYING);
 		
 	}
 	
@@ -395,11 +409,12 @@ public class MapTest {
 		Player player = new Player();
 		player = game.getPlayerList().get(0);
 		
-		
+		HexLocation robberLocation = map.getRobberLocation();
 		// AssertTrue if the robber is being moved to a new location, the player to rob has at least 1
 		// resource card, the player has a soldier card, the player hasn't played the soldier card yet
 		// this turn, it is the player's turn, the game status is 'Playing'
 		//assertTrue(map.canPlaySoldier(oldLocation, newLocation, targetPlayerIndex));
+		
 		
 		//@TODO
 		// AssertFalse if the robber is not being moved (i.e. being moved to
