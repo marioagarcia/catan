@@ -49,4 +49,12 @@ public class Port implements SerializerPortInterface {
 		
 	}
 	
+	@Override
+	public String toString(){
+		String returnString = "";
+		
+		returnString += "Ratio: " + ratio + " -- " + location.toString() + "\n";
+		
+		return returnString;
+	}
 }
