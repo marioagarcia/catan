@@ -11,11 +11,7 @@
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
     <property name="java.src.dir" value="${java.dir}/src"/>
-    <property name="src.tests.dir" value="${java.dir}/src/test"/>
-	<property name="junit.jar" value="${java.dir}/lib/junit.jar"/>
-	<property name="ant-junit.jar" value="${java.dir}/lib/ant-junit.jar"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
-	
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
@@ -27,8 +23,6 @@
     <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
-	
-	<property name="test_folder" value="${java.dir}/src/test/test_results"/>
    
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -113,7 +107,6 @@
 		<tstamp/>
 		<mkdir dir="${java.build}"/>
 		<mkdir dir="${java.dist}"/>
-		<mkdir dir="${test_folder}"/>
 	</target>
 		
 	<target name="clean" description="clean build files" >
