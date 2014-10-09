@@ -279,13 +279,13 @@ public class MapTest {
 		
 		// AssertFalse when the player does not have the resources being given
 		player.setResourceList(new ResourceList(1, 10, 10, 10, 10));
-		//assertFalse(map.canMaritimeTrade(location, playerIndex));
+		//assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertFalse(player.canMaritimeTrade(trade));
 		
 		// AssertFalse if it isn't the player's turn
 		player.setResourceList(new ResourceList(25, 25, 25, 25, 25));
 		tt.setCurrentTurn(2);
-		//assertFalse(map.canMaritimeTrade(location, playerIndex));
+		//assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertFalse(player.canMaritimeTrade(trade) && tt.getCurrentTurn() == playerIndex);
 		
 		// AssertFalse if the game status isn't 'Playing'
@@ -337,7 +337,7 @@ public class MapTest {
 		EdgeLocation tempLocation1 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);//= tempLocation2;
 		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
 		
-		//assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex));
+		assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex));
 		assertTrue(player.canPlayRoadBuilding());
 		
 		// AssertFalse if the first road location is not connected to one of the player's roads or the
@@ -351,7 +351,6 @@ public class MapTest {
 		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);
 		assertFalse(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex) && player.canPlayRoadBuilding());
 		
-		//@TODO
 		// AssertFalse if the first road location is on water
 		tempLocation1 = new EdgeLocation(new HexLocation(0, 3), EdgeDirection.NorthWest);
 		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
@@ -364,31 +363,32 @@ public class MapTest {
 		
 		// AssertFalse if the player does not have 2 roads
 		player.setRoads(1);
-		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		assertFalse(player.canPlayRoadBuilding());
 		
 		// AssertFalse if the player does not have a RoadBuild card
 		player.setRoads(25);
 		devCardList.setDevCardList(25, 25, 25, 0, 25);
-		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		assertFalse(player.canPlayRoadBuilding());
 		
 		// AssertFalse if the player has played a RoadBuild this turn
 		devCardList.setDevCardList(25, 25, 25, 25, 25);
 		player.setPlayedDevCard(true);
-		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		assertFalse(player.canPlayRoadBuilding());
 		
 		// AssertFalse if it is not the player's turn
 		player.setPlayedDevCard(false);
 		tt.setCurrentTurn(1);
-		//assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
+		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		assertTrue(player.canPlayRoadBuilding());
 		assertFalse(tt.getCurrentTurn() == playerIndex);
 		
 		// AssertFalse if the game status is not 'Playing'
 		tt.setCurrentTurn(0);
 		tt.setStatus(Status.ROBBING);
+		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex));
 		assertTrue(player.canPlayRoadBuilding());
 		assertFalse(tt.getStatus() == Status.PLAYING);
 		
