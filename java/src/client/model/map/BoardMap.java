@@ -180,14 +180,19 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 				roads.remove(location1);
 				return true;
 			}
+			else{
+				roads.remove(location1);
+			}
 		}
-		
 		if(this.canBuildRoad(location2, playerIndex)){
 			Road road = new Road(playerIndex, location2);
 			this.roads.put(location2, road);
 			if(this.canBuildRoad(location1,  playerIndex)){
 				roads.remove(location2);
 				return true;
+			}
+			else{
+				roads.remove(location2);
 			}
 		}
 		return false;
