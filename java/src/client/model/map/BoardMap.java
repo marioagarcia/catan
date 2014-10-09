@@ -13,6 +13,7 @@ import client.model.LookupTables.VertexesAdjacentToEdge;
 import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
