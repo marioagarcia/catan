@@ -177,19 +177,10 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		
 		for(EdgeLocation potentialPort : EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location, this).asSet()){
 			for(EdgeLocation port : this.ports.keySet()){
-				if(potentialPort == port)
 				if(potentialPort.equals(port))
 					return true;
 			}
 		}
-//		for(EdgeLocation port : this.ports.keySet()){
-//			EdgeLocation[] potentialPorts = EdgeLocation.getAdjacent(location);
-//			for(EdgeLocation pp : potentialPorts)
-//				System.out.println("pp " + pp);
-//			for(EdgeLocation potentialPort : potentialPorts)
-//				if(potentialPort == port)
-//					return true;
-//		}
 		return false;
 	}
 
