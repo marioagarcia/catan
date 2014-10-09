@@ -195,6 +195,8 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, int playerIndex) {
+		location1 = location1.getNormalizedLocation();
+		location2 = location2.getNormalizedLocation();
 		if(this.canBuildRoad(location1, playerIndex)){
 			Road road = new Road(playerIndex, location1);
 			this.roads.put(location1, road);
