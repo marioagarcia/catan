@@ -99,12 +99,14 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		for(VertexLocation individualPertinentVertex : pertinentVertexes)
 			if(this.cities.containsKey(individualPertinentVertex) || this.settlements.containsKey(individualPertinentVertex))
 				return false;
-
+		System.out.println("one " + this.roads + "\n" + location);
 		//check if you have a road on an adjacent edge
 		if(!setupPhase)
-			for(EdgeLocation individualPertinentEdge : edges.asSet())
+			for(EdgeLocation individualPertinentEdge : edges.asSet()){
+				System.out.println(individualPertinentEdge.toString());
 				if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
 					return true;
+			}
 		
 		return false;
 	}
@@ -176,7 +178,11 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
+<<<<<<< Updated upstream
 	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int targetPlayerIndex) {
+=======
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation) {
+>>>>>>> Stashed changes
 		return oldLocation == newLocation;
 	}
 
@@ -193,13 +199,15 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		//roads
 		for(int i = 0; i < roadList.size(); i++){
 			
-			
-			
-			this.roads.put(roadList.get(i).getLocation(), roadList.get(i));
+			Road road = roadList.get(i);
+			road = new Road(road.getPlayerIndex(), road.getLocation().getNormalizedLocation());
+
+			this.roads.put(road.getLocation(), road);
 		}
 		
 		//cities
 		for(int i = 0; i < cityList.size(); i++){
+			cityList.get(i).setLocation(cityList.get(i).getLocation().getNormalizedLocation());
 			this.cities.put(cityList.get(i).getLocation(), cityList.get(i));
 		}
 		

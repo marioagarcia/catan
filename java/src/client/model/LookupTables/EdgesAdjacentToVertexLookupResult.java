@@ -52,4 +52,14 @@ class EdgesAdjacentToVertexLookupResult {
 	public EdgeDirection getClockwiseSucceedingInternalEdge() {
 		return clockwiseSucceedingInternalEdge;
 	}
+
+	@Override
+	public String toString() {
+		return "EdgesAdjacentToVertexLookupResult [xOffset=" + xOffset
+				+ ", yOffset=" + yOffset + ", externalEdge=" + externalEdge
+				+ ", clockwisePreceedingInternalEdge="
+				+ clockwisePreceedingInternalEdge
+				+ ", clockwiseSucceedingInternalEdge="
+				+ clockwiseSucceedingInternalEdge + "]";
+	}
 }

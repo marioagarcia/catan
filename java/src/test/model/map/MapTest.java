@@ -43,7 +43,7 @@ public class MapTest {
 	{
 		ms = new ModelSerializer();
 		
-		File file = new File("C:\\Users\\Casey\\Documents\\GitHub\\Catan\\java\\src\\test\\JSON\\getGameModel.txt");
+		File file = new File("/Users/christopherbelyeu/Desktop/fall2014/cs340/catan/java/src/test/JSON/getGameModel.txt");
 		
 		String content = "";
 		try {
