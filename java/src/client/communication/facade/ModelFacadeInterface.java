@@ -3,6 +3,7 @@ package client.communication.facade;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
@@ -232,8 +233,8 @@ public interface ModelFacadeInterface {
 	 * @param newLocation The location the robber is going to
 	 * @return true if successful 
 	 */
-	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation);
-	public boolean playSoldier(HexInterface oldLocation, HexInterface newLocation);
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victim);
+	public boolean PlaySoldier(HexLocation newLocation, int victim);
 	/**
 	 * Checks are completed in canPlayDevCard() so always returns true
 	 * @return true

@@ -386,7 +386,7 @@ public class GameManager implements GameManagerInterface {
 	public boolean canPlaySoldier(HexLocation oldLocation,	HexLocation newLocation, int victimIndex) {
 		boolean player_condition_met = localPlayer.canPlaySoldier();
 		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
-		boolean map_condition_met = true; //boardMap.canPlaySoldier(HexInterface oldLocation, HexInterface newLocation);
+		boolean map_condition_met = boardMap.canPlaySoldier(oldLocation, newLocation, victimIndex);
 		boolean robbed_player_condition_met = true; //currentGame.playerCanBeRobbed(victimIndex);
 
 		return (player_condition_met && turn_condition_met && map_condition_met && robbed_player_condition_met);
@@ -520,7 +520,11 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canOfferTrade(TradeInterface trade) {
-		return localPlayer.canOfferTrade(trade);
+		boolean player_can_trade = localPlayer.canOfferTrade(trade);
+		boolean correct_status = turnTracker.getStatus() == Status.PLAYING;
+		boolean correct_turn = turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex(); 
+		
+		return player_can_trade && correct_status && correct_turn;
 	}
 
 	@Override
@@ -542,9 +546,10 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canAcceptTrade(TradeInterface trade) {
 		boolean player_condition_met = localPlayer.canAcceptTrade(trade);
-		boolean turn_condition_met = (turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		boolean status_met = (turnTracker.getStatus() == Status.PLAYING);
+		boolean turn_condition_met = (turnTracker.getCurrentTurn() != localPlayer.getPlayerIndex());
 
-		return (player_condition_met && turn_condition_met);
+		return (player_condition_met && status_met && turn_condition_met);
 	}
 
 	@Override
@@ -562,7 +567,7 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canDiscardCards(SerializerResourceListInterface list) {
-		return localPlayer.canDiscardCards(list);
+		return (localPlayer.canDiscardCards(list) && (turnTracker.getStatus() == Status.PLAYING || turnTracker.getStatus() == Status.DISCARDING));
 	}
 
 	@Override
