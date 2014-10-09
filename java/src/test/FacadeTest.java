@@ -209,25 +209,43 @@ public class FacadeTest {
 		dev_cards.setMonopoly(1);
 		
 		manager.getLocalPlayer().setNewDevCards(dev_cards);
-		assertTrue(facade.canPlayMonopoly());
+		assertTrue(facade.canPlayMonopoly()); //Player has the card, and it is their turn
 		
-		manager.getTurnTracker().setStatus(Status.PLAYING);
-		assertFalse(facade.canPlayMonopoly());
+		manager.getTurnTracker().setStatus(Status.ROLLING);
+		assertFalse(facade.canPlayMonopoly()); //Cannot play dev card during rolling phase
 		
 		manager.getTurnTracker().setCurrentTurn(2);
-		assertFalse(facade.canPlayMonopoly());
+		assertFalse(facade.canPlayMonopoly()); //Cannot play when it is not your turn
 		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
 		dev_cards.setMonopoly(0);
 		manager.getTurnTracker().setCurrentTurn(0);
 		manager.getLocalPlayer().setNewDevCards(dev_cards);
-		assertFalse(facade.canPlayMonopoly());
-		
-		
-		
+		assertFalse(facade.canPlayMonopoly());	//Player does not have monopoly card
 	}
 	
-	//
+	@Test
 	public void testCanPlayMonument(){
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		
+		manager.getTurnTracker().setCurrentTurn(0);
+		DevCardList dev_cards = new DevCardList();
+		dev_cards.setMonument(1);
+		
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertTrue(facade.canPlayMonument()); //Player has the card, and it is their turn
+		
+		manager.getTurnTracker().setStatus(Status.ROLLING);
+		assertFalse(facade.canPlayMonument()); //Cannot play dev card during rolling phase
+		
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canPlayMonument()); //Cannot play when it is not your turn
+		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		dev_cards.setMonument(0);
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertFalse(facade.canPlayMonument());	//Player does not have monopoly card
 		
 	}
 	
