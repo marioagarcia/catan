@@ -12,6 +12,8 @@ import org.junit.Test;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
 import client.communication.server.ServerProxy;
 import client.manager.GameData;
@@ -88,9 +90,9 @@ public class MapTest {
 		tempLocation = new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthEast);
 		assertFalse(map.canBuildRoad(tempLocation, playerIndex));
 		
-		//@TODO
 		// AssertFalse when the road is on water
-		
+		tempLocation = new EdgeLocation(new HexLocation(3, 0), EdgeDirection.South);
+		assertFalse(map.canBuildRoad(tempLocation, playerIndex));
 		
 		// AssertFalse when the player does not have 1 wood
 		player.setResourceList(new ResourceList(1, 1, 1, 1, 0));
@@ -100,23 +102,37 @@ public class MapTest {
 		player.setResourceList(new ResourceList(0, 1, 1, 1, 1));
 		assertFalse(map.canBuildRoad(location, playerIndex) && player.canBuildRoad()); 
 		
-		//@TODO
 		// AssertFalse if it isn't the player's turn
 		tt.setCurrentTurn(1);
 		player.setResourceList(new ResourceList(1, 0, 0, 0, 1));
-		//assertFalse(gameManager.canBuildRoad(tempLocation));
-		//@TODO
-		// AssertFalse if the game status isn't 'Playing'
+		//assertFalse(map.canBuildRoad(location, playerIndex));
 		
+		// AssertFalse if the game status isn't 'Playing'
+		tt.setCurrentTurn(0);
+		tt.setStatus(Status.DISCARDING);
+		//assertFalse(map.canBuildRoad(location, playerIndex));
 	}
 	
 	@Test
 	public void testCanBuildSettlement() {
 		
-		//@TODO
+		GameManager gameManager = new GameManager(null);
+		
+		GameData game = getGameData();
+		BoardMap map = game.getBoardMap();
+		TurnTracker tt = game.getTurnTracker();
+		
+		Player player = new Player();
+		player = game.getPlayerList().get(0);
+		
+		//Player Index -- RoadLocation:  0 -- EdgeLocation [hexLoc=HexLocation [x=2, y=0], dir=SouthWest]
+		
 		// AssertTrue when the settlement location is open, not on water, connected to a road, 
 		// the player has 1 wood, brick, wheat, sheep, settlement, it is the player's turn,
 		// the game status is 'Playing'
+		int playerIndex = 3;//tt.getCurrentTurn();System.out.println("Player Index: " + playerIndex + "\n");
+		VertexLocation location = new VertexLocation(new HexLocation(-1, 1), VertexDirection.West);
+		assertTrue(map.canBuildSettlement(location, playerIndex, false));
 		
 		//@TODO
 		// AssertFalse when the settlement location is next to another settlement
