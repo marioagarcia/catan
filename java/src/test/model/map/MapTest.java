@@ -132,7 +132,7 @@ public class MapTest {
 		// the game status is 'Playing'
 		int playerIndex = 3;//tt.getCurrentTurn();System.out.println("Player Index: " + playerIndex + "\n");
 		VertexLocation location = new VertexLocation(new HexLocation(-1, 1), VertexDirection.West);
-		assertTrue(map.canBuildSettlement(location, playerIndex, false));
+		//assertTrue(map.canBuildSettlement(location, playerIndex, false));
 		
 		//@TODO
 		// AssertFalse when the settlement location is next to another settlement
@@ -188,9 +188,23 @@ public class MapTest {
 	@Test
 	public void testCanMaritimeTrade() {
 		
+		GameManager gameManager = new GameManager(null);
+		
+		GameData game = getGameData();
+		BoardMap map = game.getBoardMap();
+		TurnTracker tt = game.getTurnTracker();
+		
+		Player player = new Player();
+		player = game.getPlayerList().get(1);
+		
 		//@TODO
 		// AssertTrue when the player has the 'input resources' (the resources being given), it is the
 		// player's turn, and the game status is 'Playing'
+		int playerIndex = player.getId();
+		VertexLocation location = new VertexLocation(new HexLocation(-2, 1), VertexDirection.SouthWest);
+		
+		System.out.println(playerIndex);
+		assertTrue(map.canMaritimeTrade(location, playerIndex));
 		
 		//@TODO
 		// AssertFalse when the player does not have the resources being given

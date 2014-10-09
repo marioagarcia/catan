@@ -494,7 +494,7 @@ System.out.println("Settlements: " + "\n" + settlementList.toString());
 			portList.add(port);
 		}
 		//Done building port list
-		
+System.out.println("Ports: " + portList.toString());		
 		//Parse robber
 		subObject = mainObject.getAsJsonObject("map");
 		subObject = (JsonObject)subObject.get("robber");
