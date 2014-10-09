@@ -51,4 +51,12 @@ public class Settlement implements SettlementInterface, SerializerSettlementInte
 		this.location = vertexLocation;
 	}
 
+	@Override
+	public String toString(){
+		String returnString = "";
+		
+		returnString += playerIndex + " -- " + location.toString() + "\n";
+		
+		return returnString;
+	}
 }

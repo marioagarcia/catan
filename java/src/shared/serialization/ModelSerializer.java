@@ -417,7 +417,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			roadList.add(road);
 		}
 		//Done building the list of roads
-		
+System.out.println("Roads:" + "\n" + roadList);		
 		//Parse cities and build list of cities
 		ArrayList<City> cityList = new ArrayList<City>();
 		
@@ -463,7 +463,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			settlementList.add(settlement);
 		}
 		//Done building list of settlements
-//System.out.println(settlementList.toString());		
+System.out.println("Settlements: " + "\n" + settlementList.toString());		
 		//Parse radius
 		subObject = mainObject.getAsJsonObject("map");
 		int radius = subObject.get("radius").getAsInt();
