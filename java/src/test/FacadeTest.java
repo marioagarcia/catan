@@ -269,7 +269,6 @@ public class FacadeTest {
 			playerInfo.setPlayerInfo(colorList.get(i), nameList.get(i), i);
 			playerList.add(playerInfo);
 		}
-		System.out.println(playerList);
 		return playerList;
 	}
 
