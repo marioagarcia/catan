@@ -209,11 +209,13 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		
 		//settlements
 		for(int i = 0; i < settlementList.size(); i++){
+			settlementList.get(i).setLocation(settlementList.get(i).getLocation().getNormalizedLocation());
 			this.settlements.put(settlementList.get(i).getLocation(), settlementList.get(i));
 		}
 		
 		//ports
 		for(int i = 0; i < portList.size(); i++){
+			portList.get(i).setLocation(portList.get(i).getLocation().getNormalizedLocation());
 			this.ports.put(portList.get(i).getLocation(), portList.get(i));
 		}
 		
