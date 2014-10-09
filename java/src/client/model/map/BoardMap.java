@@ -92,6 +92,8 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		//create a Set of all the neighboring vertexes
 		pertinentVertexes.add(location);
 		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getExterior(true)).asSet());
+		if(edges.getExterior(true) != null)
+			pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getExterior(true)).asSet());
 		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwisePreceeding(true)).asSet());
 		pertinentVertexes.addAll(VertexesAdjacentToEdge.get(edges.getInteriorClockwiseSucceeding(true)).asSet());
 		
