@@ -3,6 +3,7 @@ package client.communication.facade;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.GameManagerInterface;
@@ -172,13 +173,13 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation) {
-		return false; //this.gameManager.canPlaySoldier(oldLocation, newLocation);
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victim) {
+		return this.gameManager.canPlaySoldier(oldLocation, newLocation, victim);
 	}
 
 	@Override
-	public boolean playSoldier(HexInterface oldLocation, HexInterface newLocation) {
-		return false; //this.gameManager.playSoldier(oldLocation, newLocation);
+	public boolean PlaySoldier(HexLocation newLocation, int victim) {
+		return this.gameManager.playSoldier(newLocation, victim);
 	}
 
 	@Override

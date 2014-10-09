@@ -13,6 +13,7 @@ import client.communication.server.ServerProxy;
 import client.manager.GameData;
 import client.manager.GameManager;
 import client.model.GameInfo;
+import client.model.card.DevCardList;
 import client.model.card.DomesticTrade;
 import client.model.card.ResourceList;
 import client.model.player.Player;
@@ -98,6 +99,7 @@ public class FacadeTest {
 	public void testCanDiscardCards(){
 		
 		manager.getTurnTracker().setStatus(Status.DISCARDING);
+		manager.getLocalPlayer().setDiscarded(false);
 		manager.getLocalPlayer().setResourceList(new ResourceList(0, 0, 0, 0, 7));
 		assertFalse(facade.canDiscardCards(manager.getLocalPlayer().getResourceList()));
 		
@@ -137,9 +139,25 @@ public class FacadeTest {
 		
 	}
 	
-	//
+	@Test
 	public void testCanOfferTrade(){
+		manager.getTurnTracker().setStatus(Status.PLAYING);
 		
+		//Player can offer when it is their turn
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getLocalPlayer().setResourceList(new ResourceList(20, 20, 20, 20, 20));
+		DomesticTrade trade = new DomesticTrade(1, 2, new ResourceList(-1, 0, 0, 0, 1));
+		assertTrue(facade.canOfferTrade(trade));
+		
+		//Player cannot offer trade on another player's turn
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canOfferTrade(trade));
+		
+		//Player does not have the required resources
+		manager.getTurnTracker().setCurrentTurn(2);
+		manager.getLocalPlayer().setResourceList(new ResourceList(0, 0, 0, 0, 0));
+		trade = new DomesticTrade(1, 2, new ResourceList(20, 2, 0, -10, -5));
+		assertFalse(facade.canOfferTrade(trade));
 	}
 	
 	public void testCanMaritimeTrade(){
@@ -181,8 +199,30 @@ public class FacadeTest {
 		
 	}
 	
-	//
+	@Test
 	public void testCanPlayMonopoly(){
+		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		
+		manager.getTurnTracker().setCurrentTurn(0);
+		DevCardList dev_cards = new DevCardList();
+		dev_cards.setMonopoly(1);
+		
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertTrue(facade.canPlayMonopoly());
+		
+		manager.getTurnTracker().setStatus(Status.PLAYING);
+		assertFalse(facade.canPlayMonopoly());
+		
+		manager.getTurnTracker().setCurrentTurn(2);
+		assertFalse(facade.canPlayMonopoly());
+		
+		dev_cards.setMonopoly(0);
+		manager.getTurnTracker().setCurrentTurn(0);
+		manager.getLocalPlayer().setNewDevCards(dev_cards);
+		assertFalse(facade.canPlayMonopoly());
+		
+		
 		
 	}
 	
