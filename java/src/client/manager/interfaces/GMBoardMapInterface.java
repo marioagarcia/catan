@@ -1,8 +1,8 @@
 package client.manager.interfaces;
 
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import client.model.map.HexInterface;
 
 public interface GMBoardMapInterface {
 	

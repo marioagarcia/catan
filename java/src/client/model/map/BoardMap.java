@@ -176,8 +176,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	@Override
-	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation) {
-	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation) {
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int targetPlayerIndex) {
 		return oldLocation == newLocation;
 	}
 
