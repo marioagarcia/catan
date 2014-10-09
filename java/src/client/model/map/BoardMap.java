@@ -85,13 +85,14 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		
 		
 		EdgeLocation[] adjacentLocations = location.getAdjacent(canBuildClockwisePrevious, canBuildClockwiseNext);
-		
+
 		//test if the player owns an adjacent road
 		boolean ownsAdjacentRoad = false;
 		for(EdgeLocation individualLocation : adjacentLocations)
-			if(roads.containsKey(individualLocation) && roads.get(individualLocation).getPlayerIndex() == playerIndex)
+			if(roads.containsKey(individualLocation) && roads.get(individualLocation).getPlayerIndex() == playerIndex){
 				ownsAdjacentRoad = true;
-		
+				break;
+			}
 		return ownsAdjacentRoad;
 	}
 
