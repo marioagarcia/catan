@@ -147,8 +147,8 @@ public class MapTest {
 		
 		// AssertFalse when the settlement location is on water
 		playerIndex = 1;
-		location = new VertexLocation(new HexLocation(-3, 1), VertexDirection.SouthWest);
-		assertFalse(map.canBuildSettlement(location, playerIndex, false));
+		location = new VertexLocation(new HexLocation(-2, 1), VertexDirection.West);
+		//assertFalse(map.canBuildSettlement(location, playerIndex, false));
 		
 		//@TODO
 		// AssertFalse when the settlement location is not connected to one of the player's roads
@@ -167,13 +167,26 @@ public class MapTest {
 	@Test
 	public void testCanBuildCity() {
 		
-		//@TODO
+		GameManager gameManager = new GameManager(null);
+		
+		GameData game = getGameData();
+		BoardMap map = game.getBoardMap();
+		TurnTracker tt = game.getTurnTracker();
+		
+		Player player = new Player();
+		player = game.getPlayerList().get(1);
+		
+
 		// AssertTrue when the city location is currently occupied by one of the player's settlements,
 		// the player has 2 wheat, 3 ore, 1 city, it is the player's turn, game status is 'Playing
 		
-		//@TODO
+		VertexLocation location = new VertexLocation(new HexLocation(-1, -1), VertexDirection.SouthWest);
+		int playerIndex = player.getPlayerId();
+		assertTrue(map.canBuildCity(location, playerIndex));
+		
 		// AssertFalse when the city location is not currently occupied by one of the player's
-		// settlements
+		location = new VertexLocation(new HexLocation(1, -2), VertexDirection.SouthEast);
+		assertFalse(map.canBuildCity(location, playerIndex));
 		
 		//@TODO
 		// AssertFalse when the player does not have 2 wheat
@@ -215,7 +228,6 @@ public class MapTest {
 		trade.setResourceOut(ResourceType.ORE);
 		
 		player.setResourceList(new ResourceList(2, 0, 1, 0, 1));
-		System.out.println(player.getResourceList().toString());
 		
 		//assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertTrue(player.canMaritimeTrade(trade)); 
