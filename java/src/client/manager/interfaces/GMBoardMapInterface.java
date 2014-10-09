@@ -55,5 +55,5 @@ public interface GMBoardMapInterface {
 	 * @param newLocation
 	 * @return true if the locations are different
 	 */
-	public boolean canPlaySoldier(HexInterface oldLocation, HexInterface newLocation);
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation);
 }
