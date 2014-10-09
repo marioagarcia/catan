@@ -90,5 +90,40 @@ public class HexLocation
 		}
 	}
 	
+	public boolean isValid(HexLocation location){
+		if(location.getX() == -2){
+			if(location.getY() >= 0 || location.getY() <= 2){
+				return true;
+			}
+			return false;
+		}
+		else if(location.getX() == -1){
+			if(location.getY() == -1 || location.getY() == 0 || location.getY() == 1 || location.getY() == 2){
+				return true;
+			}
+			return false;
+		}
+		else if(location.getX() == 0){
+			if(location.getY() == -1 || location.getY() == 0 || location.getY() == 1 || location.getY() == 2 || location.getY() == -2){
+				return true;
+			}
+			return false;
+		}
+		else if(location.getX() == 1){
+			if(location.getY() == 0 || location.getY() == 1 || location.getY() == -1 || location.getY() == -2){
+				return true;
+			}
+			return false;
+		}
+		else if(location.getX() == 2){
+			if(location.getY() == 0 || location.getY() == -1 || location.getY() == -2){
+				return true;
+			}
+			return false;
+		}
+		return false;
+			
+	}
+	
 }
 
