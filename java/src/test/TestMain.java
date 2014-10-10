@@ -9,8 +9,7 @@ public class TestMain {
 				"test.ServerPollerTest",
 				"test.ServerProxyTest",
 				"test.GameManagerTest",
-				"test.FacadeTest",
-				"test.model.map.MapTest"
+				"test.FacadeTest"
 		};
 		
 		JUnitCore.main(classes);
