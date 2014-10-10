@@ -44,7 +44,8 @@ public class MapTest {
 	{
 		ms = new ModelSerializer();
 		
-		File file = new File("JSON\\getGameModel.txt");
+		
+		File file = new File("JSON" + File.separator + "getGameModel.txt");
 		
 		String content = "";
 		try {
@@ -59,9 +60,6 @@ public class MapTest {
 		
 	@Test
 	public void testCanBuildRoad() {
-		
-		GameManager gameManager = new GameManager(null);
-		
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
@@ -121,8 +119,6 @@ public class MapTest {
 	
 	@Test
 	public void testCanBuildSettlement() {
-		
-		GameManager gameManager = new GameManager(null);
 		
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
@@ -199,8 +195,6 @@ public class MapTest {
 	@Test
 	public void testCanBuildCity() {
 		
-		GameManager gameManager = new GameManager(null);
-		
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
@@ -250,8 +244,6 @@ public class MapTest {
 	@Test
 	public void testCanMaritimeTrade() {
 		
-		GameManager gameManager = new GameManager(null);
-		
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
@@ -297,8 +289,6 @@ public class MapTest {
 	
 	@Test
 	public void testCanPlayRoadBuild() {
-		
-		GameManager gameManager = new GameManager(null);
 		
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
