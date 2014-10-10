@@ -44,7 +44,7 @@ public class MapTest {
 	{
 		ms = new ModelSerializer();
 		
-		File file = new File("C:\\Users\\Casey\\Documents\\GitHub\\Catan\\java\\src\\test\\JSON\\getGameModel.txt");
+		File file = new File("JSON\\getGameModel.txt");
 		
 		String content = "";
 		try {
@@ -154,7 +154,7 @@ public class MapTest {
 		playerIndex = 1;
 		tt.setCurrentTurn(1);
 		location = new VertexLocation(new HexLocation(-3, 1), VertexDirection.West);//(-2, 1) also broken)
-		//assertFalse(map.canBuildSettlement(location, playerIndex, false));// && player.canBuildSettlement());
+		assertFalse(map.canBuildSettlement(location, playerIndex, false));// && player.canBuildSettlement());
 		
 		// AssertFalse when the settlement location is not connected to one of the player's roads
 		location = new VertexLocation(new HexLocation(-1, 2), VertexDirection.SouthEast);//(-2, 1)
@@ -274,24 +274,24 @@ public class MapTest {
 		
 		player.setResourceList(new ResourceList(2, 0, 0, 0, 0));
 		
-		//assertTrue(map.canMaritimeTrade(location, playerIndex));
+		assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertTrue(player.canMaritimeTrade(trade)); 
 		
 		// AssertFalse when the player does not have the resources being given
 		player.setResourceList(new ResourceList(1, 10, 10, 10, 10));
-		//assertTrue(map.canMaritimeTrade(location, playerIndex));
+		assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertFalse(player.canMaritimeTrade(trade));
 		
 		// AssertFalse if it isn't the player's turn
 		player.setResourceList(new ResourceList(25, 25, 25, 25, 25));
 		tt.setCurrentTurn(2);
-		//assertTrue(map.canMaritimeTrade(location, playerIndex));
+		assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertFalse(player.canMaritimeTrade(trade) && tt.getCurrentTurn() == playerIndex);
 		
 		// AssertFalse if the game status isn't 'Playing'
 		tt.setCurrentTurn(1);
 		tt.setStatus(Status.ROBBING);
-		//assertFalse(map.canMaritimeTrade(location, playerIndex));
+		assertTrue(map.canMaritimeTrade(location, playerIndex));
 		assertFalse(player.canMaritimeTrade(trade) && tt.getStatus() == Status.PLAYING);
 	}
 	
@@ -308,7 +308,6 @@ public class MapTest {
 		player = game.getPlayerList().get(1);
 		
 		//Player Index -- RoadLocation:  0 -- EdgeLocation [hexLoc=HexLocation [x=0, y=1], dir=South]
-		
 		int playerIndex = 0; 
 		player.setResourceList(new ResourceList(1, 0, 1, 1, 1));
 		tt.setStatus(Status.PLAYING);
@@ -319,10 +318,9 @@ public class MapTest {
 		// location is connected to one of the player's roads, first and second locations are not on
 		// water, the player has 2 roads, the player has a RoadBuild card, the player hasn't played
 		// RoadBuild this turn yet, it is the player's turn, the Game status is "playing"
-		DevCardList devCardList = new DevCardList();//int yearOfPlenty, int monopoly, int soldier, int roadBuild, int monument
+		DevCardList devCardList = new DevCardList();
 		devCardList.setDevCardList(0, 0, 0, 1, 0);
 		player.setNewDevCards(devCardList);
-		
 		assertTrue(map.canPlayRoadBuilding(location1, location2, playerIndex) && player.canPlayRoadBuilding());
 		
 		// AsserTrue if the first road location is connected to one of the player's roads, the second
@@ -396,9 +394,6 @@ public class MapTest {
 	
 	@Test
 	public void testCanPlaySoldier() {
-		
-		GameManager gameManager = new GameManager(null);
-		
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();

@@ -361,11 +361,10 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2) {
-		boolean player_condition_met = localPlayer.canPlayRoadBuilding();
-		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
-		boolean map_condition_met = true; //boardMap.canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, localPlayer.getPlayerIndex());
-
-		return (player_condition_met && turn_condition_met && map_condition_met);
+		return (boardMap.canPlayRoadBuilding(location1, location2, localPlayer.getPlayerId()) &&
+				localPlayer.canPlayRoadBuilding() && 
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getStatus() == Status.PLAYING);
 	}
 
 	@Override
@@ -384,12 +383,10 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canPlaySoldier(HexLocation oldLocation,	HexLocation newLocation, int victimIndex) {
-		boolean player_condition_met = localPlayer.canPlaySoldier();
-		boolean turn_condition_met = turnTracker.canPlayDevCard(localPlayer.getPlayerIndex());
-		boolean map_condition_met = boardMap.canPlaySoldier(oldLocation, newLocation, victimIndex);
-		boolean robbed_player_condition_met = true; //currentGame.playerCanBeRobbed(victimIndex);
-
-		return (player_condition_met && turn_condition_met && map_condition_met && robbed_player_condition_met);
+		return (boardMap.canPlaySoldier(oldLocation, newLocation, victimIndex) &&
+				localPlayer.canPlaySoldier() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getStatus() == Status.PLAYING);
 	}
 
 	@Override
@@ -475,7 +472,10 @@ public class GameManager implements GameManagerInterface {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
 
-		return boardMap.canBuildSettlement(location, player_index, in_first_round);
+		return (boardMap.canBuildSettlement(location, player_index, in_first_round) &&
+				localPlayer.canBuildSettlement() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getStatus() == Status.PLAYING);
 	}
 
 	@Override
@@ -499,7 +499,10 @@ public class GameManager implements GameManagerInterface {
 	public boolean canBuildCity(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 
-		return boardMap.canBuildCity(location, player_index);
+		return (boardMap.canBuildCity(location, player_index) &&
+				localPlayer.canBuildCity() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getStatus() == Status.PLAYING);
 	}
 
 	@Override
@@ -586,10 +589,10 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade) {
-		return (localPlayer.canMaritimeTrade(trade) 
-				&& boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex())
-				&& turnTracker.getStatus() == Status.PLAYING 
-				&& turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		return (localPlayer.canMaritimeTrade(trade) &&
+				boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex()) &&
+				turnTracker.getStatus() == Status.PLAYING && 
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
 	}
 
 	@Override
