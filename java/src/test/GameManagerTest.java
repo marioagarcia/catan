@@ -16,21 +16,10 @@ public class GameManagerTest {
 	@Test
 	public void test() {
 		ServerProxyInterface proxy = new ServerMoxy();
-	//	String param = null;
 		
 		GameManager manager = new GameManager(proxy);
 		
 		manager.loginPlayer("Sam", "sam");
-		
-		/*param = "{"
-				 + "\"username\": \"Sam\","
-				 + "\"password\": \"sam\""
-				 + "}";*/
-		
-		/*param = "{"
-				  + "\"id\": 0,"
-				  + "\"color\": \"orange\""
-				  + "}";*/
 		
 		GameInfo g = new GameInfo();
 		g.setId(0);
