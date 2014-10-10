@@ -23,8 +23,6 @@
     <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
-
-	<property name="test_folder" value="test_results.txt"/>
    
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -173,8 +171,6 @@
 	
 	<target name="test" depends="package" description="compiles, packages, and runs the test cases">
 		<java classname="test.TestMain">
-		<redirector output="${test_folder}">
-		</redirector>
 		<arg value="-h"/>
 			<classpath>
 				<path refid="java.lib.classpath"/>

@@ -1,10 +1,6 @@
 package shared.serialization;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
@@ -416,8 +412,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 			Road road = new Road(playerIndex, edgeLocation);
 			roadList.add(road);
 		}
-		//Done building the list of roads
-System.out.println("Roads:" + "\n" + roadList);		
+		//Done building the list of roads	
 		//Parse cities and build list of cities
 		ArrayList<City> cityList = new ArrayList<City>();
 		
@@ -462,8 +457,7 @@ System.out.println("Roads:" + "\n" + roadList);
 			
 			settlementList.add(settlement);
 		}
-		//Done building list of settlements
-System.out.println("Settlements: " + "\n" + settlementList.toString());		
+		//Done building list of settlements	
 		//Parse radius
 		subObject = mainObject.getAsJsonObject("map");
 		int radius = subObject.get("radius").getAsInt();
@@ -493,8 +487,7 @@ System.out.println("Settlements: " + "\n" + settlementList.toString());
 			Port port = new Port(resource, edgeLocation, ratio);
 			portList.add(port);
 		}
-		//Done building port list
-System.out.println("Ports: " + portList.toString());		
+		//Done building port list	
 		//Parse robber
 		subObject = mainObject.getAsJsonObject("map");
 		subObject = (JsonObject)subObject.get("robber");

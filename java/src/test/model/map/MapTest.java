@@ -1,14 +1,10 @@
 package test.model.map;
 
 import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import org.junit.Before;
 import org.junit.Test;
-
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -16,14 +12,10 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
-import client.communication.server.ServerProxy;
 import client.manager.GameData;
-import client.manager.GameManager;
-import client.model.GameInfo;
 import client.model.card.DevCardList;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
-import client.model.card.TradeInterface;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
@@ -32,13 +24,6 @@ import client.model.turntracker.TurntrackerInterface.Status;
 public class MapTest {
 	
 	ModelSerializer ms;
-	
-	@Before
-	public void setUp(){
-		
-		//manager = new GameManager(new ServerProxy("8081", "locolhost"));
-		//System.out.println(manager.getServerProxy());
-	}
 	
 	public GameData getGameData()
 	{
@@ -51,7 +36,6 @@ public class MapTest {
 		try {
 			content = new Scanner(file).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -440,21 +424,4 @@ public class MapTest {
 		assertFalse(tt.getStatus() == Status.PLAYING);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
