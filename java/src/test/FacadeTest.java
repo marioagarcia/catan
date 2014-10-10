@@ -16,16 +16,13 @@ import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import client.communication.facade.ModelFacade;
 import client.communication.server.ServerMoxy;
-import client.manager.GameData;
 import client.manager.GameManager;
 import client.model.GameInfo;
 import client.model.card.DevCardList;
 import client.model.card.DomesticTrade;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
-import client.model.map.BoardMap;
 import client.model.player.PlayerInfo;
-import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 
 public class FacadeTest {
@@ -390,16 +387,6 @@ public class FacadeTest {
 		location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast);
 		assertFalse(manager.canBuildSettlement(location));
 		
-		// AssertFalse when the settlement location is on water
-		playerIndex = 1;
-		manager.getTurnTracker().setCurrentTurn(1);
-		location = new VertexLocation(new HexLocation(-3, 1), VertexDirection.West);
-		assertFalse(manager.canBuildSettlement(location));
-		
-		// AssertFalse when the settlement location is not connected to one of the player's roads
-		location = new VertexLocation(new HexLocation(-1, 2), VertexDirection.SouthEast);
-		assertFalse(manager.canBuildSettlement(location));
-		
 		// AssertFalse when the player doesn't have 1 wood
 		playerIndex = 0; 
 		manager.getLocalPlayer().setResourceList(new ResourceList(1, 1, 1, 1, 0));
@@ -433,6 +420,23 @@ public class FacadeTest {
 		manager.getTurnTracker().setCurrentTurn(0);
 		manager.getTurnTracker().setStatus(Status.DISCARDING);
 		assertFalse(manager.canBuildSettlement(location) && manager.getTurnTracker().getStatus() == Status.PLAYING);
+		
+		facade.loginPlayer("Brooke", "brooke");
+		
+		GameInfo g = new GameInfo();
+		g.setId(0);
+		g.setTitle("My game");
+		facade.joinGame(CatanColor.BLUE, g);
+		
+		// AssertFalse when the settlement location is on water
+		playerIndex = 1;
+		manager.getTurnTracker().setCurrentTurn(1);
+		location = new VertexLocation(new HexLocation(-3, 1), VertexDirection.West);
+		assertFalse(manager.canBuildSettlement(location));
+		
+		// AssertFalse when the settlement location is not connected to one of the player's roads
+		location = new VertexLocation(new HexLocation(-1, 2), VertexDirection.SouthEast);
+		assertFalse(manager.canBuildSettlement(location));
 
 	}
 	
@@ -480,6 +484,13 @@ public class FacadeTest {
 	public void testCanMaritimeTrade() {
 		// AssertTrue when the player has the 'input resources' (the resources being given), it is the
 		// player's turn, and the game status is 'Playing'
+		facade.loginPlayer("Brooke", "brooke");
+		
+		GameInfo g = new GameInfo();
+		g.setId(0);
+		g.setTitle("My game");
+		facade.joinGame(CatanColor.BLUE, g);
+		
 		int playerIndex = manager.getLocalPlayer().getId();
 		VertexLocation location = new VertexLocation(new HexLocation(-2, 1), VertexDirection.SouthWest);
 		manager.getTurnTracker().setStatus(Status.PLAYING);
@@ -493,7 +504,6 @@ public class FacadeTest {
 		manager.getLocalPlayer().setResourceList(new ResourceList(2, 0, 0, 0, 0));
 		
 		assertTrue(manager.canMaritimeTrade(location, trade));
-		assertTrue(manager.getLocalPlayer().canMaritimeTrade(trade)); 
 		
 		// AssertFalse when the player does not have the resources being given
 		manager.getLocalPlayer().setResourceList(new ResourceList(1, 10, 10, 10, 10));
