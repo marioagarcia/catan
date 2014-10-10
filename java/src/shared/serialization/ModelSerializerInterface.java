@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import client.manager.GameCommands;
 import client.model.GameInfo;
-import shared.serialization.interfaces.SerializerGameCommandInterface;
-import shared.serialization.interfaces.SerializerGameInfoInterface;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;

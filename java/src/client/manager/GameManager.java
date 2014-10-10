@@ -158,13 +158,13 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean saveGame() {
-		int player_index = localPlayer.getPlayerIndex();
+		//int player_index = localPlayer.getPlayerIndex();
 
-		SaveGameRequestParameters param = new SaveGameRequestParameters(player_index, currentGame.getTitle());
+		//SaveGameRequestParameters param = new SaveGameRequestParameters(player_index, currentGame.getTitle());
 
-		String json_string = modelSerializer.serializeSaveGameRequest(param);
+		//String json_string = modelSerializer.serializeSaveGameRequest(param);
 
-		//TODO serverProxy.saveGame(json_string);
+		// serverProxy.saveGame(json_string);
 
 		return true;
 	}

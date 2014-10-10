@@ -387,7 +387,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 				number = subObject.get("number").getAsInt();
 			}
 			
-			Hex hex = new Hex(hexLocation, resource, number);
+			//Hex hex = new Hex(hexLocation, resource, number);
 			hexList.add(new Hex(hexLocation, resource, number));
 		}
 		//Done building the list of hexes

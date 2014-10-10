@@ -1,7 +1,6 @@
 package client.logging;
 
 import client.logging.chat.GameChatInterface;
-import client.logging.history.HistoryLog;
 import client.logging.history.GameHistoryLogInterface;
 
 public interface GameLogInterface 
