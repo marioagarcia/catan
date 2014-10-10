@@ -18,36 +18,61 @@ import client.model.card.TradeInterface;
 public interface ModelFacadeInterface {
 
 	/**
+	 * sends a request to the server to login the player with the given credentials
+	 * @param username the name of the user
+	 * @param password the password of the user
+	 * @return true if the player was succesfully logged in
+	 */
+	public boolean loginPlayer(String username, String password);
+	
+	/**
+	 * sends a request to the server to register the player with the given credentials
+	 * @param username the name of the user
+	 * @param password the password of the user
+	 * @return true if the player was succesfully registered
+	 */
+	public boolean registerPlayer(String username, String password);
+	/**
+	 * Sends a request to the server to create a new game with the given information
+	 * @param gameName title of the game
+	 * @param randTiles whether or not the player wants to randomize the tiles
+	 * @param randNumbers whether or not the player wants to randomize the chits
+	 * @param randPorts whether or not the player wants to randomize the ports
+	 * @return true if a new game was created and the player joined it
+	 */
+	public boolean createNewGame(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts);
+
+	/**
 	 * Checks that the player has a valid catan.user cookie set, the player
 	 * is already in the game or there is an available spot in the game,
 	 * and the color submitted is a valid color
 	 * 
-	 * @param player The player who wants to join the game
 	 * @param game The game the player wants to join
 	 * @param color The color the player submitted
 	 * @return true if the player has a valid user cookie set, is already in
 	 * the game or there is an available spot in the game, and the color
 	 * is valid, false otherwise
 	 */
-	public boolean canJoinGame(shared.definitions.CatanColor color, GameInfo game);
-	public void joinGame(CatanColor color, GameInfo game);
+	public boolean canJoinGame(CatanColor color, GameInfo game);
+	public boolean joinGame(CatanColor color, GameInfo game);
 	
 	/**
 	 * Checks that the player has a valid user and a valid game id
 	 * 
-	 * @param player The player trying to get the game model
-	 * @param game The game the player is participating in
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise 
 	 */
 	public boolean resetGame();
-//	public void saveGameStatus();
+	
+	/**
+	 * Saves the current game
+	 * @return true if the server was able to save the game
+	 */
+	public boolean saveGame();
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
 	 * 
-	 * @param player The player trying to get the game model
-	 * @param game The game the player is participating in
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise  
 	 */
@@ -56,46 +81,42 @@ public interface ModelFacadeInterface {
 	/**
 	 * Checks that the player has a valid user id and a valid game id
 	 * 
-	 * @param player The player trying to get the game model
-	 * @param game The game the player is participating in
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise  
 	 */
 	public boolean postGameCommands();
 	
-//	/**
-//	 * Checks that the poster specifies a valid logging level. Valid values
-//	 * include: SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST
-//	 * 
-//	 * @param level The logging level the poster is specifying
-//	 * @return true if the logging level is valid, false otherwise
-//	 */
-//	public boolean canChangeLogLevel(String level);
+	/**
+	 * There are no preconditions so just checks for a valid palyer and game cookie
+	 * @return true if the user is in the game
+	 */
+	public boolean canSendChat();
+	public boolean sendChat(String chatMessage);
 	
 	/**
 	 * Checks that the player being offered the trade has the resources that the person whose
 	 * turn it is wants
 	 *
-	 * @param player The player who has been offered a trade
-	 * @param object representing the conditions of a trade. Resources, etc.
+	 * @param trade representing the conditions of a trade. Resources, etc.
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
 	public boolean canAcceptTrade(TradeInterface trade);
 	public boolean acceptTrade(TradeInterface trade, boolean accept);
+	
 	/**
 	 * Checks that a player has over 7 cards and that the player has the cards
 	 * being discarded
 	 * 
-	 * @param player The player attempting to discard cards
+	 * @param list the list of cards to be discarded
 	 * @return true if the player has over 7 cards and the player has the cards
 	 * being discarded, false otherwise
 	 */
 	public boolean canDiscardCards(SerializerResourceListInterface list);
-	public void discardCards(SerializerResourceListInterface list);
+	public boolean discardCards(SerializerResourceListInterface list);
+	
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
 	 * 
-	 * @param player The player trying to roll
 	 * @return true if it is the player's turn and the model status is "rolling",
 	 * false otherwise
 	 */
@@ -106,8 +127,6 @@ public interface ModelFacadeInterface {
 	 * Checks that the road location is open, the road location is connected to 
 	 * another road, the road location is not on water, the player 1 brick and 1 wood
 	 * 
-	 * 
-	 * @param player The player wanting to build a road
 	 * @param location The location the player wants to build a road on
 	 * @return true if the location is open, connected to another road, is not on water, 
 	 * and if the player has the necessary resources, false otherwise
@@ -119,8 +138,6 @@ public interface ModelFacadeInterface {
 	 * Checks that the settlement location is open, not on water, connected to 
 	 * one of the player's roads, and that the player has 1 wheat, 1 sheep, 1 brick, 1 wood
 	 *  
-	 * 
-	 * @param player The player trying to build a settlement
 	 * @param location The location the player wants to build a settlement on
 	 * @return true if the location is open, not on water, connected to one of the
 	 * player's roads, and the player has the resources to build a settlement,
@@ -132,7 +149,6 @@ public interface ModelFacadeInterface {
 	 * Checks that the player has a settlement on the location where the player wants
 	 * to build a city and that the player has 3 ore and 2 wheat (possibly vice versa)
 	 * 
-	 * @param player The player wanting to build a city
 	 * @param location The location where the player wants to build a city
 	 * @return true if it was successful
 	 */
@@ -142,7 +158,7 @@ public interface ModelFacadeInterface {
 	/**
 	 * Checks that the player has the resources that he is offering in the trade
 	 * 
-	 * @param player The player offering the trade
+	 * @param trade the resources to offer
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
 	public boolean canOfferTrade(TradeInterface trade);
@@ -153,7 +169,8 @@ public interface ModelFacadeInterface {
 	 * 2 resources corresponding to the type of harbor or 3 resources corresponding to
 	 * the type of harbor
 	 * 
-	 * @param player The player wanting to make the maritime trade
+	 * @param location The location of the port so it can be checked against the player
+	 * @param trade The cards that are being traded with the bank
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
@@ -161,20 +178,17 @@ public interface ModelFacadeInterface {
 	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade);
 	
 	/**
-	 * Checks that the client model status is "playing"
+	 * Checks the turn tracker to make sure that the client model status is "playing"
 	 * 
-	 * @param model The client model
 	 * @return true if the client model status is "playing", false otherwise
 	 */
-	public boolean canFinishTurn(); //do we decide this locally or do we ask the server?
+	public boolean canFinishTurn();
 	public boolean finishTurn();
 	
 	/**
 	 * Checks that the player has 1 sheep, 1 wheat, and 1 ore and that 
 	 * the bank has dev cards left
 	 * 
-	 * @param player The player wanting to buy a dev card
-	 * @param CardBank The bank holds the dev cards
 	 * @return true if the player has the resources to buy a dev card and 
 	 * the bank has dev cards left, false otherwise
 	 */
@@ -186,20 +200,19 @@ public interface ModelFacadeInterface {
 	/**
 	 * Checks that the two resources the player specifies are in the bank
 	 * 
-	 * @param player The player wanting to play the year of plenty card
-	 * @param CardBank The bank holds the dev cards
+	 * @param type1 The first type of resource that the player wants
+	 * @param type2 The second type of resource that the player wants
 	 * @return true if the resources the player specifies are in the bank, false
 	 * otherwise
 	 */
-	public boolean canPlayYearOfPlenty(ResourceType resource1, ResourceType resource2);
-	public boolean playYearOfPlenty(ResourceType resource1, ResourceType resource2);
+	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2);
+	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2);
 	/**
 	 * Checks that the first road location is connected to one of the player's
 	 * roads, the second road location is connected to one of the player's roads
 	 * or the previous location, neither location is on water, the player has
 	 * two roads
 	 * 
-	 * @param player The player trying to place a road building
 	 * @param location1 The first road location
 	 * @param location2 The second road location
 	 * @return true if the first road location is connected to one of the player's
@@ -214,33 +227,25 @@ public interface ModelFacadeInterface {
 	 * Checks that the robber isn't being kept in the same place and that the 
 	 * player to rob has cards
 	 * 
-	 * @param player The player being robbed
 	 * @param oldLocation The location the robber is coming from
 	 * @param newLocation The location the robber is going to
+	 * @param victimIndex The player being robbed
 	 * @return true if successful 
 	 */
-	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victim);
-	public boolean PlaySoldier(HexLocation newLocation, int victim);
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victimIndex);
+	public boolean playSoldier(HexLocation newLocation, int victimIndex);
+	
 	/**
-	 * Checks are completed in canPlayDevCard() so always returns true
+	 * Checks that the it is the player's turn and that the player has the monopoly dev card
 	 * @return true
 	 */
 	public boolean canPlayMonopoly();
-	public boolean playMonopoly();
+	public boolean playMonopoly(ResourceType resourceType);
 	
 	/**
-	 * Checks are completed in canPlayDevCar() so always returns true
+	 * Checks that the it is the player's turn and that the player has the monument dev card
 	 * @return true
 	 */
 	public boolean canPlayMonument();
 	public boolean playMonument();
-	
-	public void populateGameList();
-	
-	public boolean registerPlayer(String username, String password);
-	
-	public boolean loginPlayer(String username, String password);
-	
-	public boolean canSendChat(String message);
-	public boolean SendChat(String message);
 }

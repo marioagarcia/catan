@@ -1,5 +1,7 @@
 package client.model.piece;
 
+import client.model.piece.GamePieceInterface.GamePieceType;
+
 /**
  * Contains all the pieces not currently played on the board owned by a Player
  */
@@ -13,10 +15,11 @@ public interface GamePieceInventoryInterface
 	
 	/**
 	 * Removes a single GamePiece from the Player's inventory. 
-	 * @param piece The piece to be removed. An instance of this piece must exist in the Player's current inventory. 
+	 * @param type The type of piece to be removed. An instance of this piece must exist in the Player's current inventory.
+	 * @return the piece removed
 	 * @throws PieceNotFoundException if the specified piece is not found
 	 */
-	public abstract GamePieceInterface removePiece(GamePieceInterface.GamePieceType type) throws PieceNotFoundException;
+	public abstract GamePieceInterface removePiece(GamePieceType type) throws PieceNotFoundException;
 	
 	/**
 	 * Counts all instances of a single type of GamePiece in the Player's inventory

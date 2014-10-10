@@ -31,6 +31,7 @@ public interface ServerProxyInterface{
 	
 	/**
 	 * Creates a new, empty Settlers of Catan game on the server
+	 * @param JSONString a json string with the info to create the game with
 	 * @return JSONString containing the name, id, and list of players for the new game
 	 */
 	abstract String createGame(String JSONString);
@@ -44,7 +45,6 @@ public interface ServerProxyInterface{
 	
 	/**
 	 * Requests the model of a given game
-	 * @param JSONString A String containing the game id
 	 * received by the client
 	 * @return JSONString for the model of the current game
 	 */
@@ -52,13 +52,12 @@ public interface ServerProxyInterface{
 	
 	/**
 	 * Resets the game to its initial state immediately after players joined
-	 * @return String
+	 * @return String with the reset model after game was reset
 	 */
 	abstract String resetGame();
 	
 	/**
 	 * Retrieves a list of all actions taken by all players in the current game
-	 * @param JSONString a String containing player info and the current game_id
 	 * @return JSONstring with the information requested
 	 */
 	abstract String getGameCommands();

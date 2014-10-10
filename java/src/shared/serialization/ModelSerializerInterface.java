@@ -293,6 +293,7 @@ public interface ModelSerializerInterface
 	 * @param params An object containing the type of action being taken (string),
 	 * the index of the player sending the request, and 5 ints representing the resources
 	 * being discarded
+	 * @return the json string of the cards to be discarded
 	 */
 	public String serializeDiscardCards(DiscardCardsParameters params);
 	

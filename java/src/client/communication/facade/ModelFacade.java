@@ -27,19 +27,14 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public void joinGame(CatanColor color, GameInfo game) {
-		this.gameManager.joinGame(color, game);
+	public boolean joinGame(CatanColor color, GameInfo game) {
+		return this.gameManager.joinGame(color, game);
 	}
 
 	@Override
 	public boolean resetGame() {
 		return this.resetGame();
 	}
-
-//	@Override
-//	public void saveGameStatus() {
-//		this.gameManager.saveGameStatus();
-//	}
 
 	@Override
 	public boolean getGameCommands() {
@@ -67,8 +62,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public void discardCards(SerializerResourceListInterface list) {
-		this.gameManager.discardCards(list);
+	public boolean discardCards(SerializerResourceListInterface list) {
+		return this.gameManager.discardCards(list);
 	}
 
 	@Override
@@ -177,7 +172,7 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean PlaySoldier(HexLocation newLocation, int victim) {
+	public boolean playSoldier(HexLocation newLocation, int victim) {
 		return this.gameManager.playSoldier(newLocation, victim);
 	}
 
@@ -187,7 +182,7 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean playMonopoly() {
+	public boolean playMonopoly(ResourceType resourceType) {
 		return false; //this.gameManager.playMonopoly();
 	}
 
@@ -202,11 +197,6 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public void populateGameList() {
-		this.gameManager.populateGameList();
-	}
-
-	@Override
 	public boolean registerPlayer(String username, String password) {
 		return this.gameManager.registerPlayer(username, password);
 	}
@@ -217,13 +207,23 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canSendChat(String message) {
+	public boolean canSendChat() {
 		return this.gameManager.canSendChat();
 	}
 
 	@Override
-	public boolean SendChat(String message) {
+	public boolean sendChat(String message) {
 		return this.gameManager.sendChat(message);
+	}
+
+	@Override
+	public boolean createNewGame(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts) {
+		return gameManager.createNewGame(gameName, randTiles, randNumbers, randPorts);
+	}
+
+	@Override
+	public boolean saveGame() {
+		return gameManager.saveGame();
 	}
 
 }

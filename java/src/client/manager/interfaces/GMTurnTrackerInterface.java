@@ -11,14 +11,14 @@ public interface GMTurnTrackerInterface {
 	
 	/**
 	 * Verifies that the given player can buy a dev card
-	 * @param player_index
+	 * @param player_index the local player's index 
 	 * @return true if it is the player's turn and the status of the game is playing
 	 */
 	public boolean canBuyDevCard(int player_index);
 	
 	/**
 	 * Verifies that the given player can play a dev card
-	 * @param player_index
+	 * @param player_index the local player's index 
 	 * @return true if it is the player's turn and the status of the game is playing
 	 */
 	public boolean canPlayDevCard(int player_index);

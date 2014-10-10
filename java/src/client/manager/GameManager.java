@@ -91,7 +91,6 @@ public class GameManager implements GameManagerInterface {
 		return serverProxy.validatePlayer(localPlayer);
 	}
 
-	@Override
 	public boolean populateGameList() {
 		String json_string = serverProxy.listGames();
 
@@ -210,7 +209,6 @@ public class GameManager implements GameManagerInterface {
 			return false;
 	}
 
-	//TODO
 	@Override
 	public boolean getGameCommands() {
 		String json_string = serverProxy.getGameCommands();
@@ -222,13 +220,12 @@ public class GameManager implements GameManagerInterface {
 		return false;
 	}
 
-	//TODO
 	@Override
 	public boolean postGameCommands() {
 		if(gameCommands == null)
 			return false;
 
-		String json_string = null; //modelSerializer.serializePostGameCommands(gameCommands);
+		String json_string = null; //TODO modelSerializer.serializePostGameCommands(gameCommands);
 
 		serverProxy.postGameCommands(json_string);
 
@@ -276,8 +273,6 @@ public class GameManager implements GameManagerInterface {
 			return false;
 	}
 
-	//TODO
-	@Override
 	public boolean robPlayer(int victimPlayerIndex, HexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 
@@ -286,7 +281,7 @@ public class GameManager implements GameManagerInterface {
 		@SuppressWarnings("unused")
 		String json_string = modelSerializer.serializeRobPlayer(param);
 
-		String json_model = null; //serverProxy.robPlayer(json_string);
+		String json_model = null; //TODO serverProxy.robPlayer(json_string);
 
 		if(resetFromGameModel(json_model))
 			return true;

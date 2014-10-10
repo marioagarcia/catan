@@ -7,13 +7,13 @@ public interface HexInterface {
 	
 	/**
 	 * returns the location object with the location of the Hex
-	 * @return HexLocation
+	 * @return HexLocation the location of the hex
 	 */
 	public abstract HexLocation getLocation();
 	
 	/**
 	 * this returns the HexType of the hex
-	 * @return HexType
+	 * @return HexType the resouce type of the hex
 	 */
 	public abstract HexType getType();
 	/**
@@ -24,13 +24,13 @@ public interface HexInterface {
 	
 	/**
 	 * gets the dice number which activates this hex
-	 * @return int
+	 * @return int the number rolled
 	 */
 	public abstract int getNumber();
 
 	/**
 	 * sets the dice roll number which will activate this hex
-	 * @param number
+	 * @param number the number rolled
 	 */
 	public abstract void setNumber(int number);
 
