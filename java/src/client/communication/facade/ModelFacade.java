@@ -83,7 +83,7 @@ public class ModelFacade implements ModelFacadeInterface {
 
 	@Override
 	public boolean buildRoad(EdgeLocation location) {
-		return this.buildRoad(location);
+		return this.gameManager.buildRoad(location);
 	}
 
 	@Override

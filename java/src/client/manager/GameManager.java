@@ -316,7 +316,7 @@ public class GameManager implements GameManagerInterface {
 		boolean turn_condition_met = turnTracker.canBuyDevCard(localPlayer.getPlayerIndex());
 		boolean deck_condition_met = devCardBank.containsAnyCard();
 
-		return (player_condition_met && turn_condition_met && deck_condition_met );
+		return (player_condition_met && turn_condition_met && deck_condition_met);
 	}
 
 	@Override
