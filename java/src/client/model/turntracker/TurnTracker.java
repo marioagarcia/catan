@@ -1,9 +1,11 @@
 package client.model.turntracker;
 
+import java.util.Observable;
+
 import shared.serialization.interfaces.SerializerTurnTrackerInterface;
 import client.manager.interfaces.GMTurnTrackerInterface;
 
-public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
+public class TurnTracker extends Observable implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
 	
 	private Status status;
 	private int currentPlayerIndex;
@@ -86,5 +88,36 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 	    }
 	    return null;
 	  }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + currentPlayerIndex;
+		result = prime * result + playerWithLargestArmy;
+		result = prime * result + playerWithLongestRoad;
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TurnTracker other = (TurnTracker) obj;
+		if (currentPlayerIndex != other.currentPlayerIndex)
+			return false;
+		if (playerWithLargestArmy != other.playerWithLargestArmy)
+			return false;
+		if (playerWithLongestRoad != other.playerWithLongestRoad)
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
 
 }

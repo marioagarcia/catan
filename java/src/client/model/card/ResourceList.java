@@ -10,43 +10,7 @@ public class ResourceList implements SerializerResourceListInterface {
 	private int sheep;
 	private int wheat;
 	private int wood;
-	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + brick;
-		result = prime * result + ore;
-		result = prime * result + sheep;
-		result = prime * result + wheat;
-		result = prime * result + wood;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ResourceList other = (ResourceList) obj;
-		if (brick != other.brick)
-			return false;
-		if (ore != other.ore)
-			return false;
-		if (sheep != other.sheep)
-			return false;
-		if (wheat != other.wheat)
-			return false;
-		if (wood != other.wood)
-			return false;
-		return true;
-	}
-
-	
+		
 	public ResourceList(int b, int o, int s, int wh, int wo){
 		brick = b;
 		ore = o;
@@ -124,4 +88,39 @@ public class ResourceList implements SerializerResourceListInterface {
 		returnString += "\tOre: " + ore;
 		return returnString;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + brick;
+		result = prime * result + ore;
+		result = prime * result + sheep;
+		result = prime * result + wheat;
+		result = prime * result + wood;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ResourceList other = (ResourceList) obj;
+		if (brick != other.brick)
+			return false;
+		if (ore != other.ore)
+			return false;
+		if (sheep != other.sheep)
+			return false;
+		if (wheat != other.wheat)
+			return false;
+		if (wood != other.wood)
+			return false;
+		return true;
+	}
+	
 }

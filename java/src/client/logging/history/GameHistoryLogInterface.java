@@ -11,7 +11,7 @@ public interface GameHistoryLogInterface
 	/**
 	 * returns the entry at a particular index if the index is valid
 	 * raises LogEntryDoesNotExistException if index does not exist
-	 * @param messageIndex the index which you want to access
+	 * @param logIndex the index which you want to access
 	 * @return object implementing the MoveLogInterface
 	 * throws LogEntryDoesNotExistException
 	 */
@@ -19,7 +19,7 @@ public interface GameHistoryLogInterface
 	
 	/**
 	 * adds the given entry to the log
-	 * @param newEntry MoveLogInterface instance representing the new entry
+	 * @param logLine MoveLogInterface instance representing the new entry
 	 */
 	public void addLogLine(LogLineInterface logLine);
 

@@ -161,6 +161,14 @@
 			    ],
 			    "roads": [
 			      {
+			        "owner": 0,
+			        "location": {
+			          "direction": "SE",
+			          "x": -1,
+			          "y": 2
+			        }
+			      },
+			      {
 			        "owner": 2,
 			        "location": {
 			          "direction": "S",
@@ -400,7 +408,7 @@
 			        "roadBuilding": 0,
 			        "monument": 0
 			      },
-			      "roads": 13,
+			      "roads": 14,
 			      "cities": 4,
 			      "settlements": 3,
 			      "soldiers": 0,

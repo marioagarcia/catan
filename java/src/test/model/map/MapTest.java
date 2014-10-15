@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import org.junit.Before;
 import org.junit.Test;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
@@ -13,44 +12,38 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
-import client.communication.server.ServerProxy;
 import client.manager.GameData;
-import client.manager.GameManager;
-import client.model.GameInfo;
 import client.model.card.DevCardList;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
-import client.model.card.TradeInterface;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 
 public class MapTest {
+	
 	ModelSerializer ms;
-
-	@Before
-	public void setUp() {
-		// manager = new GameManager(new ServerProxy("8081", "locolhost"));
-		// System.out.println(manager.getServerProxy());
-	}
 
 	public GameData getGameData() {
 		ms = new ModelSerializer();
+	
+		
+		
 		File file = new File("JSON\\getGameModel.txt");
+		
 		String content = "";
 		try {
 			content = new Scanner(file).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return ms.deserializeGameModel(content);
 	}
 
 	@Test
 	public void testCanBuildRoad() {
-		GameManager gameManager = new GameManager(null);
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
@@ -113,7 +106,6 @@ public class MapTest {
 
 	@Test
 	public void testCanBuildSettlement() {
-		GameManager gameManager = new GameManager(null);
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
@@ -198,7 +190,6 @@ public class MapTest {
 
 	@Test
 	public void testCanBuildCity() {
-		GameManager gameManager = new GameManager(null);
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
@@ -249,7 +240,6 @@ public class MapTest {
 
 	@Test
 	public void testCanMaritimeTrade() {
-		GameManager gameManager = new GameManager(null);
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
@@ -291,7 +281,6 @@ public class MapTest {
 
 	@Test
 	public void testCanPlayRoadBuild() {
-		GameManager gameManager = new GameManager(null);
 		GameData game = getGameData();
 		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();

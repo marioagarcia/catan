@@ -11,14 +11,13 @@ public interface GamePieceInterface
 	 */
 	public abstract GamePieceType getType();
 	
-	
 	/**
-	 * @param id The id number of the Player who owns this piece
+	 * @param index The index of the Player who owns this piece
 	 */
 	public abstract void setPlayerIndex(int index);
 	
 	/**
-	 * @return the id number of the Player who owns this piece
+	 * @return the index of the Player who owns this piece
 	 */
 	public abstract int getPlayerIndex();
 	

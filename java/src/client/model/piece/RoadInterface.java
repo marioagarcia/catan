@@ -8,19 +8,16 @@ import shared.locations.EdgeLocation;
 public interface RoadInterface extends GamePieceInterface
 {
 	/**
-	 * @param border The HexBorder that this Road will be placed on. 
 	 * Must not be currently occupied by another GamePiece, 
 	 * and must be adjacent to another Road or Settlement/City owned by the Player.
-	 * 
-	 * @see HexBorderInterface 
+	 * @param location the location where the road will go
 	 */
 	public abstract void setLocation(EdgeLocation location);
 	
 	/**
+	 * Gets the location of the road
 	 * @return The HexBorder where this Road is placed on the game board. 
 	 * Null if this Road is not on the board.
-	 * 
-	 * @see HexBorderInterface
 	 */
 	public abstract EdgeLocation getLocation();
 }

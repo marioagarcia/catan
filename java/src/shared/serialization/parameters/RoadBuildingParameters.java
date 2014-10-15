@@ -1,6 +1,5 @@
 package shared.serialization.parameters;
 
-import shared.locations.EdgeLocation;
 
 public class RoadBuildingParameters extends MasterParameterInterface{
 

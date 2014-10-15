@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Set;
 
 import client.manager.interfaces.GMBoardMapInterface;
@@ -20,7 +21,7 @@ import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerMapInterface;
 
-public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
+public class BoardMap extends Observable implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
 	private Map<HexLocation, HexInterface> hexes;
 	private Map<EdgeLocation, Road> roads;
 	private Map<VertexLocation, City> cities;
@@ -270,5 +271,67 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	public HexLocation getRobberLocation() {
 		return this.robberLocation;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cities == null) ? 0 : cities.hashCode());
+		result = prime * result + ((hexes == null) ? 0 : hexes.hashCode());
+		result = prime * result + ((ports == null) ? 0 : ports.hashCode());
+		result = prime * result + radius;
+		result = prime * result + ((roads == null) ? 0 : roads.hashCode());
+		result = prime * result
+				+ ((robberLocation == null) ? 0 : robberLocation.hashCode());
+		result = prime * result
+				+ ((settlements == null) ? 0 : settlements.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BoardMap other = (BoardMap) obj;
+		if (cities == null) {
+			if (other.cities != null)
+				return false;
+		} else if (!cities.equals(other.cities))
+			return false;
+		if (hexes == null) {
+			if (other.hexes != null)
+				return false;
+		} else if (!hexes.equals(other.hexes))
+			return false;
+		if (ports == null) {
+			if (other.ports != null)
+				return false;
+		} else if (!ports.equals(other.ports))
+			return false;
+		if (radius != other.radius)
+			return false;
+		if (roads == null) {
+			if (other.roads != null)
+				return false;
+		} else if (!roads.equals(other.roads))
+			return false;
+		if (robberLocation == null) {
+			if (other.robberLocation != null)
+				return false;
+		} else if (!robberLocation.equals(other.robberLocation))
+			return false;
+		if (settlements == null) {
+			if (other.settlements != null)
+				return false;
+		} else if (!settlements.equals(other.settlements))
+			return false;
+		return true;
+	}
+	
+	
 
 }

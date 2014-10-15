@@ -6,7 +6,7 @@ public interface GMPlayerInterface {
 	
 	/**
 	 * Determines if the player has enough resources to offer the trade 
-	 * @param trade
+	 * @param trade the cards to be traded
 	 * @return true if the player can make the trade
 	 */
 	public boolean canOfferTrade(TradeInterface trade);
@@ -19,7 +19,6 @@ public interface GMPlayerInterface {
 	
 	/**
 	 * Determines that the player has the year of plenty, it hasn't played a dev card this turn
-	 * @param resourceList
 	 * @return true if player has the year of plenty card and the resources passed in
 	 */
 	public boolean canPlayYearOfPlenty();

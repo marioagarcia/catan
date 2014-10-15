@@ -77,4 +77,38 @@ public class DevCardList implements SerializerDevCardListInterface {
 		return returnString;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + monopoly;
+		result = prime * result + monument;
+		result = prime * result + roadBuild;
+		result = prime * result + soldier;
+		result = prime * result + yearOfPlenty;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DevCardList other = (DevCardList) obj;
+		if (monopoly != other.monopoly)
+			return false;
+		if (monument != other.monument)
+			return false;
+		if (roadBuild != other.roadBuild)
+			return false;
+		if (soldier != other.soldier)
+			return false;
+		if (yearOfPlenty != other.yearOfPlenty)
+			return false;
+		return true;
+	}
+
 }

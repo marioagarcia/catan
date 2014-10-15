@@ -28,7 +28,8 @@ public interface PlayerInterface
 	public int getId();
 	
 	/**
-	 * 
+	 * normal to String metod
+	 * @return a string of the player
 	 */
 	public String toString();
 	
@@ -39,18 +40,22 @@ public interface PlayerInterface
 	public int getPoints();
 	
 	/**
-	 * 
-	 * @param trade
-	 * @return
+	 * determines if the player has the resources to accept the trade
+	 * @param trade the list of cards offered and desired
+	 * @return true if the player has the resources to make the trade
 	 */
 	public boolean canAcceptTrade(TradeInterface trade);
 	
 	/**
 	 * verifies that the player has the correct cards to be able to discard
-	 * @param list
-	 * @return
+	 * @param list the list of cards the player wants to discard
+	 * @return true if the player has the cards in the list
 	 */
 	public boolean canDiscardCards(SerializerResourceListInterface list);
 	
+	/**
+	 * The number of cards in the player's resource deck
+	 * @return the number of cards currently in the players deck
+	 */
 	public int getNumberOfCards();
 }

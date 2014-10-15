@@ -91,7 +91,6 @@ public class GameManager implements GameManagerInterface {
 		return serverProxy.validatePlayer(localPlayer);
 	}
 
-	@Override
 	public boolean populateGameList() {
 		String json_string = serverProxy.listGames();
 
@@ -159,13 +158,13 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean saveGame() {
-		int player_index = localPlayer.getPlayerIndex();
+		//int player_index = localPlayer.getPlayerIndex();
 
-		SaveGameRequestParameters param = new SaveGameRequestParameters(player_index, currentGame.getTitle());
+		//SaveGameRequestParameters param = new SaveGameRequestParameters(player_index, currentGame.getTitle());
 
-		String json_string = modelSerializer.serializeSaveGameRequest(param);
+		//String json_string = modelSerializer.serializeSaveGameRequest(param);
 
-		//TODO serverProxy.saveGame(json_string);
+		// serverProxy.saveGame(json_string);
 
 		return true;
 	}
@@ -210,7 +209,6 @@ public class GameManager implements GameManagerInterface {
 			return false;
 	}
 
-	//TODO
 	@Override
 	public boolean getGameCommands() {
 		String json_string = serverProxy.getGameCommands();
@@ -222,13 +220,12 @@ public class GameManager implements GameManagerInterface {
 		return false;
 	}
 
-	//TODO
 	@Override
 	public boolean postGameCommands() {
 		if(gameCommands == null)
 			return false;
 
-		String json_string = null; //modelSerializer.serializePostGameCommands(gameCommands);
+		String json_string = null; //TODO modelSerializer.serializePostGameCommands(gameCommands);
 
 		serverProxy.postGameCommands(json_string);
 
@@ -276,8 +273,6 @@ public class GameManager implements GameManagerInterface {
 			return false;
 	}
 
-	//TODO
-	@Override
 	public boolean robPlayer(int victimPlayerIndex, HexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 
@@ -286,7 +281,7 @@ public class GameManager implements GameManagerInterface {
 		@SuppressWarnings("unused")
 		String json_string = modelSerializer.serializeRobPlayer(param);
 
-		String json_model = null; //serverProxy.robPlayer(json_string);
+		String json_model = null; //TODO serverProxy.robPlayer(json_string);
 
 		if(resetFromGameModel(json_model))
 			return true;
@@ -321,7 +316,7 @@ public class GameManager implements GameManagerInterface {
 		boolean turn_condition_met = turnTracker.canBuyDevCard(localPlayer.getPlayerIndex());
 		boolean deck_condition_met = devCardBank.containsAnyCard();
 
-		return (player_condition_met && turn_condition_met && deck_condition_met );
+		return (player_condition_met && turn_condition_met && deck_condition_met);
 	}
 
 	@Override

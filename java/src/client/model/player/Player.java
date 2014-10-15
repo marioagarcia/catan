@@ -1,5 +1,7 @@
 package client.model.player;
 
+import java.util.Observable;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerPlayerInterface;
@@ -10,7 +12,7 @@ import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 
-public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
+public class Player extends Observable implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
 	int cities;
 	CatanColor color;
 	boolean discarded;
@@ -390,4 +392,84 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	public boolean canBeRobbed() {
 		return (resourceList.totalNumberCards() >= 1);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + cities;
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + (discarded ? 1231 : 1237);
+		result = prime * result + monuments;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((newDevCards == null) ? 0 : newDevCards.hashCode());
+		result = prime * result
+				+ ((oldDevCards == null) ? 0 : oldDevCards.hashCode());
+		result = prime * result + (playedDevCard ? 1231 : 1237);
+		result = prime * result + playerId;
+		result = prime * result + playerIndex;
+		result = prime * result
+				+ ((resourceList == null) ? 0 : resourceList.hashCode());
+		result = prime * result + roads;
+		result = prime * result + settlements;
+		result = prime * result + soldiers;
+		result = prime * result + victoryPoints;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		if (cities != other.cities)
+			return false;
+		if (color != other.color)
+			return false;
+		if (discarded != other.discarded)
+			return false;
+		if (monuments != other.monuments)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (newDevCards == null) {
+			if (other.newDevCards != null)
+				return false;
+		} else if (!newDevCards.equals(other.newDevCards))
+			return false;
+		if (oldDevCards == null) {
+			if (other.oldDevCards != null)
+				return false;
+		} else if (!oldDevCards.equals(other.oldDevCards))
+			return false;
+		if (playedDevCard != other.playedDevCard)
+			return false;
+		if (playerId != other.playerId)
+			return false;
+		if (playerIndex != other.playerIndex)
+			return false;
+		if (resourceList == null) {
+			if (other.resourceList != null)
+				return false;
+		} else if (!resourceList.equals(other.resourceList))
+			return false;
+		if (roads != other.roads)
+			return false;
+		if (settlements != other.settlements)
+			return false;
+		if (soldiers != other.soldiers)
+			return false;
+		if (victoryPoints != other.victoryPoints)
+			return false;
+		return true;
+	}
+	
 }

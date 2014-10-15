@@ -10,12 +10,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import shared.definitions.CatanColor;
 import client.model.card.DevCardList;
 import client.model.card.ResourceList;
 import client.model.card.Trade;
-import client.model.card.TradeInterface;
 import client.model.player.Player;
 
 /**

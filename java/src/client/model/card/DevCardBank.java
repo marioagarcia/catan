@@ -2,12 +2,13 @@ package client.model.card;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
 import client.manager.interfaces.GMDevCardBankInterface;
 import shared.definitions.DevCardType;
 import shared.serialization.interfaces.SerializerDeckInterface;
 
-public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface {
+public class DevCardBank extends Observable implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface {
 
 	private Map<DevCardType, Integer> cards;
 	
@@ -65,4 +66,30 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
 		
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cards == null) ? 0 : cards.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DevCardBank other = (DevCardBank) obj;
+		if (cards == null) {
+			if (other.cards != null)
+				return false;
+		} else if (!cards.equals(other.cards))
+			return false;
+		return true;
+	}
+	
 }

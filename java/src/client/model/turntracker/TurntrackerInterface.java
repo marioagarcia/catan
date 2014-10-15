@@ -4,7 +4,7 @@ public interface TurntrackerInterface {
 	
 	/**
 	 * returns the TurntrackerInterface.Status representing where you are in the turn cycle
-	 * @return
+	 * @return the state of the game
 	 */
 	public Status getStatus();
 	
