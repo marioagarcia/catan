@@ -62,6 +62,10 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 		return (player_index == currentPlayerIndex && status == Status.PLAYING);
 	}
 	
+	public boolean canMakeMove(int player_index){
+		return (currentPlayerIndex == player_index && status == Status.PLAYING);
+	}
+	
 	@Override
 	public void setTurnTracker(String status, int currentTurn, int longestRoad,
 			int largestArmy){
