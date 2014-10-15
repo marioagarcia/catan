@@ -1,20 +1,21 @@
 package client.model.piece;
 
+import shared.definitions.PieceType;
 import client.model.map.HexInterface;
 
 public class Robber implements RobberInterface {
 	
-	GamePieceType type;
+	PieceType type;
 	int playerIndex;
 	HexInterface location;
 	
 	public Robber()
 	{
-		this.type = GamePieceType.ROBBER;
+		this.type = PieceType.ROBBER;
 	}
 
 	@Override
-	public GamePieceType getType() {
+	public PieceType getType() {
 		return type;
 	}
 

@@ -1,5 +1,6 @@
 package client.model.piece;
 
+import shared.definitions.PieceType;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerCityInterface;
 
@@ -7,10 +8,10 @@ public class City implements CityInterface, SerializerCityInterface {
 	
 	private int playerIndex;
 	private VertexLocation location;
-	GamePieceType type;
+	PieceType type;
 	
 	public City(){
-		this.type = GamePieceType.CITY;
+		this.type = PieceType.CITY;
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class City implements CityInterface, SerializerCityInterface {
 	}
 
 	@Override
-	public GamePieceType getType() {
+	public PieceType getType() {
 		return this.type;
 	}
 
@@ -44,7 +45,7 @@ public class City implements CityInterface, SerializerCityInterface {
 		this.playerIndex = index;
 	}
 
-	public void setType(GamePieceType type) {
+	public void setType(PieceType type) {
 		this.type = type;
 	}
 

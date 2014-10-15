@@ -16,7 +16,7 @@ import client.manager.GameData;
 import client.model.card.DevCardList;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
-import client.model.map.BoardMap;
+import client.model.map.BoardMap;			
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;

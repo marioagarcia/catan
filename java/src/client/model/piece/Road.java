@@ -1,5 +1,6 @@
 package client.model.piece;
 
+import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.serialization.interfaces.SerializerRoadInterface;
 
@@ -7,12 +8,12 @@ public class Road implements RoadInterface, SerializerRoadInterface {
 
 	int playerIndex;
 	EdgeLocation location;
-	GamePieceType type;
+	PieceType type;
 	
 	public Road(int id, EdgeLocation loc){
 		playerIndex = id;
 		location = loc;
-		this.type = GamePieceType.ROAD;
+		this.type = PieceType.ROAD;
 	}
 	
 	@Override
@@ -36,7 +37,7 @@ public class Road implements RoadInterface, SerializerRoadInterface {
 	}
 
 	@Override
-	public GamePieceType getType() {
+	public PieceType getType() {
 		return this.type;
 	}
 	

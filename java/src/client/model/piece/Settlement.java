@@ -1,17 +1,18 @@
 package client.model.piece;
 
+import shared.definitions.PieceType;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerSettlementInterface;
 
 
 public class Settlement implements SettlementInterface, SerializerSettlementInterface {
 	
-	GamePieceType type;
+	PieceType type;
 	int playerIndex;
 	VertexLocation location;
 	
 	public Settlement(){
-		this.type = GamePieceType.SETTLEMENT;
+		this.type = PieceType.SETTLEMENT;
 		//TODO this should start out in the desert
 	}
 	
@@ -21,7 +22,7 @@ public class Settlement implements SettlementInterface, SerializerSettlementInte
 	}
 
 	@Override
-	public GamePieceType getType() {
+	public PieceType getType() {
 		return this.type;
 	}
 

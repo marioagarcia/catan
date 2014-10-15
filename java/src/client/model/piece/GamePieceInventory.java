@@ -2,6 +2,8 @@ package client.model.piece;
 
 import java.util.Collection;
 
+import shared.definitions.PieceType;
+
 public class GamePieceInventory implements GamePieceInventoryInterface {
 	
 	private Collection<GamePieceInterface> pieces;
@@ -16,7 +18,7 @@ public class GamePieceInventory implements GamePieceInventoryInterface {
 	}
 
 	@Override
-	public GamePieceInterface removePiece(GamePieceInterface.GamePieceType type) throws PieceNotFoundException {
+	public GamePieceInterface removePiece(PieceType type) throws PieceNotFoundException {
 		for(GamePieceInterface piece : pieces)
 			if(piece.getType() == type){
 				pieces.remove(piece);

@@ -1,5 +1,7 @@
 package client.model.piece;
 
+import shared.definitions.PieceType;
+
 /**
  * Represents a Piece in the Player's inventory.
  */
@@ -9,7 +11,7 @@ public interface GamePieceInterface
 	 * gets the type of the game piece
 	 * @return GamePieceType representing the type of the piece in question
 	 */
-	public abstract GamePieceType getType();
+	public abstract PieceType getType();
 	
 	/**
 	 * @param index The index of the Player who owns this piece
@@ -21,10 +23,4 @@ public interface GamePieceInterface
 	 */
 	public abstract int getPlayerIndex();
 	
-	public enum GamePieceType{
-		CITY,
-		SETTLEMENT,
-		ROAD,
-		ROBBER		
-	}
 }
