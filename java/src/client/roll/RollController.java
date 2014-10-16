@@ -1,6 +1,7 @@
 package client.roll;
 
 import client.base.*;
+import client.communication.facade.ModelFacade;
 
 
 /**
@@ -36,7 +37,7 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-		//Facade facade = new facade();
+		ModelFacade instance = ModelFacade.getInstance();
 		DiceRoller diceRoller = new DiceRoller();
 		int rolledNumber = diceRoller.roll();
 		getResultView().setRollValue(rolledNumber);

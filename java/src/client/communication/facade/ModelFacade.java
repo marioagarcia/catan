@@ -16,11 +16,19 @@ import client.model.card.TradeInterface;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
+	private static ModelFacade instance = null;
 	private GameManagerInterface gameManager;
 	
-	public ModelFacade()
+	protected ModelFacade()
 	{
 		this.gameManager = new GameManager(new ServerProxy(null, null));
+	}
+	
+	public static ModelFacade getInstance(){
+		if(instance == null){
+			instance = new ModelFacade();
+		}
+		return instance;
 	}
 
 	@Override
