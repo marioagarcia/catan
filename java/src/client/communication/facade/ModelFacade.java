@@ -6,6 +6,8 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
+import client.communication.server.ServerProxy;
+import client.manager.GameManager;
 import client.manager.GameManagerInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
@@ -16,9 +18,9 @@ public class ModelFacade implements ModelFacadeInterface {
 	
 	private GameManagerInterface gameManager;
 	
-	public ModelFacade(GameManagerInterface gameManager)
+	public ModelFacade()
 	{
-		this.gameManager = gameManager;
+		this.gameManager = new GameManager(new ServerProxy(null, null));
 	}
 
 	@Override

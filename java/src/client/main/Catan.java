@@ -3,6 +3,7 @@ package client.main;
 import javax.swing.*;
 
 import client.catan.*;
+import client.communication.facade.ModelFacade;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
@@ -43,6 +44,7 @@ public class Catan extends JFrame
 	
 	public static void main(final String[] args)
 	{
+		
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
