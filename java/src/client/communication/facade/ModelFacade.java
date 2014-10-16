@@ -6,9 +6,9 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
-import client.communication.server.ServerProxy;
+import client.communication.server.ServerMoxy;
+import client.communication.server.ServerProxyInterface;
 import client.manager.GameManager;
-import client.manager.GameManagerInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
@@ -16,11 +16,18 @@ import client.model.card.TradeInterface;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
-	private GameManagerInterface gameManager;
+	private GameManager gameManager;
 	
-	public ModelFacade()
+	public ModelFacade(ServerProxyInterface proxy)
 	{
-		this.gameManager = new GameManager(new ServerProxy(null, null));
+		if (proxy != null)
+		{
+			this.gameManager = new GameManager(proxy);
+		}
+		else
+		{
+			this.gameManager = new GameManager(new ServerMoxy());
+		}
 	}
 
 	@Override
@@ -226,6 +233,10 @@ public class ModelFacade implements ModelFacadeInterface {
 	@Override
 	public boolean saveGame() {
 		return gameManager.saveGame();
+	}
+	
+	public GameManager getManager(){
+		return gameManager;
 	}
 
 }
