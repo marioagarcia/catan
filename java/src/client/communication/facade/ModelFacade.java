@@ -16,9 +16,10 @@ import client.model.card.TradeInterface;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
+	private static ModelFacade facadeInstance = null;
 	private GameManager gameManager;
 	
-	public ModelFacade(ServerProxyInterface proxy)
+	protected ModelFacade(ServerProxyInterface proxy)
 	{
 		if (proxy != null)
 		{
@@ -28,6 +29,13 @@ public class ModelFacade implements ModelFacadeInterface {
 		{
 			this.gameManager = new GameManager(new ServerMoxy());
 		}
+	}
+	
+	public static ModelFacade getInstance(){
+		if(facadeInstance == null){
+			facadeInstance = new ModelFacade(new ServerMoxy());
+		}
+		return facadeInstance;
 	}
 
 	@Override
