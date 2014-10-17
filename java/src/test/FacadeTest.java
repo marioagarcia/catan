@@ -3,13 +3,16 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import client.communication.facade.ModelFacade;
 import client.communication.server.ServerMoxy;
 import client.manager.GameManager;
+import client.manager.GameManagerInterface;
 import client.model.GameInfo;
 import client.model.card.DevCardList;
 import client.model.card.DomesticTrade;
@@ -24,8 +27,8 @@ public class FacadeTest {
 	
 	@Before
 	public void setUp(){
-		manager = new GameManager(new ServerMoxy());
-		facade = new ModelFacade(manager);
+		facade = new ModelFacade(new ServerMoxy());
+		manager = facade.getManager();
 
 		facade.loginPlayer("Sam", "sam");
 		

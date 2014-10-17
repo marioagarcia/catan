@@ -37,7 +37,7 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-		ModelFacade instance = ModelFacade.getInstance();
+		//ModelFacade instance = ModelFacade.getInstance();
 		DiceRoller diceRoller = new DiceRoller();
 		int rolledNumber = diceRoller.roll();
 		getResultView().setRollValue(rolledNumber);

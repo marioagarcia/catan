@@ -29,8 +29,23 @@ public class ServerProxy implements ServerProxyInterface{
 	 * @param host The name of the machine running the server.
 	 */
 	public ServerProxy(String port, String host){
-		this.serverPortNumber = port;
-		this.host = host;
+		if (port != null)
+		{
+			this.serverPortNumber = port;
+		}
+		else
+		{
+			this.serverPortNumber = "8081";
+		}
+		if (host != null)
+		{
+			this.host = host;
+		}
+		else
+		{
+			this.host = "localhost";
+		}
+		
 		link = "http://" + this.host + ":" + serverPortNumber;
 		gameId = Integer.MAX_VALUE;
 		cookie = null;
