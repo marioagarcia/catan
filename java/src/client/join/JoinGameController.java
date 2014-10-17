@@ -1,9 +1,13 @@
 package client.join;
 
+import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import client.base.*;
+import client.communication.facade.ModelFacade;
 import client.misc.*;
 import client.model.GameInfo;
+import client.model.player.PlayerInfo;
 
 
 /**
@@ -125,7 +129,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
+		ModelFacade facade = ModelFacade.getInstance();
+		GameInfo gameInfo = new GameInfo();
 		
+		String gameTitle;
+		int gameId;
+		ArrayList<PlayerInfo> playerList;
+		//this.
+		//gameInfo.setGameInfo(gameTitle, gameId, playerList);
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();

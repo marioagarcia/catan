@@ -1,6 +1,7 @@
 package client.login;
 
 import client.base.*;
+import client.communication.facade.ModelFacade;
 import client.misc.*;
 
 /**
@@ -64,21 +65,40 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
 		
 		// TODO: log in user
+		ModelFacade facade = ModelFacade.getInstance();
 		
-
+		String username = this.getLoginView().getLoginUsername();
+		String password = this.getLoginView().getLoginPassword();
+		
+		if(facade.loginPlayer(username, password)){
 		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+			getLoginView().closeModal();
+			loginAction.execute();
+		}else{
+			this.messageView.setTitle("Error");
+			this.messageView.setMessage("Unable to login.  Please try again.");
+		}
 	}
 
 	@Override
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
+		ModelFacade facade = ModelFacade.getInstance();
+		
+		String username = this.getLoginView().getLoginUsername();
+		String password = this.getLoginView().getLoginPassword();
+
+		if(facade.registerPlayer(username, password)){
+			facade.loginPlayer(username, password);
 		
 		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+			getLoginView().closeModal();
+			loginAction.execute();
+		}else{
+			this.messageView.setTitle("Error");
+			this.messageView.setMessage("Unable to register.  Please try again.");
+		}
 	}
 
 }
