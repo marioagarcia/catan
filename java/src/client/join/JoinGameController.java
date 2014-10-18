@@ -111,8 +111,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
+		ModelFacade facade = ModelFacade.getInstance(null);
+		String gameName = newGameView.getTitle();
+		Boolean randTiles = newGameView.getRandomlyPlaceHexes();
+		Boolean randNumbers = newGameView.getRandomlyPlaceNumbers();
+		Boolean randPorts = newGameView.getUseRandomPorts();
 		
-		getNewGameView().closeModal();
+		if(facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
+			getNewGameView().closeModal();
+		}else{
+			messageView.setTitle("Error");
+			messageView.setMessage("Unable to create game.  Please try again");
+			messageView.showModal();
+		}
 	}
 
 	@Override

@@ -138,13 +138,14 @@ public class ModelSerializer implements ModelSerializerInterface {
 			PlayerInfo playerInfo = new PlayerInfo();
 			
 			JsonObject playerObject = (JsonObject)playerArray.get(j);
+			if(playerObject.get("id") != null){
+				int playerID = playerObject.get("id").getAsInt();
+				String playerName = playerObject.get("name").getAsString();
+				CatanColor playerColor = getPlayerColor(playerObject.get("color").getAsString());
 			
-			int playerID = playerObject.get("id").getAsInt();
-			String playerName = playerObject.get("name").getAsString();
-			CatanColor playerColor = getPlayerColor(playerObject.get("color").getAsString());
-			
-			playerInfo.setPlayerInfo(playerColor, playerName, playerID);
-			playerList.add(playerInfo);
+				playerInfo.setPlayerInfo(playerColor, playerName, playerID);
+				playerList.add(playerInfo);
+			}
 		}
 		
 		gameInfo.setGameInfo(gameTitle, gameID, playerList);
