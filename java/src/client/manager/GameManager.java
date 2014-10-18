@@ -70,8 +70,18 @@ public class GameManager implements GameManagerInterface {
 		CredentialsParameters credentials = new CredentialsParameters(username, password);
 
 		String json_string = modelSerializer.serializeCredentials(credentials);
-
-		return (!serverProxy.login(json_string).equals("400"));
+		
+		if (!serverProxy.login(json_string).equals("400"))
+		{
+			localPlayer = new Player();
+			localPlayer.setName(username);
+			localPlayer.setPlayerId(serverProxy.getPlayerId());
+			
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	@Override
