@@ -27,7 +27,7 @@ public class FacadeTest {
 	
 	@Before
 	public void setUp(){
-		facade = ModelFacade.getInstance();//new ModelFacade(new ServerMoxy());
+		facade = ModelFacade.getInstance(new ServerMoxy());
 		manager = facade.getManager();
 
 		facade.loginPlayer("Sam", "sam");

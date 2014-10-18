@@ -129,7 +129,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		ModelFacade facade = ModelFacade.getInstance();
+		ModelFacade facade = ModelFacade.getInstance(null);
 		GameInfo gameInfo = new GameInfo();
 		
 		String gameTitle;

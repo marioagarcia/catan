@@ -7,6 +7,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.communication.server.ServerMoxy;
+import client.communication.server.ServerProxy;
 import client.communication.server.ServerProxyInterface;
 import client.manager.GameManager;
 import client.manager.interfaces.GMDomesticTradeInterface;
@@ -31,9 +32,14 @@ public class ModelFacade implements ModelFacadeInterface {
 		}
 	}
 	
-	public static ModelFacade getInstance(){
+	public static ModelFacade getInstance(ServerProxyInterface proxy){
 		if(facadeInstance == null){
-			facadeInstance = new ModelFacade(new ServerMoxy());
+			if(proxy == null){
+				facadeInstance = new ModelFacade(new ServerProxy(null, null));
+			}else
+			{
+				facadeInstance = new ModelFacade(proxy);
+			}
 		}
 		return facadeInstance;
 	}

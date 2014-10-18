@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import client.catan.*;
 import client.communication.facade.ModelFacade;
+import client.communication.server.ServerProxy;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
@@ -44,6 +45,11 @@ public class Catan extends JFrame
 	
 	public static void main(final String[] args)
 	{
+		if(args.length > 1){
+			ModelFacade.getInstance(new ServerProxy(args[0], args[1]));
+		}else{
+			ModelFacade.getInstance(null);
+		}
 		
 		try
 		{

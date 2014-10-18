@@ -65,7 +65,7 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
 		
 		// TODO: log in user
-		ModelFacade facade = ModelFacade.getInstance();
+		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		String username = this.getLoginView().getLoginUsername();
 		String password = this.getLoginView().getLoginPassword();
@@ -84,7 +84,7 @@ public class LoginController extends Controller implements ILoginController {
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
-		ModelFacade facade = ModelFacade.getInstance();
+		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		String username = this.getLoginView().getLoginUsername();
 		String password = this.getLoginView().getLoginPassword();
