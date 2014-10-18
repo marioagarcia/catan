@@ -1,6 +1,8 @@
 package client.manager;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -89,15 +91,26 @@ public class GameManager implements GameManagerInterface {
 		return serverProxy.validatePlayer(localPlayer);
 	}
 
-	public boolean populateGameList() {
+	public GameInfo[] populateGameList() {
 		String json_string = serverProxy.listGames();
 
 		gameList = modelSerializer.deserializeGamesList(json_string);
 
-		if(gameList != null)
-			return true;
+		if(gameList != null){
+			return gameListToArray();
+		}
 
-		return false;
+		return null;
+	}
+	
+	public GameInfo[] gameListToArray(){
+		GameInfo[] gamesList = new GameInfo[gameList.size()];
+		
+		for(int i = 0; i < gameList.size(); i++){
+			gamesList[i] = gameList.get(i);
+		}
+		
+		return gamesList;
 	}
 
 	@Override

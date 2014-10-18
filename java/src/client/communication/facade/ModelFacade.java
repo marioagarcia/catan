@@ -249,6 +249,10 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.saveGame();
 	}
 	
+	public GameInfo[] getGamesList(){
+		return gameManager.populateGameList();
+	}
+	
 	public GameManager getManager(){
 		return gameManager;
 	}
