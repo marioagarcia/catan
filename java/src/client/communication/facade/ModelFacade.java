@@ -14,6 +14,7 @@ import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.TradeInterface;
+import client.model.player.Player;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
@@ -43,7 +44,7 @@ public class ModelFacade implements ModelFacadeInterface {
 		}
 		return facadeInstance;
 	}
-
+	
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
 		return this.gameManager.canJoinGame(color, game);
@@ -247,6 +248,10 @@ public class ModelFacade implements ModelFacadeInterface {
 	@Override
 	public boolean saveGame() {
 		return gameManager.saveGame();
+	}
+	
+	public Player getLocalPlayer(){
+		return gameManager.getLocalPlayer();
 	}
 	
 	public GameInfo[] getGamesList(){
