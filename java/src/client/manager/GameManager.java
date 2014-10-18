@@ -71,9 +71,7 @@ public class GameManager implements GameManagerInterface {
 
 		String json_string = modelSerializer.serializeCredentials(credentials);
 
-		serverProxy.login(json_string);
-
-		return true;
+		return (!serverProxy.login(json_string).equals("400"));
 	}
 
 	@Override
