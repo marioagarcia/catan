@@ -10,6 +10,7 @@ import org.junit.Test;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import client.communication.facade.ModelFacade;
+import client.communication.server.ServerMoxy;
 import client.manager.GameManager;
 import client.model.GameInfo;
 import client.model.card.DevCardList;
