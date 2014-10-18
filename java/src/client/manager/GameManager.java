@@ -1,8 +1,6 @@
 package client.manager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -700,6 +698,11 @@ public class GameManager implements GameManagerInterface {
 
 	public void setGameCommands(GameCommands gameCommands) {
 		this.gameCommands = gameCommands;
+	}
+
+	@Override
+	public boolean isLocalPlayersTurn(){
+		return (localPlayer.getPlayerIndex() == turnTracker.getCurrentTurn());
 	}
 
 }

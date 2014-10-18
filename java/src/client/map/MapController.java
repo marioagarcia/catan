@@ -4,8 +4,17 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
+import state.DiscardingState;
+import state.FirstRoundState;
+import state.GameState;
+import state.PlayingState;
+import state.RobbingState;
+import state.RollingState;
 import client.base.*;
+import client.communication.facade.ModelFacade;
 import client.model.player.RobPlayerInfo;
+import client.model.turntracker.TurnTracker;
+import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**
@@ -14,14 +23,57 @@ import client.model.player.RobPlayerInfo;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
+	private GameState currentState = new GameState();
+	private TurnTracker tracker = null;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
+
+		tracker = ModelFacade.getInstance(null).getManager().getTurnTracker();
+		tracker.addObserver(new TrackerObserver());
 		
 		setRobView(robView);
 		
 		initFromModel();
+	}
+	
+	private class TrackerObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg){
+			tracker = (TurnTracker)o;
+			
+			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
+				
+				Status state = tracker.getStatus();
+				
+				switch (state){
+					case DISCARDING:
+						currentState = new DiscardingState();
+						break;
+					case FIRST_ROUND:
+						currentState = new FirstRoundState();
+						break;
+					case PLAYING:
+						currentState = new PlayingState();
+						break;
+					case ROBBING:
+						currentState = new RobbingState();
+						break;
+					case ROLLING:
+						currentState = new RollingState();
+						break;
+					default:
+						currentState = new GameState();
+						break;		
+				}
+			}
+			else{
+				currentState = new GameState();
+			}
+		}
+		
 	}
 	
 	public IMapView getView() {
@@ -105,17 +157,17 @@ public class MapController extends Controller implements IMapController {
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		
-		return true;
+		return currentState.canBuildRoad(edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
 		
-		return true;
+		return currentState.canBuildSettlement(vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
 		
-		return true;
+		return currentState.canBuildCity(vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
@@ -125,16 +177,19 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
+		currentState.buildRoad(edgeLoc);
 		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		
+		currentState.buildSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
 		
+		currentState.buildCity(vertLoc);
 		getView().placeCity(vertLoc, CatanColor.ORANGE);
 	}
 
@@ -164,6 +219,10 @@ public class MapController extends Controller implements IMapController {
 	
 	public void robPlayer(RobPlayerInfo victim) {	
 		
+	}
+	
+	public void setGameState(GameState new_state){
+		this.currentState = new_state;
 	}
 	
 }

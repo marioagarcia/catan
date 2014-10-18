@@ -244,4 +244,6 @@ public interface GameManagerInterface
 	public boolean canPlayMonument();
 	public boolean playMonument();
 	
+	public boolean isLocalPlayersTurn();
+	
 }
