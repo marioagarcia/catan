@@ -70,7 +70,6 @@ public class GameManager implements GameManagerInterface {
 		CredentialsParameters credentials = new CredentialsParameters(username, password);
 
 		String json_string = modelSerializer.serializeCredentials(credentials);
-
 		return (!serverProxy.login(json_string).equals("400"));
 	}
 
