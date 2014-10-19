@@ -1,6 +1,7 @@
 package client.manager;
 
 import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -9,9 +10,14 @@ import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import shared.serialization.parameters.*;
+import client.communication.server.ServerMoxy;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
 import client.logging.GameLog;
+import client.logging.chat.GameChat;
+import client.logging.history.GameHistoryLogInterface;
+import client.logging.history.HistoryLog;
+import client.logging.history.LogLineInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
@@ -52,17 +58,26 @@ public class GameManager implements GameManagerInterface {
 
 		modelSerializer = new ModelSerializer();
 
+		gameList = new ArrayList<>();
+		
+		initModelClasses();
+	}
+	
+	private void initModelClasses() {
+		
+		//initialize the model classes so that the controllers can register as observers
+		
 		diceRoller = new DiceRoller();
-		gameList = null;
-		localPlayer = null;
-		currentGame = null;
-		gameLog = null;
-		gameCommands = null;
-		turnTracker = null;
-		boardMap = null;
-		devCardBank = null;
-		resCardBank = null;
-		allPlayers = null;
+		localPlayer = new Player();
+		currentGame = new GameInfo();
+		gameLog = new GameLog(new HistoryLog(), new GameChat());
+		gameCommands = new GameCommands();
+		turnTracker = new TurnTracker();
+		boardMap = new BoardMap();
+		devCardBank = new DevCardBank();
+		resCardBank = new ResourceCardBank();
+		allPlayers = new ArrayList<>();
+		
 	}
 
 	@Override
@@ -214,6 +229,12 @@ public class GameManager implements GameManagerInterface {
 		allPlayers = game_data.getPlayerList();
 		
 		gameLog = game_data.getGameLog();
+		
+		//update the model classes and fire up the notifications of each
+		
+		if(!localPlayer.equals(game_data.getPlayerList().get(player_index))) {
+			
+		}
 
 		return true;
 	}

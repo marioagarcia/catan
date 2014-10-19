@@ -18,6 +18,10 @@ public class TurnTracker extends Observable implements TurntrackerInterface, GMT
 		this.playerWithLongestRoad = longestRoad;
 		this.playerWithLargestArmy = largestArmy;
 	}
+	
+	public TurnTracker() {
+		
+	}
 
 	@Override
 	public Status getStatus() {
