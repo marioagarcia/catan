@@ -212,7 +212,11 @@ public class GameManager implements GameManagerInterface {
 
 		int player_index;
 		if(localPlayer != null) {
-			player_index = localPlayer.getPlayerIndex();
+			if(localPlayer.getPlayerId() == -1){
+				player_index = game_data.getPlayerList().size() - 1;
+			}else{
+				player_index = localPlayer.getPlayerIndex();
+			}
 		}
 		else return false;
 
