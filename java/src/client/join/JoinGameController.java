@@ -1,6 +1,7 @@
 package client.join;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import shared.definitions.CatanColor;
 import client.base.*;
@@ -51,6 +52,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		playerInfo.setPlayerInfo(selectColorView.getSelectedColor(), 
 								 facade.getLocalPlayer().getName(),
 								 facade.getLocalPlayer().getPlayerId());
+		
 		
 		getJoinGameView().setGames(games, playerInfo);
 	}
@@ -142,7 +144,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 		chosenGame = game;
+		disableColors();
 		getSelectColorView().showModal();
+	}
+	
+	public void disableColors(){
+		List<PlayerInfo> players = chosenGame.getPlayers();
+		for(int i = 0; i < players.size(); i++){
+			if(players.get(i) != null){
+				if(players.get(i).getColor() != null){
+					selectColorView.setColorEnabled(players.get(i).getColor(), false);
+				}
+			}
+		}
 	}
 
 	@Override
