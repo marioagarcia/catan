@@ -57,7 +57,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void start() {
-		
+		((LoginView)getLoginView()).setRegisterButtonEnabled(false);
 		getLoginView().showModal();
 	}
 
@@ -87,8 +87,8 @@ public class LoginController extends Controller implements ILoginController {
 		// TODO: register new user (which, if successful, also logs them in)
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
-		String username = this.getLoginView().getLoginUsername();
-		String password = this.getLoginView().getLoginPassword();
+		String username = this.getLoginView().getRegisterUsername();
+		String password = this.getLoginView().getRegisterPassword();
 
 		if(facade.registerPlayer(username, password)){
 			facade.loginPlayer(username, password);
