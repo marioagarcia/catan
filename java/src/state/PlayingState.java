@@ -6,11 +6,15 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
+import client.map.MapController;
 import client.model.card.MaritimeTrade;
 import client.model.card.TradeInterface;
 
-public class PlayingState extends GameState
-{
+public class PlayingState extends GameState{
+	public PlayingState(MapController c){
+		super(c);
+	}
+
 	@Override
 	public boolean resetGame(){ return false; }
 	

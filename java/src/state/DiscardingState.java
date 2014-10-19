@@ -1,6 +1,11 @@
 package state;
 
-public class DiscardingState extends GameState
-{
+import client.map.MapController;
+
+public class DiscardingState extends GameState{
+
+	public DiscardingState(MapController c){
+		super(c);
+	}
 
 }

@@ -12,6 +12,12 @@ import state.RobbingState;
 import state.RollingState;
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.map.BoardMap;
+import client.model.map.HexInterface;
+import client.model.map.Port;
+import client.model.piece.City;
+import client.model.piece.Road;
+import client.model.piece.Settlement;
 import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
@@ -23,8 +29,10 @@ import client.model.turntracker.TurntrackerInterface.Status;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
-	private GameState currentState = new GameState();
+	private GameState currentState = new GameState(this);
 	private TurnTracker tracker = null;
+	private BoardMap map = null;
+	private CatanColor localPlayerColor =  null;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -33,9 +41,10 @@ public class MapController extends Controller implements IMapController {
 		tracker = ModelFacade.getInstance(null).getManager().getTurnTracker();
 		tracker.addObserver(new TrackerObserver());
 		
-		setRobView(robView);
+		map = ModelFacade.getInstance(null).getManager().getBoardMap();
+		map.addObserver(new MapObserver());
 		
-		initFromModel();
+		setRobView(robView);
 	}
 	
 	private class TrackerObserver implements Observer{
@@ -50,30 +59,42 @@ public class MapController extends Controller implements IMapController {
 				
 				switch (state){
 					case DISCARDING:
-						currentState = new DiscardingState();
+						currentState = new DiscardingState(MapController.this);
 						break;
 					case FIRST_ROUND:
-						currentState = new FirstRoundState();
+						currentState = new FirstRoundState(MapController.this);
 						break;
 					case PLAYING:
-						currentState = new PlayingState();
+						currentState = new PlayingState(MapController.this);
 						break;
 					case ROBBING:
-						currentState = new RobbingState();
+						currentState = new RobbingState(MapController.this);
 						break;
 					case ROLLING:
-						currentState = new RollingState();
+						currentState = new RollingState(MapController.this);
 						break;
 					default:
-						currentState = new GameState();
+						currentState = new GameState(MapController.this);
 						break;		
 				}
 			}
 			else{
-				currentState = new GameState();
+				currentState = new GameState(MapController.this);
 			}
+			
+			localPlayerColor = ModelFacade.getInstance(null).getLocalPlayer().getColor();
 		}
 		
+	}
+	
+	private class MapObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg){
+			map = (BoardMap)o;
+			
+			initFromModel(map);
+		}
 	}
 	
 	public IMapView getView() {
@@ -88,9 +109,53 @@ public class MapController extends Controller implements IMapController {
 		this.robView = robView;
 	}
 	
-	protected void initFromModel() {
+	protected void initFromModel(BoardMap m) {
 		
 		//<temp>
+		
+		System.out.println("Drawing Map");
+		
+		//Draw hexes
+		for (Map.Entry<HexLocation, HexInterface> hex : m.getHexes().entrySet()){
+			
+			getView().addHex(hex.getKey(), hex.getValue().getType());
+		}
+		
+		//Draw roads
+		for (Map.Entry<EdgeLocation, Road> road : m.getRoads().entrySet()){
+			
+			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().get(road.getValue().getPlayerIndex()).getColor();
+			getView().placeRoad(road.getKey(), color);
+		}
+		
+		//Draw cities
+		for (Map.Entry<VertexLocation, City> city : m.getCities().entrySet()){
+			
+			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().get(city.getValue().getPlayerIndex()).getColor();
+			getView().placeCity(city.getKey(), color);
+		}
+		
+		//Draw settlements
+		for (Map.Entry<VertexLocation, Settlement> settlement : m.getSettlements().entrySet()){
+			
+			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().get(settlement.getValue().getPlayerIndex()).getColor();
+			getView().placeCity(settlement.getKey(), color);
+		}
+		
+		//Draw ports
+		for (Map.Entry<EdgeLocation, Port> port : m.getPorts().entrySet()){
+		//	Port contains ResourceType, but the view wants a PortType	
+		//	getView().addPort(port.getKey(), port.getValue().getResource());
+		}
+		
+		//Place robber
+		getView().placeRobber(m.getRobberLocation());
+		
+		
+		
+		
+		
+		/*
 		
 		Random rand = new Random();
 
@@ -153,6 +218,7 @@ public class MapController extends Controller implements IMapController {
 		getView().addNumber(new HexLocation(2, 0), 12);
 		
 		//</temp>
+		 */
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -178,19 +244,19 @@ public class MapController extends Controller implements IMapController {
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
 		currentState.buildRoad(edgeLoc);
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		getView().placeRoad(edgeLoc, localPlayerColor);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		
 		currentState.buildSettlement(vertLoc);
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		getView().placeSettlement(vertLoc, localPlayerColor);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
 		
 		currentState.buildCity(vertLoc);
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		getView().placeCity(vertLoc, localPlayerColor);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -202,7 +268,7 @@ public class MapController extends Controller implements IMapController {
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		getView().startDrop(pieceType, localPlayerColor, true);
 	}
 	
 	public void cancelMove() {

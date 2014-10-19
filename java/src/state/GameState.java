@@ -16,8 +16,9 @@ public class GameState
 	protected ModelFacade facade = null;
 	protected MapController controller = null;
 	
-	public GameState(){
+	public GameState(MapController c){
 		facade = ModelFacade.getInstance(null);
+		controller = c;
 	}
 	
 	public boolean resetGame(){ return false; }

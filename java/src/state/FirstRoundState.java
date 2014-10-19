@@ -1,10 +1,15 @@
 package state;
 
+import client.map.MapController;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
-public class FirstRoundState extends GameState
-{
+public class FirstRoundState extends GameState{
+	
+	public FirstRoundState(MapController c){
+		super(c);
+	}
+
 	private boolean roadPlaced = false;
 	private boolean settlementPlaced = false;
 	
@@ -54,7 +59,8 @@ public class FirstRoundState extends GameState
 			roadPlaced = false;
 			settlementPlaced = false;
 			
-			controller.setGameState(new GameState());
+			//In the three seconds it takes for the poller to update the model, we don't want the player to be able to take extra actions after they finish their turn
+			controller.setGameState(new GameState(controller));
 			
 			return true;
 		}

@@ -1,6 +1,11 @@
 package state;
 
-public class RobbingState extends GameState
-{
+import client.map.MapController;
+
+public class RobbingState extends GameState{
+
+	public RobbingState(MapController c){
+		super(c);
+	}
 
 }

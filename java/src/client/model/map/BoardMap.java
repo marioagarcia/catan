@@ -39,6 +39,26 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		this.ports = new HashMap<EdgeLocation, Port> ();
 	}
 	
+	public Map<HexLocation, HexInterface> getHexes(){
+		return hexes;
+	}
+	
+	public Map<EdgeLocation, Road> getRoads(){
+		return roads;
+	}
+	
+	public Map<VertexLocation, City> getCities(){
+		return cities;
+	}
+	
+	public Map<VertexLocation, Settlement> getSettlements(){
+		return settlements;
+	}
+	
+	public Map<EdgeLocation, Port> getPorts(){
+		return ports;
+	}
+	
 	public boolean isValid(EdgeLocation location){
 		location = location.getNormalizedLocation();
 		for(HexInterface hex : this.hexes.values()){
