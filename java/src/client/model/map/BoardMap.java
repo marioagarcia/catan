@@ -8,9 +8,9 @@ import java.util.Observable;
 import java.util.Set;
 
 import client.manager.interfaces.GMBoardMapInterface;
-import client.model.LookupTables.EdgesAdjacentToVertex;
-import client.model.LookupTables.EdgesAdjacentToVertexResult;
-import client.model.LookupTables.VertexesAdjacentToEdge;
+import client.model.map.luts.EdgesAdjacentToVertex;
+import client.model.map.luts.EdgesAdjacentToVertexResult;
+import client.model.map.luts.VertexesAdjacentToEdge;
 import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
