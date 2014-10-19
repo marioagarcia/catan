@@ -75,8 +75,8 @@ public class LoginController extends Controller implements ILoginController {
 			getLoginView().closeModal();
 			loginAction.execute();
 		}else{
-			this.messageView.setTitle("Error");
-			this.messageView.setMessage("Unable to login.  Please try again.");
+			this.messageView.setTitle("Login Error");
+			this.messageView.setMessage("Invalid username or password.  Please try again.");
 			this.messageView.showModal();
 		}
 	}
@@ -97,7 +97,7 @@ public class LoginController extends Controller implements ILoginController {
 			getLoginView().closeModal();
 			loginAction.execute();
 		}else{
-			this.messageView.setTitle("Error");
+			this.messageView.setTitle("Register Error");
 			this.messageView.setMessage("Unable to register.  Please try again.");
 			this.messageView.showModal();
 		}

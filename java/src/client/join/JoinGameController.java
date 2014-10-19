@@ -20,6 +20,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IMessageView messageView;
 	private IAction joinAction;
 	
+	private GameInfo chosenGame;
+	
 	/**
 	 * JoinGameController constructor
 	 * 
@@ -30,9 +32,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
 								ISelectColorView selectColorView, IMessageView messageView) {
-
+		
 		super(view);
-
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
@@ -41,6 +42,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public IJoinGameView getJoinGameView() {
 		
 		return (IJoinGameView)super.getView();
+	}
+	
+	public void getGamesList(){
+		ModelFacade facade = ModelFacade.getInstance(null);
+		GameInfo[] games = facade.getGamesList();
+		PlayerInfo playerInfo = new PlayerInfo();
+		playerInfo.setPlayerInfo(selectColorView.getSelectedColor(), 
+								 facade.getLocalPlayer().getName(),
+								 facade.getLocalPlayer().getPlayerId());
+		
+		getJoinGameView().setGames(games, playerInfo);
 	}
 	
 	/**
@@ -93,7 +105,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		
+		getGamesList();
 		getJoinGameView().showModal();
 	}
 
@@ -118,9 +130,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		Boolean randPorts = newGameView.getUseRandomPorts();
 		
 		if(facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
+			getGamesList();
 			getNewGameView().closeModal();
 		}else{
-			messageView.setTitle("Error");
+			messageView.setTitle("Create Game Error");
 			messageView.setMessage("Unable to create game.  Please try again");
 			messageView.showModal();
 		}
@@ -128,17 +141,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameInfo game) {
-		System.out.println(game);
-		
-		ModelFacade facade = ModelFacade.getInstance(null);
-		GameInfo[] games = facade.getGamesList();
-		PlayerInfo playerInfo = new PlayerInfo();
-		playerInfo.setPlayerInfo(selectColorView.getSelectedColor(), 
-								 facade.getLocalPlayer().getName(),
-								 facade.getLocalPlayer().getPlayerId());
-		
-		getJoinGameView().setGames(games, playerInfo);
-		
+		chosenGame = game;
 		getSelectColorView().showModal();
 	}
 
@@ -150,10 +153,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
+		
+		ModelFacade facade = ModelFacade.getInstance(null);
+		if(facade.canJoinGame(color, chosenGame)){
 		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+			facade.joinGame(color, chosenGame);
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			joinAction.execute();
+		}else{
+			messageView.setTitle("Join Game Error");
+			messageView.setMessage("Unable to join game.  Please try again");
+			messageView.showModal();
+		}
 	}
 
 }

@@ -808,37 +808,40 @@ public class ModelSerializer implements ModelSerializerInterface {
 		ArrayList<Player> playerList = new ArrayList<Player>();
 		
 		JsonArray array = object.getAsJsonArray("players");
+		
 		for(int i = 0; i < array.size(); i++){
-			JsonObject subObject = array.get(i).getAsJsonObject();
-			
-			JsonObject playerObject = subObject.getAsJsonObject("resources");
-			ResourceList resourceList = getResourceList(playerObject);
-			
-			playerObject = subObject.getAsJsonObject("oldDevCards");
-			DevCardList oldDevCards = getDevCardList(playerObject);
-			
-			playerObject = subObject.getAsJsonObject("newDevCards");
-			DevCardList newDevCards = getDevCardList(playerObject);
-			
-			int roads = subObject.get("roads").getAsInt();
-			int cities = subObject.get("cities").getAsInt();
-			int settlements = subObject.get("settlements").getAsInt();
-			int soldiers = subObject.get("soldiers").getAsInt();
-			int victoryPoints = subObject.get("victoryPoints").getAsInt();
-			int monuments = subObject.get("monuments").getAsInt();
-			boolean playedDevCard = subObject.get("playedDevCard").getAsBoolean();
-			boolean discarded = subObject.get("discarded").getAsBoolean();
-			int playerID = subObject.get("playerID").getAsInt();
-			int playerIndex = subObject.get("playerIndex").getAsInt();
-			String name = subObject.get("name").getAsString();
-			CatanColor playerColor = getPlayerColor(subObject.get("color").getAsString());
-			
-			Player player = new Player();
-			player.setPlayer(resourceList, oldDevCards, newDevCards, roads, 
-							 cities, settlements, soldiers, victoryPoints, 
-							 monuments, playedDevCard, discarded, playerID, 
-							 playerIndex, name, playerColor);
-			playerList.add(player);
+			if(!array.get(i).isJsonNull()){
+				JsonObject subObject = array.get(i).getAsJsonObject();
+				
+				JsonObject playerObject = subObject.getAsJsonObject("resources");
+				ResourceList resourceList = getResourceList(playerObject);
+				
+				playerObject = subObject.getAsJsonObject("oldDevCards");
+				DevCardList oldDevCards = getDevCardList(playerObject);
+				
+				playerObject = subObject.getAsJsonObject("newDevCards");
+				DevCardList newDevCards = getDevCardList(playerObject);
+				
+				int roads = subObject.get("roads").getAsInt();
+				int cities = subObject.get("cities").getAsInt();
+				int settlements = subObject.get("settlements").getAsInt();
+				int soldiers = subObject.get("soldiers").getAsInt();
+				int victoryPoints = subObject.get("victoryPoints").getAsInt();
+				int monuments = subObject.get("monuments").getAsInt();
+				boolean playedDevCard = subObject.get("playedDevCard").getAsBoolean();
+				boolean discarded = subObject.get("discarded").getAsBoolean();
+				int playerID = subObject.get("playerID").getAsInt();
+				int playerIndex = subObject.get("playerIndex").getAsInt();
+				String name = subObject.get("name").getAsString();
+				CatanColor playerColor = getPlayerColor(subObject.get("color").getAsString());
+				
+				Player player = new Player();
+				player.setPlayer(resourceList, oldDevCards, newDevCards, roads, 
+								 cities, settlements, soldiers, victoryPoints, 
+								 monuments, playedDevCard, discarded, playerID, 
+								 playerIndex, name, playerColor);
+				playerList.add(player);
+			}
 		}
 		
 		return playerList;
