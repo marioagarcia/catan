@@ -92,4 +92,11 @@ public class DevCardBank extends Observable implements DevCardBankInterface, Ser
 		return true;
 	}
 	
+	public int numberOfType(DevCardType type){
+		if(this.cards.containsKey(type)){
+			return this.cards.get(type);
+		}
+		return 0;
+	}
+	
 }
