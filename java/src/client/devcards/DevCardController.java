@@ -1,7 +1,14 @@
 package client.devcards;
 
+import java.util.Observable;
+import java.util.Observer;
+
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.*;
+import client.communication.facade.ModelFacade;
+import client.communication.server.ServerMoxy;
+import client.model.card.DevCardBank;
 
 
 /**
@@ -12,6 +19,19 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	
+	private class DevCardBankObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg) {
+			DevCardBank bank = (DevCardBank) arg;
+
+			for(DevCardType type : DevCardType.values()){
+				getPlayCardView().setCardAmount(type, bank.numberOfType(type));
+			}
+		}
+		
+	}
 	
 	/**
 	 * DevCardController constructor
@@ -29,6 +49,8 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
+		
+		ModelFacade.getInstance(null).getManager().getDevCardBank().addObserver(new DevCardBankObserver());
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -55,6 +77,11 @@ public class DevCardController extends Controller implements IDevCardController 
 	public void buyCard() {
 		
 		getBuyCardView().closeModal();
+		if(!ModelFacade.getInstance(null).canBuyDevCard()){
+			return;
+		}
+		
+		ModelFacade.getInstance(null).buyDevCard();
 	}
 
 	@Override
@@ -71,12 +98,18 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		
+		if(!ModelFacade.getInstance(null).canPlayMonopoly()){
+			return;
+		}
+		ModelFacade.getInstance(null).playMonopoly(resource);
 	}
 
 	@Override
 	public void playMonumentCard() {
-		
+		if(!ModelFacade.getInstance(null).canPlayMonument()){
+			return;
+		}
+		ModelFacade.getInstance(null).playMonument();
 	}
 
 	@Override
@@ -93,7 +126,10 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		if(!ModelFacade.getInstance(null).canPlayYearOfPlenty(resource1, resource2)){
+			return;
+		}
+		ModelFacade.getInstance(null).playYearOfPlenty(resource1, resource2);
 	}
 
 }
