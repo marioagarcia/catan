@@ -1,11 +1,13 @@
 package client.logging;
 
+import java.util.Observable;
+
 import client.logging.chat.GameChat;
 import client.logging.chat.GameChatInterface;
 import client.logging.history.HistoryLog;
 import client.logging.history.GameHistoryLogInterface;
 
-public class GameLog implements GameLogInterface {
+public class GameLog extends Observable implements GameLogInterface {
 
 	private GameHistoryLogInterface gameHistoryLog;
 	private GameChatInterface gameChat;
