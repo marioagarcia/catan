@@ -124,21 +124,21 @@ public class MapController extends Controller implements IMapController {
 		//Draw roads
 		for (Map.Entry<EdgeLocation, Road> road : m.getRoads().entrySet()){
 			
-			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().get(road.getValue().getPlayerIndex()).getColor();
+			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(road.getValue().getPlayerIndex()).getColor();
 			getView().placeRoad(road.getKey(), color);
 		}
 		
 		//Draw cities
 		for (Map.Entry<VertexLocation, City> city : m.getCities().entrySet()){
 			
-			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().get(city.getValue().getPlayerIndex()).getColor();
+			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(city.getValue().getPlayerIndex()).getColor();
 			getView().placeCity(city.getKey(), color);
 		}
 		
 		//Draw settlements
 		for (Map.Entry<VertexLocation, Settlement> settlement : m.getSettlements().entrySet()){
 			
-			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().get(settlement.getValue().getPlayerIndex()).getColor();
+			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(settlement.getValue().getPlayerIndex()).getColor();
 			getView().placeCity(settlement.getKey(), color);
 		}
 		
