@@ -8,16 +8,12 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.ModelSerializer;
-import shared.serialization.interfaces.SerializerResourceListInterface;
 import shared.serialization.parameters.*;
-import client.communication.server.ServerMoxy;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
 import client.logging.GameLog;
 import client.logging.chat.GameChat;
-import client.logging.history.GameHistoryLogInterface;
 import client.logging.history.HistoryLog;
-import client.logging.history.LogLineInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
@@ -28,6 +24,7 @@ import client.model.card.TradeInterface;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
+import client.model.player.Players;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 import client.roll.DiceRoller;
@@ -47,7 +44,7 @@ public class GameManager implements GameManagerInterface {
 	private BoardMap boardMap;
 	private DevCardBank devCardBank;
 	private ResourceCardBank resCardBank;
-	private ArrayList<Player> allPlayers;
+	private Players allPlayers;
 
 	public GameManager(ServerProxyInterface serverProxy) {
 
@@ -76,7 +73,7 @@ public class GameManager implements GameManagerInterface {
 		boardMap = new BoardMap();
 		devCardBank = new DevCardBank();
 		resCardBank = new ResourceCardBank();
-		allPlayers = new ArrayList<>();
+		allPlayers = new Players();
 		
 	}
 
@@ -238,7 +235,7 @@ public class GameManager implements GameManagerInterface {
 
 		resCardBank = game_data.getResourceCardBank();
 
-		allPlayers = game_data.getPlayerList();
+		//allPlayers = game_data.getPlayerList();
 		
 		gameLog = game_data.getGameLog();
 		
@@ -257,21 +254,53 @@ public class GameManager implements GameManagerInterface {
 			localPlayer.setRoads(p.getRoads());
 			localPlayer.setSettlements(p.getSettlements());
 			localPlayer.setSoldiers(p.getSoldiers());
-			localPlayer.setVictoryPoints(p.getVictoryPoints());			
+			localPlayer.setVictoryPoints(p.getVictoryPoints());
+			localPlayer.notifyObservers(localPlayer);
 		}
 		
 		if(!turnTracker.equals(game_data.turnTracker)) {
 			TurnTracker t = game_data.turnTracker;
 			turnTracker.setCurrentTurn(t.getCurrentTurn());
 			turnTracker.setStatus(t.getStatus());
-			//TODO turnTracker.setLongestRoad(t.getLongestRoadStatus());
-			//TODO turnTracker.setLargestArmy(t.getLargestArmy());
+			turnTracker.setPlayerWithLongestRoad(t.getPlayerWithLongestRoad());
+			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
+			turnTracker.notifyObservers(turnTracker);
 		}
 		
 		if(!boardMap.equals(game_data.boardMap)) {
 			BoardMap bm = game_data.boardMap;
+			boardMap.setCities(bm.getCities());
+			boardMap.setHexes(bm.getHexes());
+			boardMap.setPorts(bm.getPorts());
+			boardMap.setRadius(bm.getRadius());
+			boardMap.setRoads(bm.getRoads());
+			boardMap.setRobberLocation(bm.getRobberLocation());
+			boardMap.setSettlements(bm.getSettlements());
+			boardMap.notifyObservers(boardMap);
 		}
-
+		
+		if(!devCardBank.equals(game_data.devCardBank)) {
+			devCardBank.setCards(game_data.devCardBank.getCards());
+			devCardBank.notifyObservers(devCardBank);
+		}
+		
+		if(!resCardBank.equals(game_data.resourceCardBank)) {
+			resCardBank.setCards(game_data.resourceCardBank.getCards());
+			resCardBank.notifyObservers(resCardBank);
+		}
+		
+		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
+			allPlayers.setPlayerList(game_data.playerList);
+			allPlayers.notifyObservers(allPlayers);
+			
+		}
+		
+		if(!gameLog.equals(game_data.gameLog)) {
+			gameLog.setGameChat(game_data.gameLog.getGameChat());
+			gameLog.setGameHistoryLog(game_data.gameLog.getGameHistoryLog());
+			gameLog.notifyObservers(gameLog);
+		}
+		
 		return true;
 	}
 
@@ -745,7 +774,7 @@ public class GameManager implements GameManagerInterface {
 		return resCardBank;
 	}
 
-	public ArrayList<Player> getAllPlayers() {
+	public Players getAllPlayers() {
 		return allPlayers;
 	}
 

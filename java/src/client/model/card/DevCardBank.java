@@ -21,6 +21,14 @@ public class DevCardBank extends Observable implements DevCardBankInterface, Ser
 		this.cards = cards;
 	}
 
+	public Map<DevCardType, Integer> getCards() {
+		return cards;
+	}
+
+	public void setCards(Map<DevCardType, Integer> cards) {
+		this.cards = cards;
+	}
+
 	@Override
 	public void addCard(DevCardType card) {
 		if(this.cards.containsKey(card))

@@ -16,6 +16,7 @@ import client.manager.GameManager;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
+import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
@@ -85,12 +86,12 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canDiscardCards(SerializerResourceListInterface list) {
+	public boolean canDiscardCards(ResourceList list) {
 		return this.gameManager.canDiscardCards(list);
 	}
 
 	@Override
-	public boolean discardCards(SerializerResourceListInterface list) {
+	public boolean discardCards(ResourceList list) {
 		return this.gameManager.discardCards(list);
 	}
 

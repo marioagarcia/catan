@@ -16,6 +16,14 @@ public class ResourceCardBank extends Observable implements ResourceCardBankInte
 		this.cards = new HashMap<ResourceType, Integer>();
 	}
 	
+	public Map<ResourceType, Integer> getCards() {
+		return cards;
+	}
+
+	public void setCards(Map<ResourceType, Integer> cards) {
+		this.cards = cards;
+	}
+
 	public int getNumberOfResourcesByType(ResourceType type){
 		if(this.cards.containsKey(type)){
 			return this.cards.get(type);

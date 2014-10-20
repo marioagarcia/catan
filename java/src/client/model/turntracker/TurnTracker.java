@@ -48,6 +48,22 @@ public class TurnTracker extends Observable implements TurntrackerInterface, GMT
 		return this.playerWithLongestRoad;
 	}
 
+	public int getPlayerWithLongestRoad() {
+		return playerWithLongestRoad;
+	}
+
+	public void setPlayerWithLongestRoad(int playerWithLongestRoad) {
+		this.playerWithLongestRoad = playerWithLongestRoad;
+	}
+
+	public int getPlayerWithLargestArmy() {
+		return playerWithLargestArmy;
+	}
+
+	public void setPlayerWithLargestArmy(int playerWithLargestArmy) {
+		this.playerWithLargestArmy = playerWithLargestArmy;
+	}
+
 	@Override
 	public int getLargestArmy() {
 		return this.playerWithLargestArmy;
