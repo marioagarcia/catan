@@ -1,7 +1,11 @@
 package client.join;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.player.PlayerInfo;
 
 
 /**
@@ -25,9 +29,21 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		String[] listAI = {"Butthole", "Buttface", "Butthead", "Buttwad"};
-		getView().setAIChoices(listAI);
+		PlayerInfo[] players = getPlayerArray(facade.getPlayers());
 		
+		getView().setAIChoices(listAI);
+		getView().setPlayers(players);
 		getView().showModal();
+	}
+	
+	public PlayerInfo[] getPlayerArray(List<PlayerInfo> playerList){
+		PlayerInfo[] players = new PlayerInfo[playerList.size()];
+		
+		for(int i = 0; i < playerList.size(); i++){
+			players[i] = playerList.get(i);
+		}
+		
+		return players;
 	}
 
 	@Override
