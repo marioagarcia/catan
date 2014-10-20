@@ -1,5 +1,7 @@
 package client.communication.facade;
 
+import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -256,6 +258,10 @@ public class ModelFacade implements ModelFacadeInterface {
 	
 	public GameInfo[] getGamesList(){
 		return gameManager.populateGameList();
+	}
+	
+	public ArrayList<Player> getPlayers(){
+		return gameManager.getAllPlayers();
 	}
 	
 	public GameManager getManager(){

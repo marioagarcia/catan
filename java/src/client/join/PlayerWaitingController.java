@@ -1,6 +1,7 @@
 package client.join;
 
 import client.base.*;
+import client.communication.facade.ModelFacade;
 
 
 /**
@@ -21,7 +22,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
-
+		ModelFacade facade = ModelFacade.getInstance(null);
+		
+		String[] listAI = {"Butthole", "Buttface", "Butthead", "Buttwad"};
+		getView().setAIChoices(listAI);
+		
 		getView().showModal();
 	}
 
