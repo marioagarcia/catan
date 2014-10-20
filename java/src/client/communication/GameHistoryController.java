@@ -7,6 +7,7 @@ import client.communication.facade.ModelFacade;
 import client.logging.GameLog;
 import client.logging.history.LogLineInterface;
 import client.model.player.Player;
+import client.model.player.Players;
 import shared.definitions.*;
 
 
@@ -38,7 +39,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	}
 
 	private void update(GameLog game_log){
-		ArrayList<Player> players = ModelFacade.getInstance(null).getManager().getAllPlayers();
+		Players players = ModelFacade.getInstance(null).getManager().getAllPlayers();
 		
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		
@@ -48,7 +49,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 			
 			CatanColor playerColor = CatanColor.WHITE;
 			
-			for(Player player : players){
+			for(Player player : players.getPlayerList()){
 				if(player.getName().equals(line.getPlayerName())){
 					playerColor = player.getColor();
 				}
