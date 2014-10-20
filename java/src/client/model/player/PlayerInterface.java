@@ -1,8 +1,8 @@
 package client.model.player;
 
+import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import shared.definitions.CatanColor;
-import shared.serialization.interfaces.SerializerResourceListInterface;
 
 /**
  * Represents a Player in the game
@@ -51,7 +51,7 @@ public interface PlayerInterface
 	 * @param list the list of cards the player wants to discard
 	 * @return true if the player has the cards in the list
 	 */
-	public boolean canDiscardCards(SerializerResourceListInterface list);
+	public boolean canDiscardCards(ResourceList list);
 	
 	/**
 	 * The number of cards in the player's resource deck

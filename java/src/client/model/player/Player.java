@@ -5,7 +5,6 @@ import java.util.Observable;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerPlayerInterface;
-import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.manager.interfaces.GMPlayerInterface;
 import client.model.card.DevCardList;
 import client.model.card.MaritimeTrade;
@@ -113,7 +112,7 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		this.playerId = playerId;
 	}
 
-	public SerializerResourceListInterface getResourceList() {
+	public ResourceList getResourceList() {
 		return resourceList;
 	}
 
@@ -369,7 +368,7 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	}
 
 	@Override
-	public boolean canDiscardCards(SerializerResourceListInterface list){
+	public boolean canDiscardCards(ResourceList list){
 		return (!discarded && resourceList.totalNumberCards() > 7);
 	}
 	

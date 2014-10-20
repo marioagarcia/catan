@@ -105,9 +105,17 @@ public class GameManager implements GameManagerInterface {
 
 		String json_string = modelSerializer.serializeCredentials(credentials);
 
-		serverProxy.register(json_string);
-
-		return true;
+		if (!serverProxy.register(json_string).equals("400"))
+		{
+			localPlayer = new Player();
+			localPlayer.setName(username);
+			localPlayer.setPlayerId(serverProxy.getPlayerId());
+			
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	public boolean validatePlayer() {
@@ -237,7 +245,31 @@ public class GameManager implements GameManagerInterface {
 		//update the model classes and fire up the notifications of each
 		
 		if(!localPlayer.equals(game_data.getPlayerList().get(player_index))) {
-			
+			Player p = game_data.getPlayerList().get(player_index);
+			localPlayer.setCities(p.getCities());
+			localPlayer.setColor(p.getColor());
+			localPlayer.setMonuments(p.getMonuments());
+			localPlayer.setNewDevCards(p.getNewDevCards());
+			localPlayer.setOldDevCards(p.getOldDevCards());
+			localPlayer.setDiscarded(p.isDiscarded());
+			localPlayer.setPlayedDevCard(p.isPlayedDevCard());
+			localPlayer.setResourceList(p.getResourceList());
+			localPlayer.setRoads(p.getRoads());
+			localPlayer.setSettlements(p.getSettlements());
+			localPlayer.setSoldiers(p.getSoldiers());
+			localPlayer.setVictoryPoints(p.getVictoryPoints());			
+		}
+		
+		if(!turnTracker.equals(game_data.turnTracker)) {
+			TurnTracker t = game_data.turnTracker;
+			turnTracker.setCurrentTurn(t.getCurrentTurn());
+			turnTracker.setStatus(t.getStatus());
+			//TODO turnTracker.setLongestRoad(t.getLongestRoadStatus());
+			//TODO turnTracker.setLargestArmy(t.getLargestArmy());
+		}
+		
+		if(!boardMap.equals(game_data.boardMap)) {
+			BoardMap bm = game_data.boardMap;
 		}
 
 		return true;
@@ -608,12 +640,12 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean canDiscardCards(SerializerResourceListInterface list) {
+	public boolean canDiscardCards(ResourceList list) {
 		return (localPlayer.canDiscardCards(list) && (turnTracker.getStatus() == Status.PLAYING || turnTracker.getStatus() == Status.DISCARDING));
 	}
 
 	@Override
-	public boolean discardCards(SerializerResourceListInterface list) {
+	public boolean discardCards(ResourceList list) {
 		int player_index = localPlayer.getPlayerIndex();
 
 		String json_string = modelSerializer.serializeDiscardCards(new DiscardCardsParameters(player_index, list));
