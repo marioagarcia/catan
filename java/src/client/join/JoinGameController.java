@@ -144,7 +144,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 		chosenGame = game;
-		disableColors();
+		if(chosenGame != null){
+			disableColors();
+		}
 		((SelectColorView)getSelectColorView()).disableJoinButton();
 		getSelectColorView().showModal();
 	}
@@ -170,7 +172,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void joinGame(CatanColor color) {
 		
 		ModelFacade facade = ModelFacade.getInstance(null);
-		if(facade.canJoinGame(color, chosenGame)){
+		if(chosenGame == null){
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			joinAction.execute();
+		}else if(facade.canJoinGame(color, chosenGame)){
 		// If join succeeded
 			facade.joinGame(color, chosenGame);
 			getSelectColorView().closeModal();
