@@ -1,6 +1,7 @@
 package client.communication.facade;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -17,6 +18,7 @@ import client.model.GameInfo;
 import client.model.card.MaritimeTrade;
 import client.model.card.TradeInterface;
 import client.model.player.Player;
+import client.model.player.PlayerInfo;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
@@ -260,8 +262,8 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.populateGameList();
 	}
 	
-	public ArrayList<Player> getPlayers(){
-		return gameManager.getAllPlayers();
+	public List<PlayerInfo> getPlayers(){
+		return gameManager.getCurrentGame().getPlayers();
 	}
 	
 	public GameManager getManager(){
