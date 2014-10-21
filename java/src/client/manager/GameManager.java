@@ -247,7 +247,7 @@ public class GameManager implements GameManagerInterface {
 			turnTracker.setStatus(t.getStatus());
 			turnTracker.setPlayerWithLongestRoad(t.getPlayerWithLongestRoad());
 			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
-			turnTracker.notifyObservers(turnTracker);
+			turnTracker.update();
 		}
 		
 		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
@@ -266,9 +266,8 @@ public class GameManager implements GameManagerInterface {
 			boardMap.setRobberLocation(bm.getRobberLocation());
 			boardMap.setSettlements(bm.getSettlements());
 			
-			boardMap.setHasChanged(); //Notify observers does nothing unless the protected method HasChanged has been called
+			boardMap.update(); //Notify observers does nothing unless the protected method HasChanged has been called
 			boardMap.notifyObservers(boardMap);
-			boardMap.clearHasChanged();
 		}
 
 		if(!devCardBank.equals(game_data.devCardBank)) {

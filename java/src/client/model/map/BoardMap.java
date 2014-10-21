@@ -380,14 +380,8 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		return true;
 	}
 	
-	public void setHasChanged(){
+	public void update(){
 		this.setChanged();
+		this.notifyObservers();
 	}
-	
-	public void clearHasChanged(){
-		this.clearChanged();
-	}
-	
-	
-
 }
