@@ -334,7 +334,7 @@ public class GameManager implements GameManagerInterface {
 		}
 	}
 	
-	public List<String> listAIPlayers() {
+	public String[] listAIPlayers() {
 		String json_string = serverProxy.getAIList();
 		return modelSerializer.deserializeGetListAI(json_string);		
 	}

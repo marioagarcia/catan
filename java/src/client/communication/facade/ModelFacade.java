@@ -256,6 +256,14 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.saveGame();
 	}
 	
+	public String[] getListAI(){
+		return gameManager.listAIPlayers();
+	}
+	
+	public boolean addAI(String botPlayer){
+		return gameManager.addAIPlayer(botPlayer);
+	}
+	
 	public Player getLocalPlayer(){
 		return gameManager.getLocalPlayer();
 	}

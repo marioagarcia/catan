@@ -92,7 +92,7 @@ public interface GameManagerInterface
 	 * Lists the available AI types that may be added to a game
 	 * @return
 	 */
-	public List<String> listAIPlayers();
+	public String[] listAIPlayers();
 	
 	/**
 	 * There are no preconditions so just checks for a valid palyer and game cookie
