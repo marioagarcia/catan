@@ -61,7 +61,9 @@ public class GameInfo extends Observable implements SerializerGameInfoInterface
 		return Collections.unmodifiableList(players);
 	}
 	
-	public boolean playerCanJoin(Player player) {
+	public boolean playerCanJoin(Player localPlayer) {
+		PlayerInfo player = new PlayerInfo();
+		player.setPlayerInfo(localPlayer.getColor(), localPlayer.getName(), localPlayer.getId());
 		
 		boolean color_available = true;
 		

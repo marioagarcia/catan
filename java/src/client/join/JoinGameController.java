@@ -195,8 +195,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 			joinAction.execute();
-		}else if(chosenGame.getPlayers().contains(playerInfo)){
-			System.out.println("HERE");
 		}else{
 			messageView.setTitle("Join Game Error");
 			messageView.setMessage("Unable to join game.  Please try again");
