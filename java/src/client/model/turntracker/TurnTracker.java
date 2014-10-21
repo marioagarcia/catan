@@ -139,5 +139,10 @@ public class TurnTracker extends Observable implements TurntrackerInterface, GMT
 			return false;
 		return true;
 	}
+	
+	public void update(){
+		this.setChanged();
+		this.notifyObservers();
+	}
 
 }
