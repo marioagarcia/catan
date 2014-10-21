@@ -24,7 +24,7 @@ public class DevCardController extends Controller implements IDevCardController 
 
 		@Override
 		public void update(Observable o, Object arg) {
-			DevCardBank bank = (DevCardBank) arg;
+			DevCardBank bank = (DevCardBank) o;
 
 			for(DevCardType type : DevCardType.values()){
 				getPlayCardView().setCardAmount(type, bank.numberOfType(type));
