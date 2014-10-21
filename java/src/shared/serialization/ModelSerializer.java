@@ -215,14 +215,15 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return jsonString;
 	}
 	
-	public ArrayList<String> deserializeGetListAI(String jsonString){
-		ArrayList<String> listAI = new ArrayList<String>();
+	public String[] deserializeGetListAI(String jsonString){
 		
 		JsonParser parser = new JsonParser();
 		JsonArray array = parser.parse(jsonString).getAsJsonArray();
 		
+		String[] listAI = new String[array.size()];
+		
 		for(int i = 0; i < array.size(); i++){
-			listAI.add(array.get(i).getAsString());
+			listAI[i] = array.get(i).getAsString();
 		}
 		
 		return listAI;

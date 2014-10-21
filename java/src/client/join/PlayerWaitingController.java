@@ -30,7 +30,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void start() {
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
-		String[] listAI = {"Butthole", "Buttface", "Butthead", "Buttwad"};
+		//String[] listAI = {"Butthole", "Buttface", "Butthead", "Buttwad"};
+		String[] listAI = facade.getListAI();
 		PlayerInfo[] players = getPlayerArray(facade.getPlayers());
 		
 		getView().setAIChoices(listAI);
@@ -58,8 +59,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		String ai = getView().getSelectedAI();
-		
-		getView().closeModal();
+		if(facade.addAI(ai)){
+			start();
+		}
 	}
 
 }
