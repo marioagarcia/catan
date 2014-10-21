@@ -75,6 +75,7 @@ public class GameManager implements GameManagerInterface {
 		devCardBank = new DevCardBank();
 		resCardBank = new ResourceCardBank();
 		allPlayers = new Players();
+		
 
 	}
 
@@ -248,6 +249,12 @@ public class GameManager implements GameManagerInterface {
 			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
 			turnTracker.notifyObservers(turnTracker);
 		}
+		
+		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
+			allPlayers.setPlayerList(game_data.playerList);
+			allPlayers.notifyObservers(allPlayers);
+
+		}
 
 		if(!boardMap.equals(game_data.boardMap)) {
 			BoardMap bm = game_data.boardMap;
@@ -258,7 +265,10 @@ public class GameManager implements GameManagerInterface {
 			boardMap.setRoads(bm.getRoads());
 			boardMap.setRobberLocation(bm.getRobberLocation());
 			boardMap.setSettlements(bm.getSettlements());
+			
+			boardMap.setHasChanged(); //Notify observers does nothing unless the protected method HasChanged has been called
 			boardMap.notifyObservers(boardMap);
+			boardMap.clearHasChanged();
 		}
 
 		if(!devCardBank.equals(game_data.devCardBank)) {
@@ -269,12 +279,6 @@ public class GameManager implements GameManagerInterface {
 		if(!resCardBank.equals(game_data.resourceCardBank)) {
 			resCardBank.setCards(game_data.resourceCardBank.getCards());
 			resCardBank.notifyObservers(resCardBank);
-		}
-
-		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
-			allPlayers.setPlayerList(game_data.playerList);
-			allPlayers.notifyObservers(allPlayers);
-
 		}
 
 		if(!gameLog.equals(game_data.gameLog)) {

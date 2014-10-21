@@ -42,9 +42,12 @@ public class MapController extends Controller implements IMapController {
 		tracker.addObserver(new TrackerObserver());
 		
 		map = ModelFacade.getInstance(null).getManager().getBoardMap();
-		map.addObserver(new MapObserver());
+		MapObserver m = new MapObserver();
+		map.addObserver(m);
 		
 		setRobView(robView);
+		
+		System.out.println("Map controller created");
 	}
 	
 	private class TrackerObserver implements Observer{
@@ -52,6 +55,7 @@ public class MapController extends Controller implements IMapController {
 		@Override
 		public void update(Observable o, Object arg){
 			tracker = (TurnTracker)o;
+			System.out.println("Turn Tracker updated");
 			
 			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
 				
@@ -93,6 +97,7 @@ public class MapController extends Controller implements IMapController {
 		public void update(Observable o, Object arg){
 			map = (BoardMap)o;
 			
+			System.out.println("Map updated");
 			initFromModel(map);
 		}
 	}
@@ -123,7 +128,7 @@ public class MapController extends Controller implements IMapController {
 		
 		//Draw roads
 		for (Map.Entry<EdgeLocation, Road> road : m.getRoads().entrySet()){
-			
+
 			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(road.getValue().getPlayerIndex()).getColor();
 			getView().placeRoad(road.getKey(), color);
 		}
