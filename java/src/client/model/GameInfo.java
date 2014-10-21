@@ -4,6 +4,7 @@ import java.util.*;
 
 import shared.definitions.CatanColor;
 import shared.serialization.interfaces.SerializerGameInfoInterface;
+import client.model.player.Player;
 import client.model.player.PlayerInfo;
 
 /**
@@ -60,15 +61,12 @@ public class GameInfo extends Observable implements SerializerGameInfoInterface
 		return Collections.unmodifiableList(players);
 	}
 	
-	public boolean playerCanJoin(PlayerInfo player) {
+	public boolean playerCanJoin(Player player) {
 		
 		boolean color_available = true;
 		
 		for (PlayerInfo p : players)
-		{
-			System.out.println(player.getName() + " : " + player.getId());
-			System.out.println(p.getName() + " : " + p.getId() + "\n");
-			
+		{	
 			if (p.getColor() == player.getColor())
 			{
 				if(!p.equals(player))
