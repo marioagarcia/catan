@@ -60,7 +60,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		
 		String ai = getView().getSelectedAI();
 		if(facade.addAI(ai)){
-			start();
+			
 		}
 	}
 
