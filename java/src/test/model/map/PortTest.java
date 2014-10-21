@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import shared.definitions.ResourceType;
+import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -16,7 +16,7 @@ public class PortTest {
 	@Test
 	public void testCRUD(){
 		//create
-		ResourceType resourceType = ResourceType.BRICK;
+		PortType resourceType = PortType.BRICK;
 		HexLocation hexLocation = new HexLocation(5,5);
 		EdgeDirection edgeDirection = EdgeDirection.North;
 		EdgeLocation location = new EdgeLocation(hexLocation, edgeDirection);
@@ -30,7 +30,7 @@ public class PortTest {
 		assertEquals(location, port.getLocation());
 		
 		//update
-		ResourceType secondResourceType = ResourceType.ORE;
+		PortType secondResourceType = PortType.ORE;
 		HexLocation secondHexLocation = new HexLocation(4,4);
 		EdgeDirection secondEdgeDirection = EdgeDirection.South;
 		EdgeLocation secondLocation = new EdgeLocation(secondHexLocation, secondEdgeDirection);

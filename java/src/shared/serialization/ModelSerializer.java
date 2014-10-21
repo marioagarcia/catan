@@ -1,8 +1,10 @@
 package shared.serialization;
 
 import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -488,12 +490,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 			
 			int ratio = subObject.get("ratio").getAsInt();
 			
-			ResourceType resource;
-			if(subObject.getAsJsonPrimitive("resource") == null){
-				resource = null;
-			}else{
-				resource = getResourceType(subObject);
-			}
+			PortType resource;
+			resource = getPortType(subObject);
 
 			EdgeDirection edgeDirection = getEdgeDirection(subObject);
 			HexLocation hexLocation = getHexLocation((JsonObject)subObject.get("location"));
@@ -679,7 +677,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return playerColor;
 	}
 	
-	public ResourceType getResourceType(JsonObject object){
+/*	public ResourceType getResourceType(JsonObject object){
 		ResourceType resource = null;
 		
 		switch(object.getAsJsonPrimitive("resource").getAsString()){
@@ -698,6 +696,34 @@ public class ModelSerializer implements ModelSerializerInterface {
 		case "wheat":
 			resource = ResourceType.WHEAT;
 			break;
+		}
+		
+		return resource;
+	}*/
+	
+	public PortType getPortType(JsonObject object){
+		PortType resource = null;
+		
+		if(object.getAsJsonPrimitive("resource") == null){
+			resource = PortType.THREE;
+		}else{
+			switch(object.getAsJsonPrimitive("resource").getAsString()){
+			case "brick":
+				resource = PortType.BRICK;
+				break;
+			case "wood":
+				resource = PortType.WOOD;
+				break;
+			case "ore":
+				resource = PortType.ORE;
+				break;
+			case "sheep":
+				resource = PortType.SHEEP;
+				break;
+			case "wheat":
+				resource = PortType.WHEAT;
+				break;
+			}
 		}
 		
 		return resource;

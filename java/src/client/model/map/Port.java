@@ -1,26 +1,26 @@
 package client.model.map;
 
-import shared.definitions.ResourceType;
+import shared.definitions.PortType;
 import shared.locations.EdgeLocation;
 import shared.serialization.interfaces.SerializerPortInterface;
 
 public class Port implements SerializerPortInterface {
 
-	private ResourceType resource; // If omitted, then it's for any resource, Optional
+	private PortType resource; // If omitted, then it's for any resource, Optional
 	private EdgeLocation location;
 	private int ratio;
 	
-	public Port(ResourceType resource, EdgeLocation location, int ratio){
+	public Port(PortType resource, EdgeLocation location, int ratio){
 		this.resource = resource;
 		this.location = location;
 		this.ratio = ratio;
 	}
 
-	public ResourceType getResource() {
+	public PortType getResource() {
 		return resource;
 	}
 
-	public void setResource(ResourceType resource) {
+	public void setResource(PortType resource) {
 		this.resource = resource;
 	}
 
@@ -41,7 +41,7 @@ public class Port implements SerializerPortInterface {
 	}
 
 	@Override
-	public void setPort(int ratio, ResourceType resource, EdgeLocation direction) {
+	public void setPort(int ratio, PortType resource, EdgeLocation direction) {
 		
 		this.ratio = ratio;
 		this.resource = resource;
