@@ -5,7 +5,9 @@ import java.util.List;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.player.Player;
 import client.model.player.PlayerInfo;
+import client.model.player.Players;
 
 
 /**
@@ -36,11 +38,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		getView().showModal();
 	}
 	
-	public PlayerInfo[] getPlayerArray(List<PlayerInfo> playerList){
+	public PlayerInfo[] getPlayerArray(Players playerObj){
+		List<Player> playerList = playerObj.getPlayerList();
+		
 		PlayerInfo[] players = new PlayerInfo[playerList.size()];
 		
 		for(int i = 0; i < playerList.size(); i++){
-			players[i] = playerList.get(i);
+			PlayerInfo playerInfo = new PlayerInfo();
+			playerInfo.setPlayerInfo(playerList.get(i).getColor(), playerList.get(i).getName(), playerList.get(i).getId());
+			
+			players[i] = playerInfo;
 		}
 		
 		return players;
@@ -48,8 +55,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
-
-		// TEMPORARY
+		ModelFacade facade = ModelFacade.getInstance(null);
+		
+		String ai = getView().getSelectedAI();
+		
 		getView().closeModal();
 	}
 

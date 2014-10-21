@@ -20,6 +20,7 @@ import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
+import client.model.player.Players;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
@@ -263,8 +264,8 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.populateGameList();
 	}
 	
-	public List<PlayerInfo> getPlayers(){
-		return gameManager.getCurrentGame().getPlayers();
+	public Players getPlayers(){
+		return gameManager.getAllPlayers();
 	}
 	
 	public GameManager getManager(){
