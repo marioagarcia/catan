@@ -677,30 +677,6 @@ public class ModelSerializer implements ModelSerializerInterface {
 		return playerColor;
 	}
 	
-/*	public ResourceType getResourceType(JsonObject object){
-		ResourceType resource = null;
-		
-		switch(object.getAsJsonPrimitive("resource").getAsString()){
-		case "brick":
-			resource = ResourceType.BRICK;
-			break;
-		case "wood":
-			resource = ResourceType.WOOD;
-			break;
-		case "ore":
-			resource = ResourceType.ORE;
-			break;
-		case "sheep":
-			resource = ResourceType.SHEEP;
-			break;
-		case "wheat":
-			resource = ResourceType.WHEAT;
-			break;
-		}
-		
-		return resource;
-	}*/
-	
 	public PortType getPortType(JsonObject object){
 		PortType resource = null;
 		
