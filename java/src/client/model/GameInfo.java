@@ -66,9 +66,13 @@ public class GameInfo extends Observable implements SerializerGameInfoInterface
 		
 		for (PlayerInfo p : players)
 		{
+			System.out.println(player.getName() + " : " + player.getId());
+			System.out.println(p.getName() + " : " + p.getId() + "\n");
+			
 			if (p.getColor() == player.getColor())
 			{
-				color_available = false;
+				if(!p.equals(player))
+					color_available = false;
 			}
 		}
 		

@@ -88,8 +88,8 @@ public class PlayerInfo implements SerializerPlayerInfoInterface
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerInfo other = (PlayerInfo) obj;
-		if (color != other.color)
-			return false;
+		//if (color != other.color)
+		//	return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {

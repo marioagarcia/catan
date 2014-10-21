@@ -152,6 +152,8 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		buttonPanel.add(createButton);
 		buttonPanel.add(tempJoinButton);		
 		this.add(buttonPanel, BorderLayout.SOUTH);
+		
+		disableTempJoinButton();
 	}
 
 	@Override
@@ -167,6 +169,11 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		this.localPlayer = localPlayer;
 		this.removeAll();
 		this.initialize();
+	}
+	
+	public void disableTempJoinButton(){
+		tempJoinButton.setEnabled(false);
+		tempJoinButton.setVisible(false);
 	}
 	
 	private ActionListener actionListener = new ActionListener()

@@ -8,6 +8,7 @@ import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.misc.*;
 import client.model.GameInfo;
+import client.model.player.Player;
 import client.model.player.PlayerInfo;
 
 
@@ -22,6 +23,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IAction joinAction;
 	
 	private GameInfo chosenGame;
+	private PlayerInfo playerInfo;
 	
 	/**
 	 * JoinGameController constructor
@@ -43,18 +45,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public IJoinGameView getJoinGameView() {
 		
 		return (IJoinGameView)super.getView();
-	}
-	
-	public void getGamesList(){
-		ModelFacade facade = ModelFacade.getInstance(null);
-		GameInfo[] games = facade.getGamesList();
-		PlayerInfo playerInfo = new PlayerInfo();
-		playerInfo.setPlayerInfo(selectColorView.getSelectedColor(), 
-								 facade.getLocalPlayer().getName(),
-								 facade.getLocalPlayer().getPlayerId());
-		
-		
-		getJoinGameView().setGames(games, playerInfo);
 	}
 	
 	/**
@@ -107,7 +97,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		getGamesList();
+		populateGamesList();
 		getJoinGameView().showModal();
 	}
 
@@ -132,7 +122,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		Boolean randPorts = newGameView.getUseRandomPorts();
 		
 		if(facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
-			getGamesList();
+			populateGamesList();
 			getNewGameView().closeModal();
 		}else{
 			messageView.setTitle("Create Game Error");
@@ -145,13 +135,37 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) {
 		chosenGame = game;
 		if(chosenGame != null){
-			disableColors();
+			disableTakenColors();
 		}
-		((SelectColorView)getSelectColorView()).disableJoinButton();
-		getSelectColorView().showModal();
+		if(chosenGame.getPlayers().contains(playerInfo)){
+			//If the player is in the game, disable all colors
+			((SelectColorView)getSelectColorView()).disableAllColors();
+			((SelectColorView)getSelectColorView()).setColorEnabled(getPlayerColor(), true);
+			getSelectColorView().showModal();
+		}else{
+			//If the player is not in the game, disable the join button until an available color is chosen
+			((SelectColorView)getSelectColorView()).disableJoinButton();
+			getSelectColorView().showModal();
+		}
 	}
 	
-	public void disableColors(){
+	public CatanColor getPlayerColor(){
+		int playerIndex = chosenGame.getPlayers().indexOf(playerInfo);
+		return chosenGame.getPlayers().get(playerIndex).getColor();
+	}
+	
+	public void populateGamesList(){
+		ModelFacade facade = ModelFacade.getInstance(null);
+		GameInfo[] games = facade.getGamesList();
+		PlayerInfo player = new PlayerInfo();
+		player.setPlayerInfo(selectColorView.getSelectedColor(), 
+								 facade.getLocalPlayer().getName(),
+								 facade.getLocalPlayer().getPlayerId());
+		playerInfo = player;
+		getJoinGameView().setGames(games, player);
+	}
+	
+	public void disableTakenColors(){
 		List<PlayerInfo> players = chosenGame.getPlayers();
 		for(int i = 0; i < players.size(); i++){
 			if(players.get(i) != null){
@@ -170,7 +184,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		
 		ModelFacade facade = ModelFacade.getInstance(null);
 		if(chosenGame == null){
 			getSelectColorView().closeModal();
@@ -182,6 +195,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 			joinAction.execute();
+		}else if(chosenGame.getPlayers().contains(playerInfo)){
+			System.out.println("HERE");
 		}else{
 			messageView.setTitle("Join Game Error");
 			messageView.setMessage("Unable to join game.  Please try again");
