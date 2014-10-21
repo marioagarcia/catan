@@ -1,6 +1,7 @@
 package client.manager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -160,7 +161,7 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
-		return (game.validateColor(color));
+		return (game.playerCanJoin(localPlayer));
 	}
 
 	@Override
@@ -219,21 +220,7 @@ public class GameManager implements GameManagerInterface {
 		}
 		
 		player_index = localPlayer.getPlayerIndex();
-
-//		localPlayer = game_data.getPlayerList().get(player_index);
-//
-//		turnTracker = game_data.getTurnTracker();
-//
-//		boardMap = game_data.getBoardMap();
-//
-//		devCardBank = game_data.getDevCardBank();
-//
-//		resCardBank = game_data.getResourceCardBank();
-//
-//		//allPlayers = game_data.getPlayerList();
-//		
-//		gameLog = game_data.getGameLog();
-
+		
 		//update the model classes and fire up the notifications of each
 
 		if(!localPlayer.equals(game_data.getPlayerList().get(player_index))) {
@@ -330,6 +317,22 @@ public class GameManager implements GameManagerInterface {
 		serverProxy.postGameCommands(json_string);
 
 		return true;
+	}
+	
+	public boolean addAIPlayer(String ai_type) {
+		AIRequestParameters param = new AIRequestParameters(ai_type);
+		String json_string = modelSerializer.serializeAIRequest(param);
+		if(!serverProxy.postNewAI(json_string).equals("400")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public List<String> listAIPlayers() {
+		String json_string = serverProxy.getAIList();
+		return modelSerializer.deserializeGetListAI(json_string);		
 	}
 
 	@Override

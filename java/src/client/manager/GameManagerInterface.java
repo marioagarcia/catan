@@ -1,4 +1,6 @@
 package client.manager;
+import java.util.List;
+
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.*;
@@ -79,6 +81,18 @@ public interface GameManagerInterface
 	 * false otherwise  
 	 */
 	public boolean postGameCommands();
+	
+	/**
+	 * Adds an AI to the game
+	 * @return true if it was correctly added to the current game
+	 */
+	public boolean addAIPlayer(String ai_type);
+	
+	/**
+	 * Lists the available AI types that may be added to a game
+	 * @return
+	 */
+	public List<String> listAIPlayers();
 	
 	/**
 	 * There are no preconditions so just checks for a valid palyer and game cookie
