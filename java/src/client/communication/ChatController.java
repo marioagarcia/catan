@@ -1,12 +1,22 @@
 package client.communication;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.definitions.CatanColor;
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.logging.GameLog;
 import client.logging.chat.GameChatInterface;
+import client.logging.chat.Message;
+import client.logging.chat.MessageDoesNotExistException;
+import client.logging.chat.MessageInterface;
+import client.model.player.Player;
+import client.model.player.Players;
 
 
 /**
@@ -34,7 +44,31 @@ public class ChatController extends Controller implements IChatController {
 	}
 	
 	private void updateChat(GameChatInterface gameChat) {
+		Players players = facade.getManager().getAllPlayers();
+		Map<String, CatanColor> colorByIdMap = new HashMap<String, CatanColor>();
+		List<LogEntry> entries = new ArrayList<LogEntry>();
 		
+		for(Player player : players.getPlayerList()) {
+			colorByIdMap.put(player.getName(), player.getColor());
+		}
+		
+		for (int message_index = 0; message_index < gameChat.getSize(); message_index++) {
+			MessageInterface message = null;
+			
+			try {
+				
+				message = gameChat.getMessage(message_index);
+				
+			} catch (MessageDoesNotExistException e) {
+				e.printStackTrace();
+			}
+			
+			LogEntry log_entry = new LogEntry(colorByIdMap.get(message.getPlayerName()), message.getMessageContent());
+			
+			entries.add(log_entry);
+		}
+		
+		getView().setEntries(entries);
 	}
 
 	private Observer chatObserver = new Observer() {

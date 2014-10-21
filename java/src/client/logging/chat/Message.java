@@ -27,4 +27,14 @@ public class Message implements MessageInterface, SerializerMessageInterface {
 			this.playerName = playerName;
 			this.content = message;
 		}
+
+		@Override
+		public String getMessageContent() {
+			return content;
+		}
+
+		@Override
+		public String getPlayerName() {
+			return playerName;
+		}
 }

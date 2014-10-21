@@ -56,14 +56,14 @@ public class GameManager implements GameManagerInterface {
 		modelSerializer = new ModelSerializer();
 
 		gameList = new ArrayList<>();
-		
+
 		initModelClasses();
 	}
-	
+
 	private void initModelClasses() {
-		
+
 		//initialize the model classes so that the controllers can register as observers
-		
+
 		diceRoller = new DiceRoller();
 		localPlayer = new Player();
 		currentGame = new GameInfo();
@@ -74,7 +74,7 @@ public class GameManager implements GameManagerInterface {
 		devCardBank = new DevCardBank();
 		resCardBank = new ResourceCardBank();
 		allPlayers = new Players();
-		
+
 	}
 
 	@Override
@@ -82,13 +82,13 @@ public class GameManager implements GameManagerInterface {
 		CredentialsParameters credentials = new CredentialsParameters(username, password);
 
 		String json_string = modelSerializer.serializeCredentials(credentials);
-		
+
 		if (!serverProxy.login(json_string).equals("400"))
 		{
 			localPlayer = new Player();
 			localPlayer.setName(username);
 			localPlayer.setPlayerId(serverProxy.getPlayerId());
-			
+
 			return true;
 		}
 		else{
@@ -107,7 +107,7 @@ public class GameManager implements GameManagerInterface {
 			localPlayer = new Player();
 			localPlayer.setName(username);
 			localPlayer.setPlayerId(serverProxy.getPlayerId());
-			
+
 			return true;
 		}
 		else{
@@ -130,14 +130,14 @@ public class GameManager implements GameManagerInterface {
 
 		return null;
 	}
-	
+
 	public GameInfo[] gameListToArray(){
 		GameInfo[] gamesList = new GameInfo[gameList.size()];
-		
+
 		for(int i = 0; i < gameList.size(); i++){
 			gamesList[i] = gameList.get(i);
 		}
-		
+
 		return gamesList;
 	}
 
@@ -174,20 +174,7 @@ public class GameManager implements GameManagerInterface {
 		if(result.equals("Success")) {
 
 			currentGame = game;
-			
-			localPlayer = new Player();
-			
-			for (int i = 0; i < currentGame.getPlayers().size(); i++) {
-				PlayerInfo player_info = currentGame.getPlayers().get(i);
-				
-				if(player_info.getId() == serverProxy.getPlayerId()) {
-					localPlayer.setPlayerId(serverProxy.getPlayerId());
-					localPlayer.setName(player_info.getName());
-					localPlayer.setPlayerIndex(player_info.getPlayerIndex());
-				}
 
-			}
-			
 			resetFromGameModel(serverProxy.getGameModel());
 			return true;
 		}
@@ -215,32 +202,40 @@ public class GameManager implements GameManagerInterface {
 		//reset model classes 
 		populateGameList();
 
-		int player_index;
-		if(localPlayer != null) {
-			if(localPlayer.getPlayerId() == -1){
-				player_index = game_data.getPlayerList().size() - 1;
-			}else{
-				player_index = localPlayer.getPlayerIndex();
+		int player_index;			
+
+		if(localPlayer.getPlayerId() == -1){
+			
+			for (GameInfo gameInfo : gameList) {
+				if(gameInfo.getId() == currentGame.getId()) {
+					currentGame = gameInfo;
+					for (PlayerInfo player_info : currentGame.getPlayers()) {
+						if(localPlayer.getId() == player_info.getId()) {
+							localPlayer.setPlayerIndex(player_info.getPlayerIndex());
+						}
+					}
+				}
 			}
 		}
-		else return false;
-
-		localPlayer = game_data.getPlayerList().get(player_index);
-
-		turnTracker = game_data.getTurnTracker();
-
-		boardMap = game_data.getBoardMap();
-
-		devCardBank = game_data.getDevCardBank();
-
-		resCardBank = game_data.getResourceCardBank();
-
-		//allPlayers = game_data.getPlayerList();
 		
-		gameLog = game_data.getGameLog();
-		
+		player_index = localPlayer.getPlayerIndex();
+
+//		localPlayer = game_data.getPlayerList().get(player_index);
+//
+//		turnTracker = game_data.getTurnTracker();
+//
+//		boardMap = game_data.getBoardMap();
+//
+//		devCardBank = game_data.getDevCardBank();
+//
+//		resCardBank = game_data.getResourceCardBank();
+//
+//		//allPlayers = game_data.getPlayerList();
+//		
+//		gameLog = game_data.getGameLog();
+
 		//update the model classes and fire up the notifications of each
-		
+
 		if(!localPlayer.equals(game_data.getPlayerList().get(player_index))) {
 			Player p = game_data.getPlayerList().get(player_index);
 			localPlayer.setCities(p.getCities());
@@ -257,7 +252,7 @@ public class GameManager implements GameManagerInterface {
 			localPlayer.setVictoryPoints(p.getVictoryPoints());
 			localPlayer.notifyObservers(localPlayer);
 		}
-		
+
 		if(!turnTracker.equals(game_data.turnTracker)) {
 			TurnTracker t = game_data.turnTracker;
 			turnTracker.setCurrentTurn(t.getCurrentTurn());
@@ -266,7 +261,7 @@ public class GameManager implements GameManagerInterface {
 			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
 			turnTracker.notifyObservers(turnTracker);
 		}
-		
+
 		if(!boardMap.equals(game_data.boardMap)) {
 			BoardMap bm = game_data.boardMap;
 			boardMap.setCities(bm.getCities());
@@ -278,29 +273,29 @@ public class GameManager implements GameManagerInterface {
 			boardMap.setSettlements(bm.getSettlements());
 			boardMap.notifyObservers(boardMap);
 		}
-		
+
 		if(!devCardBank.equals(game_data.devCardBank)) {
 			devCardBank.setCards(game_data.devCardBank.getCards());
 			devCardBank.notifyObservers(devCardBank);
 		}
-		
+
 		if(!resCardBank.equals(game_data.resourceCardBank)) {
 			resCardBank.setCards(game_data.resourceCardBank.getCards());
 			resCardBank.notifyObservers(resCardBank);
 		}
-		
+
 		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
 			allPlayers.setPlayerList(game_data.playerList);
 			allPlayers.notifyObservers(allPlayers);
-			
+
 		}
-		
+
 		if(!gameLog.equals(game_data.gameLog)) {
 			gameLog.setGameChat(game_data.gameLog.getGameChat());
 			gameLog.setGameHistoryLog(game_data.gameLog.getGameHistoryLog());
 			gameLog.notifyObservers(gameLog);
 		}
-		
+
 		return true;
 	}
 
@@ -341,7 +336,7 @@ public class GameManager implements GameManagerInterface {
 	public boolean canSendChat() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean sendChat(String chatMessage) {
 		int player_index = localPlayer.getPlayerIndex();
@@ -626,7 +621,7 @@ public class GameManager implements GameManagerInterface {
 		boolean player_can_trade = localPlayer.canOfferTrade(trade);
 		boolean correct_status = turnTracker.getStatus() == Status.PLAYING;
 		boolean correct_turn = turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex(); 
-		
+
 		return player_can_trade && correct_status && correct_turn;
 	}
 
