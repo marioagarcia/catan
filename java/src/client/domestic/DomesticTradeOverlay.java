@@ -211,8 +211,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 	        });
 	        toggleButtonGroup.add(noneToggle);
 	        
-	        JToggleButton recieveToggle = new JToggleButton("recieve");
-	        recieveToggle.setActionCommand("recieve");
+	        JToggleButton recieveToggle = new JToggleButton("receive");
+	        recieveToggle.setActionCommand("receive");
 	        recieveToggle.putClientProperty( "JButton.buttonType", "segmented" );
 	        recieveToggle.putClientProperty( "JButton.segmentPosition", "last" );
 	        recieveToggle.addActionListener(new ActionListener(){
