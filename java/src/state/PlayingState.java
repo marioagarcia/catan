@@ -4,110 +4,106 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.serialization.interfaces.SerializerResourceListInterface;
-import client.manager.interfaces.GMDomesticTradeInterface;
 import client.map.MapController;
-import client.model.card.MaritimeTrade;
-import client.model.card.TradeInterface;
 
 public class PlayingState extends GameState{
 	public PlayingState(MapController c){
 		super(c);
 	}
-
-	@Override
-	public boolean resetGame(){ return false; }
 	
 	@Override
-	public boolean saveGame(){ return false; }
+	public boolean canBuildRoad(EdgeLocation location){ 
+		
+		return facade.canBuildRoad(location);
+	}
 	
 	@Override
-	public boolean getGameCommands(){ return false; }
+	public boolean buildRoad(EdgeLocation location){
+		
+		return facade.buildRoad(location);
+	}
 	
 	@Override
-	public boolean postGameCommands(){ return false; }
+	public boolean canBuildSettlement(VertexLocation location){ 
+		
+		return facade.canBuildSettlement(location); 
+	}
 	
 	@Override
-	public boolean canAcceptTrade(TradeInterface trade){ return false; }
+	public boolean buildSettlement(VertexLocation location){
+		
+		return facade.buildSettlement(location); 
+	}
 	
 	@Override
-	public boolean acceptTrade(TradeInterface trade, boolean accept){ return false; }
+	public boolean canBuildCity(VertexLocation location){ 
+		
+		return facade.canBuildCity(location);
+	}
 	
 	@Override
-	public boolean canDiscardCards(SerializerResourceListInterface list){ return false; }
+	public boolean buildCity(VertexLocation location){ 
+		
+		return facade.buildCity(location);
+	}
 	
 	@Override
-	public boolean discardCards(SerializerResourceListInterface list){ return false; }
+	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2){ 
+		
+		return facade.canPlayYearOfPlenty(type1, type2); 
+	}
 	
 	@Override
-	public boolean canBuildRoad(EdgeLocation location){ return false; }
+	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2){ 
+		
+		return facade.playYearOfPlenty(type1, type2);
+	}
 	
 	@Override
-	public boolean buildRoad(EdgeLocation location){ return false; }
+	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2){ 
+		
+		return facade.canPlayRoadBuilding(location1, location2);
+	}
 	
 	@Override
-	public boolean canBuildSettlement(VertexLocation location){ return false; }
+	public boolean playRoadBuilding(EdgeLocation location1, EdgeLocation location2){ 
+		
+		return facade.playRoadBuilding(location1, location2); 
+	}
 	
 	@Override
-	public boolean buildSettlement(VertexLocation location){ return false; }
+	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victimIndex){ 
+		
+		return facade.canPlaySoldier(oldLocation, newLocation, victimIndex);
+	}
 	
 	@Override
-	public boolean canBuildCity(VertexLocation location){ return false; }
+	public boolean playSoldier(HexLocation newLocation, int victimIndex){ 
+		
+		return facade.playSoldier(newLocation, victimIndex); 
+	}
 	
 	@Override
-	public boolean buildCity(VertexLocation location){ return false; }
+	public boolean canPlayMonopoly(){ 
+		
+		return facade.canPlayMonopoly();
+	}
 	
 	@Override
-	public boolean canOfferTrade(TradeInterface trade){ return false; }
+	public boolean playMonopoly(ResourceType resourceType){ 
+		
+		return facade.playMonopoly(resourceType);
+	}
 	
 	@Override
-	public boolean offerTrade(GMDomesticTradeInterface trade, int otherPlayerIndex){ return false; }
+	public boolean canPlayMonument(){ 
+		
+		return facade.canPlayMonument();
+	}
 	
 	@Override
-	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade){ return false; }
-	
-	@Override
-	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade){ return false; }
-	
-	@Override
-	public boolean canFinishTurn(){ return false; }
-	
-	@Override
-	public boolean finishTurn(){ return false; }
-	
-	@Override
-	public boolean canBuyDevCard(){ return false; }
-	
-	@Override
-	public boolean buyDevCard(){ return false; }
-	
-	@Override
-	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2){ return false; }
-	
-	@Override
-	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2){ return false; }
-	
-	@Override
-	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2){ return false; }
-	
-	@Override
-	public boolean playRoadBuilding(EdgeLocation location1, EdgeLocation location2){ return false; }
-	
-	@Override
-	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victimIndex){ return false; }
-	
-	@Override
-	public boolean playSoldier(HexLocation newLocation, int victimIndex){ return false; }
-	
-	@Override
-	public boolean canPlayMonopoly(){ return false; }
-	
-	@Override
-	public boolean playMonopoly(ResourceType resourceType){ return false; }
-	
-	@Override
-	public boolean canPlayMonument(){ return false; }
-	
-	@Override
-	public boolean playMonument(){ return false; }
+	public boolean playMonument(){ 
+		
+		return facade.playMonument();
+	}
 }

@@ -1,15 +1,12 @@
 package client.map;
 
 import java.util.*;
-
 import shared.definitions.*;
 import shared.locations.*;
-import state.DiscardingState;
 import state.FirstRoundState;
 import state.GameState;
 import state.PlayingState;
 import state.RobbingState;
-import state.RollingState;
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.model.map.BoardMap;
@@ -59,9 +56,6 @@ public class MapController extends Controller implements IMapController {
 				Status state = tracker.getStatus();
 				
 				switch (state){
-					case DISCARDING:
-						currentState = new DiscardingState(MapController.this);
-						break;
 					case FIRST_ROUND:
 						currentState = new FirstRoundState(MapController.this);
 						break;
@@ -70,9 +64,6 @@ public class MapController extends Controller implements IMapController {
 						break;
 					case ROBBING:
 						currentState = new RobbingState(MapController.this);
-						break;
-					case ROLLING:
-						currentState = new RollingState(MapController.this);
 						break;
 					default:
 						currentState = new GameState(MapController.this);
@@ -99,7 +90,6 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public IMapView getView() {
-		
 		return (IMapView)super.getView();
 	}
 	
@@ -162,6 +152,7 @@ public class MapController extends Controller implements IMapController {
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		
 		return currentState.canBuildRoad(edgeLoc);
+		
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
@@ -176,53 +167,53 @@ public class MapController extends Controller implements IMapController {
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		
-		return true;
+		return currentState.canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		
+		System.out.println("Map Controller placeRoad");
 		currentState.buildRoad(edgeLoc);
 		getView().placeRoad(edgeLoc, localPlayerColor);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
+		System.out.println("Map Controller placeSettlement");
 		currentState.buildSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, localPlayerColor);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		
+		System.out.println("Map Controller placeCity");
 		currentState.buildCity(vertLoc);
 		getView().placeCity(vertLoc, localPlayerColor);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		
+		System.out.println("Map Controller placeRobber");
 		getView().placeRobber(hexLoc);
 		
 		getRobView().showModal();
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		
+		System.out.println("Map Controller startMove");
 		getView().startDrop(pieceType, localPlayerColor, true);
 	}
 	
 	public void cancelMove() {
-		
+		System.out.println("Map Controller cancelMove");
 	}
 	
 	public void playSoldierCard() {	
-		
+		System.out.println("Map Controller playSoldierCard");
 	}
 	
 	public void playRoadBuildingCard() {	
-		
+		System.out.println("Map Controller playRoadBuildingCard");
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
-		
+		System.out.println("Map Controller robPlayer");
 	}
 	
 	public void setGameState(GameState new_state){
