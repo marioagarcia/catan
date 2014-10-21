@@ -25,7 +25,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		
 		@Override
 		public void update(Observable o, Object arg){
-			TurnTracker turn_tracker = (TurnTracker)arg;
+			TurnTracker turn_tracker = (TurnTracker)o;
 			
 			if(turn_tracker.getStatus() != Status.DISCARDING){
 				return;
