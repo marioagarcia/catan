@@ -239,6 +239,8 @@ public class GameManager implements GameManagerInterface {
 			localPlayer.setSoldiers(p.getSoldiers());
 			localPlayer.setVictoryPoints(p.getVictoryPoints());
 			localPlayer.notifyObservers(localPlayer);
+			
+			localPlayer.update();
 		}
 
 		if(!turnTracker.equals(game_data.turnTracker)) {
@@ -253,6 +255,8 @@ public class GameManager implements GameManagerInterface {
 		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
 			allPlayers.setPlayerList(game_data.playerList);
 			allPlayers.notifyObservers(allPlayers);
+			
+			allPlayers.update();
 
 		}
 
@@ -266,24 +270,29 @@ public class GameManager implements GameManagerInterface {
 			boardMap.setRobberLocation(bm.getRobberLocation());
 			boardMap.setSettlements(bm.getSettlements());
 			
-			boardMap.update(); //Notify observers does nothing unless the protected method HasChanged has been called
-			boardMap.notifyObservers(boardMap);
+			boardMap.update(); 
 		}
 
 		if(!devCardBank.equals(game_data.devCardBank)) {
 			devCardBank.setCards(game_data.devCardBank.getCards());
 			devCardBank.notifyObservers(devCardBank);
+			
+			devCardBank.update();
 		}
 
 		if(!resCardBank.equals(game_data.resourceCardBank)) {
 			resCardBank.setCards(game_data.resourceCardBank.getCards());
 			resCardBank.notifyObservers(resCardBank);
+			
+			resCardBank.update();
 		}
 
 		if(!gameLog.equals(game_data.gameLog)) {
 			gameLog.setGameChat(game_data.gameLog.getGameChat());
 			gameLog.setGameHistoryLog(game_data.gameLog.getGameHistoryLog());
 			gameLog.notifyObservers(gameLog);
+			
+			//gameLog.update();
 		}
 
 		return true;
