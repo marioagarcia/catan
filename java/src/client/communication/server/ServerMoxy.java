@@ -226,4 +226,9 @@ public class ServerMoxy implements ServerProxyInterface{
 	public int getPlayerId() {
 		return playerId;
 	}
+
+	@Override
+	public String robPlayer(String JSONString){
+		return "400";
+	}
 }
