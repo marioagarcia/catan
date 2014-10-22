@@ -1,4 +1,4 @@
-package client.logging.chat;
+package client.model.logging.chat;
 
 import shared.serialization.interfaces.SerializerMessageInterface;
 

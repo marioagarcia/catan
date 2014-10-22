@@ -1,4 +1,4 @@
-package client.logging.chat;
+package client.model.logging.chat;
 
 
 public interface GameChatInterface 

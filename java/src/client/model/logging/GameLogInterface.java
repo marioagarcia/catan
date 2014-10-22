@@ -1,7 +1,7 @@
-package client.logging;
+package client.model.logging;
 
-import client.logging.chat.GameChatInterface;
-import client.logging.history.GameHistoryLogInterface;
+import client.model.logging.chat.GameChatInterface;
+import client.model.logging.history.GameHistoryLogInterface;
 
 public interface GameLogInterface 
 {

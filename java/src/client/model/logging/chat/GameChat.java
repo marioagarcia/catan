@@ -1,4 +1,4 @@
-package client.logging.chat;
+package client.model.logging.chat;
 
 import java.util.ArrayList;
 

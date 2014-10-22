@@ -38,11 +38,6 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 
 import com.google.gson.*;
 
-import client.logging.GameLog;
-import client.logging.chat.GameChat;
-import client.logging.chat.Message;
-import client.logging.history.HistoryLog;
-import client.logging.history.LogLine;
 import client.manager.GameCommand;
 import client.manager.GameCommands;
 import client.manager.GameData;
@@ -52,6 +47,11 @@ import client.model.card.DevCardList;
 import client.model.card.DomesticTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
+import client.model.logging.GameLog;
+import client.model.logging.chat.GameChat;
+import client.model.logging.chat.Message;
+import client.model.logging.history.HistoryLog;
+import client.model.logging.history.LogLine;
 import client.model.map.BoardMap;
 import client.model.map.Hex;
 import client.model.map.Port;

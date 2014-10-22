@@ -1,4 +1,4 @@
-package client.logging.history;
+package client.model.logging.history;
 
 public interface LogLineInterface 
 {

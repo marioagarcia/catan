@@ -4,8 +4,8 @@ import java.util.*;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.logging.GameLog;
-import client.logging.history.LogLineInterface;
+import client.model.logging.GameLog;
+import client.model.logging.history.LogLineInterface;
 import client.model.player.Player;
 import client.model.player.Players;
 import shared.definitions.*;

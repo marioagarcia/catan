@@ -2,10 +2,10 @@ package client.manager;
 
 import java.util.ArrayList;
 
-import client.logging.GameLog;
 import client.model.card.DevCardBank;
 import client.model.card.DomesticTrade;
 import client.model.card.ResourceCardBank;
+import client.model.logging.GameLog;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;

@@ -1,6 +1,7 @@
 package client.manager;
 
 import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -10,9 +11,6 @@ import shared.serialization.ModelSerializer;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
-import client.logging.GameLog;
-import client.logging.chat.GameChat;
-import client.logging.history.HistoryLog;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.card.DevCardBank;
@@ -20,6 +18,9 @@ import client.model.card.MaritimeTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
+import client.model.logging.GameLog;
+import client.model.logging.chat.GameChat;
+import client.model.logging.history.HistoryLog;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
@@ -74,7 +75,6 @@ public class GameManager implements GameManagerInterface {
 		resCardBank = new ResourceCardBank();
 		allPlayers = new Players();
 		
-
 	}
 
 	@Override
@@ -405,10 +405,9 @@ public class GameManager implements GameManagerInterface {
 
 		RobPlayerParameters param = new RobPlayerParameters(player_index, victimPlayerIndex, location);
 
-		@SuppressWarnings("unused")
 		String json_string = modelSerializer.serializeRobPlayer(param);
 
-		String json_model = null; //TODO serverProxy.robPlayer(json_string);
+		String json_model = serverProxy.robPlayer(json_string);
 
 		if(resetFromGameModel(json_model))
 			return true;
