@@ -1,6 +1,10 @@
 package client.points;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import client.communication.facade.ModelFacade;
 
 
 /**
@@ -9,6 +13,8 @@ import client.base.*;
 public class PointsController extends Controller implements IPointsController {
 
 	private IGameFinishedView finishedView;
+	
+	private ModelFacade facade = ModelFacade.getInstance(null);
 	
 	/**
 	 * PointsController constructor
@@ -22,7 +28,8 @@ public class PointsController extends Controller implements IPointsController {
 		
 		setFinishedView(finishedView);
 		
-		initFromModel();
+		facade.getManager().getLocalPlayer().addObserver(playerObserver);
+		//initFromModel();
 	}
 	
 	public IPointsView getPointsView() {
@@ -33,15 +40,23 @@ public class PointsController extends Controller implements IPointsController {
 	public IGameFinishedView getFinishedView() {
 		return finishedView;
 	}
+	
 	public void setFinishedView(IGameFinishedView finishedView) {
 		this.finishedView = finishedView;
 	}
 
-	private void initFromModel() {
-		//<temp>		
-		getPointsView().setPoints(5);
-		//</temp>
+	private void updatePoints() {
+		
 	}
+	
+	private Observer playerObserver = new Observer() {
+		
+		@Override
+		public void update(Observable o, Object arg) {
+			
+			
+		}
+	};
 	
 }
 

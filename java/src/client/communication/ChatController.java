@@ -76,7 +76,6 @@ public class ChatController extends Controller implements IChatController {
 		@Override
 		public void update(Observable o, Object arg) {
 
-			//System.out.println("gamelog updated");
 			GameLog gameLog = (GameLog)o;
 			ChatController.this.updateChat(gameLog.getGameChat());
 		}
