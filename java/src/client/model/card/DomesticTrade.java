@@ -1,9 +1,11 @@
 package client.model.card;
 
+import java.util.Observable;
+
 import client.manager.interfaces.GMDomesticTradeInterface;
 import shared.definitions.ResourceType;
 
-public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface {
+public class DomesticTrade extends Observable implements TradeInterface, GMDomesticTradeInterface {
 
 	private int sender;
 	private int receiver;
@@ -113,4 +115,8 @@ public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface {
 		return getTradeCard(ResourceType.WHEAT);
 	}
 
+	public void update(){
+		setChanged();
+		notifyObservers();
+	}
 }

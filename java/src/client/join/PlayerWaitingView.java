@@ -148,6 +148,14 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 			center.add(new Box.Filler(minSize, prefSize, maxSize));			
 		}
 	}
+	
+	public boolean isReady(){
+		if(label.getText().equals("This game is ready to go!")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	@Override
 	public void setAIChoices(String[] value) {	

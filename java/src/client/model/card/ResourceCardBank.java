@@ -98,5 +98,10 @@ public class ResourceCardBank extends Observable implements ResourceCardBankInte
 			return false;
 		return true;
 	}
+	
+	public void update(){
+		setChanged();
+		notifyObservers();
+	}
 
 }

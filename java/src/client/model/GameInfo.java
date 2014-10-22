@@ -137,6 +137,11 @@ public class GameInfo extends Observable implements SerializerGameInfoInterface
 			return false;
 		return true;
 	}
+	
+	public void update(){
+		setChanged();
+		notifyObservers();
+	}
 
 }
 

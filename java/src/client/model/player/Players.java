@@ -54,5 +54,9 @@ public class Players extends Observable {
 		return true;
 	}
 	
+	public void update(){
+		setChanged();
+		notifyObservers();
+	}
 	
 }

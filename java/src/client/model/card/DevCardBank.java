@@ -107,4 +107,9 @@ public class DevCardBank extends Observable implements DevCardBankInterface, Ser
 		return 0;
 	}
 	
+	public void update(){
+		setChanged();
+		notifyObservers();
+	}
+	
 }

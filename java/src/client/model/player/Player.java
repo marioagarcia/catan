@@ -471,4 +471,9 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		return true;
 	}
 	
+	public void update(){
+		setChanged();
+		notifyObservers();
+	}
+	
 }
