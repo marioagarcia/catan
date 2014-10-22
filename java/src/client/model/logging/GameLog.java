@@ -43,7 +43,7 @@ public class GameLog extends Observable implements GameLogInterface {
 	}
 	
 	public void update() {
-		this.hasChanged();
+		this.setChanged();
 		this.notifyObservers();
 	}
 }

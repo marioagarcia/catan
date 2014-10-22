@@ -12,7 +12,6 @@ import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.model.logging.GameLog;
 import client.model.logging.chat.GameChatInterface;
-import client.model.logging.chat.Message;
 import client.model.logging.chat.MessageDoesNotExistException;
 import client.model.logging.chat.MessageInterface;
 import client.model.player.Player;
@@ -63,9 +62,6 @@ public class ChatController extends Controller implements IChatController {
 				e.printStackTrace();
 			}
 			
-
-			System.out.println(message.toString());
-			
 			LogEntry log_entry = new LogEntry(colorByIdMap.get(message.getPlayerName()), message.getMessageContent());
 			
 			entries.add(log_entry);
@@ -80,7 +76,7 @@ public class ChatController extends Controller implements IChatController {
 		@Override
 		public void update(Observable o, Object arg) {
 
-			System.out.println("gamelog updated");
+			//System.out.println("gamelog updated");
 			GameLog gameLog = (GameLog)o;
 			ChatController.this.updateChat(gameLog.getGameChat());
 		}
