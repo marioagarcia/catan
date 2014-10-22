@@ -105,8 +105,11 @@ public class NewGameView extends OverlayView implements INewGameView
 
             if (e.getSource() == createButton)
             {
-
-                getController().createNewGame();
+            	if(!txtTitle.getText().isEmpty()){
+            		getController().createNewGame();
+            	}else{
+            		JOptionPane.showMessageDialog(new Frame(), "Please enter a title.", "Create Game Error", JOptionPane.ERROR_MESSAGE);
+            	}
             }
             else if (e.getSource() == cancelButton)
             {
