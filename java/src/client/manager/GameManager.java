@@ -1,8 +1,6 @@
 package client.manager;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -194,6 +192,15 @@ public class GameManager implements GameManagerInterface {
 
 		return true;
 	}
+	
+	public boolean loadGame() {
+		return true;
+	}
+	
+	public boolean updateGameModel() {
+		String json_model = serverProxy.getGameModel();
+		return resetFromGameModel(json_model);
+	}
 
 	public boolean resetFromGameModel(String json_model) {
 
@@ -223,7 +230,9 @@ public class GameManager implements GameManagerInterface {
 		//update the model classes and fire up the notifications of each
 
 		if(!localPlayer.equals(game_data.getPlayerList().get(player_index))) {
+			
 			Player p = game_data.getPlayerList().get(player_index);
+			
 			localPlayer.setCities(p.getCities());
 			localPlayer.setColor(p.getColor());
 			localPlayer.setMonuments(p.getMonuments());
@@ -242,11 +251,14 @@ public class GameManager implements GameManagerInterface {
 		}
 
 		if(!turnTracker.equals(game_data.turnTracker)) {
+			
 			TurnTracker t = game_data.turnTracker;
+			
 			turnTracker.setCurrentTurn(t.getCurrentTurn());
 			turnTracker.setStatus(t.getStatus());
 			turnTracker.setPlayerWithLongestRoad(t.getPlayerWithLongestRoad());
 			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
+			
 			turnTracker.update();
 		}
 		
@@ -259,7 +271,9 @@ public class GameManager implements GameManagerInterface {
 		}
 
 		if(!boardMap.equals(game_data.boardMap)) {
+			
 			BoardMap bm = game_data.boardMap;
+			
 			boardMap.setCities(bm.getCities());
 			boardMap.setHexes(bm.getHexes());
 			boardMap.setPorts(bm.getPorts());
@@ -290,7 +304,7 @@ public class GameManager implements GameManagerInterface {
 			gameLog.setGameHistoryLog(game_data.gameLog.getGameHistoryLog());
 			gameLog.notifyObservers(gameLog);
 			
-			//gameLog.update();
+			gameLog.update();
 		}
 
 		return true;

@@ -41,4 +41,9 @@ public class GameLog extends Observable implements GameLogInterface {
 	public void setGameHistoryLog(GameHistoryLogInterface gameHistoryLog) {
 		this.gameHistoryLog = gameHistoryLog;
 	}
+	
+	public void update() {
+		this.hasChanged();
+		this.notifyObservers();
+	}
 }
