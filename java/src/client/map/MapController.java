@@ -156,8 +156,8 @@ public class MapController extends Controller implements IMapController {
 		
 		System.out.println("Current game status: " + tracker.getStatus().toString());
 		System.out.println("Current turn: " + ModelFacade.getInstance(null).getPlayers().getPlayer(tracker.getCurrentTurn()).getName());
-		System.out.println("Rolling dice");
-		ModelFacade.getInstance(null).roll();
+	//	System.out.println("Rolling dice");
+	//	ModelFacade.getInstance(null).roll();
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
