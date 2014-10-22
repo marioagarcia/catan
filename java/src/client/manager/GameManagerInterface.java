@@ -53,18 +53,31 @@ public interface GameManagerInterface
 	public boolean joinGame(CatanColor color, GameInfo game);
 	
 	/**
+	 * Saves the current game
+	 * @return true if the server was able to save the game
+	 */
+	public boolean saveGame();
+	
+	/**
+	 * Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) 
+	 * The id is the same as the original game id.
+	 * @return true if the game was correctly loaded
+	 */
+	public boolean loadGame();
+	
+	/**
+	 * This gets the current game model from the server and updates all the model classes
+	 * @return true if all model classes were correctly updated
+	 */
+	public boolean updateGameModel();
+	
+	/**
 	 * Checks that the player has a valid user and a valid game id
 	 * 
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise 
 	 */
 	public boolean resetGame();
-	
-	/**
-	 * Saves the current game
-	 * @return true if the server was able to save the game
-	 */
-	public boolean saveGame();
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
