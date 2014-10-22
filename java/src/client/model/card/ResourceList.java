@@ -18,6 +18,23 @@ public class ResourceList implements SerializerResourceListInterface {
 		wheat = wh;
 		wood = wo;
 	}
+	
+	public int getResourceByType(String type){
+		switch (type){
+			case "brick": 
+				return brick;
+			case "ore":
+				return ore;
+			case "sheep":
+				return sheep;
+			case "wheat":
+				return wheat;
+			case "wood":
+				return wood;
+			default:
+				return 0;
+		}
+	}
 
 	public int getBrick() {
 		return brick;

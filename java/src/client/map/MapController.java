@@ -55,22 +55,28 @@ public class MapController extends Controller implements IMapController {
 				
 				Status state = tracker.getStatus();
 				
+				
 				switch (state){
 					case FIRST_ROUND:
+						System.out.println("CurrentState is First Round");
 						currentState = new FirstRoundState(MapController.this);
 						break;
 					case PLAYING:
+						System.out.println("CurrentState is Playing");
 						currentState = new PlayingState(MapController.this);
 						break;
 					case ROBBING:
+						System.out.println("CurrentState is Robbing");
 						currentState = new RobbingState(MapController.this);
 						break;
 					default:
+						System.out.println("CurrentState is Locked");
 						currentState = new GameState(MapController.this);
 						break;		
 				}
 			}
 			else{
+				System.out.println("CurrentState is Locked. Not player's turn");
 				currentState = new GameState(MapController.this);
 			}
 			
@@ -147,6 +153,11 @@ public class MapController extends Controller implements IMapController {
 		
 		//Place robber
 		getView().placeRobber(m.getRobberLocation());
+		
+		System.out.println("Current game status: " + tracker.getStatus().toString());
+		System.out.println("Current turn: " + ModelFacade.getInstance(null).getPlayers().getPlayer(tracker.getCurrentTurn()).getName());
+		//System.out.println("Rolling dice");
+		//ModelFacade.getInstance(null).roll();
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
