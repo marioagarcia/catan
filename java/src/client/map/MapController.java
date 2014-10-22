@@ -156,8 +156,8 @@ public class MapController extends Controller implements IMapController {
 		
 		System.out.println("Current game status: " + tracker.getStatus().toString());
 		System.out.println("Current turn: " + ModelFacade.getInstance(null).getPlayers().getPlayer(tracker.getCurrentTurn()).getName());
-		//System.out.println("Rolling dice");
-		//ModelFacade.getInstance(null).roll();
+		System.out.println("Rolling dice");
+		ModelFacade.getInstance(null).roll();
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -178,7 +178,7 @@ public class MapController extends Controller implements IMapController {
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		
-		return currentState.canPlaceRobber(hexLoc);
+		return !map.getRobberLocation().equals(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
@@ -209,14 +209,18 @@ public class MapController extends Controller implements IMapController {
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		System.out.println("Map Controller startMove");
 		getView().startDrop(pieceType, localPlayerColor, true);
+		
 	}
 	
 	public void cancelMove() {
 		System.out.println("Map Controller cancelMove");
 	}
 	
-	public void playSoldierCard() {	
+	public void playSoldierCard() {
 		System.out.println("Map Controller playSoldierCard");
+		tracker.setStatus(Status.ROBBING);
+		setGameState(new RobbingState(this));
+		getView().startDrop(PieceType.ROBBER, CatanColor.WHITE, true);
 	}
 	
 	public void playRoadBuildingCard() {	

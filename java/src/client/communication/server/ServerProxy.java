@@ -9,7 +9,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLDecoder;
+
 import com.google.gson.*;
+
 import client.model.player.Player;
 
 public class ServerProxy implements ServerProxyInterface{
@@ -331,5 +333,11 @@ public class ServerProxy implements ServerProxyInterface{
 	@Override
 	public int getPlayerId() {
 		return playerId;
+	}
+
+	@Override
+	public String robPlayer(String JSONString){
+		methodUrl = "/moves/robPlayer";
+		return doGet(methodUrl, JSONString, true);
 	}
 }

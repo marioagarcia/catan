@@ -216,5 +216,7 @@ public interface ServerProxyInterface{
 	 */
 	abstract String playMonument(String JSONString);
 	
+	abstract String robPlayer(String JSONString);
+	
 	abstract boolean validatePlayer(Player player);
 }

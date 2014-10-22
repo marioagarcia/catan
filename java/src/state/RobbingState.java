@@ -13,13 +13,13 @@ public class RobbingState extends GameState{
 	@Override
 	public boolean canPlaceRobber(HexLocation hexLoc){ 
 		
-		return false;
+		return true;
 	}
 	
 	@Override
 	public boolean PlaceRobber(HexLocation hexLoc){
 		
-		return false; 
+		return true; 
 	}
 	
 	@Override
