@@ -173,6 +173,9 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 				if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
 					return true;
 			}
+		else{		
+			return true;
+		}
 		
 		return false;
 	}
