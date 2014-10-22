@@ -2,6 +2,7 @@ package client.communication.facade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -262,6 +263,10 @@ public class ModelFacade implements ModelFacadeInterface {
 	
 	public boolean addAI(String botPlayer){
 		return gameManager.addAIPlayer(botPlayer);
+	}
+	
+	public void addAllPlayersObserver(Observer o){
+		gameManager.getAllPlayers().addObserver(o);
 	}
 	
 	public Player getLocalPlayer(){

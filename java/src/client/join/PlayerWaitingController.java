@@ -2,6 +2,8 @@ package client.join;
 
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
@@ -18,6 +20,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
+		ModelFacade.getInstance(null).addAllPlayersObserver(new AllPlayersObserver());
 	}
 
 	@Override
@@ -31,17 +34,17 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		//String[] listAI = {"Butthole", "Buttface", "Butthead", "Buttwad"};
-		String[] listAI = facade.getListAI();
-		PlayerInfo[] players = getPlayerArray(facade.getPlayers());
+		String[] listAI = facade.getListAI(); //Retrieve AIList
+		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
 		
-		getView().setAIChoices(listAI);
-		getView().setPlayers(players);
+		getView().setAIChoices(listAI); //Set AIList
+		getView().setPlayers(players); //Set player list
 		getView().showModal();
-		if(((PlayerWaitingView)getView()).isReady()){
+		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
 			getView().closeModal();
 		}
 	}
-	
+	//Turns the Players object into an array of players
 	public PlayerInfo[] getPlayerArray(Players playerObj){
 		List<Player> playerList = playerObj.getPlayerList();
 		
@@ -61,10 +64,19 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void addAI() {
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
-		String ai = getView().getSelectedAI();
+		String ai = getView().getSelectedAI();//Retrieve the selected AI
 		if(facade.addAI(ai)){
 			
 		}
+	}
+	//Observes the Players object and updates the view when update is called
+	private class AllPlayersObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg) {
+			start();
+		}
+		
 	}
 
 }
