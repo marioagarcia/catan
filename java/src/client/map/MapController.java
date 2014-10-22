@@ -223,8 +223,11 @@ public class MapController extends Controller implements IMapController {
 		getView().startDrop(PieceType.ROBBER, CatanColor.WHITE, true);
 	}
 	
-	public void playRoadBuildingCard() {	
+	public void playRoadBuildingCard() {
+
 		System.out.println("Map Controller playRoadBuildingCard");
+		getView().startDrop(PieceType.ROAD, localPlayerColor, false);
+		getView().startDrop(PieceType.ROAD, localPlayerColor, false);
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	

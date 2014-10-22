@@ -565,11 +565,13 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canBuildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
+		
+		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
 
 		return (boardMap.canBuildRoad(location, player_index) &&
-				localPlayer.canBuildRoad() && 
+				(localPlayer.canBuildRoad() || in_first_round)  && 
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
-				turnTracker.getStatus() == Status.PLAYING);
+				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
 	}
 
 	@Override
@@ -594,9 +596,9 @@ public class GameManager implements GameManagerInterface {
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
 
 		return (boardMap.canBuildSettlement(location, player_index, in_first_round) &&
-				localPlayer.canBuildSettlement() &&
+				(localPlayer.canBuildSettlement() || in_first_round) &&
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
-				turnTracker.getStatus() == Status.PLAYING);
+				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
 	}
 
 	@Override
@@ -619,11 +621,13 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canBuildCity(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
+		
+		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
 
 		return (boardMap.canBuildCity(location, player_index) &&
-				localPlayer.canBuildCity() &&
+				(localPlayer.canBuildCity() || in_first_round) &&
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
-				turnTracker.getStatus() == Status.PLAYING);
+				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
 	}
 
 	@Override
