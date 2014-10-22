@@ -142,6 +142,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			((SelectColorView)getSelectColorView()).disableAllColors();
 			//Now enable the player's color so that is the only color they can choos
 			((SelectColorView)getSelectColorView()).setColorEnabled(getPlayerColor(), true);
+			//Disable the join button until the user selects their color
+			((SelectColorView)getSelectColorView()).disableJoinButton();
 			getSelectColorView().showModal();
 		}else{
 			//If the player is not in the game, disable the join button until an available color is selected

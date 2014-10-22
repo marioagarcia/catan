@@ -66,7 +66,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		
 		String ai = getView().getSelectedAI();//Retrieve the selected AI
 		if(facade.addAI(ai)){
-			
+			System.out.println("HERE");
 		}
 	}
 	//Observes the Players object and updates the view when update is called
