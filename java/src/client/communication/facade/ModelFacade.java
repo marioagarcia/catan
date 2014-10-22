@@ -61,6 +61,16 @@ public class ModelFacade implements ModelFacadeInterface {
 	public boolean joinGame(CatanColor color, GameInfo game) {
 		return this.gameManager.joinGame(color, game);
 	}
+	
+	@Override
+	public boolean loadGame() {
+		return this.gameManager.loadGame();
+	}
+	
+	@Override
+	public boolean updateGameModel() {
+		return this.gameManager.updateGameModel();
+	}
 
 	@Override
 	public boolean resetGame() {
