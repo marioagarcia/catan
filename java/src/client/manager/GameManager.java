@@ -87,7 +87,6 @@ public class GameManager implements GameManagerInterface {
 
 		if (!serverProxy.login(json_string).equals("400"))
 		{
-			localPlayer = new Player();
 			localPlayer.setName(username);
 			localPlayer.setPlayerId(serverProxy.getPlayerId());
 
@@ -106,7 +105,6 @@ public class GameManager implements GameManagerInterface {
 
 		if (!serverProxy.register(json_string).equals("400"))
 		{
-			localPlayer = new Player();
 			localPlayer.setName(username);
 			localPlayer.setPlayerId(serverProxy.getPlayerId());
 
