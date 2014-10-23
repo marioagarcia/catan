@@ -4,6 +4,9 @@ import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.TimeUnit;
+
+import javax.xml.ws.handler.Handler;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
@@ -16,7 +19,7 @@ import client.model.player.Players;
  * Implementation for the player waiting controller
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
-
+	
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
@@ -32,7 +35,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 		ModelFacade facade = ModelFacade.getInstance(null);
-		
+		System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().getName());
+		System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex());
 		//String[] listAI = {"Butthole", "Buttface", "Butthead", "Buttwad"};
 		String[] listAI = facade.getListAI(); //Retrieve AIList
 		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
@@ -40,17 +44,27 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		getView().setAIChoices(listAI); //Set AIList
 		getView().setPlayers(players); //Set player list
 		getView().showModal();
+		
 		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
 			getView().closeModal();
 		}
 	}
 	
 	public void refresh(){
+		getView().closeModal();
 		ModelFacade facade = ModelFacade.getInstance(null);
+		
+		String[] listAI = facade.getListAI(); //Retrieve AIList
 		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
 		
+		getView().setAIChoices(listAI);
 		getView().setPlayers(players); //Set player list
-		((PlayerWaitingView)getView()).repaint();
+		getView().showModal();
+		
+		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
+
+			getView().closeModal();
+		}
 	}
 	
 	//Turns the Players object into an array of players
@@ -83,9 +97,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 		@Override
 		public void update(Observable o, Object arg) {
-			System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().getName() + " : Updating");
-			getView().closeModal();
-			start();
+			refresh();
 		}
 		
 	}

@@ -36,7 +36,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			tracker = (TurnTracker)o;
 			boolean enabled = false;
 			
-			System.out.println("Resource controller received tracker update");
+			//System.out.println("Resource controller received tracker update");
 			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
 				enabled = true;
 			}
@@ -53,7 +53,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		public void update(Observable o, Object arg){
 			localPlayer = (Player)o;
 			
-			System.out.println("Resource controller received player update");
+			//System.out.println("Resource controller received player update");
 			//localPlayer.setResourceList(new ResourceList(5, 5, 5, 5, 5));
 			
 			getView().setElementAmount(ResourceBarElement.BRICK, localPlayer.getResourceList().getBrick());
