@@ -1,8 +1,6 @@
 package client.manager;
 
 import java.util.ArrayList;
-import java.util.Observable;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -25,7 +23,6 @@ import client.model.logging.chat.GameChat;
 import client.model.logging.history.HistoryLog;
 import client.model.map.BoardMap;
 import client.model.player.Player;
-import client.model.player.PlayerInfo;
 import client.model.player.Players;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
@@ -217,23 +214,15 @@ public class GameManager implements GameManagerInterface {
 		//reset model classes 
 		populateGameList();
 
-		int player_index;
-
-		if(localPlayer.getPlayerId() == -1){
-			
-			for (GameInfo gameInfo : gameList) {
-				if(gameInfo.getId() == currentGame.getId()) {
-					currentGame = gameInfo;
-					for (PlayerInfo player_info : currentGame.getPlayers()) {
-						if(localPlayer.getId() == player_info.getId()) {
-							localPlayer.setPlayerIndex(player_info.getPlayerIndex());
-						}
-					}
+		if (localPlayer.getPlayerIndex() == -1){
+			for (Player p : game_data.getPlayerList()){
+				if (localPlayer.getId() == p.getId()){
+					localPlayer.setPlayerIndex(p.getPlayerIndex());
 				}
 			}
 		}
 		
-		player_index = localPlayer.getPlayerIndex();
+		int player_index = localPlayer.getPlayerIndex();
 		
 		//update the model classes and fire up the notifications of each
 
@@ -253,7 +242,6 @@ public class GameManager implements GameManagerInterface {
 			localPlayer.setSettlements(p.getSettlements());
 			localPlayer.setSoldiers(p.getSoldiers());
 			localPlayer.setVictoryPoints(p.getVictoryPoints());
-			localPlayer.notifyObservers(localPlayer);
 			
 			localPlayer.update();
 		}
@@ -272,7 +260,6 @@ public class GameManager implements GameManagerInterface {
 		
 		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
 			allPlayers.setPlayerList(game_data.playerList);
-			allPlayers.notifyObservers(allPlayers);
 			
 			allPlayers.update();
 
@@ -295,14 +282,12 @@ public class GameManager implements GameManagerInterface {
 
 		if(!devCardBank.equals(game_data.devCardBank)) {
 			devCardBank.setCards(game_data.devCardBank.getCards());
-			devCardBank.notifyObservers(devCardBank);
 			
 			devCardBank.update();
 		}
 
 		if(!resCardBank.equals(game_data.resourceCardBank)) {
 			resCardBank.setCards(game_data.resourceCardBank.getCards());
-			resCardBank.notifyObservers(resCardBank);
 			
 			resCardBank.update();
 		}
@@ -310,7 +295,6 @@ public class GameManager implements GameManagerInterface {
 		if(!gameLog.equals(game_data.gameLog)) {
 			gameLog.setGameChat(game_data.gameLog.getGameChat());
 			gameLog.setGameHistoryLog(game_data.gameLog.getGameHistoryLog());
-			gameLog.notifyObservers(gameLog);
 			
 			gameLog.update();
 		}

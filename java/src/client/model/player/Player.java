@@ -30,6 +30,8 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	
 	public Player(){
 		newDevCards = new DevCardList();
+		playerId = -1;
+		playerIndex = -1;
 	}
 
 	public int getCities() {
