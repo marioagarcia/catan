@@ -30,4 +30,12 @@ public class LogLine implements LogLineInterface {
 		this.playerName = playerName;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "LogLine [playerName=" + playerName + ", move=" + move + "]";
+	}
+
 }
