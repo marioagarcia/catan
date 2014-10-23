@@ -48,15 +48,6 @@ public class Port implements SerializerPortInterface {
 		this.location = direction;
 		
 	}
-	
-	@Override
-	public String toString(){
-		String returnString = "";
-		
-		returnString += "Ratio: " + ratio + " -- " + location.toString() + "\n";
-		
-		return returnString;
-	}
 
 	@Override
 	public int hashCode() {
@@ -68,6 +59,15 @@ public class Port implements SerializerPortInterface {
 		result = prime * result
 				+ ((resource == null) ? 0 : resource.hashCode());
 		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Port [resource=" + resource + ", location=" + location
+				+ ", ratio=" + ratio + "]";
 	}
 
 	@Override
