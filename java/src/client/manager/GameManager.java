@@ -388,10 +388,8 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean roll() {
+	public boolean roll(int number) {
 		int player_index = localPlayer.getPlayerIndex();
-		int number = diceRoller.roll();
-
 		String json_string = modelSerializer.serializeRollNumber(new RollNumberParameters(player_index, number));
 
 		String json_model = serverProxy.rollNumber(json_string);

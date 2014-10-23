@@ -113,8 +113,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean roll() {
-		return this.gameManager.roll();
+	public boolean roll(int number) {
+		return this.gameManager.roll(number);
 	}
 
 	@Override

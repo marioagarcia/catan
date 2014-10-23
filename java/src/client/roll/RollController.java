@@ -1,5 +1,9 @@
 package client.roll;
 
+import java.awt.Frame;
+
+import javax.swing.JOptionPane;
+
 import client.base.*;
 import client.communication.facade.ModelFacade;
 
@@ -37,12 +41,20 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-		//ModelFacade instance = ModelFacade.getInstance();
-		DiceRoller diceRoller = new DiceRoller();
-		int rolledNumber = diceRoller.roll();
-		getResultView().setRollValue(rolledNumber);
+		ModelFacade facade = ModelFacade.getInstance(null);
 		
-		getResultView().showModal();
+		if(facade.canRoll()){
+			DiceRoller diceRoller = new DiceRoller();
+			int rolledNumber = diceRoller.roll();
+			
+			facade.roll(rolledNumber);
+			
+			getResultView().setRollValue(rolledNumber);
+			getResultView().showModal();
+		}else{
+			JOptionPane.showMessageDialog(new Frame(), "You are not allowed to roll right now.", "Roll Error", JOptionPane.ERROR_MESSAGE);
+			getRollView().closeModal();
+		}
 	}
 
 }

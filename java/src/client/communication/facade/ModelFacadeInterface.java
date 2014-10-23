@@ -136,7 +136,7 @@ public interface ModelFacadeInterface {
 	 * false otherwise
 	 */
 	public boolean canRoll();
-	public boolean roll();
+	public boolean roll(int number);
 	
 	/**
 	 * Checks that the road location is open, the road location is connected to 
