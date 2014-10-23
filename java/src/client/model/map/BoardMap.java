@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
 
+import client.communication.facade.ModelFacade;
 import client.manager.interfaces.GMBoardMapInterface;
 import client.model.map.luts.EdgesAdjacentToVertex;
 import client.model.map.luts.EdgesAdjacentToVertexResult;
@@ -14,6 +15,7 @@ import client.model.map.luts.VertexesAdjacentToEdge;
 import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
+import client.model.player.Player;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -271,6 +273,24 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 			return false;
 		}
 		return true;
+	}
+	
+	public Set<Port> getPortsByPlayer(Player player){
+		Set<Port> ports = new HashSet<Port>();
+		
+		for(EdgeLocation location : this.ports.keySet()){
+			Set<VertexLocation> vertexes = VertexesAdjacentToEdge.get(this.ports.get(location).getLocation()).asSet();
+			for(VertexLocation vertex : vertexes){
+				if(this.settlements.containsKey(vertex) && this.settlements.get(vertex).getPlayerIndex() == player.getPlayerIndex() ||
+						this.cities.containsKey(vertex) && this.cities.get(vertex).getPlayerIndex() == player.getPlayerIndex()){
+					
+						ports.add(this.ports.get(location));
+						break;
+				}
+			}
+		}
+		
+		return ports;
 	}
 
 
