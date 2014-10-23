@@ -1,5 +1,6 @@
 package client.model.card;
 
+import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 
 public class ResourceList implements SerializerResourceListInterface {
@@ -33,6 +34,23 @@ public class ResourceList implements SerializerResourceListInterface {
 				return wood;
 			default:
 				return 0;
+		}
+	}
+	
+	public int getResourceByType(ResourceType type){
+		switch(type){
+		case BRICK:
+			return brick;
+		case ORE:
+			return ore;
+		case SHEEP:
+			return sheep;
+		case WHEAT:
+			return wheat;
+		case WOOD:
+			return wood;
+		default:
+			return 0;
 		}
 	}
 
