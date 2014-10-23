@@ -35,9 +35,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 		ModelFacade facade = ModelFacade.getInstance(null);
-		System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().getName());
-		System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex());
-		//String[] listAI = {"Butthole", "Buttface", "Butthead", "Buttwad"};
 		String[] listAI = facade.getListAI(); //Retrieve AIList
 		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
 		
@@ -51,6 +48,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 	
 	public void refresh(){
+		System.out.println("Refreshing");
 		getView().closeModal();
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
@@ -62,7 +60,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		getView().showModal();
 		
 		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
-
 			getView().closeModal();
 		}
 	}
@@ -88,16 +85,17 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		String ai = getView().getSelectedAI();//Retrieve the selected AI
+		
 		if(facade.addAI(ai)){
-			//@ TODO add AI to playerlist and refresh
+			
 		}
 	}
-	//Observes the Players object and updates the view when update is called
+	//Observes the Players object and updates the view when the Players object changes
 	private class AllPlayersObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			refresh();
+			start();
 		}
 		
 	}
