@@ -536,8 +536,8 @@ public class ModelSerializer implements ModelSerializerInterface {
 			String source = subObject.get("source").getAsString();
 			String content = subObject.get("message").getAsString();
 			
-			LogLine message = new LogLine(content, source);
-			historyLog.addLogLine(message);
+			LogLine logLine = new LogLine(source, content);
+			historyLog.addLogLine(logLine);
 		}
 		gameLog.setGameHistoryLog(historyLog);
 		//Done parsing Log

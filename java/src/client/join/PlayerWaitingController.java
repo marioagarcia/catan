@@ -44,6 +44,15 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			getView().closeModal();
 		}
 	}
+	
+	public void refresh(){
+		ModelFacade facade = ModelFacade.getInstance(null);
+		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
+		
+		getView().setPlayers(players); //Set player list
+		((PlayerWaitingView)getView()).repaint();
+	}
+	
 	//Turns the Players object into an array of players
 	public PlayerInfo[] getPlayerArray(Players playerObj){
 		List<Player> playerList = playerObj.getPlayerList();
@@ -66,7 +75,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		
 		String ai = getView().getSelectedAI();//Retrieve the selected AI
 		if(facade.addAI(ai)){
-			System.out.println("HERE");
+			//@ TODO add AI to playerlist and refresh
 		}
 	}
 	//Observes the Players object and updates the view when update is called
@@ -74,6 +83,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 		@Override
 		public void update(Observable o, Object arg) {
+			getView().closeModal();
 			start();
 		}
 		

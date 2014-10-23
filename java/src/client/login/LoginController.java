@@ -1,5 +1,9 @@
 package client.login;
 
+import java.awt.Frame;
+
+import javax.swing.JOptionPane;
+
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.misc.*;
@@ -73,9 +77,10 @@ public class LoginController extends Controller implements ILoginController {
 			getLoginView().closeModal();
 			loginAction.execute();
 		}else{
-			this.messageView.setTitle("Login Error");
+			JOptionPane.showMessageDialog(new Frame(), "Invalid username or password.", "Login Error", JOptionPane.ERROR_MESSAGE);
+/*			this.messageView.setTitle("Login Error");
 			this.messageView.setMessage("Invalid username or password.  Please try again.");
-			this.messageView.showModal();
+			this.messageView.showModal();*/
 		}
 	}
 
