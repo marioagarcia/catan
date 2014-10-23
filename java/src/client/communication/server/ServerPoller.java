@@ -56,7 +56,7 @@ public class ServerPoller implements ServerPollerInterface
 			if (!model.equals("True")){
 				latestModel = model;
 				
-				System.out.println("Poll Complete");
+				//System.out.println("Polling");
 				//Notify listeners
 				for (ModelStateObserver o : modelObservers){
 					o.modelChanged(model);

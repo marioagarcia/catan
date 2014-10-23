@@ -85,6 +85,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		public void update(Observable o, Object arg) {
 			System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().getName() + " : Updating");
 			getView().closeModal();
+			//refresh();
 			start();
 		}
 		
