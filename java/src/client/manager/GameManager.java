@@ -1,6 +1,7 @@
 package client.manager;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -13,6 +14,7 @@ import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
+import client.model.Winner;
 import client.model.card.DevCardBank;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceCardBank;
@@ -45,6 +47,7 @@ public class GameManager implements GameManagerInterface {
 	private DevCardBank devCardBank;
 	private ResourceCardBank resCardBank;
 	private Players allPlayers;
+	private Winner winner;
 
 	public GameManager(ServerProxyInterface serverProxy) {
 
@@ -74,6 +77,7 @@ public class GameManager implements GameManagerInterface {
 		devCardBank = new DevCardBank();
 		resCardBank = new ResourceCardBank();
 		allPlayers = new Players();
+		winner = new Winner();
 		
 	}
 
@@ -174,6 +178,7 @@ public class GameManager implements GameManagerInterface {
 			currentGame = game;
 
 			resetFromGameModel(serverProxy.getGameModel());
+			
 			return true;
 		}
 
@@ -209,7 +214,7 @@ public class GameManager implements GameManagerInterface {
 		//reset model classes 
 		populateGameList();
 
-		int player_index;			
+		int player_index;
 
 		if(localPlayer.getPlayerId() == -1){
 			
@@ -305,6 +310,16 @@ public class GameManager implements GameManagerInterface {
 			gameLog.notifyObservers(gameLog);
 			
 			gameLog.update();
+		}
+		
+		if(game_data.getWinner() != -1) {
+			
+			Player winner = allPlayers.getPlayer(game_data.getWinner());
+			
+			this.winner.setName(winner.getName());
+			this.winner.setPlayerIndex(winner.getPlayerIndex());
+			this.winner.setLocalPlayer(localPlayer.getPlayerIndex() == winner.getPlayerIndex());
+			this.winner.update();
 		}
 
 		return true;
@@ -801,6 +816,14 @@ public class GameManager implements GameManagerInterface {
 
 	public Players getAllPlayers() {
 		return allPlayers;
+	}
+
+	public Winner getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Winner winner) {
+		this.winner = winner;
 	}
 
 	public ServerPoller.ModelStateObserver getPollerObserver() {
