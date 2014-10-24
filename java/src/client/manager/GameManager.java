@@ -1,6 +1,7 @@
 package client.manager;
 
 import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -24,6 +25,7 @@ import client.model.logging.history.HistoryLog;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.player.Players;
+import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 import client.roll.DiceRoller;
@@ -608,13 +610,20 @@ public class GameManager implements GameManagerInterface {
 	public boolean buildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus());
+		
+		System.out.println("Free settlement: " + isFree);
+		System.out.println("Player index: " + player_index);
+		
+		location = location.getNormalizedLocation();
 
 		BuildSettlementParameters param = new BuildSettlementParameters(player_index, new VertexLocationParameters(location), isFree);
 
 		String json_string = modelSerializer.serializeBuildSettlement(param);
 
+		System.out.println("Request: " + json_string);
 		String json_model = serverProxy.buildSettlement(json_string);
 
+		System.out.println("Manager Build Settlement");
 		if(resetFromGameModel(json_model))
 			return true;
 		else
@@ -825,6 +834,34 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean isLocalPlayersTurn(){
 		return (localPlayer.getPlayerIndex() == turnTracker.getCurrentTurn());
+	}
+	
+	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
+		ArrayList<Integer> player_list = boardMap.getRobbablePlayers(location);
+
+		ArrayList<RobPlayerInfo> rob_array= new ArrayList<RobPlayerInfo>();
+		RobPlayerInfo[] rob_list = new RobPlayerInfo[0];
+		
+		for (int player_index : player_list){
+			
+			int number_of_cards = allPlayers.getPlayer(player_index).getNumberOfCards();
+			
+			if (localPlayer.getPlayerIndex() != player_index && number_of_cards > 0){
+				RobPlayerInfo rob_player_info = new RobPlayerInfo();
+				
+				rob_player_info.setNumCards(allPlayers.getPlayer(player_index).getNumberOfCards());
+				
+				CatanColor color = currentGame.getPlayers().get(player_index).getColor();
+				String name = currentGame.getPlayers().get(player_index).getName();
+				int id = currentGame.getPlayers().get(player_index).getId();
+				
+				rob_player_info.setPlayerInfo(color, name, id);
+				
+				rob_array.add(rob_player_info);
+			}
+		}
+		
+		return rob_array.toArray(rob_list);
 	}
 
 }

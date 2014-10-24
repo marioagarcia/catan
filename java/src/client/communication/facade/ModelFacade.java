@@ -1,15 +1,11 @@
 package client.communication.facade;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.serialization.interfaces.SerializerResourceListInterface;
 import client.communication.server.ServerMoxy;
 import client.communication.server.ServerProxy;
 import client.communication.server.ServerProxyInterface;
@@ -20,8 +16,8 @@ import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.player.Player;
-import client.model.player.PlayerInfo;
 import client.model.player.Players;
+import client.model.player.RobPlayerInfo;
 
 public class ModelFacade implements ModelFacadeInterface {
 	
@@ -293,6 +289,10 @@ public class ModelFacade implements ModelFacadeInterface {
 	
 	public GameManager getManager(){
 		return gameManager;
+	}
+	
+	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
+		return gameManager.getRobbablePlayers(location);
 	}
 
 }

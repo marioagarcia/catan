@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
 
-import client.communication.facade.ModelFacade;
 import client.manager.interfaces.GMBoardMapInterface;
 import client.model.map.luts.EdgesAdjacentToVertex;
 import client.model.map.luts.EdgesAdjacentToVertexResult;
@@ -413,5 +412,38 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	public void update(){
 		this.setChanged();
 		this.notifyObservers();
+	}
+	
+	public ArrayList<Integer> getRobbablePlayers(HexLocation location){
+		
+		ArrayList<Integer> players_on_hex = new ArrayList<Integer>();
+		
+		for(VertexDirection direction : VertexDirection.values()){
+			VertexLocation vertex_location = new VertexLocation(location, direction).getNormalizedLocation();
+			
+			for (Map.Entry<VertexLocation, City> city : cities.entrySet()){
+				if (city.getKey().getNormalizedLocation().equals(vertex_location)){
+					
+					int owner = city.getValue().getPlayerIndex();
+					
+					if (!players_on_hex.contains(owner)){
+						players_on_hex.add(owner);
+					}
+				}
+			}
+			
+			for (Map.Entry<VertexLocation, Settlement> settlement : settlements.entrySet()){
+				if (settlement.getKey().getNormalizedLocation().equals(vertex_location)){
+					
+					int owner = settlement.getValue().getPlayerIndex();
+					
+					if (!players_on_hex.contains(owner)){
+						players_on_hex.add(owner);
+					}
+				}
+			}	
+		}
+		
+		return players_on_hex;
 	}
 }
