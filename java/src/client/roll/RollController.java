@@ -1,6 +1,8 @@
 package client.roll;
 
 import java.awt.Frame;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JOptionPane;
 
@@ -26,6 +28,7 @@ public class RollController extends Controller implements IRollController {
 		super(view);
 		
 		setResultView(resultView);
+		
 	}
 	
 	public IRollResultView getResultView() {
@@ -42,7 +45,7 @@ public class RollController extends Controller implements IRollController {
 	@Override
 	public void rollDice() {
 		ModelFacade facade = ModelFacade.getInstance(null);
-		
+		getResultView().showModal();
 		if(facade.canRoll()){
 			DiceRoller diceRoller = new DiceRoller();
 			int rolledNumber = diceRoller.roll();
@@ -57,5 +60,13 @@ public class RollController extends Controller implements IRollController {
 		}
 	}
 
+	private class TurnTrackerObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg) {
+			getRollView().showModal();
+		}
+		
+	}
 }
 
