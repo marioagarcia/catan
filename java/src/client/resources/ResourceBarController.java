@@ -36,6 +36,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			tracker = (TurnTracker)o;
 			boolean settlement_enabled = false;
 			boolean city_enabled = false;
+			boolean road_enabled = false;
 			boolean play_dev_card_enabled = false;
 			boolean buy_dev_card_enabled = false;
 			
@@ -47,18 +48,21 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				switch (tracker.getStatus()){
 					case FIRST_ROUND:
 						settlement_enabled = true;
+						road_enabled = true;
 						break;
 					case PLAYING:
 						play_dev_card_enabled = true;
 						buy_dev_card_enabled = true;
 						settlement_enabled = true;
 						city_enabled = true;
+						road_enabled = true;
 						break;
 					default:
 						break;
 				}
 			}
 			
+			getView().setElementEnabled(ResourceBarElement.ROAD, road_enabled);
 			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, settlement_enabled);
 			getView().setElementEnabled(ResourceBarElement.CITY, city_enabled);
 			getView().setElementEnabled(ResourceBarElement.BUY_CARD, buy_dev_card_enabled);

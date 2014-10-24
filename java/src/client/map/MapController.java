@@ -110,8 +110,6 @@ public class MapController extends Controller implements IMapController {
 		
 		//<temp>
 		
-		System.out.println("Drawing Map");
-		
 		//Draw hexes
 		for (Map.Entry<HexLocation, HexInterface> hex : m.getHexes().entrySet()){
 			
@@ -156,8 +154,7 @@ public class MapController extends Controller implements IMapController {
 		
 		System.out.println("Current game status: " + tracker.getStatus().toString());
 		System.out.println("Current turn: " + ModelFacade.getInstance(null).getPlayers().getPlayer(tracker.getCurrentTurn()).getName());
-	//	System.out.println("Rolling dice");
-	//	ModelFacade.getInstance(null).roll();
+
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -189,7 +186,6 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		System.out.println("Map Controller placeSettlement");
-		//currentState.buildSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, localPlayerColor);
 		currentState.buildSettlement(vertLoc);
 	}
