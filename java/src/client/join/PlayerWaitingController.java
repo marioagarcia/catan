@@ -82,7 +82,8 @@ System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().g
 		String ai = getView().getSelectedAI();//Retrieve the selected AI
 		
 		if(facade.addAI(ai)){
-			
+			facade.updateGameModel();
+			System.out.println(facade.getManager().getAllPlayers());
 		}
 	}
 	//Observes the Players object and updates the view when the Players object changes
