@@ -173,7 +173,7 @@ public class ServerProxy implements ServerProxyInterface{
 		String model_string = doGet(methodUrl, null, true);
 		
 		//pull out the latest version number for future calls
-		if (!model_string.equals("400") && !model_string.equals("\"true\"")){
+		if (!model_string.equals("400") && !model_string.equals("\"true\"") && !model_string.equals("\"Success\"")){
 			JsonParser parser = new JsonParser();
 			JsonElement model_element = parser.parse(model_string);
 			JsonObject model_object = model_element.getAsJsonObject();
