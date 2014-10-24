@@ -71,6 +71,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 											(turnTracker.getPlayerWithLongestRoad() == player_index));
 				}
 			}
+			
+			boolean enable = facade.canFinishTurn() && turnTracker.isLocalPlayerTurn();
+			getView().updateGameState(turnTracker.getStatus().toString(), enable);
 		}
 	};
 	
