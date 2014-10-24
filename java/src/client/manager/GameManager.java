@@ -436,7 +436,7 @@ public class GameManager implements GameManagerInterface {
 	public boolean canFinishTurn() {
 		if(turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex()) {
 			if(turnTracker.getStatus() == Status.FIRST_ROUND) {
-				return localPlayer.isPlacedSecondRoad();
+				return (localPlayer.hasPlacedFreeSettlement() && localPlayer.hasPlacedFreeRoad());					
 			}
 			else {
 				return turnTracker.getStatus() == Status.PLAYING;
@@ -448,6 +448,12 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean finishTurn() {
 		int player_index = localPlayer.getPlayerIndex();
+		
+		if(TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus()) {
+			
+			localPlayer.setPlacedFreeRoad(false);
+			localPlayer.setPlacedFreeSettlement(false);
+		}
 
 		FinishTurnParameters param = new FinishTurnParameters(player_index);
 
@@ -608,16 +614,13 @@ public class GameManager implements GameManagerInterface {
 		String json_string = modelSerializer.serializeBuildRoad(param);
 
 		String json_model = serverProxy.buildRoad(json_string);
+		
+		if(isFree) {
+			localPlayer.setPlacedFreeRoad(true);
+		}
 
 		if(resetFromGameModel(json_model)) {
-			if(isFree) {
-				if(localPlayer.isPlacedFirstRoad()) {
-					localPlayer.setPlacedSecondRoad(true);
-				}
-				else {
-					localPlayer.setPlacedFirstRoad(true);
-				}
-			}
+			
 			return true;
 		}
 		else
@@ -647,9 +650,14 @@ public class GameManager implements GameManagerInterface {
 		String json_string = modelSerializer.serializeBuildSettlement(param);
 		
 		String json_model = serverProxy.buildSettlement(json_string);
+		
+		if(isFree) {
+			localPlayer.setPlacedFreeSettlement(true);
+		}
 
-		if(resetFromGameModel(json_model))
+		if(resetFromGameModel(json_model)) {			
 			return true;
+		}
 		else
 			return false;
 	}

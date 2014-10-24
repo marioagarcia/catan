@@ -27,15 +27,15 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	int victoryPoints;
 	boolean discarded;
 	boolean playedDevCard;
-	boolean placedFirstSettlement;
-	boolean placedSecondSettlemnet;
-	boolean placedFirstRoad;
-	boolean placedSecondRoad;
+	boolean placedFreeSettlemnet;
+	boolean placedFreeRoad;
 	
 	public Player(){
 		newDevCards = new DevCardList();
 		playerId = -1;
 		playerIndex = -1;
+		placedFreeSettlemnet = false;
+		placedFreeRoad = false;
 	}
 
 	public int getCities() {
@@ -398,36 +398,20 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		return (resourceList.totalNumberCards() >= 1);
 	}
 
-	public boolean isPlacedFirstSettlement() {
-		return placedFirstSettlement;
+	public boolean hasPlacedFreeSettlement() {
+		return placedFreeSettlemnet;
 	}
 
-	public void setPlacedFirstSettlement(boolean placedFirstSettlement) {
-		this.placedFirstSettlement = placedFirstSettlement;
+	public void setPlacedFreeSettlement(boolean placedFreeSettlement) {
+		this.placedFreeSettlemnet = placedFreeSettlement;
 	}
 
-	public boolean isPlacedSecondSettlemnet() {
-		return placedSecondSettlemnet;
+	public boolean hasPlacedFreeRoad() {
+		return placedFreeRoad;
 	}
 
-	public void setPlacedSecondSettlemnet(boolean placedSecondSettlemnet) {
-		this.placedSecondSettlemnet = placedSecondSettlemnet;
-	}
-
-	public boolean isPlacedFirstRoad() {
-		return placedFirstRoad;
-	}
-
-	public void setPlacedFirstRoad(boolean placedFirstRoad) {
-		this.placedFirstRoad = placedFirstRoad;
-	}
-
-	public boolean isPlacedSecondRoad() {
-		return placedSecondRoad;
-	}
-
-	public void setPlacedSecondRoad(boolean placedSecondRoad) {
-		this.placedSecondRoad = placedSecondRoad;
+	public void setPlacedFreeRoad(boolean placedFreeRoad) {
+		this.placedFreeRoad = placedFreeRoad;
 	}
 
 	@Override
