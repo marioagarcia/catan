@@ -44,13 +44,18 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	
 	private Observer playersObserver = new Observer() {
 		
+		private final int TOTAL_PLAYERS = 4;
+		
 		@Override
 		public void update(Observable o, Object arg) {
 			Players players = (Players)o;
 			TurnTracker turnTracker = (TurnTracker)arg;
 			
 			if(!playersInitialized) {
-				playersInitialized = true;
+				
+				if(players.getPlayerList().size() == TOTAL_PLAYERS) {
+					playersInitialized = true;
+				}
 				
 				for (Player player : players.getPlayerList()) {
 					
