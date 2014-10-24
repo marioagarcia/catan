@@ -572,7 +572,7 @@ public class GameManager implements GameManagerInterface {
 		int player_index = localPlayer.getPlayerIndex();
 		
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
-
+		System.out.println("Board Map can build road " + boardMap.canBuildRoad(location, player_index));
 		return (boardMap.canBuildRoad(location, player_index) &&
 				(localPlayer.canBuildRoad() || in_first_round)  && 
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
@@ -610,11 +610,13 @@ public class GameManager implements GameManagerInterface {
 	public boolean buildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus());
+		
+		location = location.getNormalizedLocation();
 
 		BuildSettlementParameters param = new BuildSettlementParameters(player_index, new VertexLocationParameters(location), isFree);
 
 		String json_string = modelSerializer.serializeBuildSettlement(param);
-
+		
 		String json_model = serverProxy.buildSettlement(json_string);
 
 		if(resetFromGameModel(json_model))

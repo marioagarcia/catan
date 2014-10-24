@@ -34,16 +34,35 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		@Override
 		public void update(Observable o, Object arg){
 			tracker = (TurnTracker)o;
-			boolean enabled = false;
+			boolean settlement_enabled = false;
+			boolean city_enabled = false;
+			boolean play_dev_card_enabled = false;
+			boolean buy_dev_card_enabled = false;
 			
-			//System.out.println("Resource controller received tracker update");
 			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
-				enabled = true;
+				
+				//This needs to be more robust. Player can only play one dev card per turn. 
+				//Should probably disable settlements in first round when one has been placed
+
+				switch (tracker.getStatus()){
+					case FIRST_ROUND:
+						settlement_enabled = true;
+						break;
+					case PLAYING:
+						play_dev_card_enabled = true;
+						buy_dev_card_enabled = true;
+						settlement_enabled = true;
+						city_enabled = true;
+						break;
+					default:
+						break;
+				}
 			}
 			
-			for (Map.Entry<ResourceBarElement, IAction> resource_element : elementActions.entrySet()){
-				getView().setElementEnabled(resource_element.getKey(), enabled);
-			}	
+			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, settlement_enabled);
+			getView().setElementEnabled(ResourceBarElement.CITY, city_enabled);
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, buy_dev_card_enabled);
+			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, play_dev_card_enabled);
 		}	
 	}
 	
@@ -53,9 +72,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		public void update(Observable o, Object arg){
 			localPlayer = (Player)o;
 			
-			//System.out.println("Resource controller received player update");
-			//localPlayer.setResourceList(new ResourceList(5, 5, 5, 5, 5));
-			
 			getView().setElementAmount(ResourceBarElement.BRICK, localPlayer.getResourceList().getBrick());
 			getView().setElementAmount(ResourceBarElement.ORE, localPlayer.getResourceList().getOre());
 			getView().setElementAmount(ResourceBarElement.SHEEP, localPlayer.getResourceList().getSheep());
@@ -64,6 +80,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			
 			getView().setElementAmount(ResourceBarElement.CITY, localPlayer.getCities());
 			getView().setElementAmount(ResourceBarElement.SETTLEMENT, localPlayer.getSettlements());
+			getView().setElementAmount(ResourceBarElement.ROAD, localPlayer.getRoads());
 			
 			//getView().setElementAmount(ResourceBarElement.PLAY_CARD, localPlayer.getResourceList().getResourceByType("brick")); Not sure what these are supposed to be
 			//getView().setElementAmount(ResourceBarElement.BUY_CARD, localPlayer.getResourceList().getResourceByType("brick"));

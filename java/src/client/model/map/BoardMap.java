@@ -121,6 +121,15 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		
 		VertexDirection[] adjacentVertexes = VertexDirection.getAdjacent(location.getDir());
 		
+		for(VertexDirection vertex_direction : adjacentVertexes){
+			VertexLocation vertex_location = new VertexLocation(location.getHexLoc(), vertex_direction).getNormalizedLocation();
+			
+			if(this.cities.containsKey(vertex_location) && this.cities.get(vertex_location).getPlayerIndex() == playerIndex ||
+			   this.settlements.containsKey(vertex_location) && this.settlements.get(vertex_location).getPlayerIndex() == playerIndex){
+				return true;
+			}
+		}
+		
 		boolean canBuildClockwisePrevious = true;
 		boolean canBuildClockwiseNext = true;
 
