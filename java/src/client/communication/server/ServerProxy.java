@@ -189,6 +189,11 @@ public class ServerProxy implements ServerProxyInterface{
 		
 		return model_string;
 	}
+	
+	@Override
+	public String getGameModel(){
+		return getGameModel(true);
+	}
 
 	@Override
 	public String resetGame(){

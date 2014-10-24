@@ -50,6 +50,8 @@ public interface ServerProxyInterface{
 	 */
 	abstract String getGameModel(boolean forceUpdate);
 	
+	abstract String getGameModel();
+	
 	/**
 	 * Resets the game to its initial state immediately after players joined
 	 * @return String with the reset model after game was reset

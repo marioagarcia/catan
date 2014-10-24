@@ -231,4 +231,9 @@ public class ServerMoxy implements ServerProxyInterface{
 	public String robPlayer(String JSONString){
 		return "400";
 	}
+
+	@Override
+	public String getGameModel(){
+		return getGameModel(true);
+	}
 }
