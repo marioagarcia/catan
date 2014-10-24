@@ -15,6 +15,7 @@ import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.Winner;
 import client.model.card.DevCardBank;
+import client.model.card.DomesticTrade;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
@@ -47,6 +48,7 @@ public class GameManager implements GameManagerInterface {
 	private ResourceCardBank resCardBank;
 	private Players allPlayers;
 	private Winner winner;
+	private DomesticTrade domesticTrade;
 
 	public GameManager(ServerProxyInterface serverProxy) {
 
@@ -78,6 +80,7 @@ public class GameManager implements GameManagerInterface {
 		resCardBank = new ResourceCardBank();
 		allPlayers = new Players();
 		winner = new Winner();
+		domesticTrade = new DomesticTrade();
 		
 	}
 
@@ -223,6 +226,15 @@ public class GameManager implements GameManagerInterface {
 				}
 			}
 		}
+		
+		if(game_data.getDomesticTrade() != null && !this.domesticTrade.equals(game_data.getDomesticTrade())){
+			this.domesticTrade.setReceiver(game_data.getDomesticTrade().getReceiver());
+			this.domesticTrade.setSender(game_data.getDomesticTrade().getSender());
+			this.domesticTrade.setResourceList(game_data.getDomesticTrade().getResourceList());
+			
+			this.domesticTrade.update();
+		}
+		game_data.getDomesticTrade();
 		
 		int player_index = localPlayer.getPlayerIndex();
 		
@@ -817,6 +829,10 @@ public class GameManager implements GameManagerInterface {
 
 	public Winner getWinner() {
 		return winner;
+	}
+	
+	public DomesticTrade getDomesticTrade(){
+		return this.domesticTrade;
 	}
 
 	public void setWinner(Winner winner) {
