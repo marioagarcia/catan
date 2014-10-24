@@ -15,6 +15,7 @@ import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.Winner;
 import client.model.card.DevCardBank;
+import client.model.card.DomesticTrade;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
@@ -47,6 +48,7 @@ public class GameManager implements GameManagerInterface {
 	private ResourceCardBank resCardBank;
 	private Players allPlayers;
 	private Winner winner;
+	private DomesticTrade domesticTrade;
 
 	public GameManager(ServerProxyInterface serverProxy) {
 
@@ -78,6 +80,7 @@ public class GameManager implements GameManagerInterface {
 		resCardBank = new ResourceCardBank();
 		allPlayers = new Players();
 		winner = new Winner();
+		domesticTrade = new DomesticTrade();
 		
 	}
 
@@ -177,7 +180,7 @@ public class GameManager implements GameManagerInterface {
 
 			currentGame = game;
 
-			resetFromGameModel(serverProxy.getGameModel());
+			resetFromGameModel(serverProxy.getGameModel(true));
 			
 			serverPoller.startPoller(3000);
 			
@@ -205,7 +208,7 @@ public class GameManager implements GameManagerInterface {
 	}
 	
 	public boolean updateGameModel() {
-		String json_model = serverProxy.getGameModel();
+		String json_model = serverProxy.getGameModel(true);
 		return resetFromGameModel(json_model);
 	}
 
@@ -223,6 +226,15 @@ public class GameManager implements GameManagerInterface {
 				}
 			}
 		}
+		
+		if(game_data.getDomesticTrade() != null && !this.domesticTrade.equals(game_data.getDomesticTrade())){
+			this.domesticTrade.setReceiver(game_data.getDomesticTrade().getReceiver());
+			this.domesticTrade.setSender(game_data.getDomesticTrade().getSender());
+			this.domesticTrade.setResourceList(game_data.getDomesticTrade().getResourceList());
+			
+			this.domesticTrade.update();
+		}
+		game_data.getDomesticTrade();
 		
 		int player_index = localPlayer.getPlayerIndex();
 		
@@ -422,7 +434,15 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canFinishTurn() {
-		return (turnTracker.getStatus() == Status.PLAYING && turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		if(turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex()) {
+			if(turnTracker.getStatus() == Status.FIRST_ROUND) {
+				return localPlayer.isPlacedSecondRoad();
+			}
+			else {
+				return turnTracker.getStatus() == Status.PLAYING;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -589,8 +609,17 @@ public class GameManager implements GameManagerInterface {
 
 		String json_model = serverProxy.buildRoad(json_string);
 
-		if(resetFromGameModel(json_model))
+		if(resetFromGameModel(json_model)) {
+			if(isFree) {
+				if(localPlayer.isPlacedFirstRoad()) {
+					localPlayer.setPlacedSecondRoad(true);
+				}
+				else {
+					localPlayer.setPlacedFirstRoad(true);
+				}
+			}
 			return true;
+		}
 		else
 			return false;
 	}
@@ -812,6 +841,10 @@ public class GameManager implements GameManagerInterface {
 
 	public Winner getWinner() {
 		return winner;
+	}
+	
+	public DomesticTrade getDomesticTrade(){
+		return this.domesticTrade;
 	}
 
 	public void setWinner(Winner winner) {

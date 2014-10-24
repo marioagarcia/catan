@@ -31,6 +31,14 @@ public class PlayerInfo implements SerializerPlayerInfoInterface
 		setColor(CatanColor.WHITE);
 	}
 	
+	public PlayerInfo(int player_id, String player_name, int player_index, CatanColor player_color)
+	{
+		setId(player_id);
+		setName(player_name);
+		setPlayerIndex(player_index);
+		setColor(player_color);
+	}
+	
 	private void setPlayerIndex(int i) {
 		playerIndex = i;
 	}
