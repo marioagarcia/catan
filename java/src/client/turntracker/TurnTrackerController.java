@@ -79,8 +79,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		@Override
 		public void update(Observable o, Object arg) {
 			TurnTracker turnTracker = (TurnTracker)o;
-			
-			getView().updateGameState(turnTracker.getStatus().toString(), turnTracker.isLocalPlayerTurn());
+			boolean enable = facade.canFinishTurn() && turnTracker.isLocalPlayerTurn();
+			getView().updateGameState(turnTracker.getStatus().toString(), enable);
 		}
 	};
 
