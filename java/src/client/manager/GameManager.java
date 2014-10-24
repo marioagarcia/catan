@@ -180,7 +180,7 @@ public class GameManager implements GameManagerInterface {
 
 			currentGame = game;
 
-			resetFromGameModel(serverProxy.getGameModel());
+			resetFromGameModel(serverProxy.getGameModel(true));
 			
 			serverPoller.startPoller(3000);
 			
@@ -208,7 +208,7 @@ public class GameManager implements GameManagerInterface {
 	}
 	
 	public boolean updateGameModel() {
-		String json_model = serverProxy.getGameModel();
+		String json_model = serverProxy.getGameModel(true);
 		return resetFromGameModel(json_model);
 	}
 
@@ -434,7 +434,15 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canFinishTurn() {
-		return (turnTracker.getStatus() == Status.PLAYING && turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		if(turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex()) {
+			if(turnTracker.getStatus() == Status.FIRST_ROUND) {
+				return localPlayer.isPlacedSecondRoad();
+			}
+			else {
+				return turnTracker.getStatus() == Status.PLAYING;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -601,8 +609,17 @@ public class GameManager implements GameManagerInterface {
 
 		String json_model = serverProxy.buildRoad(json_string);
 
-		if(resetFromGameModel(json_model))
+		if(resetFromGameModel(json_model)) {
+			if(isFree) {
+				if(localPlayer.isPlacedFirstRoad()) {
+					localPlayer.setPlacedSecondRoad(true);
+				}
+				else {
+					localPlayer.setPlacedFirstRoad(true);
+				}
+			}
 			return true;
+		}
 		else
 			return false;
 	}

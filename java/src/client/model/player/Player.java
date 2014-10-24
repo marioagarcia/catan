@@ -14,19 +14,23 @@ import client.model.card.TradeInterface;
 public class Player extends Observable implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
 	int cities;
 	CatanColor color;
-	boolean discarded;
 	int monuments;
 	String name;
 	DevCardList newDevCards;
 	DevCardList oldDevCards;
 	int playerIndex;
-	boolean playedDevCard;
 	int playerId;
 	ResourceList resourceList;
 	int roads;
 	int settlements;
 	int soldiers;
 	int victoryPoints;
+	boolean discarded;
+	boolean playedDevCard;
+	boolean placedFirstSettlement;
+	boolean placedSecondSettlemnet;
+	boolean placedFirstRoad;
+	boolean placedSecondRoad;
 	
 	public Player(){
 		newDevCards = new DevCardList();
@@ -392,6 +396,38 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	@Override
 	public boolean canBeRobbed() {
 		return (resourceList.totalNumberCards() >= 1);
+	}
+
+	public boolean isPlacedFirstSettlement() {
+		return placedFirstSettlement;
+	}
+
+	public void setPlacedFirstSettlement(boolean placedFirstSettlement) {
+		this.placedFirstSettlement = placedFirstSettlement;
+	}
+
+	public boolean isPlacedSecondSettlemnet() {
+		return placedSecondSettlemnet;
+	}
+
+	public void setPlacedSecondSettlemnet(boolean placedSecondSettlemnet) {
+		this.placedSecondSettlemnet = placedSecondSettlemnet;
+	}
+
+	public boolean isPlacedFirstRoad() {
+		return placedFirstRoad;
+	}
+
+	public void setPlacedFirstRoad(boolean placedFirstRoad) {
+		this.placedFirstRoad = placedFirstRoad;
+	}
+
+	public boolean isPlacedSecondRoad() {
+		return placedSecondRoad;
+	}
+
+	public void setPlacedSecondRoad(boolean placedSecondRoad) {
+		this.placedSecondRoad = placedSecondRoad;
 	}
 
 	@Override
