@@ -39,10 +39,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			boolean play_dev_card_enabled = false;
 			boolean buy_dev_card_enabled = false;
 			
-			//System.out.println("Resource controller received tracker update");
 			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
 				
-				//This needs to be more robust. Player can only play one dev card per turn. Should probably disable settlements in first round when one has been placed
+				//This needs to be more robust. Player can only play one dev card per turn. 
+				//Should probably disable settlements in first round when one has been placed
+
 				switch (tracker.getStatus()){
 					case FIRST_ROUND:
 						settlement_enabled = true;

@@ -48,6 +48,8 @@ public interface ServerProxyInterface{
 	 * received by the client
 	 * @return JSONString for the model of the current game
 	 */
+	abstract String getGameModel(boolean forceUpdate);
+	
 	abstract String getGameModel();
 	
 	/**

@@ -275,6 +275,10 @@ public class ModelFacade implements ModelFacadeInterface {
 		gameManager.getAllPlayers().addObserver(o);
 	}
 	
+	public void addTurnTrackerObserver(Observer o){
+		gameManager.getTurnTracker().addObserver(o);
+	}
+	
 	public Player getLocalPlayer(){
 		return gameManager.getLocalPlayer();
 	}

@@ -156,15 +156,6 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 			return false;
 		}
 	}
-	
-	public void waitTwoSeconds(){
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public void setAIChoices(String[] value) {	
@@ -174,7 +165,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 			choiceList.add(v);
 		}
 		
-		aiModel.setList(choiceList);
+		aiModel.setList(choiceList); 
 		
 		if (value.length > 0) {
 			aiChoices.setValue(value[0]);

@@ -209,7 +209,6 @@ public class MapController extends Controller implements IMapController {
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		System.out.println("Map Controller startMove");
-		System.out.println("Dropping: " + pieceType.toString());
 		getView().startDrop(pieceType, localPlayerColor, true);
 		
 	}

@@ -168,12 +168,19 @@ public class ServerProxy implements ServerProxyInterface{
 	}
 
 	@Override
-	public String getGameModel(){
-		methodUrl = "/game/model?version=" + latestVersion;
-		String model_string = doGet(methodUrl, null, true);
+	public String getGameModel(boolean forceUpdate){
 		
+		if(forceUpdate){
+			methodUrl = "/game/model";
+		}
+		else{
+			methodUrl = "/game/model?version=" + latestVersion;
+		}
+		
+		String model_string = doGet(methodUrl, null, true);
 		//pull out the latest version number for future calls
-		if (!model_string.equals("400") && !model_string.equals("\"true\"")){
+		
+		if (!model_string.equals("400") && !model_string.equals("\"true\"") && !model_string.equals("\"Success\"")){
 			JsonParser parser = new JsonParser();
 			JsonElement model_element = parser.parse(model_string);
 			JsonObject model_object = model_element.getAsJsonObject();
@@ -181,6 +188,11 @@ public class ServerProxy implements ServerProxyInterface{
 		}
 		
 		return model_string;
+	}
+	
+	@Override
+	public String getGameModel(){
+		return getGameModel(true);
 	}
 
 	@Override
@@ -210,7 +222,7 @@ public class ServerProxy implements ServerProxyInterface{
 	@Override
 	public String postNewAI(String JSONString){
 		methodUrl = "/game/addAI";
-		return doGet(methodUrl, JSONString, false);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override

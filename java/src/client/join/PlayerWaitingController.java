@@ -33,13 +33,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ModelFacade facade = ModelFacade.getInstance(null);
 		String[] listAI = facade.getListAI(); //Retrieve AIList
 		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
-		
+System.out.println(ModelFacade.getInstance(null).getManager().getLocalPlayer().getName());		
 		getView().setAIChoices(listAI); //Set AIList
 		getView().setPlayers(players); //Set player list
 		getView().showModal();
 		
 		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
-			((PlayerWaitingView)getView()).waitTwoSeconds();
 			getView().closeModal();
 		}
 	}
@@ -83,7 +82,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		String ai = getView().getSelectedAI();//Retrieve the selected AI
 		
 		if(facade.addAI(ai)){
-			
+			facade.updateGameModel();
+			System.out.println(facade.getManager().getAllPlayers());
 		}
 	}
 	//Observes the Players object and updates the view when the Players object changes
