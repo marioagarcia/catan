@@ -1,12 +1,8 @@
 package client.join;
 
-import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.TimeUnit;
-
-import javax.xml.ws.handler.Handler;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
@@ -43,12 +39,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		getView().showModal();
 		
 		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
+			((PlayerWaitingView)getView()).waitTwoSeconds();
 			getView().closeModal();
 		}
 	}
 	
 	public void refresh(){
-		System.out.println("Refreshing");
 		getView().closeModal();
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
@@ -95,6 +91,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 		@Override
 		public void update(Observable o, Object arg) {
+			getView().closeModal();
 			start();
 		}
 		

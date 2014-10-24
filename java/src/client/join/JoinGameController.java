@@ -134,6 +134,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 		chosenGame = game;
+		
 		if(chosenGame != null){
 			disableTakenColors();
 		}
@@ -159,8 +160,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	
 	public void populateGamesList(){
 		ModelFacade facade = ModelFacade.getInstance(null);
-		GameInfo[] games = facade.getGamesList(); //Retrieve the list of games from the server
-		
+		GameInfo[] games = facade.getGamesList(); //Retrieve the list of games from the server		
 		PlayerInfo player = new PlayerInfo(); //Get the local player's color, name, and id 
 		player.setPlayerInfo(selectColorView.getSelectedColor(), 
 								 facade.getLocalPlayer().getName(),
@@ -197,8 +197,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			joinAction.execute();
 		}else if(facade.canJoinGame(color, chosenGame)){
 		// If join succeeded
-			facade.joinGame(color, chosenGame); //Join the game with the chosen color
-			
+			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 			joinAction.execute();

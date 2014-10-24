@@ -104,6 +104,7 @@ public class PlayerInfo implements SerializerPlayerInfoInterface
 	public String toString(){
 		String str = "Player Name: " + name + "\n";
 		str += "Player ID: " + id + "\n";
+		str += "Player Index: " + playerIndex + "\n";
 		str += "Player Color: " + color.toString() + "\n";
 		return str;
 	}

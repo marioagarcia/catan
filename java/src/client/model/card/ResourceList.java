@@ -120,7 +120,7 @@ public class ResourceList implements SerializerResourceListInterface {
 		returnString += "\tWood: " + wood + "\n";
 		returnString += "\tSheep: " + sheep + "\n";
 		returnString += "\tWheat: " + wheat + "\n";
-		returnString += "\tOre: " + ore;
+		returnString += "\tOre: " + ore + "\n";
 		return returnString;
 	}
 	

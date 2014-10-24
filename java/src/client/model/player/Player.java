@@ -472,7 +472,26 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 			return false;
 		return true;
 	}
-	
+	@Override
+	public String toString() {
+		String playerString = "";
+		playerString += "Name: " + name + "\n" +
+						"PlayerIndex: " + playerIndex + "\n" +
+						"Player ID: " + playerId + "\n" +
+						"Color: " + color + "\n" +
+						"Roads: " + roads + "\n" +
+						"Cities: " + cities + "\n" +
+						"Settlements: " + settlements + "\n" + 
+						"Monuments: " + monuments + "\n" +
+						"Soldiers: " + soldiers + "\n" +
+						"Victory Points: " + victoryPoints + "\n" +
+						"Discarded: " + discarded + "\n" + 
+						"Played Dev Card: " + playedDevCard + "\n" +
+						"ResourceList: " + "\n" + resourceList + "\n";
+		
+		return playerString;
+	}
+
 	public void update(){
 		setChanged();
 		notifyObservers();
