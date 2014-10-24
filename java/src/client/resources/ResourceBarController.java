@@ -64,6 +64,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			
 			getView().setElementAmount(ResourceBarElement.CITY, localPlayer.getCities());
 			getView().setElementAmount(ResourceBarElement.SETTLEMENT, localPlayer.getSettlements());
+			getView().setElementAmount(ResourceBarElement.ROAD, localPlayer.getRoads());
 			
 			//getView().setElementAmount(ResourceBarElement.PLAY_CARD, localPlayer.getResourceList().getResourceByType("brick")); Not sure what these are supposed to be
 			//getView().setElementAmount(ResourceBarElement.BUY_CARD, localPlayer.getResourceList().getResourceByType("brick"));
