@@ -136,7 +136,7 @@ public class MapController extends Controller implements IMapController {
 		for (Map.Entry<VertexLocation, Settlement> settlement : m.getSettlements().entrySet()){
 			
 			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(settlement.getValue().getPlayerIndex()).getColor();
-			getView().placeCity(settlement.getKey(), color);
+			getView().placeSettlement(settlement.getKey(), color);
 		}
 		
 		//Draw ports
@@ -189,8 +189,9 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		System.out.println("Map Controller placeSettlement");
-		currentState.buildSettlement(vertLoc);
+		//currentState.buildSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, localPlayerColor);
+		currentState.buildSettlement(vertLoc);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
@@ -208,6 +209,7 @@ public class MapController extends Controller implements IMapController {
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		System.out.println("Map Controller startMove");
+		System.out.println("Dropping: " + pieceType.toString());
 		getView().startDrop(pieceType, localPlayerColor, true);
 		
 	}

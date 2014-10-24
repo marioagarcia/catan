@@ -610,13 +610,20 @@ public class GameManager implements GameManagerInterface {
 	public boolean buildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus());
+		
+		System.out.println("Free settlement: " + isFree);
+		System.out.println("Player index: " + player_index);
+		
+		location = location.getNormalizedLocation();
 
 		BuildSettlementParameters param = new BuildSettlementParameters(player_index, new VertexLocationParameters(location), isFree);
 
 		String json_string = modelSerializer.serializeBuildSettlement(param);
 
+		System.out.println("Request: " + json_string);
 		String json_model = serverProxy.buildSettlement(json_string);
 
+		System.out.println("Manager Build Settlement");
 		if(resetFromGameModel(json_model))
 			return true;
 		else
