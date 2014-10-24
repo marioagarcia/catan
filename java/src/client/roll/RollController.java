@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.turntracker.TurnTracker;
+import client.model.turntracker.TurntrackerInterface;
+import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**
@@ -27,6 +30,7 @@ public class RollController extends Controller implements IRollController {
 
 		super(view);
 		
+		//ModelFacade.getInstance(null).addTurnTrackerObserver(new TurnTrackerObserver());
 		setResultView(resultView);
 		
 	}
@@ -64,7 +68,9 @@ public class RollController extends Controller implements IRollController {
 
 		@Override
 		public void update(Observable o, Object arg) {
-			getRollView().showModal();
+			if(((TurnTracker)o).getStatus() == Status.ROLLING){
+				getRollView().showModal();
+			}
 		}
 		
 	}
