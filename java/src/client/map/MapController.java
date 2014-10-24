@@ -202,7 +202,7 @@ public class MapController extends Controller implements IMapController {
 	public void placeRobber(HexLocation hexLoc) {
 		System.out.println("Map Controller placeRobber");
 		getView().placeRobber(hexLoc);
-		
+		getRobView().setPlayers(ModelFacade.getInstance(null).getRobbablePlayers(hexLoc));
 		getRobView().showModal();
 	}
 	

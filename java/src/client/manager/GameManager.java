@@ -1,6 +1,7 @@
 package client.manager;
 
 import java.util.ArrayList;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -24,6 +25,7 @@ import client.model.logging.history.HistoryLog;
 import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.player.Players;
+import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 import client.roll.DiceRoller;
@@ -825,6 +827,34 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean isLocalPlayersTurn(){
 		return (localPlayer.getPlayerIndex() == turnTracker.getCurrentTurn());
+	}
+	
+	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
+		ArrayList<Integer> player_list = boardMap.getRobbablePlayers(location);
+
+		ArrayList<RobPlayerInfo> rob_array= new ArrayList<RobPlayerInfo>();
+		RobPlayerInfo[] rob_list = new RobPlayerInfo[0];
+		
+		for (int player_index : player_list){
+			
+			int number_of_cards = allPlayers.getPlayer(player_index).getNumberOfCards();
+			
+			if (localPlayer.getPlayerIndex() != player_index && number_of_cards > 0){
+				RobPlayerInfo rob_player_info = new RobPlayerInfo();
+				
+				rob_player_info.setNumCards(allPlayers.getPlayer(player_index).getNumberOfCards());
+				
+				CatanColor color = currentGame.getPlayers().get(player_index).getColor();
+				String name = currentGame.getPlayers().get(player_index).getName();
+				int id = currentGame.getPlayers().get(player_index).getId();
+				
+				rob_player_info.setPlayerInfo(color, name, id);
+				
+				rob_array.add(rob_player_info);
+			}
+		}
+		
+		return rob_array.toArray(rob_list);
 	}
 
 }
