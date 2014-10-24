@@ -30,7 +30,7 @@ public class RollController extends Controller implements IRollController {
 
 		super(view);
 		
-		//ModelFacade.getInstance(null).addTurnTrackerObserver(new TurnTrackerObserver());
+		ModelFacade.getInstance(null).addTurnTrackerObserver(new TurnTrackerObserver());
 		setResultView(resultView);
 		
 	}

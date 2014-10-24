@@ -220,7 +220,7 @@ public class ModelFacade implements ModelFacadeInterface {
 
 	@Override
 	public boolean playMonopoly(ResourceType resourceType) {
-		return false; //this.gameManager.playMonopoly();
+		return this.gameManager.playMonopoly(resourceType);
 	}
 
 	@Override
