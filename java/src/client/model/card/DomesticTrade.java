@@ -12,7 +12,9 @@ public class DomesticTrade extends Observable implements TradeInterface, GMDomes
 	private ResourceList resourceList;
 	
 	public DomesticTrade(){
-		
+		sender = -1;
+		receiver = -1;
+		resourceList = null;
 	}
 	
 	public DomesticTrade(int sender, int receiver, ResourceList resourceList){
