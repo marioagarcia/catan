@@ -1,8 +1,20 @@
 package client.domestic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
+
 import shared.definitions.*;
 import client.base.*;
+import client.communication.facade.ModelFacade;
 import client.misc.*;
+import client.model.card.DomesticTrade;
+import client.model.card.ResourceList;
+import client.model.player.Player;
+import client.model.player.PlayerInfo;
+import client.model.player.Players;
 
 
 /**
@@ -13,6 +25,51 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
+	private DomesticTrade trade;
+	private Map<ResourceType, Boolean> send;
+	
+	private class DomesticTradeControllerObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg) {
+			DomesticTrade trade = (DomesticTrade)o;
+			if(trade.getReceiver() == -1 || !ModelFacade.getInstance(null).canAcceptTrade(trade)){
+				
+				for(ResourceType resource : ResourceType.values()){
+					if(trade.getResourceList().getResourceByType(resource) > 0){
+						getAcceptOverlay().addGetResource(resource, trade.getResourceList().getResourceByType(resource));
+						}
+					else{
+						getAcceptOverlay().addGiveResource(resource, trade.getResourceList().getResourceByType(resource));
+					}
+				}
+				
+				getAcceptOverlay().showModal();
+				
+				return;
+			}
+			//TODO implement accepting trades
+			
+		}
+	}
+	
+	private class DomesticTradeControllerPlayerObserver implements Observer{
+		
+		@Override
+		public void update(Observable o, Object arg){
+			Players players = (Players)o;
+			
+			ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
+			
+			for(Player player : players.getPlayerList()){
+				if(player.getPlayerIndex() != ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex());
+			}
+			
+			
+			getTradeOverlay().setPlayers(player_info.toArray(new PlayerInfo[0]));
+			trade.setSender(ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerId());
+		}
+	}
 
 	/**
 	 * DomesticTradeController constructor
@@ -30,6 +87,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
+		this.trade = new DomesticTrade();
+		this.trade.setResourceList(new ResourceList(0,0,0,0,0));
+//		this.trade.setSender(ModelFacade.getInstance(null).getManager().get);
+		this.send = new HashMap<ResourceType, Boolean>();
+		
+		for(ResourceType type : ResourceType.values()){
+			send.put(type, false);
+		}
+		System.out.println("hisdf");
+//		getAcceptOverlay().
+		
+		this.getTradeOverlay().closeModal();
+		ModelFacade.getInstance(null).getManager().getDomesticTrade().addObserver(new DomesticTradeControllerObserver());
+		ModelFacade.getInstance(null).getManager().getAllPlayers().addObserver(new DomesticTradeControllerPlayerObserver());
+		
+		
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -62,46 +135,85 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 
 	@Override
-	public void startTrade() {
+	public void startTrade() {	
+		ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
+
+		for(Player player : ModelFacade.getInstance(null).getPlayers().getPlayerList()){
+			if(player.getPlayerIndex() != ModelFacade.getInstance(null).getPlayers().getLocalPlayerIndex()){
+				PlayerInfo new_info = new PlayerInfo(player.getId(), player.getName(), player.getPlayerIndex(), player.getColor());
+				players.add(new_info);
+			}
+		}
+		
+		getTradeOverlay().setPlayers(players.toArray(new PlayerInfo[1]));
+		
+		for(ResourceType resource : ResourceType.values()){
+			enableResourceSelectionButtons(resource, true);
+		}
 
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-
+		if(this.send.get(resource)){
+			ResourceList list = this.trade.getResourceList();
+			list.setResourceByType(resource, list.getResourceByType(resource) - 1);
+		} else {
+			this.trade.getResourceList().setResourceByType(resource,  this.trade.getResourceList().getResourceByType(resource) + 1);
+		}
+		this.enableResourceSelectionButtons(resource, false);
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-
+		if(this.send.get(resource)){
+			ResourceList list = this.trade.getResourceList();
+			list.setResourceByType(resource, list.getResourceByType(resource) + 1);
+		} else {
+			this.trade.getResourceList().setResourceByType(resource,  this.trade.getResourceList().getResourceByType(resource) - 1);
+		}
+		
+		this.enableResourceSelectionButtons(resource, this.send.get(resource));
 	}
 
 	@Override
 	public void sendTradeOffer() {
 
 		getTradeOverlay().closeModal();
-//		getWaitOverlay().showModal();
+		getWaitOverlay().showModal();
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-
+		this.trade.setReceiver(playerIndex);
+		getTradeOverlay().setTradeEnabled(this.trade.getReceiver() != -1 && this.trade.getSender() != -1 && ModelFacade.getInstance(null).getManager().canOfferTrade(this.trade));
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-
+		this.send.put(resource, false);
+		this.trade.getResourceList().setResourceByType(resource, 0);
+		this.getTradeOverlay().setResourceAmount(resource, "0");
+		this.trade.getResourceList().setResourceByType(resource, Math.abs(this.trade.getResourceList().getResourceByType(resource)) * -1);
+		this.enableResourceSelectionButtons(resource, this.send.get(resource));
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-
+		this.send.put(resource, true);
+		this.trade.getResourceList().setResourceByType(resource, 0);
+		this.getTradeOverlay().setResourceAmount(resource, "0");
+		this.trade.getResourceList().setResourceByType(resource, Math.abs(this.trade.getResourceList().getResourceByType(resource)));
+		this.enableResourceSelectionButtons(resource, this.send.get(resource));
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-
+		this.send.put(resource,false);
+		this.trade.getResourceList().setResourceByType(resource, 0);
+		this.getTradeOverlay().setResourceAmount(resource, "0");
+		this.enableResourceSelectionButtons(resource, this.send.get(resource));
 	}
 
 	@Override
@@ -114,6 +226,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 
 		getAcceptOverlay().closeModal();
+	}
+	
+	private void enableResourceSelectionButtons(ResourceType resource, boolean sending){
+		boolean can_go_down = Math.abs(this.trade.getResourceList().getResourceByType(resource)) > 0;
+		boolean can_go_up = !sending || this.trade.getResourceList().getResourceByType(resource) < ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(resource);
+		
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, can_go_up, can_go_down);
+		getTradeOverlay().setTradeEnabled(this.trade.getReceiver() != -1 && this.trade.getSender() != -1 && ModelFacade.getInstance(null).getManager().canOfferTrade(this.trade));
 	}
 
 }
