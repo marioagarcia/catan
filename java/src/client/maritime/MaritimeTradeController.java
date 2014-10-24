@@ -77,9 +77,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void makeTrade() {
-//		ModelFacade.getInstance(null).getManager().canMaritimeTrade(location, trade)
-		boolean result = ModelFacade.getInstance(null).getManager().maritimeTrade(location, trade);
-
+		ModelFacade.getInstance(null).getManager().maritimeTrade(location, trade);
 		getTradeOverlay().closeModal();
 	}
 
@@ -93,8 +91,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGetResource(ResourceType resource) {
 		this.trade.setResourceOut(resource);
 		this.trade.setRatio(this.determineRatio(resource));
-
-		this.getTradeOverlay().setTradeEnabled(true);
+		if(ModelFacade.getInstance(null).getManager().canMaritimeTrade(location, trade)){
+			this.getTradeOverlay().setTradeEnabled(true);
+		}
 		getTradeOverlay().selectGetOption(resource, 1);
 		getTradeOverlay().setStateMessage(this.stateMessageTrade);
 	}
