@@ -6,32 +6,40 @@ import shared.locations.VertexLocation;
 
 public class FirstRoundState extends GameState{
 	
+	private boolean playedSettlement;
+	private boolean playedRoad;
+	
 	public FirstRoundState(MapController c){
 		super(c);
+		
+		playedSettlement = false;
+		playedRoad = false;
 	}
 	
 	@Override
 	public boolean canBuildRoad(EdgeLocation location){ 
 		
-		return facade.canBuildRoad(location);
+		return (facade.canBuildRoad(location) && !playedRoad);
 	}
 	
 	@Override
 	public boolean buildRoad(EdgeLocation location){
 		
-		return facade.buildRoad(location);
+		playedRoad = facade.buildRoad(location);
+		return playedRoad;
 	}
 	
 	@Override
 	public boolean canBuildSettlement(VertexLocation location){ 
 		
-		return facade.canBuildSettlement(location); 
+		return (facade.canBuildSettlement(location) && !playedSettlement); 
 	}
 	
 	@Override
 	public boolean buildSettlement(VertexLocation location){ 
 		
-		return facade.buildSettlement(location);
+		playedSettlement = facade.buildSettlement(location);
+		return playedSettlement;
 	}
 
 }
