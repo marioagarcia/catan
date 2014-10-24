@@ -1,19 +1,24 @@
 package client.turntracker;
 
-import shared.definitions.CatanColor;
 import client.base.*;
+import client.communication.facade.ModelFacade;
 
 
 /**
  * Implementation for the turn tracker controller
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController {
+	
+	ModelFacade facade;
+	boolean playersInitialized;
 
 	public TurnTrackerController(ITurnTrackerView view) {
 		
 		super(view);
 		
-		initFromModel();
+		facade  = ModelFacade.getInstance(null);
+		
+		playersInitialized = false;
 	}
 	
 	@Override
@@ -24,13 +29,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-
-	}
-	
-	private void initFromModel() {
-		//<temp>
-		getView().setLocalPlayerColor(CatanColor.RED);
-		//</temp>
+		
+		facade.finishTurn();
 	}
 
 }
