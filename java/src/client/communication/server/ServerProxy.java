@@ -210,7 +210,7 @@ public class ServerProxy implements ServerProxyInterface{
 	@Override
 	public String postNewAI(String JSONString){
 		methodUrl = "/game/addAI";
-		return doGet(methodUrl, JSONString, false);
+		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override

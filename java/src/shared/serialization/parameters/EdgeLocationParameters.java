@@ -11,7 +11,32 @@ public class EdgeLocationParameters extends MasterParameterInterface{
 	public EdgeLocationParameters(EdgeLocation location){
 		x = location.getHexLoc().getX();
 		y = location.getHexLoc().getY();
-		direction = location.getDir().name();
+		
+		String temp_direction = location.getDir().name();
+		
+		switch(temp_direction)
+		{
+			case "North":
+				temp_direction = "N";
+				break;
+			case "NorthWest": 
+				temp_direction = "NW";
+				break;
+			case "NorthEast":
+				temp_direction = "NE";
+				break;
+			case "South":
+				temp_direction = "S";
+				break;
+			case "SouthEast":
+				temp_direction = "SE";
+				break;
+			case "SouthWest":
+				temp_direction = "SW";
+				break;
+		}
+		
+		direction = temp_direction;
 	}
 
 	public int getX() {
