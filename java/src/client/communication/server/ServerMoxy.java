@@ -94,7 +94,7 @@ public class ServerMoxy implements ServerProxyInterface{
 	}
 
 	@Override
-	public String getGameModel() {
+	public String getGameModel(boolean forceUpdate) {
 		return readFile("JSON" + File.separator + "getGameModel.txt");
 	}
 

@@ -51,7 +51,7 @@ public class ServerPoller implements ServerPollerInterface
 	private class CatanPoller extends TimerTask{
 		@Override
 		public void run(){
-			String model = proxyObject.getGameModel();
+			String model = proxyObject.getGameModel(false);
 			
 			if (!model.equals("\"true\"") && !model.equals("\"Success\"")){
 				

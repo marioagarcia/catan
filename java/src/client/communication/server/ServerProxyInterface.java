@@ -48,7 +48,7 @@ public interface ServerProxyInterface{
 	 * received by the client
 	 * @return JSONString for the model of the current game
 	 */
-	abstract String getGameModel();
+	abstract String getGameModel(boolean forceUpdate);
 	
 	/**
 	 * Resets the game to its initial state immediately after players joined

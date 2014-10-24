@@ -168,11 +168,18 @@ public class ServerProxy implements ServerProxyInterface{
 	}
 
 	@Override
-	public String getGameModel(){
-		methodUrl = "/game/model?version=" + latestVersion;
-		String model_string = doGet(methodUrl, null, true);
+	public String getGameModel(boolean forceUpdate){
 		
+		if(forceUpdate){
+			methodUrl = "/game/model";
+		}
+		else{
+			methodUrl = "/game/model?version=" + latestVersion;
+		}
+		
+		String model_string = doGet(methodUrl, null, true);
 		//pull out the latest version number for future calls
+		
 		if (!model_string.equals("400") && !model_string.equals("\"true\"") && !model_string.equals("\"Success\"")){
 			JsonParser parser = new JsonParser();
 			JsonElement model_element = parser.parse(model_string);

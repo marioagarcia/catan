@@ -26,7 +26,7 @@ public class GameManagerTest {
 		g.setTitle("My game");
 		manager.joinGame(CatanColor.ORANGE, g);
 		
-		manager.resetFromGameModel(proxy.getGameModel());
+		manager.resetFromGameModel(proxy.getGameModel(true));
 		
 		assertTrue(manager.getGameList() != null);
 		assertTrue(manager.getLocalPlayer() != null);
