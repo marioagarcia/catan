@@ -11,18 +11,6 @@ public class RobbingState extends GameState{
 	}
 	
 	@Override
-	public boolean canPlaceRobber(HexLocation hexLoc){ 
-		
-		return true;
-	}
-	
-	@Override
-	public boolean PlaceRobber(HexLocation hexLoc){
-		
-		return true; 
-	}
-	
-	@Override
 	public void robPlayer(RobPlayerInfo victim, HexLocation hexLoc){
 		//Our robPlayer method requires a location, but this method assumes they have chosen the person on a correct location already.
 		facade.getManager().robPlayer(victim.getPlayerIndex(), hexLoc);
