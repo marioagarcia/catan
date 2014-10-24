@@ -411,28 +411,30 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		
 		ArrayList<Integer> players_on_hex = new ArrayList<Integer>();
 		
-		for (Map.Entry<VertexLocation, City> city : cities.entrySet()){
-			if (city.getKey().getNormalizedLocation().getHexLoc().equals(location)){
-				
-				int owner = city.getValue().getPlayerIndex();
-				
-				if (!players_on_hex.contains(owner)){
-					System.out.println("Player " + owner + " own a city here");
-					players_on_hex.add(owner);
+		for(VertexDirection direction : VertexDirection.values()){
+			VertexLocation vertex_location = new VertexLocation(location, direction).getNormalizedLocation();
+			
+			for (Map.Entry<VertexLocation, City> city : cities.entrySet()){
+				if (city.getKey().getNormalizedLocation().equals(vertex_location)){
+					
+					int owner = city.getValue().getPlayerIndex();
+					
+					if (!players_on_hex.contains(owner)){
+						players_on_hex.add(owner);
+					}
 				}
 			}
-		}
-		
-		for (Map.Entry<VertexLocation, Settlement> settlement : settlements.entrySet()){
-			if (settlement.getKey().getNormalizedLocation().getHexLoc().equals(location)){
-				
-				int owner = settlement.getValue().getPlayerIndex();
-				
-				if (!players_on_hex.contains(owner)){
-					System.out.println("Player " + owner + " own a settlement here");
-					players_on_hex.add(owner);
+			
+			for (Map.Entry<VertexLocation, Settlement> settlement : settlements.entrySet()){
+				if (settlement.getKey().getNormalizedLocation().equals(vertex_location)){
+					
+					int owner = settlement.getValue().getPlayerIndex();
+					
+					if (!players_on_hex.contains(owner)){
+						players_on_hex.add(owner);
+					}
 				}
-			}
+			}	
 		}
 		
 		return players_on_hex;
