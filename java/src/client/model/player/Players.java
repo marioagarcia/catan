@@ -7,6 +7,7 @@ import java.util.Observable;
 public class Players extends Observable {
 
 	private List<Player> playerList;
+	private int localPlayerIndex;
 	
 	public Players() {
 		playerList = new ArrayList<>();
@@ -26,6 +27,14 @@ public class Players extends Observable {
 
 	public void setPlayerList(List<Player> playerList) {
 		this.playerList = playerList;
+	}
+
+	public int getLocalPlayerIndex() {
+		return localPlayerIndex;
+	}
+
+	public void setLocalPlayerIndex(int localPlayerIndex) {
+		this.localPlayerIndex = localPlayerIndex;
 	}
 
 	@Override
@@ -54,9 +63,9 @@ public class Players extends Observable {
 		return true;
 	}
 	
-	public void update(){
+	public void update(Object arg){
 		setChanged();
-		notifyObservers();
+		notifyObservers(arg);
 	}
 	
 }

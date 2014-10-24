@@ -254,14 +254,17 @@ public class GameManager implements GameManagerInterface {
 			turnTracker.setStatus(t.getStatus());
 			turnTracker.setPlayerWithLongestRoad(t.getPlayerWithLongestRoad());
 			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
+			turnTracker.setLocalPlayerIndex(localPlayer.getPlayerIndex());
 			
 			turnTracker.update();
 		}
 		
 		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
 			allPlayers.setPlayerList(game_data.playerList);
+			allPlayers.setLocalPlayerIndex(localPlayer.getPlayerIndex());
 			
-			allPlayers.update();
+			//is this hacky?
+			allPlayers.update(turnTracker);
 
 		}
 

@@ -8,6 +8,7 @@ import client.manager.interfaces.GMTurnTrackerInterface;
 public class TurnTracker extends Observable implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
 	
 	private Status status;
+	private int localPlayerIndex;
 	private int currentPlayerIndex;
 	private int playerWithLongestRoad;
 	private int playerWithLargestArmy;
@@ -41,6 +42,16 @@ public class TurnTracker extends Observable implements TurntrackerInterface, GMT
 	@Override
 	public void setCurrentTurn(int currentPlayerIndex) {
 		this.currentPlayerIndex = currentPlayerIndex;
+	}
+
+	@Override
+	public void setLocalPlayerIndex(int local_player_index) {
+		localPlayerIndex = local_player_index;		
+	}
+
+	@Override
+	public boolean isLocalPlayerTurn() {
+		return localPlayerIndex == getCurrentTurn();
 	}
 
 	@Override
