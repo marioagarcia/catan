@@ -1,6 +1,5 @@
 package state;
 
-import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -27,17 +26,11 @@ public class GameState
 	public boolean canBuildCity(VertexLocation location){ return false; }
 	public boolean buildCity(VertexLocation location){ return false; }
 	
-	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2){ return false; }
-	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2){ return false; }
-	
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2){ return false; }
 	public boolean playRoadBuilding(EdgeLocation location1, EdgeLocation location2){ return false; }
 	
 	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victimIndex){ return false; }
 	public boolean playSoldier(HexLocation newLocation, int victimIndex){ return false; }
-		
-	public boolean canPlayMonopoly(){ return false; }
-	public boolean playMonopoly(ResourceType resourceType){ return false; }
 	
 	public boolean canPlayMonument(){ return false; }
 	public boolean playMonument(){ return false; }
@@ -45,5 +38,5 @@ public class GameState
 	public boolean canPlaceRobber(HexLocation hexLoc){ return false; }
 	public boolean PlaceRobber(HexLocation hexLoc){ return false; }
 	
-	public void robPlayer(RobPlayerInfo victim){}
+	public void robPlayer(RobPlayerInfo victim, HexLocation hexLoc){}
 }

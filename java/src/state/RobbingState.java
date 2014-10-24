@@ -23,8 +23,8 @@ public class RobbingState extends GameState{
 	}
 	
 	@Override
-	public void robPlayer(RobPlayerInfo victim){
+	public void robPlayer(RobPlayerInfo victim, HexLocation hexLoc){
 		//Our robPlayer method requires a location, but this method assumes they have chosen the person on a correct location already.
-		facade.getManager().robPlayer(victim.getPlayerIndex(), null);
+		facade.getManager().robPlayer(victim.getPlayerIndex(), hexLoc);
 	}
 }

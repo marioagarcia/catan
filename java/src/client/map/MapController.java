@@ -199,6 +199,7 @@ public class MapController extends Controller implements IMapController {
 	public void placeRobber(HexLocation hexLoc) {
 		System.out.println("Map Controller placeRobber");
 		getView().placeRobber(hexLoc);
+		map.setRobberLocation(hexLoc);
 		getRobView().setPlayers(ModelFacade.getInstance(null).getRobbablePlayers(hexLoc));
 		getRobView().showModal();
 	}
@@ -229,7 +230,7 @@ public class MapController extends Controller implements IMapController {
 	
 	public void robPlayer(RobPlayerInfo victim) {	
 		System.out.println("Map Controller robPlayer");
-		currentState.robPlayer(victim);
+		currentState.robPlayer(victim, map.getRobberLocation());
 	}
 	
 	public void setGameState(GameState new_state){

@@ -1,6 +1,6 @@
 package state;
 
-import shared.definitions.ResourceType;
+
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -48,18 +48,6 @@ public class PlayingState extends GameState{
 	}
 	
 	@Override
-	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2){ 
-		
-		return facade.canPlayYearOfPlenty(type1, type2); 
-	}
-	
-	@Override
-	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2){ 
-		
-		return facade.playYearOfPlenty(type1, type2);
-	}
-	
-	@Override
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2){ 
 		
 		return facade.canPlayRoadBuilding(location1, location2);
@@ -81,18 +69,6 @@ public class PlayingState extends GameState{
 	public boolean playSoldier(HexLocation newLocation, int victimIndex){ 
 		
 		return facade.playSoldier(newLocation, victimIndex); 
-	}
-	
-	@Override
-	public boolean canPlayMonopoly(){ 
-		
-		return facade.canPlayMonopoly();
-	}
-	
-	@Override
-	public boolean playMonopoly(ResourceType resourceType){ 
-		
-		return facade.playMonopoly(resourceType);
 	}
 	
 	@Override
