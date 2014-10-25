@@ -68,7 +68,7 @@ public class RollController extends Controller implements IRollController {
 
 		@Override
 		public void update(Observable o, Object arg) {
-			if(((TurnTracker)o).getStatus() == Status.ROLLING){
+			if(((TurnTracker)o).getStatus() == Status.ROLLING && ModelFacade.getInstance(null).canRoll()){
 				getRollView().showModal();
 			}
 		}
