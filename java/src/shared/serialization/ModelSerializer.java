@@ -799,7 +799,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 	public Status getCurrentStatus(String status){
 
 		Status gameStatus = null;
-		System.out.println("This is the stats: " + status);
+		
 		switch(status){
 			case "FirstRound":
 				gameStatus = Status.FIRST_ROUND;
