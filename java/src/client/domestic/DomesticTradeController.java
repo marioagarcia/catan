@@ -95,8 +95,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		for(ResourceType type : ResourceType.values()){
 			send.put(type, false);
 		}
-		System.out.println("hisdf");
-//		getAcceptOverlay().
 		
 		this.getTradeOverlay().closeModal();
 		ModelFacade.getInstance(null).getManager().getDomesticTrade().addObserver(new DomesticTradeControllerObserver());
