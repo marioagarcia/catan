@@ -36,8 +36,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		
 		getView().setAIChoices(listAI); //Set AIList
 		getView().setPlayers(players); //Set player list
-		getView().showModal();
 		
+		getView().showModal();
+			
 		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
 			getView().closeModal();
 		}
@@ -90,10 +91,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 		@Override
 		public void update(Observable o, Object arg) {
-			if(ModelFacade.getInstance(null).getManager().getTurnTracker().getStatus() != null){
+			if(getView().isModalShowing()){
 				getView().closeModal();
-				start();
 			}
+			start();
+				
 		}
 		
 	}

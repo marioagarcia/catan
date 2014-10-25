@@ -98,12 +98,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		populateGamesList(); //Retrieve the games list from the server and populate the view with it
+		
 		getJoinGameView().showModal();
 	}
 
 	@Override
 	public void startCreateNewGame() {
-		
+	
 		getNewGameView().showModal();
 	}
 
@@ -123,12 +124,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		//If creating the new game is successful
 		if(facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
 			populateGamesList(); //Get an updated list of games so this new game will be added to the list and update the view with it
-			getNewGameView().closeModal();
 		}else{
 			messageView.setTitle("Create Game Error");
 			messageView.setMessage("Unable to create game.  Please try again");
 			messageView.showModal();
 		}
+		getNewGameView().closeModal();
 	}
 
 	@Override
@@ -162,7 +163,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelFacade facade = ModelFacade.getInstance(null);
 		GameInfo[] games = facade.getGamesList(); //Retrieve the list of games from the server		
 		PlayerInfo player = new PlayerInfo(); //Get the local player's color, name, and id 
-		System.out.println(selectColorView.getSelectedColor());
+		
 		player.setPlayerInfo(selectColorView.getSelectedColor(), 
 								 facade.getLocalPlayer().getName(),
 								 facade.getLocalPlayer().getPlayerId());
@@ -193,15 +194,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelFacade facade = ModelFacade.getInstance(null);
 		if(chosenGame == null){ //This was primarily used in the beginning for testing
 			System.out.println("Game is null");
-			getSelectColorView().closeModal();
-			getJoinGameView().closeModal();
-			joinAction.execute();
 		}else if(facade.canJoinGame(color, chosenGame)){
 		// If join succeeded
 			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
+			facade.updateGameModel();
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
-			facade.updateGameModel();
 			joinAction.execute();
 		}else{
 			messageView.setTitle("Join Game Error");
