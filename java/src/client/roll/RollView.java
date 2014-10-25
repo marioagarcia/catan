@@ -49,6 +49,7 @@ public class RollView extends OverlayView implements IRollView {
             this.add(imageLabel, BorderLayout.CENTER);
         } catch (IOException ex) {
             // Handle Exception Here
+        	System.out.println("EXCEPTION");
         }
 
 		rollButton = new JButton("Roll!");
