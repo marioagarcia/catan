@@ -98,7 +98,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		populateGamesList(); //Retrieve the games list from the server and populate the view with it
-		
 		getJoinGameView().showModal();
 	}
 
@@ -163,10 +162,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelFacade facade = ModelFacade.getInstance(null);
 		GameInfo[] games = facade.getGamesList(); //Retrieve the list of games from the server		
 		PlayerInfo player = new PlayerInfo(); //Get the local player's color, name, and id 
-<<<<<<< HEAD
-		
-=======
->>>>>>> 8a87234e743c3844fcabefbd3e950d5b1bd0a8d0
 		player.setPlayerInfo(selectColorView.getSelectedColor(), 
 								 facade.getLocalPlayer().getName(),
 								 facade.getLocalPlayer().getPlayerId());
@@ -197,17 +192,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelFacade facade = ModelFacade.getInstance(null);
 		if(chosenGame == null){ //This was primarily used in the beginning for testing
 			System.out.println("Game is null");
-<<<<<<< HEAD
-		}else if(facade.canJoinGame(color, chosenGame)){
-		// If join succeeded
-			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
-			facade.updateGameModel();
-			getSelectColorView().closeModal();
-			getJoinGameView().closeModal();
-=======
 			getSelectColorView().closeModal();
 			
-			if (getJoinGameView().isModalShowing()){
+			if(getJoinGameView().isModalShowing()){
 				getJoinGameView().closeModal();
 			}
 			
@@ -216,13 +203,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		// If join succeeded
 			getSelectColorView().closeModal();
 			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
-			
-			if (getJoinGameView().isModalShowing()){
+
+			if(getJoinGameView().isModalShowing()){
 				getJoinGameView().closeModal();
 			}
 			
 			facade.updateGameModel();
->>>>>>> 8a87234e743c3844fcabefbd3e950d5b1bd0a8d0
 			joinAction.execute();
 		}else{
 			messageView.setTitle("Join Game Error");
