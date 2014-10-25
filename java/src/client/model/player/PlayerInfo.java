@@ -39,7 +39,7 @@ public class PlayerInfo implements SerializerPlayerInfoInterface
 		setColor(player_color);
 	}
 	
-	private void setPlayerIndex(int i) {
+	public void setPlayerIndex(int i) {
 		playerIndex = i;
 	}
 	

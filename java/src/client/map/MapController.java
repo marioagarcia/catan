@@ -269,7 +269,7 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {	
 		System.out.println("Map Controller robPlayer " + victim);
 		
-		if (victim.getId() != -1){
+		if (victim.getPlayerIndex() != -1){
 			currentState.robPlayer(victim, map.getRobberLocation());
 		}
 	}

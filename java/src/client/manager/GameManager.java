@@ -937,6 +937,7 @@ public class GameManager implements GameManagerInterface {
 				int id = currentGame.getPlayers().get(player_index).getId();
 
 				rob_player_info.setPlayerInfo(color, name, id);
+				rob_player_info.setPlayerIndex(player_index);
 
 				rob_array.add(rob_player_info);
 			}
