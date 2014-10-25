@@ -24,6 +24,7 @@ import client.model.logging.GameLog;
 import client.model.logging.chat.GameChat;
 import client.model.logging.history.HistoryLog;
 import client.model.map.BoardMap;
+import client.model.piece.Settlement;
 import client.model.player.Player;
 import client.model.player.Players;
 import client.model.player.RobPlayerInfo;
@@ -81,7 +82,7 @@ public class GameManager implements GameManagerInterface {
 		allPlayers = new Players();
 		winner = new Winner();
 		domesticTrade = new DomesticTrade();
-		
+
 	}
 
 	@Override
@@ -181,9 +182,9 @@ public class GameManager implements GameManagerInterface {
 			currentGame = game;
 
 			resetFromGameModel(serverProxy.getGameModel(true));
-			
+
 			serverPoller.startPoller(3000);
-			
+
 			return true;
 		}
 
@@ -202,11 +203,11 @@ public class GameManager implements GameManagerInterface {
 
 		return true;
 	}
-	
+
 	public boolean loadGame() {
 		return true;
 	}
-	
+
 	public boolean updateGameModel() {
 		String json_model = serverProxy.getGameModel(true);
 		return resetFromGameModel(json_model);
@@ -226,24 +227,24 @@ public class GameManager implements GameManagerInterface {
 				}
 			}
 		}
-		
+
 		if(game_data.getDomesticTrade() != null && !this.domesticTrade.equals(game_data.getDomesticTrade())){
 			this.domesticTrade.setReceiver(game_data.getDomesticTrade().getReceiver());
 			this.domesticTrade.setSender(game_data.getDomesticTrade().getSender());
 			this.domesticTrade.setResourceList(game_data.getDomesticTrade().getResourceList());
-			
+
 			this.domesticTrade.update();
 		}
 		game_data.getDomesticTrade();
-		
+
 		int player_index = localPlayer.getPlayerIndex();
-		
+
 		//update the model classes and fire up the notifications of each
 
 		if(!localPlayer.equals(game_data.getPlayerList().get(player_index))) {
-			
+
 			Player p = game_data.getPlayerList().get(player_index);
-			
+
 			localPlayer.setCities(p.getCities());
 			localPlayer.setColor(p.getColor());
 			localPlayer.setMonuments(p.getMonuments());
@@ -256,36 +257,34 @@ public class GameManager implements GameManagerInterface {
 			localPlayer.setSettlements(p.getSettlements());
 			localPlayer.setSoldiers(p.getSoldiers());
 			localPlayer.setVictoryPoints(p.getVictoryPoints());
-			
+
 			localPlayer.update();
 		}
 
 		if(!turnTracker.equals(game_data.turnTracker)) {
-			
+
 			TurnTracker t = game_data.turnTracker;
-			
+
 			turnTracker.setCurrentTurn(t.getCurrentTurn());
 			turnTracker.setStatus(t.getStatus());
 			turnTracker.setPlayerWithLongestRoad(t.getPlayerWithLongestRoad());
 			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
 			turnTracker.setLocalPlayerIndex(localPlayer.getPlayerIndex());
-			
+
 			turnTracker.update();
 		}
-		
+
 		if(!allPlayers.getPlayerList().equals(game_data.playerList)) {
 			allPlayers.setPlayerList(game_data.playerList);
 			allPlayers.setLocalPlayerIndex(localPlayer.getPlayerIndex());
-			
-			//is this hacky?
+
 			allPlayers.update(turnTracker);
-
 		}
-
+		
 		if(!boardMap.equals(game_data.boardMap)) {
-			
+
 			BoardMap bm = game_data.boardMap;
-			
+
 			boardMap.setCities(bm.getCities());
 			boardMap.setHexes(bm.getHexes());
 			boardMap.setPorts(bm.getPorts());
@@ -293,36 +292,37 @@ public class GameManager implements GameManagerInterface {
 			boardMap.setRoads(bm.getRoads());
 			boardMap.setRobberLocation(bm.getRobberLocation());
 			boardMap.setSettlements(bm.getSettlements());
-			
+
 			boardMap.update(); 
 		}
 
 		if(!devCardBank.equals(game_data.devCardBank)) {
 			devCardBank.setCards(game_data.devCardBank.getCards());
-			
+
 			devCardBank.update();
 		}
 
 		if(!resCardBank.equals(game_data.resourceCardBank)) {
 			resCardBank.setCards(game_data.resourceCardBank.getCards());
-			
+
 			resCardBank.update();
 		}
 
 		if(!gameLog.equals(game_data.gameLog)) {
 			gameLog.setGameChat(game_data.gameLog.getGameChat());
 			gameLog.setGameHistoryLog(game_data.gameLog.getGameHistoryLog());
-			
+
 			gameLog.update();
 		}
-		
+
 		if(game_data.getWinner() != -1) {
-			
+
 			Player winner = allPlayers.getPlayer(game_data.getWinner());
-			
+
 			this.winner.setName(winner.getName());
 			this.winner.setPlayerIndex(winner.getPlayerIndex());
 			this.winner.setLocalPlayer(localPlayer.getPlayerIndex() == winner.getPlayerIndex());
+
 			this.winner.update();
 		}
 
@@ -361,7 +361,7 @@ public class GameManager implements GameManagerInterface {
 
 		return true;
 	}
-	
+
 	public boolean addAIPlayer(String ai_type) {
 		AIRequestParameters param = new AIRequestParameters(ai_type);
 		String json_string = modelSerializer.serializeAIRequest(param);
@@ -372,7 +372,7 @@ public class GameManager implements GameManagerInterface {
 			return false;
 		}
 	}
-	
+
 	public String[] listAIPlayers() {
 		String json_string = serverProxy.getAIList();
 		return modelSerializer.deserializeGetListAI(json_string);		
@@ -434,24 +434,40 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canFinishTurn() {
-		if(turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex()) {
-			if(turnTracker.getStatus() == Status.FIRST_ROUND ||
-					turnTracker.getStatus() == Status.SECOND_ROUND) {
-				return (localPlayer.hasPlacedFreeSettlement() && localPlayer.hasPlacedFreeRoad());					
+		int player_index = localPlayer.getPlayerIndex();
+
+		if(turnTracker.getCurrentTurn() == player_index) {
+
+			if(turnTracker.getStatus() == Status.FIRST_ROUND || turnTracker.getStatus() == Status.SECOND_ROUND) {
+				
+				int num_roads = boardMap.getNumberOfRoadsByPlayerIndex(player_index);
+				int num_settlements = boardMap.getNumberOfSettlementsByPlayerIndex(player_index);
+
+				if(turnTracker.getStatus() == Status.FIRST_ROUND && num_roads < 1 && num_settlements < 1) {
+					return false;
+				}
+
+				if(turnTracker.getStatus() == Status.SECOND_ROUND && num_roads < 2 && num_settlements < 2) {
+					return false;
+				}
+
+				return true;
 			}
 			else {
 				return turnTracker.getStatus() == Status.PLAYING;
 			}
+
 		}
+
 		return false;
 	}
 
 	@Override
 	public boolean finishTurn() {
 		int player_index = localPlayer.getPlayerIndex();
-		
+
 		if(TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus()) {
-			
+
 			localPlayer.setPlacedFreeRoad(false);
 			localPlayer.setPlacedFreeSettlement(false);
 		}
@@ -598,8 +614,18 @@ public class GameManager implements GameManagerInterface {
 	public boolean canBuildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean in_setup_phase = (turnTracker.getStatus() == Status.FIRST_ROUND || turnTracker.getStatus() == Status.SECOND_ROUND);
-		
-		return (boardMap.canBuildRoad(location, player_index) &&
+
+		int num_roads = boardMap.getNumberOfRoadsByPlayerIndex(player_index);
+
+		if(turnTracker.getStatus() == Status.FIRST_ROUND && num_roads > 0) {
+			return false;
+		}
+
+		if(turnTracker.getStatus() == Status.SECOND_ROUND && num_roads > 1) {
+			return false;
+		}
+
+		return (boardMap.canBuildRoad(location, player_index, turnTracker.getStatus()) &&
 				(localPlayer.canBuildRoad() || in_setup_phase)  && 
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
 				(turnTracker.getStatus() == Status.PLAYING || in_setup_phase));
@@ -609,19 +635,15 @@ public class GameManager implements GameManagerInterface {
 	public boolean buildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() || 
-						  TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
 		BuildRoadParameters param = new BuildRoadParameters(player_index, new EdgeLocationParameters(location), isFree);
 		String json_string = modelSerializer.serializeBuildRoad(param);
 
 		String json_model = serverProxy.buildRoad(json_string);
-		
-		if(isFree) {
-			localPlayer.setPlacedFreeRoad(true);
-		}
 
 		if(resetFromGameModel(json_model)) {
-			
+
 			return true;
 		}
 		else
@@ -633,6 +655,16 @@ public class GameManager implements GameManagerInterface {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean in_setup_phase = (turnTracker.getStatus() == Status.FIRST_ROUND || turnTracker.getStatus() == Status.SECOND_ROUND);
 
+		int num_settlements = boardMap.getNumberOfSettlementsByPlayerIndex(player_index);
+
+		if(turnTracker.getStatus() == Status.FIRST_ROUND && num_settlements > 0) {
+			return false;
+		}
+
+		if(turnTracker.getStatus() == Status.SECOND_ROUND && num_settlements > 1) {
+			return false;
+		}
+
 		return (boardMap.canBuildSettlement(location, player_index, in_setup_phase) &&
 				(localPlayer.canBuildSettlement() || in_setup_phase) &&
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
@@ -643,19 +675,17 @@ public class GameManager implements GameManagerInterface {
 	public boolean buildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
-						  TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
-		
+				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+
 		location = location.getNormalizedLocation();
+		
+		boardMap.setLastSettlementBuilt(new Settlement(player_index, location));
 
 		BuildSettlementParameters param = new BuildSettlementParameters(player_index, new VertexLocationParameters(location), isFree);
 
 		String json_string = modelSerializer.serializeBuildSettlement(param);
-		
+
 		String json_model = serverProxy.buildSettlement(json_string);
-		
-		if(isFree) {
-			localPlayer.setPlacedFreeSettlement(true);
-		}
 
 		if(resetFromGameModel(json_model)) {			
 			return true;
@@ -667,7 +697,7 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canBuildCity(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
-		
+
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
 
 		return (boardMap.canBuildCity(location, player_index) &&
@@ -852,7 +882,7 @@ public class GameManager implements GameManagerInterface {
 	public Winner getWinner() {
 		return winner;
 	}
-	
+
 	public DomesticTrade getDomesticTrade(){
 		return this.domesticTrade;
 	}
@@ -873,32 +903,32 @@ public class GameManager implements GameManagerInterface {
 	public boolean isLocalPlayersTurn(){
 		return (localPlayer.getPlayerIndex() == turnTracker.getCurrentTurn());
 	}
-	
+
 	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
 		ArrayList<Integer> player_list = boardMap.getRobbablePlayers(location);
 
 		ArrayList<RobPlayerInfo> rob_array= new ArrayList<RobPlayerInfo>();
 		RobPlayerInfo[] rob_list = new RobPlayerInfo[0];
-		
+
 		for (int player_index : player_list){
-			
+
 			int number_of_cards = allPlayers.getPlayer(player_index).getNumberOfCards();
-			
+
 			if (localPlayer.getPlayerIndex() != player_index && number_of_cards > 0){
 				RobPlayerInfo rob_player_info = new RobPlayerInfo();
-				
+
 				rob_player_info.setNumCards(allPlayers.getPlayer(player_index).getNumberOfCards());
-				
+
 				CatanColor color = currentGame.getPlayers().get(player_index).getColor();
 				String name = currentGame.getPlayers().get(player_index).getName();
 				int id = currentGame.getPlayers().get(player_index).getId();
-				
+
 				rob_player_info.setPlayerInfo(color, name, id);
-				
+
 				rob_array.add(rob_player_info);
 			}
 		}
-		
+
 		return rob_array.toArray(rob_list);
 	}
 
