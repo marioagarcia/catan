@@ -7,8 +7,7 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.communication.server.ServerMoxy;
-import client.model.card.DevCardBank;
+import client.model.player.Player;
 
 
 /**
@@ -19,16 +18,19 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private Player localPlayer = null;
 	
-	private class DevCardBankObserver implements Observer{
+	private class PlayerDevCardObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			DevCardBank bank = (DevCardBank) o;
+			Player localPlayer = (Player) o;
 
-			for(DevCardType type : DevCardType.values()){
-				getPlayCardView().setCardAmount(type, bank.numberOfType(type));
-			}
+			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, localPlayer.getNewDevCards().getMonopoly());
+			getPlayCardView().setCardAmount(DevCardType.MONUMENT, localPlayer.getNewDevCards().getMonument());
+			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, localPlayer.getNewDevCards().getRoadBuild());
+			getPlayCardView().setCardAmount(DevCardType.SOLDIER, localPlayer.getNewDevCards().getSoldier());
+			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, localPlayer.getNewDevCards().getYearOfPlenty());
 		}
 		
 	}
@@ -49,8 +51,8 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
-		
-		ModelFacade.getInstance(null).getManager().getDevCardBank().addObserver(new DevCardBankObserver());
+		localPlayer = ModelFacade.getInstance(null).getManager().getLocalPlayer();
+		localPlayer.addObserver(new PlayerDevCardObserver());
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -86,6 +88,12 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void startPlayCard() {
+		
+		getPlayCardView().setCardEnabled(DevCardType.MONUMENT, localPlayer.getNewDevCards().getMonument() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, localPlayer.getNewDevCards().getMonopoly() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, localPlayer.getNewDevCards().getRoadBuild() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.SOLDIER, localPlayer.getNewDevCards().getSoldier() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, localPlayer.getNewDevCards().getYearOfPlenty() > 0);
 		
 		getPlayCardView().showModal();
 	}
