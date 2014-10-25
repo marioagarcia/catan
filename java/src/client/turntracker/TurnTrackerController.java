@@ -8,6 +8,7 @@ import client.communication.facade.ModelFacade;
 import client.model.player.Player;
 import client.model.player.Players;
 import client.model.turntracker.TurnTracker;
+import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**
@@ -28,6 +29,21 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		facade.getManager().getTurnTracker().addObserver(turnTrackerObserver);
 		
 		playersInitialized = false;
+	}
+	
+	public static String makeMessage(Status status, boolean is_local_turn, boolean can_finish_turn) {
+		
+		if(is_local_turn) {
+			if(!can_finish_turn) {
+				return status.toString();
+			}
+			else {
+				return "Finish Turn";
+			}
+		}
+		
+		return "Waiting for other players";
+		
 	}
 	
 	@Override
@@ -78,8 +94,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 			}
 			
-			boolean enable = facade.canFinishTurn() && turnTracker.isLocalPlayerTurn();
-			getView().updateGameState(turnTracker.getStatus().toString(), enable);
+			boolean local_turn = turnTracker.isLocalPlayerTurn();
+			boolean can_finish_turn = facade.canFinishTurn();
+			boolean enable = can_finish_turn && local_turn;
+			
+			getView().updateGameState(makeMessage(turnTracker.getStatus(), local_turn, can_finish_turn), enable);
 		}
 	};
 	
@@ -90,9 +109,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			
 			TurnTracker turnTracker = (TurnTracker)o;
 			
-			boolean enable = facade.canFinishTurn() && turnTracker.isLocalPlayerTurn();
+			boolean local_turn = turnTracker.isLocalPlayerTurn();
+			boolean can_finish_turn = facade.canFinishTurn();
+			boolean enable = can_finish_turn && local_turn;
 			
-			getView().updateGameState(turnTracker.getStatus().toString(), enable);
+			getView().updateGameState(makeMessage(turnTracker.getStatus(), local_turn, can_finish_turn), enable);
 		}
 	};
 

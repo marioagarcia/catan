@@ -214,6 +214,14 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	public boolean resetFromGameModel(String json_model) {
+		
+		GameInfo[] game_list = populateGameList();
+		
+		for (GameInfo game_info : game_list) {
+			if(currentGame.getId() == game_info.getId()) {
+				currentGame = game_info;
+			}
+		}
 
 		GameData game_data = modelSerializer.deserializeGameModel(json_model);
 
