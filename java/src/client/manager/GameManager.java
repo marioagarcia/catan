@@ -435,7 +435,8 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canFinishTurn() {
 		if(turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex()) {
-			if(turnTracker.getStatus() == Status.FIRST_ROUND) {
+			if(turnTracker.getStatus() == Status.FIRST_ROUND ||
+					turnTracker.getStatus() == Status.SECOND_ROUND) {
 				return (localPlayer.hasPlacedFreeSettlement() && localPlayer.hasPlacedFreeRoad());					
 			}
 			else {
@@ -596,12 +597,13 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canBuildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
-		
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
+		boolean in_second_round = (turnTracker.getStatus() == Status.SECOND_ROUND);
+		
 		return (boardMap.canBuildRoad(location, player_index) &&
-				(localPlayer.canBuildRoad() || in_first_round)  && 
+				(localPlayer.canBuildRoad() || in_first_round || in_second_round)  && 
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
-				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
+				(turnTracker.getStatus() == Status.PLAYING || in_first_round || in_second_round));
 	}
 
 	@Override
@@ -630,17 +632,19 @@ public class GameManager implements GameManagerInterface {
 	public boolean canBuildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
+		boolean in_second_round = (turnTracker.getStatus() == Status.SECOND_ROUND);
 
 		return (boardMap.canBuildSettlement(location, player_index, in_first_round) &&
-				(localPlayer.canBuildSettlement() || in_first_round) &&
+				(localPlayer.canBuildSettlement() || in_first_round || in_second_round) &&
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
-				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
+				(turnTracker.getStatus() == Status.PLAYING || in_first_round || in_second_round));
 	}
 
 	@Override
 	public boolean buildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
-		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus());
+		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
+						  TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 		
 		location = location.getNormalizedLocation();
 
