@@ -7,6 +7,7 @@ import java.util.Observer;
 
 import shared.definitions.*;
 import client.base.*;
+import client.model.card.ResourceList;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 import client.communication.facade.ModelFacade;
@@ -19,7 +20,7 @@ import client.misc.*;
 public class DiscardController extends Controller implements IDiscardController {
 
 	private IWaitView waitView;
-	private Map<ResourceType, Integer> amounts;
+	private ResourceList resourceList;
 	
 	private class DiscardObserver implements Observer{
 		
@@ -36,7 +37,7 @@ public class DiscardController extends Controller implements IDiscardController 
 				
 				getDiscardView().setResourceMaxAmount(resource, number_of_resource);
 				getDiscardView().setResourceDiscardAmount(resource, 0);
-				amounts.put(resource,  0);
+				resourceList.setResourceByType(resource, 0);
 			}
 
 			updateDiscardView();
@@ -53,7 +54,7 @@ public class DiscardController extends Controller implements IDiscardController 
 	public DiscardController(IDiscardView view, IWaitView waitView) {
 		
 		super(view);
-		amounts = new HashMap<ResourceType, Integer>();
+		resourceList = new ResourceList(0,0,0,0,0);
 		
 		this.waitView = waitView;
 		ModelFacade.getInstance(null).getManager().getTurnTracker().addObserver(new DiscardObserver());
@@ -69,19 +70,20 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	@Override
 	public void increaseAmount(ResourceType resource) {
-		this.amounts.put(resource, this.amounts.get(resource) + 1);
+		this.resourceList.setResourceByType(resource, this.resourceList.getResourceByType(resource) + 1);
 		updateDiscardView();
 	}
 
 	@Override
 	public void decreaseAmount(ResourceType resource) {
-		this.amounts.put(resource, this.amounts.get(resource) - 1);
+		this.resourceList.setResourceByType(resource, this.resourceList.getResourceByType(resource) - 1);
 		updateDiscardView();
 	}
 
 	@Override
 	public void discard() {
 		getDiscardView().closeModal();
+		ModelFacade.getInstance(null).discardCards(this.resourceList);
 	}
 	
 	private void updateDiscardView(){
@@ -89,15 +91,15 @@ public class DiscardController extends Controller implements IDiscardController 
 		int total_discard_amount = 0;
 		
 		for(ResourceType resource : ResourceType.values()){
-			int number_of_resource = ModelFacade.getInstance(null).getManager().getResCardBank().getNumberOfResourcesByType(resource);
-			int number_of_resource_to_discard = this.amounts.get(resource);
+			int number_of_resource = ModelFacade.getInstance(null).getLocalPlayer().getResourceList().getResourceByType(resource);
+			int number_of_resource_to_discard = this.resourceList.getResourceByType(resource);
 			
 			total_cards += number_of_resource;
 			total_discard_amount += number_of_resource_to_discard;
 			getDiscardView().setResourceDiscardAmount(resource, number_of_resource_to_discard);
 			
-			boolean increase = this.amounts.get(resource) < ModelFacade.getInstance(null).getManager().getResCardBank().getNumberOfResourcesByType(resource);
-			boolean decrease = this.amounts.get(resource) > 0;
+			boolean increase = this.resourceList.getResourceByType(resource) < ModelFacade.getInstance(null).getLocalPlayer().getResourceList().getResourceByType(resource);
+			boolean decrease = this.resourceList.getResourceByType(resource) > 0;
 			getDiscardView().setResourceAmountChangeEnabled(resource, increase, decrease);
 		}
 		

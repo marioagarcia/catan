@@ -98,19 +98,31 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		populateGamesList(); //Retrieve the games list from the server and populate the view with it
-		getJoinGameView().showModal();
+		
+		if (!getJoinGameView().isModalShowing()){
+			getJoinGameView().showModal();
+		}
 	}
 
 	@Override
 	public void startCreateNewGame() {
+<<<<<<< HEAD
 	
 		getNewGameView().showModal();
+=======
+		
+		if (!getNewGameView().isModalShowing()){
+			getNewGameView().showModal();
+		}
+>>>>>>> bae7aab0ad4fc683147c0f0fb5fb14ba3e42fe66
 	}
 
 	@Override
 	public void cancelCreateNewGame() {
 		
-		getNewGameView().closeModal();
+		if (getNewGameView().isModalShowing()){
+			getNewGameView().closeModal();
+		}
 	}
 
 	@Override
@@ -123,6 +135,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		//If creating the new game is successful
 		if(facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
 			populateGamesList(); //Get an updated list of games so this new game will be added to the list and update the view with it
+<<<<<<< HEAD
+=======
+			if (getNewGameView().isModalShowing()){
+				getNewGameView().closeModal();
+			}
+>>>>>>> bae7aab0ad4fc683147c0f0fb5fb14ba3e42fe66
 		}else{
 			messageView.setTitle("Create Game Error");
 			messageView.setMessage("Unable to create game.  Please try again");
@@ -134,7 +152,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 		chosenGame = game;
-		
+		if (getJoinGameView().isModalShowing()){
+			getJoinGameView().closeModal();
+		}
 		if(chosenGame != null){
 			disableTakenColors();
 		}
@@ -183,8 +203,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void cancelJoinGame() {
+<<<<<<< HEAD
 		
 		getJoinGameView().closeModal();
+=======
+		if(getSelectColorView().isModalShowing()){
+			getSelectColorView().closeModal();
+		}
+		if (!getJoinGameView().isModalShowing()){
+			getJoinGameView().showModal();
+		}
+>>>>>>> bae7aab0ad4fc683147c0f0fb5fb14ba3e42fe66
 	}
 
 	@Override
@@ -192,22 +221,24 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelFacade facade = ModelFacade.getInstance(null);
 		if(chosenGame == null){ //This was primarily used in the beginning for testing
 			System.out.println("Game is null");
-			getSelectColorView().closeModal();
+			if (getSelectColorView().isModalShowing()){
+				getSelectColorView().closeModal();
+			}
 			
 			if(getJoinGameView().isModalShowing()){
 				getJoinGameView().closeModal();
 			}
-			
 			joinAction.execute();
 		}else if(facade.canJoinGame(color, chosenGame)){
 		// If join succeeded
-			getSelectColorView().closeModal();
+			if (getSelectColorView().isModalShowing()){
+				getSelectColorView().closeModal();
+			}
 			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
 
 			if(getJoinGameView().isModalShowing()){
 				getJoinGameView().closeModal();
 			}
-			
 			facade.updateGameModel();
 			joinAction.execute();
 		}else{
