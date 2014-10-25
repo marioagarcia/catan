@@ -348,6 +348,10 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		joinButton.setEnabled(true);
 	}
 	
+	public void handleCancel(){
+		
+	}
+	
 	public void disableAllColors(){
 		setColorEnabled(CatanColor.BLUE, false);
 		setColorEnabled(CatanColor.BROWN, false);

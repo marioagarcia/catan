@@ -176,9 +176,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelFacade facade = ModelFacade.getInstance(null);
 		GameInfo[] games = facade.getGamesList(); //Retrieve the list of games from the server		
 		PlayerInfo player = new PlayerInfo(); //Get the local player's color, name, and id 
-		player.setPlayerInfo(selectColorView.getSelectedColor(), 
-								 facade.getLocalPlayer().getName(),
-								 facade.getLocalPlayer().getPlayerId());
+		player.setPlayerInfo(null, facade.getLocalPlayer().getName(), facade.getLocalPlayer().getPlayerId());
+		
 		playerInfo = player;
 		getJoinGameView().setGames(games, player); //Send the list of games and the local player to the view
 	}
