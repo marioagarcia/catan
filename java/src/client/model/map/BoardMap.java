@@ -29,6 +29,7 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	private Map<VertexLocation, City> cities;
 	private Map<VertexLocation, Settlement> settlements;
 	private Map<EdgeLocation, Port> ports;
+	private Settlement lastSettlementPlaced;
 	
 	private int radius;
 	private HexLocation robberLocation;
@@ -39,6 +40,11 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		this.cities = new HashMap<VertexLocation, City> ();
 		this.settlements = new HashMap<VertexLocation, Settlement> ();
 		this.ports = new HashMap<EdgeLocation, Port> ();
+		this.lastSettlementPlaced = null;
+	}
+	
+	public void setLastSettlementBuilt(Settlement settlement){
+		this.lastSettlementPlaced = settlement;
 	}
 	
 	public void setHexes(Map<HexLocation, HexInterface> hexes) {
@@ -114,7 +120,7 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	}
 
 	@Override
-	public boolean canBuildRoad(EdgeLocation location, int playerIndex, Status status, Settlement lastPlacedSettlement) {
+	public boolean canBuildRoad(EdgeLocation location, int playerIndex, Status status) {
 
 		if(status.equals(Status.FIRST_ROUND)){
 			if(this.getNumberOfSettlementsByPlayerIndex(playerIndex) != 1){
@@ -132,7 +138,7 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 			Set<VertexLocation> vertexes = VertexesAdjacentToEdge.get(location).asSet();
 			
 			for(VertexLocation vertexLocation : vertexes){
-				if(lastPlacedSettlement.getLocation().getNormalizedLocation().equals(vertexLocation.getNormalizedLocation())){
+				if(this.lastSettlementPlaced.getLocation().getNormalizedLocation().equals(vertexLocation.getNormalizedLocation())){
 					isNextToSettlement = true;
 					break;
 				}
@@ -320,10 +326,10 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, int playerIndex) {
 		location1 = location1.getNormalizedLocation();
 		location2 = location2.getNormalizedLocation();
-		if(this.canBuildRoad(location1, playerIndex, null, null)){
+		if(this.canBuildRoad(location1, playerIndex, null)){
 			Road road = new Road(playerIndex, location1);
 			this.roads.put(location1, road);
-			if(this.canBuildRoad(location2,  playerIndex, null, null)){
+			if(this.canBuildRoad(location2,  playerIndex, null)){
 				roads.remove(location1);
 				return true;
 			}
@@ -331,10 +337,10 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 				roads.remove(location1);
 			}
 		}
-		if(this.canBuildRoad(location2, playerIndex, null, null)){
+		if(this.canBuildRoad(location2, playerIndex, null)){
 			Road road = new Road(playerIndex, location2);
 			this.roads.put(location2, road);
-			if(this.canBuildRoad(location1,  playerIndex, null, null)){
+			if(this.canBuildRoad(location1,  playerIndex, null)){
 				roads.remove(location2);
 				return true;
 			}
