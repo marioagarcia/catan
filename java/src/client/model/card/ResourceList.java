@@ -54,6 +54,28 @@ public class ResourceList implements SerializerResourceListInterface {
 		}
 	}
 
+	public void setResourceByType(ResourceType type, int amount){
+		switch(type){
+		case BRICK:
+			this.brick = amount;
+			return;
+		case ORE:
+			this.ore = amount;
+			return;
+		case SHEEP:
+			this.sheep = amount;
+			return;
+		case WHEAT:
+			this.wheat = amount;
+			return;
+		case WOOD:
+			this.wood = amount;
+			return;
+		default:
+			return;
+		}
+	}
+
 	public int getBrick() {
 		return brick;
 	}
