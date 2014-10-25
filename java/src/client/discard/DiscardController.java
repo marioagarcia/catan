@@ -32,7 +32,7 @@ public class DiscardController extends Controller implements IDiscardController 
 			}
 			
 			for(ResourceType resource : ResourceType.values()){
-				int number_of_resource = ModelFacade.getInstance(null).getManager().getResCardBank().getNumberOfResourcesByType(resource);
+				int number_of_resource = ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(resource);
 				
 				getDiscardView().setResourceMaxAmount(resource, number_of_resource);
 				getDiscardView().setResourceDiscardAmount(resource, 0);
