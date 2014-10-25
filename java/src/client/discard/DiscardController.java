@@ -32,12 +32,18 @@ public class DiscardController extends Controller implements IDiscardController 
 				return;
 			}
 			
+			if(turn_tracker.getStatus() == Status.DISCARDING && ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards() <= 7){
+				ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
+				return;
+			}
+			
 			for(ResourceType resource : ResourceType.values()){
 				int number_of_resource = ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(resource);
 				
 				getDiscardView().setResourceMaxAmount(resource, number_of_resource);
 				getDiscardView().setResourceDiscardAmount(resource, 0);
 				resourceList.setResourceByType(resource, 0);
+				getDiscardView().setDiscardButtonEnabled(false);
 			}
 
 			updateDiscardView();
@@ -88,22 +94,23 @@ public class DiscardController extends Controller implements IDiscardController 
 	
 	private void updateDiscardView(){
 		int total_cards = 0;
-		int total_discard_amount = 0;
 		
 		for(ResourceType resource : ResourceType.values()){
-			int number_of_resource = ModelFacade.getInstance(null).getLocalPlayer().getResourceList().getResourceByType(resource);
-			int number_of_resource_to_discard = this.resourceList.getResourceByType(resource);
-			
-			total_cards += number_of_resource;
-			total_discard_amount += number_of_resource_to_discard;
-			getDiscardView().setResourceDiscardAmount(resource, number_of_resource_to_discard);
-			
+			total_cards += this.resourceList.getResourceByType(resource);
+			getDiscardView().setResourceDiscardAmount(resource, this.resourceList.getResourceByType(resource));
+		}
+		
+		int amount_to_discard = ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards() - ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards()/ 2;
+		
+		getDiscardView().setDiscardButtonEnabled(total_cards == amount_to_discard);
+		
+		for(ResourceType resource : ResourceType.values()){
 			boolean increase = this.resourceList.getResourceByType(resource) < ModelFacade.getInstance(null).getLocalPlayer().getResourceList().getResourceByType(resource);
 			boolean decrease = this.resourceList.getResourceByType(resource) > 0;
 			getDiscardView().setResourceAmountChangeEnabled(resource, increase, decrease);
 		}
 		
-		getDiscardView().setStateMessage(total_discard_amount + "/" + (total_cards - 7));
+		getDiscardView().setStateMessage(total_cards + "/" + amount_to_discard);
 	}
 
 }
