@@ -515,7 +515,7 @@ public class GameManager implements GameManagerInterface {
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2) {
 		return (boardMap.canPlayRoadBuilding(location1, location2, localPlayer.getPlayerId()) &&
 				localPlayer.canPlayRoadBuilding() && 
-				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
 				turnTracker.getStatus() == Status.PLAYING);
 	}
 
@@ -598,10 +598,9 @@ public class GameManager implements GameManagerInterface {
 		int player_index = localPlayer.getPlayerIndex();
 		
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
-		System.out.println("Board Map can build road " + boardMap.canBuildRoad(location, player_index));
 		return (boardMap.canBuildRoad(location, player_index) &&
 				(localPlayer.canBuildRoad() || in_first_round)  && 
-				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
 				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
 	}
 
@@ -670,7 +669,7 @@ public class GameManager implements GameManagerInterface {
 
 		return (boardMap.canBuildCity(location, player_index) &&
 				(localPlayer.canBuildCity() || in_first_round) &&
-				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
 				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
 	}
 
