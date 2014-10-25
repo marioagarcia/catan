@@ -15,6 +15,8 @@ import client.model.card.ResourceList;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
 import client.model.player.Players;
+import client.model.turntracker.TurnTracker;
+import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**
@@ -28,26 +30,51 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private DomesticTrade trade;
 	private Map<ResourceType, Boolean> send;
 	
+	private class DomesticTradeControllerTTObserver implements Observer {
+
+		@Override
+		public void update(Observable o, Object arg) {
+			TurnTracker tt = (TurnTracker)o;
+			if(tt.getStatus().equals(Status.PLAYING) && tt.isLocalPlayerTurn()){
+				getTradeView().enableDomesticTrade(true);
+			} else{
+				getTradeView().enableDomesticTrade(false);
+			}
+		}
+		
+	}
+	
 	private class DomesticTradeControllerObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			DomesticTrade trade = (DomesticTrade)o;
-			if(trade.getReceiver() == -1 || !ModelFacade.getInstance(null).canAcceptTrade(trade)){
-				
+			getAcceptOverlay().reset();
+			getAcceptOverlay().setAcceptEnabled(true);
+			DomesticTrade trade_offer = (DomesticTrade)o;
+			
+			if(trade_offer.getReceiver() == -1 && getWaitOverlay().isModalShowing()){
+				getWaitOverlay().closeModal();
+				return;
+			}
+			
+			if(trade_offer.getReceiver() == -1){
+				return;
+			}
+			
+			if(trade_offer != null && trade_offer.getSender() != ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex()){
 				for(ResourceType resource : ResourceType.values()){
-					if(trade.getResourceList().getResourceByType(resource) > 0){
-						getAcceptOverlay().addGetResource(resource, trade.getResourceList().getResourceByType(resource));
+					if(trade_offer.getResourceList().getResourceByType(resource) > 0){
+						getAcceptOverlay().addGetResource(resource, trade_offer.getResourceList().getResourceByType(resource));
 						}
 					else{
-						getAcceptOverlay().addGiveResource(resource, trade.getResourceList().getResourceByType(resource));
+						getAcceptOverlay().addGiveResource(resource, trade_offer.getResourceList().getResourceByType(resource) * -1);
+						if(trade_offer.getResourceList().getResourceByType(resource) * -1 > ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(resource)){
+							getAcceptOverlay().setAcceptEnabled(false);
+						}
 					}
 				}
 				getAcceptOverlay().showModal();
-				
-				return;
 			}
-			//TODO implement accepting trades
 			
 		}
 	}
@@ -95,9 +122,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			send.put(type, false);
 		}
 		
-		this.getTradeOverlay().closeModal();
+		this.getTradeView().enableDomesticTrade(false);
+		this.getTradeOverlay().setTradeEnabled(false);
 		ModelFacade.getInstance(null).getManager().getDomesticTrade().addObserver(new DomesticTradeControllerObserver());
 		ModelFacade.getInstance(null).getManager().getAllPlayers().addObserver(new DomesticTradeControllerPlayerObserver());
+		ModelFacade.getInstance(null).getManager().getTurnTracker().addObserver(new DomesticTradeControllerTTObserver());
 		
 		
 	}
@@ -175,7 +204,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void sendTradeOffer() {
-
+		ModelFacade.getInstance(null).offerTrade(trade, this.trade.getReceiver());
 		getTradeOverlay().closeModal();
 		getWaitOverlay().showModal();
 	}
@@ -220,7 +249,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-
+		ModelFacade.getInstance(null).acceptTrade(ModelFacade.getInstance(null).getManager().getDomesticTrade(), willAccept);
 		getAcceptOverlay().closeModal();
 	}
 	
