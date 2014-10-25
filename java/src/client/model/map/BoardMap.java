@@ -119,6 +119,27 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 			return false;
 		}
 		
+		boolean location_exists = false;
+		
+		for(HexInterface hex : this.hexes.values()){
+			for(EdgeDirection direction : EdgeDirection.values()){
+				EdgeLocation test_location = new EdgeLocation(hex.getLocation(), direction).getNormalizedLocation();
+				
+				if(test_location.equals(location)){
+					location_exists = true;
+					break;
+				}
+			}
+			if(location_exists){
+				break;
+			}
+		}
+		
+		if(!location_exists){
+			return false;
+		}
+
+		
 		VertexDirection[] adjacentVertexes = VertexDirection.getAdjacent(location.getDir());
 		
 		for(VertexDirection vertex_direction : adjacentVertexes){
@@ -160,6 +181,27 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	@Override
 	public boolean canBuildSettlement(VertexLocation location, int playerIndex, boolean setupPhase) {
 		location = location.getNormalizedLocation();
+		
+		boolean location_exists = false;
+		
+		for(HexInterface hex : this.hexes.values()){
+			for(VertexDirection direction : VertexDirection.values()){
+				VertexLocation test_location = new VertexLocation(hex.getLocation(), direction).getNormalizedLocation();
+				
+				if(test_location.equals(location)){
+					location_exists = true;
+					break;
+				}
+			}
+			if(location_exists){
+				break;
+			}
+		}
+		
+		if(!location_exists){
+			return false;
+		}
+		
 		//get the edges adjacent to the requested VertexLocation
 		EdgesAdjacentToVertexResult edges = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location, this);
 		
