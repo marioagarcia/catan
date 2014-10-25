@@ -267,7 +267,7 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
-		System.out.println("Map Controller robPlayer");
+		System.out.println("Map Controller robPlayer " + victim);
 		currentState.robPlayer(victim, map.getRobberLocation());
 	}
 	
