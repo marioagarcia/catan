@@ -22,7 +22,7 @@ public class Catan extends JFrame {
 
 		client.base.OverlayView.setWindow(this);
 
-		this.setTitle("Settlers of Catan");
+		this.setTitle("Settlers of Catan (Alpha)");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		catanPanel = new CatanPanel();

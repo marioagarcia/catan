@@ -65,6 +65,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 			}
 			else {
+				
 				for (Player player : players.getPlayerList()) {
 					
 					int player_index = player.getPlayerIndex();
