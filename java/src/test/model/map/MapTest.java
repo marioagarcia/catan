@@ -66,40 +66,40 @@ public class MapTest {
 		player.setResourceList(new ResourceList(1, 0, 0, 0, 1));
 		tt.setStatus(Status.PLAYING);
 		// assertTrue(gameManager.canBuildRoad(location));
-		assertTrue(map.canBuildRoad(location, playerIndex)
+		assertTrue(map.canBuildRoad(location, playerIndex, null)
 				&& player.canBuildRoad());
 		// AssertFalse when the road location is occupied
 		EdgeLocation tempLocation = new EdgeLocation(new HexLocation(2, 0),
 				EdgeDirection.SouthWest);
-		assertFalse(map.canBuildRoad(tempLocation, playerIndex)
+		assertFalse(map.canBuildRoad(tempLocation, playerIndex, null)
 				&& player.canBuildRoad());
 		// AssertFalse when the road is not connected to another road
 		tempLocation = new EdgeLocation(new HexLocation(2, 0),
 				EdgeDirection.SouthEast);
-		assertFalse(map.canBuildRoad(tempLocation, playerIndex));
+		assertFalse(map.canBuildRoad(tempLocation, playerIndex, null));
 		// AssertFalse when the road is on water
 		tempLocation = new EdgeLocation(new HexLocation(3, 0),
 				EdgeDirection.South);
-		assertFalse(map.canBuildRoad(tempLocation, playerIndex)
+		assertFalse(map.canBuildRoad(tempLocation, playerIndex, null)
 				&& player.canBuildRoad());
 		// AssertFalse when the player does not have 1 wood
 		player.setResourceList(new ResourceList(1, 1, 1, 1, 0));
-		assertFalse(map.canBuildRoad(location, playerIndex)
+		assertFalse(map.canBuildRoad(location, playerIndex, null)
 				&& player.canBuildRoad());
 		// AssertFalse when the player does not have 1 brick
 		player.setResourceList(new ResourceList(0, 1, 1, 1, 1));
-		assertFalse(map.canBuildRoad(location, playerIndex)
+		assertFalse(map.canBuildRoad(location, playerIndex, null)
 				&& player.canBuildRoad());
 		// AssertFalse if it isn't the player's turn
 		tt.setCurrentTurn(1);
 		player.setResourceList(new ResourceList(1, 0, 0, 0, 1));
-		assertFalse(map.canBuildRoad(location, playerIndex)
+		assertFalse(map.canBuildRoad(location, playerIndex, null)
 				&& player.canBuildRoad() && tt.getCurrentTurn() == playerIndex
 				&& tt.getStatus() == Status.PLAYING);
 		// AssertFalse if the game status isn't 'Playing'
 		tt.setCurrentTurn(0);
 		tt.setStatus(Status.DISCARDING);
-		assertFalse(map.canBuildRoad(location, playerIndex)
+		assertFalse(map.canBuildRoad(location, playerIndex, null)
 				&& player.canBuildRoad() && tt.getCurrentTurn() == playerIndex
 				&& tt.getStatus() == Status.PLAYING);
 	}
