@@ -513,7 +513,7 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2) {
-		return (boardMap.canPlayRoadBuilding(location1, location2, localPlayer.getPlayerId()) &&
+		return (boardMap.canPlayRoadBuilding(location1, location2, localPlayer.getPlayerIndex()) &&
 				localPlayer.canPlayRoadBuilding() && 
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
 				turnTracker.getStatus() == Status.PLAYING);
