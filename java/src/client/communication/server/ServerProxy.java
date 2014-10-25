@@ -87,7 +87,7 @@ public class ServerProxy implements ServerProxyInterface{
 			 }
 			 
 			 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
-				 if (url_path.equals("/user/register") || url_path.equals("/user/login")){
+				 if (url_path.equals("/user/login")){
 					String local_cookie = connection.getHeaderField("Set-Cookie");
 					String[] pieces = local_cookie.split(";");
 					
