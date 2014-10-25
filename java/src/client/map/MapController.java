@@ -55,7 +55,6 @@ public class MapController extends Controller implements IMapController {
 				
 				Status state = tracker.getStatus();
 				
-				
 				switch (state){
 					case SECOND_ROUND:
 					case FIRST_ROUND:

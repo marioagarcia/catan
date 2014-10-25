@@ -46,6 +46,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				//Should probably disable settlements in first round when one has been placed
 
 				switch (tracker.getStatus()){
+					case SECOND_ROUND:
 					case FIRST_ROUND:
 						settlement_enabled = true;
 						road_enabled = true;
