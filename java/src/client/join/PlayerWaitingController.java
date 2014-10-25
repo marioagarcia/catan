@@ -91,7 +91,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		@Override
 		public void update(Observable o, Object arg) {
 			if(ModelFacade.getInstance(null).getManager().getTurnTracker().getStatus() != null){
-				getView().closeModal();
+				
+				if (getView().isModalShowing()){
+					getView().closeModal();
+				}
 				start();
 			}
 		}
