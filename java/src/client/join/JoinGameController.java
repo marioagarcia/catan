@@ -141,7 +141,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(chosenGame.getPlayers().contains(playerInfo)){
 			//If the player is in the game, disable all colors
 			((SelectColorView)getSelectColorView()).disableAllColors();
-			//Now enable the player's color so that is the only color they can choos
+			//Now enable the player's color so that is the only color they can choose
 			((SelectColorView)getSelectColorView()).setColorEnabled(getPlayerColor(), true);
 			//Disable the join button until the user selects their color
 			((SelectColorView)getSelectColorView()).disableJoinButton();
@@ -200,6 +200,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
+			facade.updateGameModel();
 			joinAction.execute();
 		}else{
 			messageView.setTitle("Join Game Error");

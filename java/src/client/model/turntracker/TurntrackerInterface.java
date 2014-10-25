@@ -50,6 +50,7 @@ public interface TurntrackerInterface {
 	
 	public enum Status{
 		FIRST_ROUND,
+		SECOND_ROUND,
 		PLAYING,
 		ROBBING,
 		DISCARDING,
