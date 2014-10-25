@@ -1,6 +1,7 @@
 package client.map;
 
 import java.util.*;
+
 import shared.definitions.*;
 import shared.locations.*;
 import state.FirstRoundState;
@@ -90,6 +91,7 @@ public class MapController extends Controller implements IMapController {
 					case ROBBING:
 						System.out.println("CurrentState is Robbing");
 						currentState = new RobbingState(MapController.this);
+						getView().startDrop(PieceType.ROBBER, localPlayerColor, true);
 						break;
 					default:
 						System.out.println("CurrentState is Locked");
