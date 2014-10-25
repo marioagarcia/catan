@@ -121,4 +121,42 @@ public class DomesticTrade extends Observable implements TradeInterface, GMDomes
 		setChanged();
 		notifyObservers();
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + receiver;
+		result = prime * result
+				+ ((resourceList == null) ? 0 : resourceList.hashCode());
+		result = prime * result + sender;
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DomesticTrade other = (DomesticTrade) obj;
+		if (receiver != other.receiver)
+			return false;
+		if (resourceList == null) {
+			if (other.resourceList != null)
+				return false;
+		} else if (!resourceList.equals(other.resourceList))
+			return false;
+		if (sender != other.sender)
+			return false;
+		return true;
+	}
 }

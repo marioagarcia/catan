@@ -233,6 +233,11 @@ public class GameManager implements GameManagerInterface {
 			this.domesticTrade.setResourceList(game_data.getDomesticTrade().getResourceList());
 			
 			this.domesticTrade.update();
+		} else if(!this.domesticTrade.equals(game_data.getDomesticTrade())){
+			this.domesticTrade.setReceiver(-1);
+			this.domesticTrade.setSender(-1);
+			this.domesticTrade.setResourceList(new ResourceList(0,0,0,0,0));;
+			this.domesticTrade.update();
 		}
 		game_data.getDomesticTrade();
 		
