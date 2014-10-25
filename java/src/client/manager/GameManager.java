@@ -597,13 +597,12 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canBuildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
-		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
-		boolean in_second_round = (turnTracker.getStatus() == Status.SECOND_ROUND);
+		boolean in_setup_phase = (turnTracker.getStatus() == Status.FIRST_ROUND || turnTracker.getStatus() == Status.SECOND_ROUND);
 		
 		return (boardMap.canBuildRoad(location, player_index) &&
-				(localPlayer.canBuildRoad() || in_first_round || in_second_round)  && 
+				(localPlayer.canBuildRoad() || in_setup_phase)  && 
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
-				(turnTracker.getStatus() == Status.PLAYING || in_first_round || in_second_round));
+				(turnTracker.getStatus() == Status.PLAYING || in_setup_phase));
 	}
 
 	@Override
@@ -631,13 +630,12 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean canBuildSettlement(VertexLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
-		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
-		boolean in_second_round = (turnTracker.getStatus() == Status.SECOND_ROUND);
+		boolean in_setup_phase = (turnTracker.getStatus() == Status.FIRST_ROUND || turnTracker.getStatus() == Status.SECOND_ROUND);
 
-		return (boardMap.canBuildSettlement(location, player_index, in_first_round) &&
-				(localPlayer.canBuildSettlement() || in_first_round || in_second_round) &&
+		return (boardMap.canBuildSettlement(location, player_index, in_setup_phase) &&
+				(localPlayer.canBuildSettlement() || in_setup_phase) &&
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
-				(turnTracker.getStatus() == Status.PLAYING || in_first_round || in_second_round));
+				(turnTracker.getStatus() == Status.PLAYING || in_setup_phase));
 	}
 
 	@Override
@@ -672,9 +670,9 @@ public class GameManager implements GameManagerInterface {
 		boolean in_first_round = (turnTracker.getStatus() == Status.FIRST_ROUND);
 
 		return (boardMap.canBuildCity(location, player_index) &&
-				(localPlayer.canBuildCity() || in_first_round) &&
+				localPlayer.canBuildCity() &&
 				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
-				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
+				turnTracker.getStatus() == Status.PLAYING && !in_first_round);
 	}
 
 	@Override
