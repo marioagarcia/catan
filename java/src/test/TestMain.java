@@ -6,10 +6,10 @@ public class TestMain {
 	public static void main(String[] args)
 	{
 		String[] classes = new String[] {
-				"test.ServerPollerTest",
+				//"test.ServerPollerTest",
 				"test.ServerProxyTest",
-				"test.GameManagerTest",
-				"test.FacadeTest",
+				//"test.GameManagerTest",
+				//"test.FacadeTest",
 				"test.model.map.MapTest"
 		};
 		

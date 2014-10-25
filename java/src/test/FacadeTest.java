@@ -68,11 +68,6 @@ public class FacadeTest {
 	}
 	
 	@Test
-	public void testSendChat(){
-			assertTrue(manager.sendChat("Yo, yo, whatup?"));
-	}
-	
-	@Test
 	public void testCanAcceptTrade(){
 		
 		manager.getTurnTracker().setStatus(Status.PLAYING);

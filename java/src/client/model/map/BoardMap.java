@@ -122,17 +122,17 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	@Override
 	public boolean canBuildRoad(EdgeLocation location, int playerIndex, Status status) {
 
-		if(status.equals(Status.FIRST_ROUND)){
+		if(status == Status.FIRST_ROUND){
 			if(this.getNumberOfSettlementsByPlayerIndex(playerIndex) != 1){
 				return false;
 			}
-		} else if(status.equals(Status.SECOND_ROUND)){
+		} else if(status == Status.SECOND_ROUND){
 			if(this.getNumberOfSettlementsByPlayerIndex(playerIndex) != 2){
 				return false;
 			}
 		}
 		
-		if(status.equals(Status.SECOND_ROUND) || status.equals(Status.FIRST_ROUND)){
+		if(status == Status.SECOND_ROUND || status == Status.FIRST_ROUND){
 			boolean isNextToSettlement = false;
 			
 			Set<VertexLocation> vertexes = VertexesAdjacentToEdge.get(location).asSet();
