@@ -30,6 +30,7 @@ public class MapController extends Controller implements IMapController {
 	private TurnTracker tracker = null;
 	private BoardMap map = null;
 	private CatanColor localPlayerColor =  null;
+	private ArrayList<HexLocation> waterHexes;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -41,6 +42,27 @@ public class MapController extends Controller implements IMapController {
 		map = ModelFacade.getInstance(null).getManager().getBoardMap();
 		MapObserver m = new MapObserver();
 		map.addObserver(m);
+		
+		waterHexes = new ArrayList<HexLocation>();
+		waterHexes.add(new HexLocation(-3, 1));
+		waterHexes.add(new HexLocation(-3, 0));
+		waterHexes.add(new HexLocation(-2, -1));
+		waterHexes.add(new HexLocation(-1, -2));
+		waterHexes.add(new HexLocation(-0, -3));
+		waterHexes.add(new HexLocation(1, -3));
+		waterHexes.add(new HexLocation(2, -3));
+		waterHexes.add(new HexLocation(3, -3));
+		waterHexes.add(new HexLocation(3, -2));
+		waterHexes.add(new HexLocation(3, -1));
+		waterHexes.add(new HexLocation(3, 0));
+		waterHexes.add(new HexLocation(2, 1));
+		waterHexes.add(new HexLocation(1, 2));
+		waterHexes.add(new HexLocation(0, 3));
+		waterHexes.add(new HexLocation(-1, 3));
+		waterHexes.add(new HexLocation(-2, 3));
+		waterHexes.add(new HexLocation(-3, 3));
+		waterHexes.add(new HexLocation(-3, 2));
+		
 		
 		setRobView(robView);
 	}
@@ -114,7 +136,20 @@ public class MapController extends Controller implements IMapController {
 		for (Map.Entry<HexLocation, HexInterface> hex : m.getHexes().entrySet()){
 			
 			getView().addHex(hex.getKey(), hex.getValue().getType());
-			getView().addNumber(hex.getKey(), hex.getValue().getNumber());
+			
+			int tile_number =  hex.getValue().getNumber();
+			
+			if (tile_number != -1){
+				getView().addNumber(hex.getKey(), hex.getValue().getNumber());
+			}
+			
+		}
+		
+		
+		//Draw water hexes
+		for (HexLocation location : waterHexes){
+			
+			getView().addHex(location, HexType.WATER);	
 		}
 		
 		//Draw roads
