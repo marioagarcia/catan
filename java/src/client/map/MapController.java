@@ -57,8 +57,9 @@ public class MapController extends Controller implements IMapController {
 				
 				
 				switch (state){
+					case SECOND_ROUND:
 					case FIRST_ROUND:
-						System.out.println("CurrentState is First Round");
+						System.out.println("CurrentState is setup");
 						currentState = new FirstRoundState(MapController.this);
 						break;
 					case PLAYING:
