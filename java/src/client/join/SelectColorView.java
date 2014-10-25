@@ -358,6 +358,18 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		setColorEnabled(CatanColor.WHITE, false);
 		setColorEnabled(CatanColor.YELLOW, false);
 	}
+	
+	public void enableAllCors(){
+		setColorEnabled(CatanColor.BLUE, true);
+		setColorEnabled(CatanColor.BROWN, true);
+		setColorEnabled(CatanColor.GREEN, true);
+		setColorEnabled(CatanColor.ORANGE, true);
+		setColorEnabled(CatanColor.PUCE, true);
+		setColorEnabled(CatanColor.PURPLE, true);
+		setColorEnabled(CatanColor.RED, true);
+		setColorEnabled(CatanColor.WHITE, true);
+		setColorEnabled(CatanColor.YELLOW, true);
+	}
 
 	private JButton getButtonForColor(CatanColor color) {
 		

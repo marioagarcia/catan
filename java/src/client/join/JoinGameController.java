@@ -162,6 +162,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelFacade facade = ModelFacade.getInstance(null);
 		GameInfo[] games = facade.getGamesList(); //Retrieve the list of games from the server		
 		PlayerInfo player = new PlayerInfo(); //Get the local player's color, name, and id 
+		System.out.println(selectColorView.getSelectedColor());
 		player.setPlayerInfo(selectColorView.getSelectedColor(), 
 								 facade.getLocalPlayer().getName(),
 								 facade.getLocalPlayer().getPlayerId());
@@ -183,8 +184,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void cancelJoinGame() {
-	
 		getJoinGameView().closeModal();
+		((SelectColorView)getSelectColorView()).enableAllCors();
 	}
 
 	@Override
