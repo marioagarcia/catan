@@ -608,7 +608,8 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean buildRoad(EdgeLocation location) {
 		int player_index = localPlayer.getPlayerIndex();
-		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus());
+		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() || 
+						  TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
 		BuildRoadParameters param = new BuildRoadParameters(player_index, new EdgeLocationParameters(location), isFree);
 		String json_string = modelSerializer.serializeBuildRoad(param);
