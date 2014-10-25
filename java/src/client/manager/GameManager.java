@@ -634,7 +634,7 @@ public class GameManager implements GameManagerInterface {
 
 		return (boardMap.canBuildSettlement(location, player_index, in_first_round) &&
 				(localPlayer.canBuildSettlement() || in_first_round) &&
-				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
 				(turnTracker.getStatus() == Status.PLAYING || in_first_round));
 	}
 
