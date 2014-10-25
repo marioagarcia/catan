@@ -49,8 +49,8 @@ public class RollController extends Controller implements IRollController {
 	@Override
 	public void rollDice() {
 		ModelFacade facade = ModelFacade.getInstance(null);
-		getRollView().closeModal();
-		//if(facade.canRoll()){
+		
+		if(facade.canRoll()){
 			DiceRoller diceRoller = new DiceRoller();
 			int rolledNumber = diceRoller.roll();
 			
@@ -58,23 +58,26 @@ public class RollController extends Controller implements IRollController {
 			
 			getResultView().setRollValue(rolledNumber);
 			getResultView().showModal();
-		//}else{
-		//	JOptionPane.showMessageDialog(new Frame(), "You are not allowed to roll right now.", "Roll Error", JOptionPane.ERROR_MESSAGE);
-		//	getRollView().closeModal();
-		//}
+		}else{
+			JOptionPane.showMessageDialog(new Frame(), "You are not allowed to roll right now.", "Roll Error", JOptionPane.ERROR_MESSAGE);
+			getRollView().closeModal();
+		}
 	}
 	
 	private void updateRollController(){
-		if(ModelFacade.getInstance(null).canRoll()){
-			getRollView().showModal();
-		}
+		getRollView().showModal();
 	}
 
 	private class TurnTrackerObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			updateRollController();
+			TurnTracker tt = ModelFacade.getInstance(null).getManager().getTurnTracker();
+			System.out.println(tt.getStatus() + "********");
+			if(ModelFacade.getInstance(null).canRoll()){
+				System.out.println(tt.getStatus());
+				updateRollController();
+			}
 		}
 		
 	}
