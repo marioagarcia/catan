@@ -537,7 +537,7 @@ public class GameManager implements GameManagerInterface {
 	public boolean canPlaySoldier(HexLocation oldLocation,	HexLocation newLocation, int victimIndex) {
 		return (boardMap.canPlaySoldier(oldLocation, newLocation, victimIndex) &&
 				localPlayer.canPlaySoldier() &&
-				turnTracker.getCurrentTurn() == localPlayer.getPlayerId() &&
+				turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex() &&
 				turnTracker.getStatus() == Status.PLAYING);
 	}
 
