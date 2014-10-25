@@ -73,7 +73,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 						}
 					}
 				}
-				
 				getAcceptOverlay().showModal();
 			}
 			
@@ -177,7 +176,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		for(ResourceType resource : ResourceType.values()){
 			enableResourceSelectionButtons(resource, true);
 		}
-
 		getTradeOverlay().showModal();
 	}
 

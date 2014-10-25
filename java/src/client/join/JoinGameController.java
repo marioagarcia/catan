@@ -134,7 +134,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 		chosenGame = game;
-		
+		getJoinGameView().closeModal();
 		if(chosenGame != null){
 			disableTakenColors();
 		}
@@ -193,13 +193,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(chosenGame == null){ //This was primarily used in the beginning for testing
 			System.out.println("Game is null");
 			getSelectColorView().closeModal();
-			getJoinGameView().closeModal();
+			
+			if (getJoinGameView().isModalShowing()){
+				getJoinGameView().closeModal();
+			}
+			
 			joinAction.execute();
 		}else if(facade.canJoinGame(color, chosenGame)){
 		// If join succeeded
-			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
 			getSelectColorView().closeModal();
-			getJoinGameView().closeModal();
+			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
+			
+			if (getJoinGameView().isModalShowing()){
+				getJoinGameView().closeModal();
+			}
+			
 			facade.updateGameModel();
 			joinAction.execute();
 		}else{

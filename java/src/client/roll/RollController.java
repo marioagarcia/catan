@@ -49,7 +49,7 @@ public class RollController extends Controller implements IRollController {
 	@Override
 	public void rollDice() {
 		ModelFacade facade = ModelFacade.getInstance(null);
-		getResultView().showModal();
+		
 		if(facade.canRoll()){
 			DiceRoller diceRoller = new DiceRoller();
 			int rolledNumber = diceRoller.roll();
@@ -63,13 +63,20 @@ public class RollController extends Controller implements IRollController {
 			getRollView().closeModal();
 		}
 	}
+	
+	private void updateRollController(){
+		getRollView().showModal();
+	}
 
 	private class TurnTrackerObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			if(((TurnTracker)o).getStatus() == Status.ROLLING && ModelFacade.getInstance(null).canRoll()){
-				getRollView().showModal();
+			TurnTracker tt = ModelFacade.getInstance(null).getManager().getTurnTracker();
+			System.out.println(tt.getStatus() + "********");
+			if(ModelFacade.getInstance(null).canRoll()){
+				System.out.println(tt.getStatus());
+				updateRollController();
 			}
 		}
 		
