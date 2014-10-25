@@ -114,6 +114,7 @@ public class MapController extends Controller implements IMapController {
 		for (Map.Entry<HexLocation, HexInterface> hex : m.getHexes().entrySet()){
 			
 			getView().addHex(hex.getKey(), hex.getValue().getType());
+			getView().addNumber(hex.getKey(), hex.getValue().getNumber());
 		}
 		
 		//Draw roads
