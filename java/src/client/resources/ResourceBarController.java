@@ -90,6 +90,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			//getView().setElementAmount(ResourceBarElement.PLAY_CARD, localPlayer.getResourceList().getResourceByType("brick")); Not sure what these are supposed to be
 			//getView().setElementAmount(ResourceBarElement.BUY_CARD, localPlayer.getResourceList().getResourceByType("brick"));
 			
+			
 			getView().setElementAmount(ResourceBarElement.SOLDIERS, localPlayer.getSoldiers());
 			
 		}

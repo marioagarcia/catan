@@ -48,7 +48,7 @@ public class MapController extends Controller implements IMapController {
 		waterHexes.add(new HexLocation(-3, 0));
 		waterHexes.add(new HexLocation(-2, -1));
 		waterHexes.add(new HexLocation(-1, -2));
-		waterHexes.add(new HexLocation(-0, -3));
+		waterHexes.add(new HexLocation(0, -3));
 		waterHexes.add(new HexLocation(1, -3));
 		waterHexes.add(new HexLocation(2, -3));
 		waterHexes.add(new HexLocation(3, -3));
@@ -260,8 +260,8 @@ public class MapController extends Controller implements IMapController {
 	public void playRoadBuildingCard() {
 
 		System.out.println("Map Controller playRoadBuildingCard");
-		getView().startDrop(PieceType.ROAD, localPlayerColor, false);
-		getView().startDrop(PieceType.ROAD, localPlayerColor, false);
+		getView().startDrop(PieceType.ROAD, localPlayerColor, true);
+		getView().startDrop(PieceType.ROAD, localPlayerColor, true);
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
