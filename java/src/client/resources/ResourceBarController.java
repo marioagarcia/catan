@@ -52,8 +52,12 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 						road_enabled = true;
 						break;
 					case PLAYING:
-						play_dev_card_enabled = true;
-						buy_dev_card_enabled = true;
+						if (localPlayer.getPlayedDevCard()){
+							play_dev_card_enabled = true;
+						}
+						if (ModelFacade.getInstance(null).getManager().canBuyDevCard()){
+							buy_dev_card_enabled = true;
+						}
 						settlement_enabled = true;
 						city_enabled = true;
 						road_enabled = true;
