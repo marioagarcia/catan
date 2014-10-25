@@ -1,5 +1,7 @@
 package client.manager.interfaces;
 
+import client.model.piece.Settlement;
+import client.model.turntracker.TurntrackerInterface.Status;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -12,7 +14,7 @@ public interface GMBoardMapInterface {
 	 * @param player_index the index of the local player
 	 * @return true if the location is next to another road or a building owned by the player
 	 */
-	public boolean canBuildRoad(EdgeLocation location, int player_index);
+	public boolean canBuildRoad(EdgeLocation location, int player_index, Status status, Settlement lastPlacedSettlement);
 
 	/**
 	 * Queries the location to see if the player can build a Settlement there

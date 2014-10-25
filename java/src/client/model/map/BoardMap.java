@@ -15,6 +15,7 @@ import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
 import client.model.player.Player;
+import client.model.turntracker.TurntrackerInterface.Status;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -113,7 +114,34 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	}
 
 	@Override
-	public boolean canBuildRoad(EdgeLocation location, int playerIndex) {
+	public boolean canBuildRoad(EdgeLocation location, int playerIndex, Status status, Settlement lastPlacedSettlement) {
+
+		if(status.equals(Status.FIRST_ROUND)){
+			if(this.getNumberOfSettlementsByPlayerIndex(playerIndex) != 1){
+				return false;
+			}
+		} else if(status.equals(Status.SECOND_ROUND)){
+			if(this.getNumberOfSettlementsByPlayerIndex(playerIndex) != 2){
+				return false;
+			}
+		}
+		
+		if(status.equals(Status.SECOND_ROUND) || status.equals(Status.FIRST_ROUND)){
+			boolean isNextToSettlement = false;
+			
+			Set<VertexLocation> vertexes = VertexesAdjacentToEdge.get(location).asSet();
+			
+			for(VertexLocation vertexLocation : vertexes){
+				if(lastPlacedSettlement.getLocation().getNormalizedLocation().equals(vertexLocation.getNormalizedLocation())){
+					isNextToSettlement = true;
+					break;
+				}
+			}
+			if(!isNextToSettlement){
+				return false;
+			}
+		}
+		
 		location = location.getNormalizedLocation();
 		if(roads.containsKey(location)){
 			return false;
@@ -292,10 +320,10 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2, int playerIndex) {
 		location1 = location1.getNormalizedLocation();
 		location2 = location2.getNormalizedLocation();
-		if(this.canBuildRoad(location1, playerIndex)){
+		if(this.canBuildRoad(location1, playerIndex, null, null)){
 			Road road = new Road(playerIndex, location1);
 			this.roads.put(location1, road);
-			if(this.canBuildRoad(location2,  playerIndex)){
+			if(this.canBuildRoad(location2,  playerIndex, null, null)){
 				roads.remove(location1);
 				return true;
 			}
@@ -303,10 +331,10 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 				roads.remove(location1);
 			}
 		}
-		if(this.canBuildRoad(location2, playerIndex)){
+		if(this.canBuildRoad(location2, playerIndex, null, null)){
 			Road road = new Road(playerIndex, location2);
 			this.roads.put(location2, road);
-			if(this.canBuildRoad(location1,  playerIndex)){
+			if(this.canBuildRoad(location1,  playerIndex, null, null)){
 				roads.remove(location2);
 				return true;
 			}
