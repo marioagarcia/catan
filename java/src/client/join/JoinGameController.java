@@ -134,7 +134,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 		chosenGame = game;
-		getJoinGameView().closeModal();
+		
 		if(chosenGame != null){
 			disableTakenColors();
 		}
@@ -183,7 +183,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void cancelJoinGame() {
-	
+		
 		getJoinGameView().closeModal();
 	}
 

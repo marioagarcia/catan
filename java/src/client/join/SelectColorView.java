@@ -183,6 +183,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 					resetButton(selButton);
 				}
 				selButton = 0;
+				enableAllColors();
 				getController().cancelJoinGame();
 			} else if (e.getSource() == btnOrange) {
 				if (selButton != 0) {
@@ -359,7 +360,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		setColorEnabled(CatanColor.YELLOW, false);
 	}
 	
-	public void enableAllCors(){
+	public void enableAllColors(){
 		setColorEnabled(CatanColor.BLUE, true);
 		setColorEnabled(CatanColor.BROWN, true);
 		setColorEnabled(CatanColor.GREEN, true);
