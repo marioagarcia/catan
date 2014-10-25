@@ -350,6 +350,28 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	public HexLocation getRobberLocation() {
 		return this.robberLocation;
 	}
+	
+	public int getNumberOfSettlementsByPlayerIndex(int player_index){
+		int number = 0;
+		
+		for(Settlement settlement : this.settlements.values()){
+			if(settlement.getPlayerIndex() == player_index){
+				number++;
+			}
+		}
+		return number;
+	}
+	
+	public int getNumberOfRoadsByPlayerIndex(int player_index){
+		int number = 0;
+		
+		for(Road road : this.roads.values()){
+			if(road.getPlayerIndex() == player_index){
+				number++;
+			}
+		}
+		return number;
+	}
 
 	@Override
 	public int hashCode() {
