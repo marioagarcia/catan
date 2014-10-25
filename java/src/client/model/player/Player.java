@@ -38,6 +38,10 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		placedFreeRoad = false;
 	}
 
+	public boolean getPlayedDevCard() {
+		return playedDevCard;
+	}
+	
 	public int getCities() {
 		return cities;
 	}
