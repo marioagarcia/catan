@@ -66,16 +66,19 @@ public class EdgeLocation
 			return false;
 		if(getClass() != obj.getClass())
 			return false;
-		EdgeLocation other = (EdgeLocation)obj;
-		if(dir != other.dir)
+		EdgeLocation other = ((EdgeLocation)obj).getNormalizedLocation();
+		
+		if(this.getNormalizedLocation().dir != other.dir){
 			return false;
-		if(hexLoc == null)
-		{
-			if(other.hexLoc != null)
-				return false;
 		}
-		else if(!hexLoc.equals(other.hexLoc))
+		if(this.hexLoc == null){
+			if(other.hexLoc != null){
+				return false;
+			}
+		}
+		else if(!this.getNormalizedLocation().hexLoc.equals(other.hexLoc)){
 			return false;
+		}
 		return true;
 	}
 	
