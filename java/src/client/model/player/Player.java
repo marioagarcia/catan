@@ -249,7 +249,7 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	}
 
 	@Override
-	public boolean canOfferTrade(TradeInterface trade){
+	public boolean canAcceptTrade(TradeInterface trade){
 		
 		int brick = trade.getTradeCard(ResourceType.BRICK);
 		int wheat = trade.getTradeCard(ResourceType.WHEAT);
@@ -336,7 +336,7 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	}
 
 	@Override
-	public boolean canAcceptTrade(TradeInterface trade){
+	public boolean canOfferTrade(TradeInterface trade){
 		int brick = trade.getTradeCard(ResourceType.BRICK);
 		int wheat = trade.getTradeCard(ResourceType.WHEAT);
 		int wood = trade.getTradeCard(ResourceType.WOOD);

@@ -66,7 +66,7 @@ public class ServerProxy implements ServerProxyInterface{
 			 
 			 connection = (HttpURLConnection)url.openConnection(); 
 			 
-			 connection.setRequestMethod("GET"); 
+			 connection.setRequestMethod("POST"); 
 			  
 			 connection.setDoInput(true);
 			 connection.setDoOutput(true);

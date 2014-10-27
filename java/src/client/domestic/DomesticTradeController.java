@@ -64,13 +64,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			if(trade_offer != null && trade_offer.getSender() != ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex()){
 				for(ResourceType resource : ResourceType.values()){
 					if(trade_offer.getResourceList().getResourceByType(resource) > 0){
-						getAcceptOverlay().addGetResource(resource, trade_offer.getResourceList().getResourceByType(resource));
-						}
-					else{
-						getAcceptOverlay().addGiveResource(resource, trade_offer.getResourceList().getResourceByType(resource) * -1);
-						if(trade_offer.getResourceList().getResourceByType(resource) * -1 > ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(resource)){
+						getAcceptOverlay().addGiveResource(resource, trade_offer.getResourceList().getResourceByType(resource));
+						if(trade_offer.getResourceList().getResourceByType(resource) > ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(resource)){
 							getAcceptOverlay().setAcceptEnabled(false);
 						}
+					}
+					else{
+						getAcceptOverlay().addGetResource(resource, trade_offer.getResourceList().getResourceByType(resource) * -1);
 					}
 				}
 				getAcceptOverlay().showModal();
@@ -183,9 +183,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void decreaseResourceAmount(ResourceType resource) {
 		if(this.send.get(resource)){
 			ResourceList list = this.trade.getResourceList();
-			list.setResourceByType(resource, list.getResourceByType(resource) - 1);
+			list.setResourceByType(resource, list.getResourceByType(resource) + 1);
 		} else {
-			this.trade.getResourceList().setResourceByType(resource,  this.trade.getResourceList().getResourceByType(resource) + 1);
+			this.trade.getResourceList().setResourceByType(resource,  this.trade.getResourceList().getResourceByType(resource) - 1);
 		}
 		this.enableResourceSelectionButtons(resource, false);
 	}
@@ -194,9 +194,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void increaseResourceAmount(ResourceType resource) {
 		if(this.send.get(resource)){
 			ResourceList list = this.trade.getResourceList();
-			list.setResourceByType(resource, list.getResourceByType(resource) + 1);
+			list.setResourceByType(resource, list.getResourceByType(resource) - 1);
 		} else {
-			this.trade.getResourceList().setResourceByType(resource,  this.trade.getResourceList().getResourceByType(resource) - 1);
+			this.trade.getResourceList().setResourceByType(resource,  this.trade.getResourceList().getResourceByType(resource) + 1);
 		}
 		
 		this.enableResourceSelectionButtons(resource, this.send.get(resource));
@@ -217,10 +217,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
+		System.out.println("Set Resource to receive");
 		this.send.put(resource, false);
 		this.trade.getResourceList().setResourceByType(resource, 0);
 		this.getTradeOverlay().setResourceAmount(resource, "0");
-		this.trade.getResourceList().setResourceByType(resource, Math.abs(this.trade.getResourceList().getResourceByType(resource)) * -1);
+		this.trade.getResourceList().setResourceByType(resource, Math.abs(this.trade.getResourceList().getResourceByType(resource)));
 		this.enableResourceSelectionButtons(resource, this.send.get(resource));
 	}
 
@@ -229,7 +230,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.send.put(resource, true);
 		this.trade.getResourceList().setResourceByType(resource, 0);
 		this.getTradeOverlay().setResourceAmount(resource, "0");
-		this.trade.getResourceList().setResourceByType(resource, Math.abs(this.trade.getResourceList().getResourceByType(resource)));
+		this.trade.getResourceList().setResourceByType(resource, Math.abs(this.trade.getResourceList().getResourceByType(resource)) * -1);
 		this.enableResourceSelectionButtons(resource, this.send.get(resource));
 	}
 
