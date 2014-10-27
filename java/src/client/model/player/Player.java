@@ -36,6 +36,7 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		playerIndex = -1;
 		placedFreeSettlemnet = false;
 		placedFreeRoad = false;
+		resourceList = new ResourceList(0,0,0,0,0);
 	}
 
 	public boolean getPlayedDevCard() {

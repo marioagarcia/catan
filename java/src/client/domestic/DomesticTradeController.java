@@ -93,7 +93,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			
 			
 			getTradeOverlay().setPlayers(player_info.toArray(new PlayerInfo[0]));
-			trade.setSender(ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerId());
+			trade.setSender(ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex());
 		}
 	}
 
