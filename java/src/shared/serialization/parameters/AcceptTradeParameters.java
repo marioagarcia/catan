@@ -7,7 +7,7 @@ public class AcceptTradeParameters extends MasterParameterInterface{
 	private Boolean willAccept;
 	
 	public AcceptTradeParameters(int index, Boolean accept){
-		type = "willAccept";
+		type = "acceptTrade";
 		playerIndex = index;
 		willAccept = accept;
 	}
