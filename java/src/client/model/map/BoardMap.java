@@ -410,7 +410,6 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		
 		//ports
 		for(int i = 0; i < portList.size(); i++){
-			portList.get(i).setLocation(portList.get(i).getLocation().getNormalizedLocation());
 			this.ports.put(portList.get(i).getLocation(), portList.get(i));
 		}
 		
