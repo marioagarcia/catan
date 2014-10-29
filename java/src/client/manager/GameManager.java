@@ -618,7 +618,7 @@ public class GameManager implements GameManagerInterface {
 
 		String json_string = modelSerializer.serializeMonument(new MonumentParameters(player_index));
 
-		serverProxy.playMonopoly(json_string);
+		serverProxy.playMonument(json_string);
 
 		return true;
 	}
