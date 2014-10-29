@@ -6,6 +6,7 @@ import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
+import client.model.turntracker.TurntrackerInterface.Status;
 
 /**
  * Implementation for the resource bar controller
@@ -102,6 +103,17 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			
 			
 			getView().setElementAmount(ResourceBarElement.SOLDIERS, localPlayer.getSoldiers());
+			
+			
+			
+			getView().setElementEnabled(ResourceBarElement.ROAD, localPlayer.canBuildRoad() || 
+																	tracker.getStatus() == Status.FIRST_ROUND || 
+																	tracker.getStatus() == Status.SECOND_ROUND);
+			
+			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, localPlayer.canBuildSettlement());
+			getView().setElementEnabled(ResourceBarElement.CITY, localPlayer.canBuildCity());
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, localPlayer.canBuyDevCard());
+			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.isPlayedDevCard());
 			
 		}
 		
