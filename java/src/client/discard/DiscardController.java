@@ -100,7 +100,7 @@ public class DiscardController extends Controller implements IDiscardController 
 			getDiscardView().setResourceDiscardAmount(resource, this.resourceList.getResourceByType(resource));
 		}
 		
-		int amount_to_discard = ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards() - ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards()/ 2;
+		int amount_to_discard = ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards()/2;
 		
 		getDiscardView().setDiscardButtonEnabled(total_cards == amount_to_discard);
 		
