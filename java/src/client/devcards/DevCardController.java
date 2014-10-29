@@ -26,11 +26,17 @@ public class DevCardController extends Controller implements IDevCardController 
 		public void update(Observable o, Object arg) {
 			Player localPlayer = (Player) o;
 
-			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, localPlayer.getNewDevCards().getMonopoly());
-			getPlayCardView().setCardAmount(DevCardType.MONUMENT, localPlayer.getNewDevCards().getMonument());
-			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, localPlayer.getNewDevCards().getRoadBuild());
-			getPlayCardView().setCardAmount(DevCardType.SOLDIER, localPlayer.getNewDevCards().getSoldier());
-			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, localPlayer.getNewDevCards().getYearOfPlenty());
+			int monopoly_cards = localPlayer.getNewDevCards().getMonopoly() + localPlayer.getOldDevCards().getMonopoly();
+			int monument_cards = localPlayer.getNewDevCards().getMonument() + localPlayer.getOldDevCards().getMonument();
+			int road_building_cards = localPlayer.getNewDevCards().getRoadBuild() + localPlayer.getOldDevCards().getRoadBuild();
+			int soldier_cards = localPlayer.getNewDevCards().getSoldier() + localPlayer.getOldDevCards().getSoldier();
+			int year_of_plenty_cards = localPlayer.getNewDevCards().getYearOfPlenty() + localPlayer.getOldDevCards().getYearOfPlenty();
+					
+			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monopoly_cards);
+			getPlayCardView().setCardAmount(DevCardType.MONUMENT, monument_cards);
+			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, road_building_cards);
+			getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldier_cards);
+			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, year_of_plenty_cards);
 		}
 		
 	}
@@ -89,11 +95,11 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void startPlayCard() {
 		
-		getPlayCardView().setCardEnabled(DevCardType.MONUMENT, localPlayer.getNewDevCards().getMonument() > 0);
-		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, localPlayer.getNewDevCards().getMonopoly() > 0);
-		getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, localPlayer.getNewDevCards().getRoadBuild() > 0);
-		getPlayCardView().setCardEnabled(DevCardType.SOLDIER, localPlayer.getNewDevCards().getSoldier() > 0);
-		getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, localPlayer.getNewDevCards().getYearOfPlenty() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.MONUMENT, localPlayer.getOldDevCards().getMonument() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, localPlayer.getOldDevCards().getMonopoly() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, localPlayer.getOldDevCards().getRoadBuild() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.SOLDIER, localPlayer.getOldDevCards().getSoldier() > 0);
+		getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, localPlayer.getOldDevCards().getYearOfPlenty() > 0);
 		
 		getPlayCardView().showModal();
 	}

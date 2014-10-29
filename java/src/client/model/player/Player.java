@@ -312,17 +312,17 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 
 	@Override
 	public boolean canPlayYearOfPlenty(){
-		return (!playedDevCard && newDevCards.getYearOfPlenty() >=1);
+		return (!playedDevCard && oldDevCards.getYearOfPlenty() >=1);
 	}
 
 	@Override
 	public boolean canPlayRoadBuilding(){
-		return (!playedDevCard && newDevCards.getRoadBuild() >=1 && roads >= 2);
+		return (!playedDevCard && oldDevCards.getRoadBuild() >=1 && roads >= 2);
 	}
 
 	@Override
 	public boolean canPlaySoldier(){
-		return (!playedDevCard && newDevCards.getSoldier() >=1);
+		return (!playedDevCard && oldDevCards.getSoldier() >=1);
 	}
 
 	@Override
@@ -385,12 +385,12 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	
 	@Override
 	public boolean canPlayMonument() {
-		return (!playedDevCard && newDevCards.getMonument() >=1);
+		return (!playedDevCard && oldDevCards.getMonument() >=1);
 	}
 
 	@Override
 	public boolean canPlayMonopoly() {
-		return (!playedDevCard && newDevCards.getMonopoly() >=1);
+		return (!playedDevCard && oldDevCards.getMonopoly() >=1);
 	}
 
 	@Override
