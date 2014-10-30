@@ -26,6 +26,7 @@ import client.model.logging.history.HistoryLog;
 import client.model.map.BoardMap;
 import client.model.piece.Settlement;
 import client.model.player.Player;
+import client.model.player.PlayerInfo;
 import client.model.player.Players;
 import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
@@ -810,13 +811,12 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade) {
+	public boolean canMaritimeTrade(EdgeLocation location, MaritimeTrade trade) {
 		if(trade.getRatio() == 4){
 			return (localPlayer.canMaritimeTrade(trade) &&
 					turnTracker.getStatus() == Status.PLAYING && 
 					turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
 		}
-		
 		return (localPlayer.canMaritimeTrade(trade) &&
 				boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex()) &&
 				turnTracker.getStatus() == Status.PLAYING && 
@@ -824,7 +824,7 @@ public class GameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade) {
+	public boolean maritimeTrade(EdgeLocation location, MaritimeTrade trade) {
 		int player_index = localPlayer.getPlayerIndex();
 		String resource_in = trade.getResourceIn().toString().toLowerCase();
 		String resource_out = trade.getResourceOut().toString().toLowerCase();
