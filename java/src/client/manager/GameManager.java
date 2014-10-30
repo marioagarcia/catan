@@ -38,7 +38,7 @@ public class GameManager implements GameManagerInterface {
 	private ServerProxyInterface serverProxy;
 	private ModelSerializer modelSerializer;
 	private ServerPoller serverPoller;
-	private ArrayList<GameInfo> gameList;
+	private GameList gameListContainer;
 	private Player localPlayer;
 	private GameInfo currentGame;
 	private GameLog gameLog;
@@ -58,11 +58,12 @@ public class GameManager implements GameManagerInterface {
 
 		serverPoller = new ServerPoller();
 		serverPoller.setProxy(this.serverProxy);
-		serverPoller.registerObserver(pollerObserver);
+		serverPoller.registerModelObserver(pollerObserver);
+		serverPoller.registerListObserver(listObserver);
 
 		modelSerializer = new ModelSerializer();
 
-		gameList = new ArrayList<>();
+		gameListContainer = new GameList();
 
 		initModelClasses();
 	}
@@ -129,23 +130,13 @@ public class GameManager implements GameManagerInterface {
 	public GameInfo[] populateGameList() {
 		String json_string = serverProxy.listGames();
 
-		gameList = modelSerializer.deserializeGamesList(json_string);
+		gameListContainer.setGameList(modelSerializer.deserializeGamesList(json_string));
 
-		if(gameList != null){
-			return gameListToArray();
+		if(gameListContainer.getGameList() != null){
+			return gameListContainer.gameListToArray();
 		}
 
 		return null;
-	}
-
-	public GameInfo[] gameListToArray(){
-		GameInfo[] gamesList = new GameInfo[gameList.size()];
-
-		for(int i = 0; i < gameList.size(); i++){
-			gamesList[i] = gameList.get(i);
-		}
-
-		return gamesList;
 	}
 
 	@Override
@@ -167,7 +158,16 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
-		return (game.playerCanJoin(localPlayer));
+		GameInfo[] game_list = populateGameList();
+		
+		for (GameInfo game_info : game_list) {
+			if(game.getId() == game_info.getId()) {
+				game = game_info;
+				break;
+			}
+		}
+		
+		return game.playerCanJoin(localPlayer);
 	}
 
 	@Override
@@ -331,7 +331,7 @@ public class GameManager implements GameManagerInterface {
 
 		if(game_data.getWinner() != -1) {
 
-			Player winner = allPlayers.getPlayer(game_data.getWinner());
+			Player winner = allPlayers.getPlayerByID(game_data.getWinner());
 
 			this.winner.setName(winner.getName());
 			this.winner.setPlayerIndex(winner.getPlayerIndex());
@@ -650,6 +650,10 @@ public class GameManager implements GameManagerInterface {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() || 
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+		
+		if (isFree){
+			localPlayer.setPlacedFreeRoad(true);
+		}
 
 		BuildRoadParameters param = new BuildRoadParameters(player_index, new EdgeLocationParameters(location), isFree);
 		String json_string = modelSerializer.serializeBuildRoad(param);
@@ -690,6 +694,10 @@ public class GameManager implements GameManagerInterface {
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+		
+		if (isFree){
+			localPlayer.setPlacedFreeSettlement(true);
+		}
 
 		location = location.getNormalizedLocation();
 		
@@ -804,6 +812,11 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canMaritimeTrade(EdgeLocation location, MaritimeTrade trade) {
+		if(trade.getRatio() == 4){
+			return (localPlayer.canMaritimeTrade(trade) &&
+					turnTracker.getStatus() == Status.PLAYING && 
+					turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		}
 		return (localPlayer.canMaritimeTrade(trade) &&
 				boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex()) &&
 				turnTracker.getStatus() == Status.PLAYING && 
@@ -836,6 +849,17 @@ public class GameManager implements GameManagerInterface {
 			resetFromGameModel(json_model);
 		}
 	};
+	
+	private ServerPoller.GameListObserver listObserver = new ServerPoller.GameListObserver() {
+
+		@Override
+		public void gameListChanged(String game_list_data) {
+
+			gameListContainer.setGameList(modelSerializer.deserializeGamesList(game_list_data));
+
+			gameListContainer.update();
+		}
+	};
 
 	public void startPoller(int interval) {
 		serverPoller.startPoller(interval);
@@ -853,8 +877,8 @@ public class GameManager implements GameManagerInterface {
 		return serverPoller;
 	}
 
-	public ArrayList<GameInfo> getGameList() {
-		return gameList;
+	public GameList getGameList() {
+		return gameListContainer;
 	}
 
 	public Player getLocalPlayer() {

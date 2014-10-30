@@ -118,8 +118,7 @@ public class PlayerInfo implements SerializerPlayerInfoInterface
 	}
 
 	@Override
-	public void setPlayerInfo(CatanColor playerColor, String playerName,
-			int playerId) {
+	public void setPlayerInfo(CatanColor playerColor, String playerName, int playerId) {
 		this.color = playerColor;
 		this.name = playerName;
 		this.id = playerId;

@@ -159,4 +159,14 @@ public class DomesticTrade extends Observable implements TradeInterface, GMDomes
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString(){
+		String str = "";
+		str += "Sender Index: " + sender + "\n";
+		str += "Receiver Index: " + receiver + "\n";
+		str += resourceList.toString();
+		
+		return str;
+	}
 }

@@ -432,5 +432,9 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		}
 	}
 	
+	public void pressCancelButton(){
+		cancelButton.doClick();
+	}
+	
 }
 

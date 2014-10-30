@@ -9,8 +9,6 @@ import javax.swing.JOptionPane;
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface;
-import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**
@@ -55,6 +53,9 @@ public class RollController extends Controller implements IRollController {
 			int rolledNumber = diceRoller.roll();
 			
 			facade.roll(rolledNumber);
+			if (getRollView().isModalShowing()){
+				getRollView().closeModal();
+			}
 			
 			getResultView().setRollValue(rolledNumber);
 			getResultView().showModal();

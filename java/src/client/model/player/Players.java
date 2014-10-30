@@ -20,6 +20,15 @@ public class Players extends Observable {
 	public Player getPlayer(int player_index) {
 		return playerList.get(player_index);
 	}
+	
+	public Player getPlayerByID(int id){
+		for(Player player : playerList){
+			if(player.getId() == id){
+				return player;
+			}
+		}
+		return null;
+	}
 
 	public List<Player> getPlayerList() {
 		return playerList;
