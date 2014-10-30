@@ -3,6 +3,8 @@ package client.join;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JOptionPane;
 
@@ -27,6 +29,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	
 	private GameInfo chosenGame;
 	private PlayerInfo playerInfo;
+	private Boolean getUpdates;
 	
 	/**
 	 * JoinGameController constructor
@@ -43,6 +46,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		
+		ModelFacade.getInstance(null).addGameListObserver(new GameListObserver());
+		getUpdates = true;
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -100,6 +106,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
+		ModelFacade.getInstance(null).startListPoller();
 		populateGamesList(); //Retrieve the games list from the server and populate the view with it
 		
 		if (!getJoinGameView().isModalShowing()){
@@ -155,10 +162,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(chosenGame != null){
 			disableTakenColors();
 		}
+		
+		getUpdates = false;
+		
 		if(chosenGame.getPlayers().contains(playerInfo)){
 			//If the player is in the game, disable all colors
 			((SelectColorView)getSelectColorView()).disableAllColors();
-			//Now enable the player's color so that is the only color they can choose
+			//Now enable the player's color so that it is the only color they can choose
 			((SelectColorView)getSelectColorView()).setColorEnabled(getPlayerColor(), true);
 			//Disable the join button until the user selects their color
 			((SelectColorView)getSelectColorView()).disableJoinButton();
@@ -205,6 +215,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if (!getJoinGameView().isModalShowing()){
 			getJoinGameView().showModal();
 		}
+		getUpdates = true;
 	}
 
 	@Override
@@ -241,9 +252,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			messageView.setMessage("Unable to join game.");
 			messageView.showModal();*/
 			JOptionPane.showMessageDialog(new Frame(), "Game is now full.  Please try a different game.", "Join Game Error", JOptionPane.ERROR_MESSAGE);
-
+			((SelectColorView)getSelectColorView()).enableAllColors();
 			((SelectColorView)getSelectColorView()).pressCancelButton();
+			start();
 		}
+	}
+	
+	private class GameListObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg) {
+			if(getUpdates){
+				start();
+			}
+		}
+		
 	}
 
 }

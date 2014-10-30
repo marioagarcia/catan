@@ -36,4 +36,5 @@ public class GameList extends Observable{
 		notifyObservers();
 	}
 
+	
 }
