@@ -222,8 +222,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			if (getSelectColorView().isModalShowing()){
 				getSelectColorView().closeModal();
 			}
-			facade.joinGame(color, chosenGame); //Join the game with the chosen color
-			
+			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
+
 			if(getJoinGameView().isModalShowing()){
 				getJoinGameView().closeModal();
 			}
@@ -237,4 +237,3 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 }
-
