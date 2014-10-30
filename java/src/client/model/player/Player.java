@@ -224,7 +224,7 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		boolean result = false;
 		int resourceAmount = 0;
 		
-		switch(trade.getResourceIn()){
+		switch(trade.getResourceOut()){
 			case BRICK:
 				resourceAmount = resourceList.getBrick();
 				break;
@@ -244,7 +244,6 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		if(trade.getRatio() <= resourceAmount){
 			result = true;
 		}
-		
 		return result;
 	}
 

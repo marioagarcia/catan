@@ -116,7 +116,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startCreateNewGame() {
-		
+		newGameView.setTitle("");
+		newGameView.setRandomlyPlaceHexes(false);
+		newGameView.setRandomlyPlaceNumbers(false);
+		newGameView.setUseRandomPorts(false);
 		if (!getNewGameView().isModalShowing()){
 			getNewGameView().showModal();
 		}

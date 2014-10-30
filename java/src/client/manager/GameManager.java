@@ -811,6 +811,12 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade) {
+		if(trade.getRatio() == 4){
+			return (localPlayer.canMaritimeTrade(trade) &&
+					turnTracker.getStatus() == Status.PLAYING && 
+					turnTracker.getCurrentTurn() == localPlayer.getPlayerIndex());
+		}
+		
 		return (localPlayer.canMaritimeTrade(trade) &&
 				boardMap.canMaritimeTrade(location, localPlayer.getPlayerIndex()) &&
 				turnTracker.getStatus() == Status.PLAYING && 
