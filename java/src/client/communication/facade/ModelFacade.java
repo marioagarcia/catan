@@ -154,12 +154,12 @@ public class ModelFacade implements ModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canMaritimeTrade(VertexLocation location, MaritimeTrade trade) {
+	public boolean canMaritimeTrade(EdgeLocation location, MaritimeTrade trade) {
 		return this.gameManager.canMaritimeTrade(location, trade);
 	}
 
 	@Override
-	public boolean maritimeTrade(VertexLocation location, MaritimeTrade trade) {
+	public boolean maritimeTrade(EdgeLocation location, MaritimeTrade trade) {
 		return this.gameManager.maritimeTrade(location, trade);
 	}
 

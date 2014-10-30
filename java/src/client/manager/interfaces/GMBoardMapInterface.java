@@ -39,7 +39,7 @@ public interface GMBoardMapInterface {
 	 * @param player_index the index of the local player
 	 * @return true if the player owns the building in the location
 	 */
-	public boolean canMaritimeTrade(VertexLocation location, int player_index);
+	public boolean canMaritimeTrade(EdgeLocation location, int player_index);
 	
 	/**
 	 * Queries the locations to determine whether or not a the roads can be build there given the following conditions: 

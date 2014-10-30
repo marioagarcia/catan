@@ -301,25 +301,19 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	}
 
 	@Override
-	public boolean canMaritimeTrade(VertexLocation location, int playerIndex) {
+	public boolean canMaritimeTrade(EdgeLocation location, int playerIndex) {
 		location = location.getNormalizedLocation();
 		
 		boolean buildingValid = false;
-		if(this.settlements.containsKey(location) && this.settlements.get(location).getPlayerIndex() == playerIndex)
-			buildingValid = true;
-		if(this.cities.containsKey(location) && this.cities.get(location).getPlayerIndex() == playerIndex)
-			buildingValid = true;
 		
-		if(!buildingValid)
-			return false;
-		
-		for(EdgeLocation potentialPort : EdgesAdjacentToVertex.findEdgesAdjacentToVertex(location, this).asSet()){
-			for(EdgeLocation port : this.ports.keySet()){
-				if(potentialPort.equals(port))
-					return true;
-			}
+		for(VertexLocation vertex : VertexesAdjacentToEdge.get(location).asSet()){
+			if(this.settlements.containsKey(vertex) && this.settlements.get(vertex).getPlayerIndex() == playerIndex || 
+			   this.cities.containsKey(vertex) && this.cities.get(vertex).getPlayerIndex() == playerIndex){
+					buildingValid = true;
+					break;
+				}
 		}
-		return false;
+		return buildingValid && this.ports.containsKey(location);
 	}
 
 	@Override
