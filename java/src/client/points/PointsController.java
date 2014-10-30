@@ -54,6 +54,7 @@ public class PointsController extends Controller implements IPointsController {
 
 	private void updateWinner(String name, boolean isLocalPlayer) {
 		getFinishedView().setWinner(name, isLocalPlayer);
+		getFinishedView().showModal();
 	}
 
 	private Observer playerObserver = new Observer() {

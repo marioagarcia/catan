@@ -331,11 +331,11 @@ public class GameManager implements GameManagerInterface {
 		if(game_data.getWinner() != -1) {
 
 			Player winner = allPlayers.getPlayerByID(game_data.getWinner());
-
+			
 			this.winner.setName(winner.getName());
 			this.winner.setPlayerIndex(winner.getPlayerIndex());
 			this.winner.setLocalPlayer(localPlayer.getPlayerIndex() == winner.getPlayerIndex());
-
+			
 			this.winner.update();
 		}
 
