@@ -1,7 +1,10 @@
 package client.join;
 
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import shared.definitions.CatanColor;
 import client.base.*;
@@ -230,9 +233,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			facade.updateGameModel();
 			joinAction.execute();
 		}else{
-			messageView.setTitle("Join Game Error");
-			messageView.setMessage("Unable to join game.  Please try again");
-			messageView.showModal();
+			if (getSelectColorView().isModalShowing()){
+				getSelectColorView().closeModal();
+			}
+			
+/*			messageView.setTitle("Join Game Error");
+			messageView.setMessage("Unable to join game.");
+			messageView.showModal();*/
+			JOptionPane.showMessageDialog(new Frame(), "Game is now full.  Please try a different game.", "Join Game Error", JOptionPane.ERROR_MESSAGE);
+
+			((SelectColorView)getSelectColorView()).pressCancelButton();
 		}
 	}
 
