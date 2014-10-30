@@ -57,7 +57,8 @@ public class GameManager implements GameManagerInterface {
 
 		serverPoller = new ServerPoller();
 		serverPoller.setProxy(this.serverProxy);
-		serverPoller.registerObserver(pollerObserver);
+		serverPoller.registerModelObserver(pollerObserver);
+		serverPoller.registerListObserver(listObserver);
 
 		modelSerializer = new ModelSerializer();
 
@@ -833,6 +834,21 @@ public class GameManager implements GameManagerInterface {
 		public void modelChanged(String json_model) {
 
 			resetFromGameModel(json_model);
+		}
+	};
+	
+	private ServerPoller.GameListObserver listObserver = new ServerPoller.GameListObserver() {
+
+		@Override
+		public void gameListChanged(String game_list_data) {
+
+		/*	gameList = modelSerializer.deserializeGamesList(game_list_data);
+
+			if(gameList != null){
+				return gameListToArray();
+			}
+
+			return null;*/
 		}
 	};
 

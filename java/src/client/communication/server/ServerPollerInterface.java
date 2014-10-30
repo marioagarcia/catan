@@ -1,5 +1,6 @@
 package client.communication.server;
 
+import client.communication.server.ServerPoller.GameListObserver;
 import client.communication.server.ServerPoller.ModelStateObserver;
 
 /**
@@ -18,7 +19,9 @@ public interface ServerPollerInterface{
 	 * Adds the observer to the ServerPoller's list of observers. Observers will be notified when the Catan game model changes
 	 * @param new_observer An object that implements the ServerPoller.ModelStateObserver interface. 
 	 */
-	public void registerObserver(ModelStateObserver new_observer);
+	public void registerModelObserver(ModelStateObserver new_observer);
+	
+	public void registerListObserver(GameListObserver new_observer);
 	
 	/**
 	 * @return A JSON String representing the current state of all model objects. This object must have a current ServerProxy object set before this method is called.

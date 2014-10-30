@@ -16,7 +16,7 @@ public class ServerPollerTest {
 		
 		poller.setProxy(new ServerMoxy());
 		
-		poller.registerObserver(observer);
+		poller.registerModelObserver(observer);
 		
 		Date before_test = new Date();
 		poller.startPoller(3000);
