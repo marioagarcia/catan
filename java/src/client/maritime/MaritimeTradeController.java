@@ -6,6 +6,7 @@ import java.util.Observer;
 import java.util.Set;
 
 import shared.definitions.*;
+import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.base.*;
 import client.communication.facade.ModelFacade;
@@ -22,7 +23,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	private IMaritimeTradeOverlay tradeOverlay;
 	private MaritimeTrade trade;
-	private VertexLocation location;
+	private EdgeLocation location;
 	private final String stateMessageSelectGive = "Please select resources to give up in trade";
 	private final String stateMessageSelectGet = "Please select resources to receive in trade";
 	private final String stateMessageTrade = "Trade!!";
@@ -91,10 +92,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGetResource(ResourceType resource) {
 		this.trade.setResourceOut(resource);
 		this.trade.setRatio(this.determineRatio(resource));
-System.out.println(determineRatio(resource));
-		if(ModelFacade.getInstance(null).getManager().canMaritimeTrade(location, trade)){
-			this.getTradeOverlay().setTradeEnabled(true);
-		}
+		
+//		if(ModelFacade.getInstance(null).getManager().canMaritimeTrade(this.determinePort(resource).getLocation(), trade)){
+//			this.getTradeOverlay().setTradeEnabled(true);
+//		}
 		getTradeOverlay().selectGetOption(resource, 1);
 		getTradeOverlay().setStateMessage(this.stateMessageTrade);
 	}
@@ -123,11 +124,18 @@ System.out.println(determineRatio(resource));
 	private int determineRatio(ResourceType type){
 		int ratio = 4;
 		for(Port port : ModelFacade.getInstance(null).getManager().getBoardMap().getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
-			if((port.getResource() == PortType.THREE || port.getResource().toString().equals(type.toString())) && port.getRatio() < ratio){
+			if((port.getResource() == PortType.THREE || port.getResource().toString().equals(type.toString())) && port.getRatio() < ratio){ 
 				ratio = port.getRatio();
 			}
 		}
 		return ratio;
+	}
+	
+	private Port determineTradeLocation(){
+		
+		
+		
+		return null;
 	}
 
 	private ResourceType[] getTradableTypes(){
