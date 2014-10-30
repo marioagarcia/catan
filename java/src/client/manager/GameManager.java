@@ -834,7 +834,7 @@ public class GameManager implements GameManagerInterface {
 		String json_string = modelSerializer.serializeMaritimeTrade(param);
 
 		String json_model = serverProxy.offerTrade(json_string);
-
+		
 		if(resetFromGameModel(json_model))
 			return true;
 		else
