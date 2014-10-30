@@ -33,6 +33,8 @@ public class MapController extends Controller implements IMapController {
 	private CatanColor localPlayerColor =  null;
 	private ArrayList<HexLocation> waterHexes;
 	
+	private boolean playingSoldier = false;
+	
 	private boolean roadBuilding = false;
 	private boolean roadBuildingOne = false;
 	private boolean roadBuildingTwo = false;
@@ -208,7 +210,6 @@ public class MapController extends Controller implements IMapController {
 		int index = ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex();
 		Status status = tracker.getStatus();
 		
-		System.out.println("Temp can build road: " + temp.canBuildRoad(edgeLoc, index, status));
 		return (currentState.canBuildRoad(edgeLoc) || (roadBuilding && num_roads >= 1 && temp.canBuildRoad(edgeLoc, index, status)));
 		
 	}
@@ -277,6 +278,7 @@ public class MapController extends Controller implements IMapController {
 	public void placeRobber(HexLocation hexLoc) {
 		System.out.println("Map Controller placeRobber");
 		getView().placeRobber(hexLoc);
+	
 		//map.setRobberLocation(hexLoc);
 		getRobView().setPlayers(ModelFacade.getInstance(null).getRobbablePlayers(hexLoc));
 		getRobView().showModal();
@@ -294,8 +296,7 @@ public class MapController extends Controller implements IMapController {
 	
 	public void playSoldierCard() {
 		System.out.println("Map Controller playSoldierCard");
-		tracker.setStatus(Status.ROBBING);
-		setGameState(new RobbingState(this));
+		playingSoldier = true;
 		getView().startDrop(PieceType.ROBBER, CatanColor.WHITE, true);
 	}
 	
@@ -322,7 +323,13 @@ public class MapController extends Controller implements IMapController {
 		System.out.println("Map Controller robPlayer " + victim);
 		
 		if (victim.getPlayerIndex() != -1){
-			currentState.robPlayer(victim, map.getRobberLocation());
+			if (playingSoldier){
+				currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
+				playingSoldier = false;
+			}
+			else{
+				currentState.robPlayer(victim, map.getRobberLocation());
+			}
 		}
 	}
 	
