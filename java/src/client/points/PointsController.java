@@ -15,6 +15,8 @@ import client.model.player.Player;
 public class PointsController extends Controller implements IPointsController {
 
 	private IGameFinishedView finishedView;
+	
+	Boolean hasWinner;
 
 	private ModelFacade facade = ModelFacade.getInstance(null);
 
@@ -33,6 +35,7 @@ public class PointsController extends Controller implements IPointsController {
 		facade.getManager().getLocalPlayer().addObserver(playerObserver);
 		facade.getManager().getWinner().addObserver(winnerObserver);
 
+		hasWinner = false;
 	}
 
 	public IPointsView getPointsView() {
@@ -53,6 +56,7 @@ public class PointsController extends Controller implements IPointsController {
 	}
 
 	private void updateWinner(String name, boolean isLocalPlayer) {
+		hasWinner = true;
 		getFinishedView().setWinner(name, isLocalPlayer);
 		getFinishedView().showModal();
 	}
@@ -75,9 +79,9 @@ public class PointsController extends Controller implements IPointsController {
 
 			String name = winner.getName();
 			boolean i_won = winner.isLocalPlayer();
-
-			updateWinner(name, i_won);
-
+			if(!hasWinner){
+				updateWinner(name, i_won);
+			}
 		}
 	};
 
