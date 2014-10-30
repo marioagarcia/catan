@@ -259,42 +259,32 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		
 		boolean can_offer = true;
 		
-		if (brick > 0)
-		{
-			if (resourceList.getBrick() < brick)
-			{
+		if (brick > 0){
+			if (resourceList.getBrick() < brick){
 				can_offer = false;
 			}
 		}
 		
-		if (wheat > 0)
-		{
-			if (resourceList.getWheat() < wheat)
-			{
+		if (wheat > 0){
+			if (resourceList.getWheat() < wheat){
 				can_offer = false;
 			}
 		}
 		
-		if (wood > 0)
-		{
-			if (resourceList.getWood() < wood)
-			{
+		if (wood > 0){
+			if (resourceList.getWood() < wood){
 				can_offer = false;
 			}
 		}
 		
-		if (sheep > 0)
-		{
-			if (resourceList.getSheep() < sheep)
-			{
+		if (sheep > 0){
+			if (resourceList.getSheep() < sheep){
 				can_offer = false;
 			}
 		}
 		
-		if (ore > 0)
-		{
-			if (resourceList.getOre() < ore)
-			{
+		if (ore > 0){
+			if (resourceList.getOre() < ore){
 				can_offer = false;
 			}
 		}
