@@ -92,7 +92,7 @@ public class ServerPoller implements ServerPollerInterface
 	private class GameListPoller extends TimerTask{
 		@Override
 		public void run(){
-			String game_list = proxyObject.listGames(); //Sucktastic
+			String game_list = proxyObject.listGames();
 			
 			if (!game_list.equals(latestGameList)){
 				

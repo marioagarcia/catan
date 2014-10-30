@@ -1,6 +1,7 @@
 package client.communication.facade;
 
 import java.util.Observer;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -279,6 +280,10 @@ public class ModelFacade implements ModelFacadeInterface {
 		gameManager.getTurnTracker().addObserver(o);
 	}
 	
+	public void addGameListObserver(Observer o){
+		gameManager.getGameList().addObserver(o);
+	}
+	
 	public Player getLocalPlayer(){
 		return gameManager.getLocalPlayer();
 	}
@@ -293,6 +298,10 @@ public class ModelFacade implements ModelFacadeInterface {
 	
 	public GameManager getManager(){
 		return gameManager;
+	}
+	
+	public void startListPoller(){
+		gameManager.getServerPoller().startListPoller(2000);
 	}
 	
 	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){

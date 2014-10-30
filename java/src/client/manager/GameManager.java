@@ -37,7 +37,7 @@ public class GameManager implements GameManagerInterface {
 	private ServerProxyInterface serverProxy;
 	private ModelSerializer modelSerializer;
 	private ServerPoller serverPoller;
-	private ArrayList<GameInfo> gameList;
+	private GameList gameListContainer;
 	private Player localPlayer;
 	private GameInfo currentGame;
 	private GameLog gameLog;
@@ -62,7 +62,7 @@ public class GameManager implements GameManagerInterface {
 
 		modelSerializer = new ModelSerializer();
 
-		gameList = new ArrayList<>();
+		gameListContainer = new GameList();
 
 		initModelClasses();
 	}
@@ -129,23 +129,13 @@ public class GameManager implements GameManagerInterface {
 	public GameInfo[] populateGameList() {
 		String json_string = serverProxy.listGames();
 
-		gameList = modelSerializer.deserializeGamesList(json_string);
+		gameListContainer.setGameList(modelSerializer.deserializeGamesList(json_string));
 
-		if(gameList != null){
-			return gameListToArray();
+		if(gameListContainer.getGameList() != null){
+			return gameListContainer.gameListToArray();
 		}
 
 		return null;
-	}
-
-	public GameInfo[] gameListToArray(){
-		GameInfo[] gamesList = new GameInfo[gameList.size()];
-
-		for(int i = 0; i < gameList.size(); i++){
-			gamesList[i] = gameList.get(i);
-		}
-
-		return gamesList;
 	}
 
 	@Override
@@ -851,13 +841,9 @@ System.out.println(game.playerCanJoin(localPlayer) + " : " + (game.getPlayers().
 		@Override
 		public void gameListChanged(String game_list_data) {
 
-		/*	gameList = modelSerializer.deserializeGamesList(game_list_data);
+			gameListContainer.setGameList(modelSerializer.deserializeGamesList(game_list_data));
 
-			if(gameList != null){
-				return gameListToArray();
-			}
-
-			return null;*/
+			gameListContainer.update();
 		}
 	};
 
@@ -877,8 +863,8 @@ System.out.println(game.playerCanJoin(localPlayer) + " : " + (game.getPlayers().
 		return serverPoller;
 	}
 
-	public ArrayList<GameInfo> getGameList() {
-		return gameList;
+	public GameList getGameList() {
+		return gameListContainer;
 	}
 
 	public Player getLocalPlayer() {
