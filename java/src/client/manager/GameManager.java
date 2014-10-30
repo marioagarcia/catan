@@ -165,8 +165,8 @@ public class GameManager implements GameManagerInterface {
 				break;
 			}
 		}
-System.out.println(game.playerCanJoin(localPlayer) + " : " + (game.getPlayers().size() < 4));
-		return (game.playerCanJoin(localPlayer) && game.getPlayers().size() < 4);
+		
+		return game.playerCanJoin(localPlayer);
 	}
 
 	@Override
@@ -649,6 +649,10 @@ System.out.println(game.playerCanJoin(localPlayer) + " : " + (game.getPlayers().
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() || 
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+		
+		if (isFree){
+			localPlayer.setPlacedFreeRoad(true);
+		}
 
 		BuildRoadParameters param = new BuildRoadParameters(player_index, new EdgeLocationParameters(location), isFree);
 		String json_string = modelSerializer.serializeBuildRoad(param);
@@ -689,6 +693,10 @@ System.out.println(game.playerCanJoin(localPlayer) + " : " + (game.getPlayers().
 		int player_index = localPlayer.getPlayerIndex();
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+		
+		if (isFree){
+			localPlayer.setPlacedFreeSettlement(true);
+		}
 
 		location = location.getNormalizedLocation();
 		

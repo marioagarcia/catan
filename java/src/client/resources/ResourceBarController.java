@@ -97,20 +97,17 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			getView().setElementAmount(ResourceBarElement.CITY, localPlayer.getCities());
 			getView().setElementAmount(ResourceBarElement.SETTLEMENT, localPlayer.getSettlements());
 			getView().setElementAmount(ResourceBarElement.ROAD, localPlayer.getRoads());
-			
-			//getView().setElementAmount(ResourceBarElement.PLAY_CARD, localPlayer.getResourceList().getResourceByType("brick")); Not sure what these are supposed to be
-			//getView().setElementAmount(ResourceBarElement.BUY_CARD, localPlayer.getResourceList().getResourceByType("brick"));
-			
-			
 			getView().setElementAmount(ResourceBarElement.SOLDIERS, localPlayer.getSoldiers());
 			
+			if (tracker.getStatus() == Status.FIRST_ROUND || tracker.getStatus() == Status.SECOND_ROUND){
+				getView().setElementEnabled(ResourceBarElement.ROAD, !localPlayer.hasPlacedFreeRoad());
+				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !localPlayer.hasPlacedFreeSettlement());
+			}
+			else{
+				getView().setElementEnabled(ResourceBarElement.ROAD, localPlayer.canBuildRoad());	
+				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, localPlayer.canBuildSettlement());
+			}
 			
-			
-			getView().setElementEnabled(ResourceBarElement.ROAD, localPlayer.canBuildRoad() || 
-																	tracker.getStatus() == Status.FIRST_ROUND || 
-																	tracker.getStatus() == Status.SECOND_ROUND);
-			
-			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, localPlayer.canBuildSettlement());
 			getView().setElementEnabled(ResourceBarElement.CITY, localPlayer.canBuildCity());
 			getView().setElementEnabled(ResourceBarElement.BUY_CARD, localPlayer.canBuyDevCard());
 			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.isPlayedDevCard());
