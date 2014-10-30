@@ -223,8 +223,8 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 	public boolean canMaritimeTrade(MaritimeTrade trade){
 		boolean result = false;
 		int resourceAmount = 0;
-		
-		switch(trade.getResourceOut()){
+
+		switch(trade.getResourceIn()){
 			case BRICK:
 				resourceAmount = resourceList.getBrick();
 				break;

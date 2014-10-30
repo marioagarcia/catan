@@ -330,7 +330,7 @@ public class GameManager implements GameManagerInterface {
 
 		if(game_data.getWinner() != -1) {
 
-			Player winner = allPlayers.getPlayer(game_data.getWinner());
+			Player winner = allPlayers.getPlayerByID(game_data.getWinner());
 
 			this.winner.setName(winner.getName());
 			this.winner.setPlayerIndex(winner.getPlayerIndex());
