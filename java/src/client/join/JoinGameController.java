@@ -208,7 +208,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void joinGame(CatanColor color) {
 		ModelFacade facade = ModelFacade.getInstance(null);
 		if(chosenGame == null){ //This was primarily used in the beginning for testing
-			System.out.println("Game is null");
+
 			if (getSelectColorView().isModalShowing()){
 				getSelectColorView().closeModal();
 			}

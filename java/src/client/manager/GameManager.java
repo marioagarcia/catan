@@ -167,7 +167,16 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
-		return (game.playerCanJoin(localPlayer));
+		GameInfo[] game_list = populateGameList();
+		
+		for (GameInfo game_info : game_list) {
+			if(game.getId() == game_info.getId()) {
+				game = game_info;
+				break;
+			}
+		}
+System.out.println(game.playerCanJoin(localPlayer) + " : " + (game.getPlayers().size() < 4));
+		return (game.playerCanJoin(localPlayer) && game.getPlayers().size() < 4);
 	}
 
 	@Override
