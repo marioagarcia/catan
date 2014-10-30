@@ -33,6 +33,16 @@ public class MapController extends Controller implements IMapController {
 	private CatanColor localPlayerColor =  null;
 	private ArrayList<HexLocation> waterHexes;
 	
+	private boolean roadBuilding = false;
+	private boolean roadBuildingOne = false;
+	private boolean roadBuildingTwo = false;
+	
+	private EdgeLocation roadBuildingLocationOne = null;
+	private EdgeLocation roadBuildingLocationTwo = null;
+	
+	private BoardMap temp = new BoardMap();
+	private Map<EdgeLocation, Road> temp_roads = new HashMap<EdgeLocation, Road>();
+	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
@@ -91,7 +101,7 @@ public class MapController extends Controller implements IMapController {
 					case ROBBING:
 						//System.out.println("CurrentState is Robbing");
 						currentState = new RobbingState(MapController.this);
-						getView().startDrop(PieceType.ROBBER, localPlayerColor, true);
+						getView().startDrop(PieceType.ROBBER, localPlayerColor, false);
 						break;
 					default:
 						//System.out.println("CurrentState is Locked");
@@ -189,15 +199,17 @@ public class MapController extends Controller implements IMapController {
 		
 		//Place robber
 		getView().placeRobber(m.getRobberLocation());
-		
-	//	System.out.println("Current game status: " + tracker.getStatus().toString());
-	//	System.out.println("Current turn: " + ModelFacade.getInstance(null).getPlayers().getPlayer(tracker.getCurrentTurn()).getName());
 
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		
-		return currentState.canBuildRoad(edgeLoc);
+		int num_roads = ModelFacade.getInstance(null).getLocalPlayer().getRoads();
+		int index = ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex();
+		Status status = tracker.getStatus();
+		
+		System.out.println("Temp can build road: " + temp.canBuildRoad(edgeLoc, index, status));
+		return (currentState.canBuildRoad(edgeLoc) || (roadBuilding && num_roads >= 1 && temp.canBuildRoad(edgeLoc, index, status)));
 		
 	}
 
@@ -213,13 +225,41 @@ public class MapController extends Controller implements IMapController {
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		
-		return !map.getRobberLocation().equals(hexLoc);
+		return (!map.getRobberLocation().equals(hexLoc) && !waterHexes.contains(hexLoc));
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		System.out.println("Map Controller placeRoad");
-		currentState.buildRoad(edgeLoc);
+		int index = ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex();
 		getView().placeRoad(edgeLoc, localPlayerColor);
+		
+		if (!roadBuilding){
+			currentState.buildRoad(edgeLoc);
+		}
+		else{
+			if (!roadBuildingOne){
+				roadBuildingOne = true;
+				roadBuildingLocationOne = edgeLoc;
+				
+				temp_roads.put(edgeLoc, new Road(index, edgeLoc));
+				
+				temp.setRoads(temp_roads);
+			}
+			else{
+				roadBuildingTwo = true;
+				roadBuildingLocationTwo = edgeLoc;
+				temp_roads.put(edgeLoc, new Road(index, edgeLoc));
+				
+				if (roadBuildingOne && roadBuildingTwo){
+					if(currentState.playRoadBuilding(roadBuildingLocationOne, roadBuildingLocationTwo)){
+						roadBuildingLocationOne = null;
+						roadBuildingLocationTwo = null;
+						roadBuilding = false;
+						temp.setRoads(map.getRoads());
+					}
+				}
+			}
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
@@ -237,7 +277,7 @@ public class MapController extends Controller implements IMapController {
 	public void placeRobber(HexLocation hexLoc) {
 		System.out.println("Map Controller placeRobber");
 		getView().placeRobber(hexLoc);
-		map.setRobberLocation(hexLoc);
+		//map.setRobberLocation(hexLoc);
 		getRobView().setPlayers(ModelFacade.getInstance(null).getRobbablePlayers(hexLoc));
 		getRobView().showModal();
 	}
@@ -262,8 +302,20 @@ public class MapController extends Controller implements IMapController {
 	public void playRoadBuildingCard() {
 
 		System.out.println("Map Controller playRoadBuildingCard");
+		
+		roadBuilding = true;
+		
+		temp.getHexes().clear();
+		temp.setHexes(map.getHexes());
+		
+		temp.getRoads().clear();
+		temp_roads.clear();
+		
+		temp_roads.putAll(map.getRoads());
+		temp.setRoads(temp_roads);
+		
 		getView().startDrop(PieceType.ROAD, localPlayerColor, true);
-		getView().startDrop(PieceType.ROAD, localPlayerColor, true);
+		getView().startDrop(PieceType.ROAD, localPlayerColor, true);		
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
