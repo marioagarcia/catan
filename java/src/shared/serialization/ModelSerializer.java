@@ -60,6 +60,7 @@ import client.model.piece.Road;
 import client.model.piece.Settlement;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
+import client.model.player.Players;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 
@@ -519,6 +520,9 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		//Parse players and build player list
 		ArrayList<Player> playerList = getPlayers(mainObject);
+		Players players = new Players();
+		players.setPlayerList(playerList);
+		gameData.setPlayers(players);
 		gameData.setPlayerList(playerList);
 		//Done parsing players
 

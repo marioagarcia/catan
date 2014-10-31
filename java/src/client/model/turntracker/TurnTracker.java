@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import shared.serialization.interfaces.SerializerTurnTrackerInterface;
 import client.manager.interfaces.GMTurnTrackerInterface;
+import client.model.player.Players;
 
 public class TurnTracker extends Observable implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
 	
@@ -12,6 +13,7 @@ public class TurnTracker extends Observable implements TurntrackerInterface, GMT
 	private int currentPlayerIndex;
 	private int playerWithLongestRoad;
 	private int playerWithLargestArmy;
+	private Players players;
 	
 	public TurnTracker(Status status, int currentTurnNumber, int longestRoad, int largestArmy){
 		this.status = status;
@@ -99,6 +101,14 @@ public class TurnTracker extends Observable implements TurntrackerInterface, GMT
 		return (currentPlayerIndex == player_index && status == Status.PLAYING);
 	}
 	
+	public void setPlayers(Players players) {
+		this.players = players;
+	}
+	
+	public Players getPlayers() {
+		return players;
+	}
+
 	@Override
 	public void setTurnTracker(String status, int currentTurn, int longestRoad,
 			int largestArmy){

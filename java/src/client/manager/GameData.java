@@ -8,6 +8,7 @@ import client.model.card.ResourceCardBank;
 import client.model.logging.GameLog;
 import client.model.map.BoardMap;
 import client.model.player.Player;
+import client.model.player.Players;
 import client.model.turntracker.TurnTracker;
 
 public class GameData {
@@ -19,6 +20,7 @@ public class GameData {
 	BoardMap boardMap;
 	
 	//Players
+	Players players;
 	ArrayList<Player> playerList;
 
 	//GameLog
@@ -70,9 +72,16 @@ public class GameData {
 	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
+	public Players getPlayers() {
+		return players;
+	}
 
 	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
+	}
+	
+	public void setPlayers(Players players) {
+		this.players = players;
 	}
 	
 	public GameLog getGameLog() {
@@ -114,7 +123,5 @@ public class GameData {
 	public void setWinner(int winner) {
 		this.winner = winner;
 	}
-	
-	
 	
 }

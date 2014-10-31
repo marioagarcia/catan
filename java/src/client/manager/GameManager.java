@@ -284,6 +284,7 @@ public class GameManager implements GameManagerInterface {
 			turnTracker.setPlayerWithLongestRoad(t.getPlayerWithLongestRoad());
 			turnTracker.setPlayerWithLargestArmy(t.getPlayerWithLargestArmy());
 			turnTracker.setLocalPlayerIndex(localPlayer.getPlayerIndex());
+			turnTracker.setPlayers(game_data.players);
 
 			turnTracker.update();
 		}
