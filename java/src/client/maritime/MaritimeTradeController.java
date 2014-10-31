@@ -33,7 +33,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		@Override
 		public void update(Observable o, Object arg) {
 			TurnTracker tt = (TurnTracker)o;
-			if(tt.getStatus() == Status.PLAYING) {
+			if(tt.getStatus() == Status.PLAYING && tt.getCurrentTurn() == ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex()) {
 				getTradeView().enableMaritimeTrade(true);
 			} else {
 				getTradeView().enableMaritimeTrade(false);
