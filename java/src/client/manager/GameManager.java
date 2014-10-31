@@ -655,6 +655,7 @@ public class GameManager implements GameManagerInterface {
 		
 		if (isFree){
 			localPlayer.setPlacedFreeRoad(true);
+			localPlayer.update();
 		}
 
 		BuildRoadParameters param = new BuildRoadParameters(player_index, new EdgeLocationParameters(location), isFree);
@@ -699,6 +700,7 @@ public class GameManager implements GameManagerInterface {
 		
 		if (isFree){
 			localPlayer.setPlacedFreeSettlement(true);
+			localPlayer.update();
 		}
 
 		location = location.getNormalizedLocation();
