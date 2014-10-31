@@ -18,7 +18,8 @@ import client.model.turntracker.TurnTracker;
 public class RollController extends Controller implements IRollController {
 
 	private IRollResultView resultView;
-
+	private Boolean isRolling;
+	
 	/**
 	 * RollController constructor
 	 * 
@@ -31,7 +32,7 @@ public class RollController extends Controller implements IRollController {
 		
 		ModelFacade.getInstance(null).addTurnTrackerObserver(new TurnTrackerObserver());
 		setResultView(resultView);
-		
+		isRolling = false;
 	}
 	
 	public IRollResultView getResultView() {
@@ -45,42 +46,47 @@ public class RollController extends Controller implements IRollController {
 		return (IRollView)getView();
 	}
 	
+	public void startRoll(){
+		setIsRolling(true);
+		((RollView)getRollView()).startRollTimer();
+		getRollView().setMessage("Automatically rolling in 5 seconds...");
+		if(!getRollView().isModalShowing()){	
+			getRollView().showModal();
+		}
+	}
+	
 	@Override
 	public void rollDice() {
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
-		if(facade.canRoll()){
-			DiceRoller diceRoller = new DiceRoller();
-			int rolledNumber = diceRoller.roll();
-			
-			facade.roll(rolledNumber);
-			if (getRollView().isModalShowing()){
-				getRollView().closeModal();
-			}
-			
-			getResultView().setRollValue(rolledNumber);
-			getResultView().showModal();
-		}else{
-			JOptionPane.showMessageDialog(new Frame(), "You are not allowed to roll right now.", "Roll Error", JOptionPane.ERROR_MESSAGE);
+		DiceRoller diceRoller = new DiceRoller();
+		int rolledNumber = diceRoller.roll();
+		
+		facade.roll(rolledNumber);
+		if (getRollView().isModalShowing()){
 			getRollView().closeModal();
 		}
-	}
-	
-	private void updateRollController(){
-		((RollView)getRollView()).startRollTimer();
-		getRollView().showModal();
-	}
-	
-	
+		
+		getResultView().setRollValue(rolledNumber);
+		if(!getResultView().isModalShowing()){
+			getResultView().showModal();
+		}
+		setIsRolling(false);
 
+	}
+	
+	public void setIsRolling(Boolean b){
+		isRolling = b;
+	}
+	
 	private class TurnTrackerObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
 			TurnTracker tt = ModelFacade.getInstance(null).getManager().getTurnTracker();
 			
-			if(ModelFacade.getInstance(null).canRoll()){
-				updateRollController();
+			if(ModelFacade.getInstance(null).canRoll() && !isRolling){
+				startRoll();
 			}
 		}
 		

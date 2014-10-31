@@ -9,8 +9,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -31,6 +30,8 @@ public class RollView extends OverlayView implements IRollView {
     private JLabel imageLabel;
 	private JButton rollButton;
 	private JPanel buttonPanel;
+	
+	private MyTimer rollTimer;
 
 	public RollView() {
 		
@@ -71,7 +72,7 @@ public class RollView extends OverlayView implements IRollView {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == rollButton) {
-				
+				rollTimer.stopTimer();
 				closeModal();
 				getController().rollDice();
 			}
@@ -79,15 +80,39 @@ public class RollView extends OverlayView implements IRollView {
 	};
 	
 	public void startRollTimer(){
-		Timer timer = new Timer();
-		this.setMessage("Automatically rolling in 5 seconds...");
-		timer.schedule(new RollAutomaticallyObject(), 5000);
+		rollTimer = new MyTimer();
 	}
 	
-	private class RollAutomaticallyObject extends TimerTask{
-		public void run(){
-			
-			rollButton.doClick();
+	private class MyTimer implements ActionListener{
+		Timer t;
+		private int seconds;
+		private final int ONE_SECOND = 1000;
+		
+		public MyTimer(){
+			seconds = 5;
+			t = new Timer(ONE_SECOND, this);
+			t.start();
+		}
+		
+		private void writeMessage(){
+			setMessage("Automatically rolling in " + seconds + " seconds...");
+		}
+		
+		private void stopTimer(){
+			t.stop();
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if(seconds == 0){
+				t.stop();
+				closeModal();
+				getController().rollDice();
+			}else{
+				seconds--;
+				writeMessage();
+			}
 		}
 	}
 	
