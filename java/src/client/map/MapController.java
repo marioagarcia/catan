@@ -16,6 +16,7 @@ import client.model.map.Port;
 import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
+import client.model.player.Player;
 import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
@@ -32,6 +33,8 @@ public class MapController extends Controller implements IMapController {
 	private BoardMap map = null;
 	private CatanColor localPlayerColor =  null;
 	private ArrayList<HexLocation> waterHexes;
+	
+	Player localPlayer = null;
 	
 	private boolean playingSoldier = false;
 	
@@ -258,6 +261,7 @@ public class MapController extends Controller implements IMapController {
 						roadBuilding = false;
 						temp.setRoads(map.getRoads());
 						ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
+						ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
 					}
 				}
 			}
@@ -328,6 +332,7 @@ public class MapController extends Controller implements IMapController {
 				currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
 				playingSoldier = false;
 				ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
+				ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
 			}
 			else{
 				currentState.robPlayer(victim, map.getRobberLocation());

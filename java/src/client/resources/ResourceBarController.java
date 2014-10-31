@@ -102,16 +102,18 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			if (tracker.getStatus() == Status.FIRST_ROUND || tracker.getStatus() == Status.SECOND_ROUND){
 				getView().setElementEnabled(ResourceBarElement.ROAD, !localPlayer.hasPlacedFreeRoad());
 				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !localPlayer.hasPlacedFreeSettlement());
+				
+				getView().setElementEnabled(ResourceBarElement.CITY, false);
+				getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+				getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
 			}
 			else{
 				getView().setElementEnabled(ResourceBarElement.ROAD, localPlayer.canBuildRoad());	
 				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, localPlayer.canBuildSettlement());
-			}
-			
-			getView().setElementEnabled(ResourceBarElement.CITY, localPlayer.canBuildCity());
-			getView().setElementEnabled(ResourceBarElement.BUY_CARD, localPlayer.canBuyDevCard());
-			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.isPlayedDevCard());
-			
+				getView().setElementEnabled(ResourceBarElement.CITY, localPlayer.canBuildCity());
+				getView().setElementEnabled(ResourceBarElement.BUY_CARD, localPlayer.canBuyDevCard());
+				getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.isPlayedDevCard());
+			}	
 		}
 		
 	}

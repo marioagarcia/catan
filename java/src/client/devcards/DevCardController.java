@@ -89,6 +89,11 @@ public class DevCardController extends Controller implements IDevCardController 
 			return;
 		}
 		
+		localPlayer.getResourceList().setOre(localPlayer.getResourceList().getOre()-1);
+		localPlayer.getResourceList().setSheep(localPlayer.getResourceList().getSheep()-1);
+		localPlayer.getResourceList().setWheat(localPlayer.getResourceList().getWheat()-1);
+		localPlayer.update();
+		
 		ModelFacade.getInstance(null).buyDevCard();
 	}
 
