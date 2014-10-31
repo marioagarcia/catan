@@ -199,16 +199,16 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		else if(this.settlements.containsKey(adjacentVertexes[1]) && this.settlements.get(adjacentVertexes[1]).getPlayerIndex() != playerIndex)
 			canBuildClockwiseNext = false;
 		
-		
-		EdgeLocation[] adjacentLocations = location.getAdjacent(canBuildClockwisePrevious, canBuildClockwiseNext);
+		EdgeLocation[] adjacentLocations = location.getAdjacent(canBuildClockwisePrevious, canBuildClockwiseNext, this);
 
 		//test if the player owns an adjacent road
 		boolean ownsAdjacentRoad = false;
-		for(EdgeLocation individualLocation : adjacentLocations)
+		for(EdgeLocation individualLocation : adjacentLocations){
 			if(roads.containsKey(individualLocation) && roads.get(individualLocation).getPlayerIndex() == playerIndex){
 				ownsAdjacentRoad = true;
 				break;
 			}
+		}
 		return ownsAdjacentRoad;
 	}
 

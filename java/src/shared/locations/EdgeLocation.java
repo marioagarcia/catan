@@ -1,6 +1,9 @@
 package shared.locations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import client.model.map.BoardMap;
 
 /**
  * Represents the location of an edge on a hex map
@@ -112,38 +115,45 @@ public class EdgeLocation
 		}
 	}
 	
-	public EdgeLocation[] getAdjacent(boolean allowClockwisePreceeding, boolean allowClockwiseSucceeding){
+	public EdgeLocation[] getAdjacent(boolean allowClockwisePreceeding, boolean allowClockwiseSucceeding, BoardMap boardMap){
 		
-		EdgeLocation[] result = new EdgeLocation[4];
+		ArrayList<EdgeLocation> result = new ArrayList<EdgeLocation>();
 		EdgeDirection[] interiorDirections = this.getDir().getAdjacent(allowClockwisePreceeding, allowClockwiseSucceeding);
 		
-		int numberCompletedOverall = 0;
 		int numberCompletedFromFirstSet = 0;
 		if(allowClockwisePreceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]).getNormalizedLocation();
+			EdgeLocation new_location =  new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]).getNormalizedLocation();
+			if(boardMap.isValid(new_location)){
+				result.add(new_location);
+			}
 		}
 		
 		if(allowClockwiseSucceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]).getNormalizedLocation();
+			EdgeLocation new_location = new EdgeLocation(this.getHexLoc(), interiorDirections[numberCompletedFromFirstSet++]).getNormalizedLocation();
+			if(boardMap.isValid(new_location)){
+				result.add(new_location);
+			}
 		}
 		
 		HexLocation sisterHex = this.getHexLoc().getNeighborLoc(this.getDir());
-		
-		if(Math.abs(sisterHex.getX()) > 2 || Math.abs(sisterHex.getY()) > 2)
-			return Arrays.copyOf(result, 2);
 		
 		EdgeLocation sisterEdgeLocation = new EdgeLocation(sisterHex, this.getDir().getOppositeDirection());
 		EdgeDirection[] exteriorDirections = sisterEdgeLocation.getDir().getAdjacent(allowClockwiseSucceeding, allowClockwisePreceeding);
 		
 		int numberCompletedFromSecondSet = 0;
 		if(allowClockwisePreceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]).getNormalizedLocation();
+			EdgeLocation new_location =  new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]).getNormalizedLocation();
+			if(boardMap.isValid(new_location)){
+				result.add(new_location);
+			}
 		}
 		if(allowClockwiseSucceeding){
-			result[numberCompletedOverall++] = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]).getNormalizedLocation();
+			EdgeLocation new_location = new EdgeLocation(sisterEdgeLocation.getHexLoc(), exteriorDirections[numberCompletedFromSecondSet++]).getNormalizedLocation();
+			if(boardMap.isValid(new_location)){
+				result.add(new_location);
+			}
 		}
-		
-		return Arrays.copyOf(result, numberCompletedOverall);
+		return result.toArray(new EdgeLocation[0]);
 	}
 
 	public static EdgeLocation[] getAdjacent(VertexLocation vertexLocation){
