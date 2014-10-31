@@ -261,6 +261,7 @@ public class MapController extends Controller implements IMapController {
 						roadBuilding = false;
 						temp.setRoads(map.getRoads());
 						ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
+						ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
 					}
 				}
 			}
@@ -331,6 +332,7 @@ public class MapController extends Controller implements IMapController {
 				currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
 				playingSoldier = false;
 				ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
+				ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
 			}
 			else{
 				currentState.robPlayer(victim, map.getRobberLocation());
