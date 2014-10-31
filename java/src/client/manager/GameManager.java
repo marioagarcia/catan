@@ -307,7 +307,8 @@ public class GameManager implements GameManagerInterface {
 			boardMap.setRobberLocation(bm.getRobberLocation());
 			boardMap.setSettlements(bm.getSettlements());
 
-			boardMap.update(); 
+			boardMap.update();
+			turnTracker.update();
 		}
 
 		if(!devCardBank.equals(game_data.devCardBank)) {
