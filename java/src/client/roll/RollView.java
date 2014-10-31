@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -75,6 +77,19 @@ public class RollView extends OverlayView implements IRollView {
 			}
 		}	
 	};
+	
+	public void startRollTimer(){
+		Timer timer = new Timer();
+		this.setMessage("Automatically rolling in 5 seconds...");
+		timer.schedule(new RollAutomaticallyObject(), 5000);
+	}
+	
+	private class RollAutomaticallyObject extends TimerTask{
+		public void run(){
+			
+			rollButton.doClick();
+		}
+	}
 	
 	@Override
 	public IRollController getController() {

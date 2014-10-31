@@ -61,7 +61,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				return;
 			}
 			
-			if(trade_offer != null && trade_offer.getSender() != ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex()){
+			if(trade_offer != null && trade_offer.getSender() != ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex() 
+								   && trade_offer.getReceiver() == ModelFacade.getInstance(null).getManager().getLocalPlayer().getPlayerIndex()){
 				for(ResourceType resource : ResourceType.values()){
 					if(trade_offer.getResourceList().getResourceByType(resource) > 0){
 						getAcceptOverlay().addGetResource(resource, trade_offer.getResourceList().getResourceByType(resource));
@@ -73,6 +74,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 						}
 					}
 				}
+				getAcceptOverlay().setPlayerName(ModelFacade.getInstance(null).getPlayers().getPlayer(trade_offer.getSender()).getName());
 				getAcceptOverlay().showModal();
 			}
 			

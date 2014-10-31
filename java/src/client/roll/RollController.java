@@ -3,6 +3,7 @@ package client.roll;
 import java.awt.Frame;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Timer;
 
 import javax.swing.JOptionPane;
 
@@ -66,17 +67,19 @@ public class RollController extends Controller implements IRollController {
 	}
 	
 	private void updateRollController(){
+		((RollView)getRollView()).startRollTimer();
 		getRollView().showModal();
 	}
+	
+	
 
 	private class TurnTrackerObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
 			TurnTracker tt = ModelFacade.getInstance(null).getManager().getTurnTracker();
-			System.out.println(tt.getStatus() + "********");
+			
 			if(ModelFacade.getInstance(null).canRoll()){
-				System.out.println(tt.getStatus());
 				updateRollController();
 			}
 		}
