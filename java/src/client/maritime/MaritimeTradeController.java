@@ -23,7 +23,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	private IMaritimeTradeOverlay tradeOverlay;
 	private MaritimeTrade trade;
-	private EdgeLocation location;
 	private final String stateMessageSelectGive = "Please select resources to give up in trade";
 	private final String stateMessageSelectGet = "Please select resources to receive in trade";
 	private final String stateMessageTrade = "Trade!!";
@@ -78,24 +77,27 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void makeTrade() {
+		Port port = this.determineTradeLocation(this.trade.getResourceOut());
+		EdgeLocation location = null;
+		if(port != null){
+			location = port.getLocation();
+		}
 		ModelFacade.getInstance(null).getManager().maritimeTrade(location, trade);
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void cancelTrade() {
-
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void setGetResource(ResourceType resource) {
 		this.trade.setResourceOut(resource);
-		this.trade.setRatio(this.determineRatio(resource));
 		
-//		if(ModelFacade.getInstance(null).getManager().canMaritimeTrade(this.determinePort(resource).getLocation(), trade)){
-//			this.getTradeOverlay().setTradeEnabled(true);
-//		}
+		Port port = this.determineTradeLocation(this.trade.getResourceIn());
+		this.getTradeOverlay().setTradeEnabled(ModelFacade.getInstance(null).canMaritimeTrade((port == null) ? null : port.getLocation(), trade));
+
 		getTradeOverlay().selectGetOption(resource, 1);
 		getTradeOverlay().setStateMessage(this.stateMessageTrade);
 	}
@@ -103,6 +105,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void setGiveResource(ResourceType resource) {
 		this.trade.setResourceIn(resource);
+		this.trade.setRatio(this.determineRatio(resource));
 		getTradeOverlay().selectGiveOption(resource, this.determineRatio(resource));
 		getTradeOverlay().showGetOptions(this.getAllTypesExcept(resource));
 		getTradeOverlay().setStateMessage(this.stateMessageSelectGet);
@@ -124,18 +127,28 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private int determineRatio(ResourceType type){
 		int ratio = 4;
 		for(Port port : ModelFacade.getInstance(null).getManager().getBoardMap().getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
-			if((port.getResource() == PortType.THREE || port.getResource().toString().equals(type.toString())) && port.getRatio() < ratio){ 
-				ratio = port.getRatio();
+			if(port.getResource() == PortType.THREE && ratio > 3){
+				ratio = 3;
+			}
+			else if(port.getResource().toString().equals(type.toString())){
+				return 2;
 			}
 		}
+		System.out.println("resource " + type + " ratio " + ratio);
 		return ratio;
 	}
 	
-	private Port determineTradeLocation(){
-		
-		
-		
-		return null;
+	private Port determineTradeLocation(ResourceType type){
+		Port best_port = null;
+		for( Port port : ModelFacade.getInstance(null).getManager().getBoardMap().getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
+			if(port.getResource().toString().equals(type.toString())){
+				return port;
+			}
+			else if(port.getResource() == PortType.THREE){
+				best_port = port;
+			}
+		}
+		return best_port;
 	}
 
 	private ResourceType[] getTradableTypes(){
