@@ -16,6 +16,7 @@ import client.model.map.Port;
 import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
+import client.model.player.Player;
 import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
@@ -32,6 +33,8 @@ public class MapController extends Controller implements IMapController {
 	private BoardMap map = null;
 	private CatanColor localPlayerColor =  null;
 	private ArrayList<HexLocation> waterHexes;
+	
+	Player localPlayer = null;
 	
 	private boolean playingSoldier = false;
 	
