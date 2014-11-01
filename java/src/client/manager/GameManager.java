@@ -597,8 +597,6 @@ public class GameManager implements GameManagerInterface {
 		}
 
 		location = location.getNormalizedLocation();
-		
-		gameModel.getBoardMap().setLastSettlementBuilt(new Settlement(player_index, location));
 
 		BuildSettlementParameters param = new BuildSettlementParameters(player_index, new VertexLocationParameters(location), isFree);
 

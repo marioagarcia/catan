@@ -28,7 +28,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	private Map<VertexLocation, City> cities;
 	private Map<VertexLocation, Settlement> settlements;
 	private Map<EdgeLocation, Port> ports;
-	private Settlement lastSettlementPlaced;
 	
 	private int radius;
 	private HexLocation robberLocation;
@@ -39,11 +38,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		this.cities = new HashMap<VertexLocation, City> ();
 		this.settlements = new HashMap<VertexLocation, Settlement> ();
 		this.ports = new HashMap<EdgeLocation, Port> ();
-		this.lastSettlementPlaced = null;
-	}
-	
-	public void setLastSettlementBuilt(Settlement settlement){
-		this.lastSettlementPlaced = settlement;
 	}
 	
 	public void setHexes(Map<HexLocation, HexInterface> hexes) {
@@ -134,10 +128,25 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			Set<VertexLocation> vertexes = VertexesAdjacentToEdge.get(location).asSet();
 			
 			for(VertexLocation vertexLocation : vertexes){
-				if(this.lastSettlementPlaced.getLocation().getNormalizedLocation().equals(vertexLocation.getNormalizedLocation())){
-					isNextToSettlement = true;
-					break;
+				for(Settlement settlement : this.settlements.values()){
+					if(settlement.getLocation().getNormalizedLocation().equals(vertexLocation.getNormalizedLocation())){
+						if(settlement.getPlayerIndex() != playerIndex){
+							return false;
+						}
+						
+						Set<EdgeLocation> edgeLocations = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(vertexLocation, this).asSet();
+						
+						for(EdgeLocation potentialLocation : edgeLocations){
+							for(EdgeLocation existingRoad : this.roads.keySet()){
+								if(existingRoad.getNormalizedLocation().equals(potentialLocation.getNormalizedLocation())){
+									return false;
+								}
+							}
+						}
+						isNextToSettlement = true;
+					}
 				}
+				
 			}
 			if(!isNextToSettlement){
 				return false;
