@@ -331,9 +331,10 @@ public class GameManager implements GameManagerInterface {
 			gameLog.update();
 		}
 
-		if(game_data.getWinner() != -1) {
+		//TODO fix this winner thing
+		if(game_data.getWinner() != null) {
 
-			Player winner = allPlayers.getPlayerByID(game_data.getWinner());
+			Winner winner = game_data.getWinner();
 			
 			this.winner.setName(winner.getName());
 			this.winner.setPlayerIndex(winner.getPlayerIndex());

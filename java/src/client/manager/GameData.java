@@ -2,6 +2,7 @@ package client.manager;
 
 import java.util.ArrayList;
 
+import client.model.Winner;
 import client.model.card.DevCardBank;
 import client.model.card.DomesticTrade;
 import client.model.card.ResourceCardBank;
@@ -14,32 +15,32 @@ import client.model.turntracker.TurnTracker;
 public class GameData {
 
 	//Deck - DevCardBank
-	DevCardBank devCardBank; //Done
+	public DevCardBank devCardBank; //Done
 	
 	//Map
-	BoardMap boardMap;
+	public BoardMap boardMap;
 	
 	//Players
-	Players players;
-	ArrayList<Player> playerList;
+	public Players players;
+	public ArrayList<Player> playerList;
 
 	//GameLog
-	GameLog gameLog;
+	public GameLog gameLog;
 	
 	//Bank - Resource List
-	ResourceCardBank resourceCardBank;
+	public ResourceCardBank resourceCardBank;
 	
 	//TurnTracker
-	TurnTracker turnTracker;
+	public TurnTracker turnTracker;
 
 	//TradeOffer (if there is one, Optional)
-	DomesticTrade domesticTrade;
+	public DomesticTrade domesticTrade;
 
-	//Winner (-1 if there is no winner yet)
-	int winner;
+	//Winner (null if there is no winner yet)
+	public Winner winner;
 	
 	//Version
-	int version;
+	public int version;
 	
 	public GameData(){
 		
@@ -116,11 +117,11 @@ public class GameData {
 		this.version = version;
 	}
 
-	public int getWinner() {
+	public Winner getWinner() {
 		return winner;
 	}
 
-	public void setWinner(int winner) {
+	public void setWinner(Winner winner) {
 		this.winner = winner;
 	}
 	

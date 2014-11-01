@@ -586,7 +586,7 @@ public class ModelSerializer implements ModelSerializerInterface {
 		int winner = mainObject.get("winner").getAsInt();
 		int version = mainObject.get("version").getAsInt();
 		
-		gameData.setWinner(winner);
+		//TODO gameData.setWinner(winner);
 		gameData.setVersion(version);
 		
 		return gameData;
