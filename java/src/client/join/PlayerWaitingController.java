@@ -34,7 +34,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void start() {
 		ModelFacade facade = ModelFacade.getInstance(null);
 		String[] listAI = facade.getListAI(); //Retrieve AIList
-		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
+		PlayerInfo[] players = getPlayerArray(facade.getAllPlayers()); //Retrieve player array
 		
 		getView().setAIChoices(listAI); //Set AIList
 		getView().setPlayers(players); //Set player list
@@ -54,7 +54,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		String[] listAI = facade.getListAI(); //Retrieve AIList
-		PlayerInfo[] players = getPlayerArray(facade.getPlayers()); //Retrieve player array
+		PlayerInfo[] players = getPlayerArray(facade.getAllPlayers()); //Retrieve player array
 		
 		getView().setAIChoices(listAI);
 		getView().setPlayers(players); //Set player list
