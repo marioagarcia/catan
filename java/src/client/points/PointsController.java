@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.Winner;
 import client.model.player.Player;
 
@@ -18,8 +19,6 @@ public class PointsController extends Controller implements IPointsController {
 	
 	Boolean hasWinner;
 
-	private ModelFacade facade = ModelFacade.getInstance(null);
-
 	/**
 	 * PointsController constructor
 	 * 
@@ -32,8 +31,7 @@ public class PointsController extends Controller implements IPointsController {
 
 		setFinishedView(finishedView);
 
-		facade.getManager().getLocalPlayer().addObserver(playerObserver);
-		facade.getManager().getWinner().addObserver(winnerObserver);
+		ModelFacade.getInstance(null).addObserver(gameModelObserver);
 
 		hasWinner = false;
 	}
@@ -61,27 +59,23 @@ public class PointsController extends Controller implements IPointsController {
 		getFinishedView().showModal();
 	}
 
-	private Observer playerObserver = new Observer() {
-
-		@Override
-		public void update(Observable o, Object arg) {
-			Player player = (Player)o;
-			PointsController.this.updatePoints(player.getPoints());
-		}
-	};
-
-	private Observer winnerObserver = new Observer() {
+	private Observer gameModelObserver = new Observer() {
 
 		@Override
 		public void update(Observable o, Object arg) {
 			
-			Winner winner = (Winner)o;
+			Winner winner = ((GameModel)o).getWinner();
 
-			String name = winner.getName();
-			boolean i_won = winner.isLocalPlayer();
-			if(!hasWinner){
-				updateWinner(name, i_won);
+			if(winner != null){
+				String name = winner.getName();
+				boolean i_won = winner.isLocalPlayer();
+				if(!hasWinner){
+					updateWinner(name, i_won);
+				}
 			}
+			
+			Player player = ((GameModel)o).getLocalPlayer();
+			PointsController.this.updatePoints(player.getPoints());
 		}
 	};
 

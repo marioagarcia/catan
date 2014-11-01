@@ -27,33 +27,15 @@ public class GameStatePanel extends JPanel
 		Font font = button.getFont();
 		Font newFont = font.deriveFont(font.getStyle(), 20);
 		button.setFont(newFont);
-		button.addKeyListener(keyListener);
-		
 		button.setPreferredSize(new Dimension(400, 50));
+		addKeyBindings(button);
 		
 		this.add(button);
 		
 		updateGameState("Waiting for other Players", false);
 	}
 	
-	KeyListener keyListener = new KeyListener(){
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			if(e.getKeyCode() == KeyEvent.VK_ENTER && button.isEnabled()){
-				button.doClick();
-			}
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-		}
-		
-	};
+	
 	
 	public void updateGameState(String stateMessage, boolean enable)
 	{
@@ -76,6 +58,21 @@ public class GameStatePanel extends JPanel
 			}
 		};
 		button.addActionListener(actionListener);
+	}
+	
+	public void addKeyBindings(JComponent jc){
+		jc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),"Enter pressed");
+		jc.getActionMap().put("Enter pressed",new AbstractAction(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(button.isEnabled()){
+					button.doClick();
+				}
+			}
+			
+		});
+	
 	}
 }
 
