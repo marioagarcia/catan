@@ -10,6 +10,7 @@ import state.PlayingState;
 import state.RobbingState;
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.map.BoardMap;
 import client.model.map.HexInterface;
 import client.model.map.Port;
@@ -34,7 +35,7 @@ public class MapController extends Controller implements IMapController {
 	private CatanColor localPlayerColor =  null;
 	private ArrayList<HexLocation> waterHexes;
 	
-	Player localPlayer = null;
+	private Player localPlayer = null;
 	
 	private boolean playingSoldier = false;
 	
@@ -54,12 +55,7 @@ public class MapController extends Controller implements IMapController {
 		
 		super(view);
 
-		tracker = ModelFacade.getInstance(null).getManager().getTurnTracker();
-		tracker.addObserver(new TrackerObserver());
-		
-		map = ModelFacade.getInstance(null).getManager().getBoardMap();
-		MapObserver m = new MapObserver();
-		map.addObserver(m);
+		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
 		
 		waterHexes = new ArrayList<HexLocation>();
 		waterHexes.add(new HexLocation(-3, 1));
@@ -85,30 +81,35 @@ public class MapController extends Controller implements IMapController {
 		setRobView(robView);
 	}
 	
-	private class TrackerObserver implements Observer{
+	private class GameModelObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg){
-			tracker = (TurnTracker)o;
+			GameModel latest_model = (GameModel) o;
 			
-			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
+			tracker = latest_model.getTurnTracker();
+			
+			map = latest_model.getBoardMap();
+			initFromModel(map);
+			
+			localPlayer = latest_model.getLocalPlayer();
+			localPlayerColor = localPlayer.getColor();
+			
+			if (tracker.isLocalPlayerTurn()){
 				
 				Status state = tracker.getStatus();
 				
 				switch (state){
 					case SECOND_ROUND:
 					case FIRST_ROUND:
-						//System.out.println("CurrentState is setup");
 						currentState = new FirstRoundState(MapController.this);
 						currentlyRobbing = false;
 						break;
 					case PLAYING:
-						//System.out.println("CurrentState is Playing");
 						currentState = new PlayingState(MapController.this);
 						currentlyRobbing = false;
 						break;
 					case ROBBING:
-						//System.out.println("CurrentState is Robbing");
 						if (!currentlyRobbing){
 							currentState = new RobbingState(MapController.this);
 							getView().startDrop(PieceType.ROBBER, localPlayerColor, false);
@@ -116,32 +117,16 @@ public class MapController extends Controller implements IMapController {
 						}
 						break;
 					default:
-						//System.out.println("CurrentState is Locked");
 						currentState = new GameState(MapController.this);
 						currentlyRobbing = false;
 						break;		
 				}
 			}
 			else{
-				//System.out.println("CurrentState is Locked. Not player's turn");
 				currentState = new GameState(MapController.this);
 			}
-			
-			localPlayerColor = ModelFacade.getInstance(null).getLocalPlayer().getColor();
 		}
 		
-	}
-	
-	private class MapObserver implements Observer{
-
-		@Override
-		public void update(Observable o, Object arg){
-			map = (BoardMap)o;
-			
-			if (!currentlyRobbing){
-				initFromModel(map);
-			}
-		}
 	}
 	
 	public IMapView getView() {
@@ -220,7 +205,7 @@ public class MapController extends Controller implements IMapController {
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		
 		int num_roads = ModelFacade.getInstance(null).getLocalPlayer().getRoads();
-		int index = ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex();
+		int index = localPlayer.getPlayerIndex();
 		Status status = tracker.getStatus();
 		
 		return (currentState.canBuildRoad(edgeLoc) || (roadBuilding && num_roads >= 1 && temp.canBuildRoad(edgeLoc, index, status)));
@@ -244,7 +229,7 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		System.out.println("Map Controller placeRoad");
-		int index = ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex();
+		int index = localPlayer.getPlayerIndex();
 		getView().placeRoad(edgeLoc, localPlayerColor);
 		
 		if (!roadBuilding){
@@ -270,8 +255,6 @@ public class MapController extends Controller implements IMapController {
 						roadBuildingLocationTwo = null;
 						roadBuilding = false;
 						temp.setRoads(map.getRoads());
-						ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
-						ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
 					}
 				}
 			}
@@ -340,8 +323,6 @@ public class MapController extends Controller implements IMapController {
 		if (playingSoldier){
 			currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
 			playingSoldier = false;
-			ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
-			ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
 		}
 		else{
 			currentState.robPlayer(victim, map.getRobberLocation());
