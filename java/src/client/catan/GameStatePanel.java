@@ -3,6 +3,8 @@ package client.catan;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
@@ -25,6 +27,7 @@ public class GameStatePanel extends JPanel
 		Font font = button.getFont();
 		Font newFont = font.deriveFont(font.getStyle(), 20);
 		button.setFont(newFont);
+		button.addKeyListener(keyListener);
 		
 		button.setPreferredSize(new Dimension(400, 50));
 		
@@ -32,6 +35,25 @@ public class GameStatePanel extends JPanel
 		
 		updateGameState("Waiting for other Players", false);
 	}
+	
+	KeyListener keyListener = new KeyListener(){
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER && button.isEnabled()){
+				button.doClick();
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+		}
+		
+	};
 	
 	public void updateGameState(String stateMessage, boolean enable)
 	{

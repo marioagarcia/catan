@@ -89,7 +89,6 @@ public class RollController extends Controller implements IRollController {
 				startRoll();
 			}
 		}
-		
 	}
 }
 

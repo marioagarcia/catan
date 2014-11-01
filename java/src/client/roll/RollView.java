@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.Timer;
 
+import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -57,6 +59,7 @@ public class RollView extends OverlayView implements IRollView {
 
 		rollButton = new JButton("Roll!");
 		rollButton.addActionListener(actionListener);
+		rollButton.addKeyListener(keyListener);
 		Font buttonFont = rollButton.getFont();
 		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
 		rollButton.setFont(buttonFont);
@@ -66,6 +69,27 @@ public class RollView extends OverlayView implements IRollView {
 		buttonPanel.add(rollButton);		
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
+	
+	KeyListener keyListener = new KeyListener(){
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				rollTimer.stopTimer();
+				closeModal();
+				getController().rollDice();
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+		}
+		
+	};
 
 	private ActionListener actionListener = new ActionListener() {
 		@Override
