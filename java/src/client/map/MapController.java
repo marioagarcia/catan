@@ -18,6 +18,7 @@ import client.model.piece.City;
 import client.model.piece.Road;
 import client.model.piece.Settlement;
 import client.model.player.Player;
+import client.model.player.Players;
 import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
@@ -36,6 +37,7 @@ public class MapController extends Controller implements IMapController {
 	private ArrayList<HexLocation> waterHexes;
 	
 	private Player localPlayer = null;
+	private Players listOfPlayers = null;
 	
 	private boolean playingSoldier = false;
 	
@@ -88,6 +90,7 @@ public class MapController extends Controller implements IMapController {
 			GameModel latest_model = (GameModel) o;
 			
 			tracker = latest_model.getTurnTracker();
+			listOfPlayers = latest_model.getPlayers();
 			
 			map = latest_model.getBoardMap();
 			initFromModel(map);
@@ -166,22 +169,22 @@ public class MapController extends Controller implements IMapController {
 		
 		//Draw roads
 		for (Map.Entry<EdgeLocation, Road> road : m.getRoads().entrySet()){
-
-			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(road.getValue().getPlayerIndex()).getColor();
+			
+			CatanColor color = listOfPlayers.getPlayer(road.getValue().getPlayerIndex()).getColor();
 			getView().placeRoad(road.getKey(), color);
 		}
 		
 		//Draw cities
 		for (Map.Entry<VertexLocation, City> city : m.getCities().entrySet()){
 			
-			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(city.getValue().getPlayerIndex()).getColor();
+			CatanColor color = listOfPlayers.getPlayer(city.getValue().getPlayerIndex()).getColor();
 			getView().placeCity(city.getKey(), color);
 		}
 		
 		//Draw settlements
 		for (Map.Entry<VertexLocation, Settlement> settlement : m.getSettlements().entrySet()){
 			
-			CatanColor color = ModelFacade.getInstance(null).getManager().getAllPlayers().getPlayer(settlement.getValue().getPlayerIndex()).getColor();
+			CatanColor color = listOfPlayers.getPlayer(settlement.getValue().getPlayerIndex()).getColor();
 			getView().placeSettlement(settlement.getKey(), color);
 		}
 		
@@ -204,7 +207,7 @@ public class MapController extends Controller implements IMapController {
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		
-		int num_roads = ModelFacade.getInstance(null).getLocalPlayer().getRoads();
+		int num_roads = localPlayer.getRoads();
 		int index = localPlayer.getPlayerIndex();
 		Status status = tracker.getStatus();
 		
