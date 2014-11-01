@@ -220,9 +220,6 @@ public class GameManager implements GameManagerInterface {
 
 		//reset model classes 
 		populateGameList();
-		
-		Player local_player = gameModel.getLocalPlayer();
-		DomesticTrade domestic_trade = gameModel.getDomesticTrade();
 
 		if (gameModel.getLocalPlayer().getPlayerIndex() == -1){
 			for (Player p : game_data.getPlayerList()){
