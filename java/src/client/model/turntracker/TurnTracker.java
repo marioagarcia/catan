@@ -100,14 +100,6 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 	public boolean canMakeMove(int player_index){
 		return (currentPlayerIndex == player_index && status == Status.PLAYING);
 	}
-	
-	public void setPlayers(Players players) {
-		this.players = players;
-	}
-	
-	public Players getPlayers() {
-		return players;
-	}
 
 	@Override
 	public void setTurnTracker(String status, int currentTurn, int longestRoad,
