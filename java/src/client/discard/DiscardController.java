@@ -1,12 +1,10 @@
 package client.discard;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-
 import shared.definitions.*;
 import client.base.*;
+import client.model.GameModel;
 import client.model.card.ResourceList;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
@@ -22,23 +20,25 @@ public class DiscardController extends Controller implements IDiscardController 
 	private IWaitView waitView;
 	private ResourceList resourceList;
 	
-	private class DiscardObserver implements Observer{
+	private class DiscardModelObserver implements Observer{
 		
 		@Override
 		public void update(Observable o, Object arg){
-			TurnTracker turn_tracker = (TurnTracker)o;
+			
+			GameModel latest_model = (GameModel) o;
+			TurnTracker turn_tracker = latest_model.getTurnTracker();
 			
 			if(turn_tracker.getStatus() != Status.DISCARDING){
 				return;
 			}
 			
-			if(turn_tracker.getStatus() == Status.DISCARDING && ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards() <= 7){
+			if(turn_tracker.getStatus() == Status.DISCARDING && latest_model.getLocalPlayer().getNumberOfCards() <= 7){
 				ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
 				return;
 			}
 			
 			for(ResourceType resource : ResourceType.values()){
-				int number_of_resource = ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(resource);
+				int number_of_resource = latest_model.getLocalPlayer().getResourceList().getResourceByType(resource);
 				
 				getDiscardView().setResourceMaxAmount(resource, number_of_resource);
 				getDiscardView().setResourceDiscardAmount(resource, 0);
@@ -63,7 +63,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		resourceList = new ResourceList(0,0,0,0,0);
 		
 		this.waitView = waitView;
-		ModelFacade.getInstance(null).getManager().getTurnTracker().addObserver(new DiscardObserver());
+		ModelFacade.getInstance(null).addObserver(new DiscardModelObserver());
 	}
 
 	public IDiscardView getDiscardView() {
