@@ -1,5 +1,7 @@
 package client.communication.facade;
 
+import java.util.Observer;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -16,6 +18,8 @@ import client.model.card.TradeInterface;
  * as well as the server. 
  */
 public interface ModelFacadeInterface {
+	
+	public void addObserver(Observer observer);
 
 	/**
 	 * sends a request to the server to login the player with the given credentials

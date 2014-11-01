@@ -1,5 +1,6 @@
 package client.manager;
 import java.util.List;
+import java.util.Observer;
 
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
@@ -13,6 +14,8 @@ import shared.locations.*;
  */
 public interface GameManagerInterface 
 {	
+	public void addObserver(Observer observer);
+	
 	/**
 	 * sends a request to the server to login the player with the given credentials
 	 * @param username the name of the user

@@ -1,6 +1,7 @@
 package client.manager;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -85,6 +86,10 @@ public class GameManager implements GameManagerInterface {
 		winner = new Winner();
 		domesticTrade = new DomesticTrade();
 
+	}
+	
+	public void addObserver(Observer observer) {
+		
 	}
 
 	@Override

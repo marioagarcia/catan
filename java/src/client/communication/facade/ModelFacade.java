@@ -50,6 +50,10 @@ public class ModelFacade implements ModelFacadeInterface {
 		return facadeInstance;
 	}
 	
+	public void addObserver(Observer observer) {
+		gameManager.addObserver(observer);
+	}
+	
 	@Override
 	public boolean canJoinGame(CatanColor color, GameInfo game) {
 		return this.gameManager.canJoinGame(color, game);
