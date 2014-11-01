@@ -37,6 +37,11 @@ public class GameModel extends Observable{
 		return gameData.players;
 	}
 	
+	public Player getLocalPlayer() {
+		//return gameData.localPlayer;
+		return null;
+	}
+	
 	public GameLog getGameLog() {
 		return gameData.gameLog;
 	}
