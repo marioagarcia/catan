@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.turntracker.TurnTracker;
 
 
@@ -30,7 +31,7 @@ public class RollController extends Controller implements IRollController {
 
 		super(view);
 		
-		ModelFacade.getInstance(null).addTurnTrackerObserver(new TurnTrackerObserver());
+		ModelFacade.getInstance(null).addObserver(gameModelObserver);
 		setResultView(resultView);
 		isRolling = false;
 	}
@@ -79,16 +80,16 @@ public class RollController extends Controller implements IRollController {
 		isRolling = b;
 	}
 	
-	private class TurnTrackerObserver implements Observer{
+	private Observer gameModelObserver = new Observer(){
 
 		@Override
 		public void update(Observable o, Object arg) {
-			TurnTracker tt = ModelFacade.getInstance(null).getManager().getTurnTracker();
+			TurnTracker tt = ((GameModel)o).getTurnTracker();
 			
 			if(ModelFacade.getInstance(null).canRoll() && !isRolling){
 				startRoll();
 			}
 		}
-	}
+	};
 }
 

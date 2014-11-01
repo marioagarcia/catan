@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.player.Player;
 import client.model.player.Players;
 import client.model.turntracker.TurnTracker;
@@ -18,17 +19,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	private final int TOTAL_PLAYERS = 4;
 	
-	ModelFacade facade;
 	boolean playersInitialized;
 
 	public TurnTrackerController(ITurnTrackerView view) {
 
 		super(view);
 
-		facade  = ModelFacade.getInstance(null);
-
-		facade.getManager().getAllPlayers().addObserver(playersObserver);
-		facade.getManager().getTurnTracker().addObserver(turnTrackerObserver);
+		ModelFacade.getInstance(null).addObserver(gameModelObserver);
 
 		playersInitialized = false;
 	}
@@ -86,39 +83,15 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void endTurn() {
 
-		facade.finishTurn();
+		ModelFacade.getInstance(null).finishTurn();
 	}
 
-	private Observer playersObserver = new Observer() {
-
-		@Override
-		public void update(Observable o, Object arg) {
-			Players players = (Players)o;
-			TurnTracker turnTracker = (TurnTracker)arg;
-
-			if(!playersInitialized) {
-
-				initializePlayers(players);
-			}
-			else {
-
-				updatePlayers(players, turnTracker);
-			}
-
-			boolean local_turn = turnTracker.isLocalPlayerTurn();
-			boolean can_finish_turn = facade.canFinishTurn();
-			boolean enable = can_finish_turn && local_turn;
-
-			getView().updateGameState(makeMessage(turnTracker.getStatus(), local_turn, can_finish_turn), enable);
-		}
-	};
-
-	private Observer turnTrackerObserver = new Observer() {
+	private Observer gameModelObserver = new Observer() {
 
 		@Override
 		public void update(Observable o, Object arg) {
 
-			TurnTracker turnTracker = (TurnTracker)o;
+			TurnTracker turnTracker = ((GameModel)o).getTurnTracker();
 
 			Players players = turnTracker.getPlayers();
 
@@ -132,7 +105,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			}
 
 			boolean local_turn = turnTracker.isLocalPlayerTurn();
-			boolean can_finish_turn = facade.canFinishTurn();
+			boolean can_finish_turn = ModelFacade.getInstance(null).canFinishTurn();
 			boolean enable = can_finish_turn && local_turn;
 
 			getView().updateGameState(makeMessage(turnTracker.getStatus(), local_turn, can_finish_turn), enable);

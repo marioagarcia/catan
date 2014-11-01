@@ -6,9 +6,11 @@ import java.util.Observer;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
 import client.model.player.Players;
+import client.model.turntracker.TurnTracker;
 
 
 /**
@@ -19,7 +21,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
-		ModelFacade.getInstance(null).addAllPlayersObserver(new AllPlayersObserver());
+		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
 	}
 
 	@Override
@@ -92,20 +94,18 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		}
 	}
 	//Observes the Players object and updates the view when the Players object changes
-	private class AllPlayersObserver implements Observer{
+	private class GameModelObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			if(ModelFacade.getInstance(null).getManager().getTurnTracker().getStatus() != null){
-				
+			TurnTracker tt = ((GameModel)o).getTurnTracker();
+			if(tt != null && tt.getStatus() != null){
 				if (getView().isModalShowing()){
 					getView().closeModal();
 				}
 				start();
 			}	
 		}
-		
 	}
-
 }
 
