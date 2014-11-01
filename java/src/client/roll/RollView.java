@@ -5,11 +5,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -29,6 +35,8 @@ public class RollView extends OverlayView implements IRollView {
     private JLabel imageLabel;
 	private JButton rollButton;
 	private JPanel buttonPanel;
+	
+	private MyTimer rollTimer;
 
 	public RollView() {
 		
@@ -54,6 +62,8 @@ public class RollView extends OverlayView implements IRollView {
 
 		rollButton = new JButton("Roll!");
 		rollButton.addActionListener(actionListener);
+		addKeyBindings(rollButton);
+		//rollButton.addKeyListener(keyListener);
 		Font buttonFont = rollButton.getFont();
 		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
 		rollButton.setFont(buttonFont);
@@ -63,18 +73,91 @@ public class RollView extends OverlayView implements IRollView {
 		buttonPanel.add(rollButton);		
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
+	
+	public void addKeyBindings(JComponent jc){
+		jc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),"Enter pressed");
+		jc.getActionMap().put("Enter pressed",new AbstractAction(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rollTimer.stopTimer();
+				closeModal();
+				getController().rollDice();
+			}
+			
+		});
+	
+	}
+	
+/*	KeyListener keyListener = new KeyListener(){
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				rollTimer.stopTimer();
+				closeModal();
+				getController().rollDice();
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+		}
+		
+	};*/
 
 	private ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == rollButton) {
-				
+				rollTimer.stopTimer();
 				closeModal();
 				getController().rollDice();
 			}
 		}	
 	};
+	
+	public void startRollTimer(){
+		rollTimer = new MyTimer();
+	}
+	
+	private class MyTimer implements ActionListener{
+		Timer t;
+		private int seconds;
+		private final int ONE_SECOND = 1000;
+		
+		public MyTimer(){
+			seconds = 5;
+			t = new Timer(ONE_SECOND, this);
+			t.start();
+		}
+		
+		private void writeMessage(){
+			setMessage("Automatically rolling in " + seconds + " seconds...");
+		}
+		
+		private void stopTimer(){
+			t.stop();
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if(seconds == 0){
+				t.stop();
+				closeModal();
+				getController().rollDice();
+			}else{
+				seconds--;
+				writeMessage();
+			}
+		}
+	}
 	
 	@Override
 	public IRollController getController() {

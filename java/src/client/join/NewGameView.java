@@ -2,9 +2,11 @@ package client.join;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import client.base.*;
+
 import javax.swing.border.Border;
 
 /**
@@ -53,6 +55,7 @@ public class NewGameView extends OverlayView implements INewGameView
         createButton = new JButton("Create Game");
         createButton.addActionListener(actionListener);
         createButton.setFont(buttonFont);
+        addKeyBindings(createButton);
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
@@ -118,6 +121,19 @@ public class NewGameView extends OverlayView implements INewGameView
             }
         }
     };
+    
+	public void addKeyBindings(JComponent jc){
+		jc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),"Enter pressed");
+		jc.getActionMap().put("Enter pressed",new AbstractAction(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				createButton.doClick();
+			}
+			
+		});
+	
+	}
 
     @Override
     public IJoinGameController getController()

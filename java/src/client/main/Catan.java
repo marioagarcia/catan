@@ -96,5 +96,4 @@ public class Catan extends JFrame {
 			}
 		});
 	}
-
 }

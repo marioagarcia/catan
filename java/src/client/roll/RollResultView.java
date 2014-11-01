@@ -48,6 +48,7 @@ public class RollResultView extends OverlayView implements IRollResultView {
 		Font okayButtonFont = okayButton.getFont();
 		okayButtonFont = okayButtonFont.deriveFont(okayButtonFont.getStyle(), BUTTON_TEXT_SIZE);
 		okayButton.setFont(okayButtonFont);
+		addKeyBindings(okayButton);
 		this.add(okayButton, BorderLayout.SOUTH);
 		
 		//create the rollLabel
@@ -70,7 +71,7 @@ public class RollResultView extends OverlayView implements IRollResultView {
 		centerPanel.add(Box.createRigidArea(new Dimension(25,25)));
 		centerPanel.add(rollLabel, BorderLayout.SOUTH);
 		this.add(centerPanel,BorderLayout.CENTER);
-		
+
 		//add some spacing
 		this.add(Box.createRigidArea(new Dimension(50,50)),BorderLayout.EAST);
 		this.add(Box.createRigidArea(new Dimension(50,50)),BorderLayout.WEST);
@@ -79,13 +80,25 @@ public class RollResultView extends OverlayView implements IRollResultView {
 	private ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
 			if (e.getSource() == okayButton) {
 				
 				closeModal();
 			}
 		}	
 	};
+	
+	public void addKeyBindings(JComponent jc){
+		jc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),"Enter pressed");
+		jc.getActionMap().put("Enter pressed",new AbstractAction(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeModal();
+			}
+			
+		});
+	
+	}
 	
 	@Override
 	public IRollController getController() {
@@ -98,7 +111,6 @@ public class RollResultView extends OverlayView implements IRollResultView {
 		String rollText = String.format("You rolled a %d.", value);
 		rollLabel.setText(rollText);
 	}
-
 }
 
 

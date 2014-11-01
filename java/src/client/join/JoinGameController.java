@@ -143,6 +143,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		//If creating the new game is successful
 		if(facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
 			populateGamesList(); //Get an updated list of games so this new game will be added to the list and update the view with it
+			
 			if (getNewGameView().isModalShowing()){
 				getNewGameView().closeModal();
 			}

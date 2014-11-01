@@ -97,9 +97,10 @@ public class LoginController extends Controller implements ILoginController {
 			getLoginView().closeModal();
 			loginAction.execute();
 		}else{
-			this.messageView.setTitle("Register Error");
+			JOptionPane.showMessageDialog(new Frame(), "Unable to register. Have you already registered?", "Register Error", JOptionPane.ERROR_MESSAGE);
+/*			this.messageView.setTitle("Register Error");
 			this.messageView.setMessage("Unable to register.  Please try again.");
-			this.messageView.showModal();
+			this.messageView.showModal();*/
 		}
 	}
 
