@@ -48,6 +48,8 @@ public class MapController extends Controller implements IMapController {
 	private BoardMap temp = new BoardMap();
 	private Map<EdgeLocation, Road> temp_roads = new HashMap<EdgeLocation, Road>();
 	
+	private boolean currentlyRobbing = false;
+	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
@@ -98,19 +100,25 @@ public class MapController extends Controller implements IMapController {
 					case FIRST_ROUND:
 						//System.out.println("CurrentState is setup");
 						currentState = new FirstRoundState(MapController.this);
+						currentlyRobbing = false;
 						break;
 					case PLAYING:
 						//System.out.println("CurrentState is Playing");
 						currentState = new PlayingState(MapController.this);
+						currentlyRobbing = false;
 						break;
 					case ROBBING:
 						//System.out.println("CurrentState is Robbing");
-						currentState = new RobbingState(MapController.this);
-						getView().startDrop(PieceType.ROBBER, localPlayerColor, false);
+						if (!currentlyRobbing){
+							currentState = new RobbingState(MapController.this);
+							getView().startDrop(PieceType.ROBBER, localPlayerColor, false);
+							currentlyRobbing = true;
+						}
 						break;
 					default:
 						//System.out.println("CurrentState is Locked");
 						currentState = new GameState(MapController.this);
+						currentlyRobbing = false;
 						break;		
 				}
 			}
@@ -130,7 +138,9 @@ public class MapController extends Controller implements IMapController {
 		public void update(Observable o, Object arg){
 			map = (BoardMap)o;
 			
-			initFromModel(map);
+			if (!currentlyRobbing){
+				initFromModel(map);
+			}
 		}
 	}
 	
@@ -282,9 +292,9 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRobber(HexLocation hexLoc) {
 		System.out.println("Map Controller placeRobber");
+		
+		map.setRobberLocation(hexLoc);
 		getView().placeRobber(hexLoc);
-	
-		//map.setRobberLocation(hexLoc);
 		getRobView().setPlayers(ModelFacade.getInstance(null).getRobbablePlayers(hexLoc));
 		getRobView().showModal();
 	}
