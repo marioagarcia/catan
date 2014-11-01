@@ -4,9 +4,9 @@ import java.util.*;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface.Status;
 
 /**
  * Implementation for the resource bar controller
@@ -23,70 +23,17 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		
-		tracker = ModelFacade.getInstance(null).getManager().getTurnTracker();
-		tracker.addObserver(new TrackerObserver());
-		
-		localPlayer = ModelFacade.getInstance(null).getLocalPlayer();
-		localPlayer.addObserver(new ResourceObserver());
+		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
 	}
 	
-	private class TrackerObserver implements Observer{
+	private class GameModelObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg){
-			tracker = (TurnTracker)o;
-			boolean settlement_enabled = false;
-			boolean city_enabled = false;
-			boolean road_enabled = false;
-			boolean play_dev_card_enabled = false;
-			boolean buy_dev_card_enabled = false;
+			GameModel latest_model = (GameModel) o;
 			
-			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
-				
-				//This needs to be more robust. Player can only play one dev card per turn. 
-				//Should probably disable settlements in first round when one has been placed
-
-				switch (tracker.getStatus()){
-					case SECOND_ROUND:
-					case FIRST_ROUND:
-						settlement_enabled = true;
-						road_enabled = true;
-						break;
-					case PLAYING:
-						if (!localPlayer.getPlayedDevCard()){
-							play_dev_card_enabled = true;
-						}
-						if (ModelFacade.getInstance(null).getManager().canBuyDevCard()){
-							buy_dev_card_enabled = true;
-						}
-						if (localPlayer.canBuildSettlement()){
-							settlement_enabled = true;
-						}
-						if (localPlayer.canBuildCity()){
-							city_enabled = true;
-						}
-						if (localPlayer.canBuildRoad()){
-							road_enabled = true;
-						}
-						break;
-					default:
-						break;
-				}
-			}
-			
-			getView().setElementEnabled(ResourceBarElement.ROAD, road_enabled);
-			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, settlement_enabled);
-			getView().setElementEnabled(ResourceBarElement.CITY, city_enabled);
-			getView().setElementEnabled(ResourceBarElement.BUY_CARD, buy_dev_card_enabled);
-			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, play_dev_card_enabled);
-		}	
-	}
-	
-	private class ResourceObserver implements Observer{
-
-		@Override
-		public void update(Observable o, Object arg){
-			localPlayer = (Player)o;
+			tracker = latest_model.getTurnTracker();
+			localPlayer = latest_model.getLocalPlayer();
 			
 			getView().setElementAmount(ResourceBarElement.BRICK, localPlayer.getResourceList().getBrick());
 			getView().setElementAmount(ResourceBarElement.ORE, localPlayer.getResourceList().getOre());
@@ -99,23 +46,33 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			getView().setElementAmount(ResourceBarElement.ROAD, localPlayer.getRoads());
 			getView().setElementAmount(ResourceBarElement.SOLDIERS, localPlayer.getSoldiers());
 			
-			if (tracker.getStatus() == Status.FIRST_ROUND || tracker.getStatus() == Status.SECOND_ROUND){
-				getView().setElementEnabled(ResourceBarElement.ROAD, !localPlayer.hasPlacedFreeRoad());
-				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !localPlayer.hasPlacedFreeSettlement());
-				
-				getView().setElementEnabled(ResourceBarElement.CITY, false);
-				getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
-				getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
+			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
+				switch (tracker.getStatus()){
+					case SECOND_ROUND:
+					case FIRST_ROUND:
+						getView().setElementEnabled(ResourceBarElement.ROAD, !localPlayer.hasPlacedFreeRoad());
+						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !localPlayer.hasPlacedFreeSettlement());
+						getView().setElementEnabled(ResourceBarElement.CITY, false);
+						getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+						getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
+						break;
+					case PLAYING:
+						getView().setElementEnabled(ResourceBarElement.ROAD, localPlayer.canBuildRoad());	
+						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, localPlayer.canBuildSettlement());
+						getView().setElementEnabled(ResourceBarElement.CITY, localPlayer.canBuildCity());
+						getView().setElementEnabled(ResourceBarElement.BUY_CARD, localPlayer.canBuyDevCard());
+						getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.isPlayedDevCard());
+						break;
+					default:
+						getView().setElementEnabled(ResourceBarElement.ROAD, false);
+						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+						getView().setElementEnabled(ResourceBarElement.CITY, false);
+						getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+						getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
+						break;
+				}
 			}
-			else{
-				getView().setElementEnabled(ResourceBarElement.ROAD, localPlayer.canBuildRoad());	
-				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, localPlayer.canBuildSettlement());
-				getView().setElementEnabled(ResourceBarElement.CITY, localPlayer.canBuildCity());
-				getView().setElementEnabled(ResourceBarElement.BUY_CARD, localPlayer.canBuyDevCard());
-				getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.isPlayedDevCard());
-			}	
-		}
-		
+		}	
 	}
 
 	@Override

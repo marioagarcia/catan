@@ -7,6 +7,7 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.player.Player;
 
 
@@ -20,11 +21,13 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IAction roadAction;
 	private Player localPlayer = null;
 	
-	private class PlayerDevCardObserver implements Observer{
+	private class GameModelObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			Player localPlayer = (Player) o;
+			GameModel new_model = (GameModel) o;
+			
+			localPlayer = new_model.getLocalPlayer();
 
 			int monopoly_cards = localPlayer.getNewDevCards().getMonopoly() + localPlayer.getOldDevCards().getMonopoly();
 			int monument_cards = localPlayer.getNewDevCards().getMonument() + localPlayer.getOldDevCards().getMonument();
@@ -57,8 +60,8 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
-		localPlayer = ModelFacade.getInstance(null).getManager().getLocalPlayer();
-		localPlayer.addObserver(new PlayerDevCardObserver());
+		
+		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -88,11 +91,6 @@ public class DevCardController extends Controller implements IDevCardController 
 		if(!ModelFacade.getInstance(null).canBuyDevCard()){
 			return;
 		}
-		
-		localPlayer.getResourceList().setOre(localPlayer.getResourceList().getOre()-1);
-		localPlayer.getResourceList().setSheep(localPlayer.getResourceList().getSheep()-1);
-		localPlayer.getResourceList().setWheat(localPlayer.getResourceList().getWheat()-1);
-		localPlayer.update();
 		
 		ModelFacade.getInstance(null).buyDevCard();
 	}
