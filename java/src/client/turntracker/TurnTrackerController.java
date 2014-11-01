@@ -90,10 +90,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 		@Override
 		public void update(Observable o, Object arg) {
+			
+			GameModel game_model = (GameModel)o;
 
-			TurnTracker turnTracker = ((GameModel)o).getTurnTracker();
+			TurnTracker turnTracker = game_model.getTurnTracker();
 
-			Players players = turnTracker.getPlayers();
+			Players players = game_model.getPlayers();
 
 			if(!playersInitialized) {
 
