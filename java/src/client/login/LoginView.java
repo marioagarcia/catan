@@ -224,8 +224,6 @@ public class LoginView extends OverlayView implements ILoginView {
 			Font btnFont = btnSignIn.getFont();
 			btnFont = btnFont.deriveFont(btnFont.getStyle(), BUTTON_TEXT_SIZE);
 			btnSignIn.setFont(btnFont);
-			btnSignIn.setDefaultCapable(true);
-			btnSignIn.requestFocus();
 			this.add(btnSignIn);
 		}
 
@@ -328,7 +326,6 @@ public class LoginView extends OverlayView implements ILoginView {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Action Performed");
 				if(btnRegister.isEnabled()){
 					getController().register();
 				}

@@ -12,6 +12,9 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -59,7 +62,8 @@ public class RollView extends OverlayView implements IRollView {
 
 		rollButton = new JButton("Roll!");
 		rollButton.addActionListener(actionListener);
-		rollButton.addKeyListener(keyListener);
+		addKeyBindings(rollButton);
+		//rollButton.addKeyListener(keyListener);
 		Font buttonFont = rollButton.getFont();
 		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
 		rollButton.setFont(buttonFont);
@@ -70,7 +74,22 @@ public class RollView extends OverlayView implements IRollView {
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
-	KeyListener keyListener = new KeyListener(){
+	public void addKeyBindings(JComponent jc){
+		jc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),"Enter pressed");
+		jc.getActionMap().put("Enter pressed",new AbstractAction(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rollTimer.stopTimer();
+				closeModal();
+				getController().rollDice();
+			}
+			
+		});
+	
+	}
+	
+/*	KeyListener keyListener = new KeyListener(){
 
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -89,7 +108,7 @@ public class RollView extends OverlayView implements IRollView {
 		public void keyReleased(KeyEvent e) {
 		}
 		
-	};
+	};*/
 
 	private ActionListener actionListener = new ActionListener() {
 		@Override

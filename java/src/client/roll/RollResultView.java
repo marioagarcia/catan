@@ -48,7 +48,7 @@ public class RollResultView extends OverlayView implements IRollResultView {
 		Font okayButtonFont = okayButton.getFont();
 		okayButtonFont = okayButtonFont.deriveFont(okayButtonFont.getStyle(), BUTTON_TEXT_SIZE);
 		okayButton.setFont(okayButtonFont);
-		okayButton.addKeyListener(keyListener);
+		addKeyBindings(okayButton);
 		this.add(okayButton, BorderLayout.SOUTH);
 		
 		//create the rollLabel
@@ -87,25 +87,18 @@ public class RollResultView extends OverlayView implements IRollResultView {
 		}	
 	};
 	
-	KeyListener keyListener = new KeyListener(){
+	public void addKeyBindings(JComponent jc){
+		jc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),"Enter pressed");
+		jc.getActionMap().put("Enter pressed",new AbstractAction(){
 
-		@Override
-		public void keyTyped(KeyEvent e) {
-			System.out.println("Enter pressed");
-			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				closeModal();
 			}
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-		}
-		
-	};
+			
+		});
+	
+	}
 	
 	@Override
 	public IRollController getController() {
