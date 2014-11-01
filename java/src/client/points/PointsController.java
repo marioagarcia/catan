@@ -63,19 +63,30 @@ public class PointsController extends Controller implements IPointsController {
 
 		@Override
 		public void update(Observable o, Object arg) {
-			
-			Winner winner = ((GameModel)o).getWinner();
-
-			if(winner != null){
-				String name = winner.getName();
-				boolean i_won = winner.isLocalPlayer();
-				if(!hasWinner){
-					updateWinner(name, i_won);
-				}
-			}
+			GameModel game_model = (GameModel)o;
 			
 			Player player = ((GameModel)o).getLocalPlayer();
 			PointsController.this.updatePoints(player.getPoints());
+			
+			int winner_player_index = game_model.getWinnerPlayerIndex();
+
+			if(winner_player_index != -1) {
+
+				int local_player_index = game_model.getLocalPlayer().getPlayerIndex();
+
+				Player winner = game_model.getPlayers().getPlayer(winner_player_index);
+
+				if(winner != null) {
+					
+					String name = winner.getName();
+					
+					boolean local_player_wins = (winner.getPlayerIndex() == local_player_index);
+					
+					if(!hasWinner){
+						updateWinner(name, local_player_wins);
+					}
+				}
+			}
 		}
 	};
 
