@@ -45,41 +45,37 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				getTradeView().enableDomesticTrade(false);
 			}
 			
-			
-			//asdfasdfasdf
 			getAcceptOverlay().reset();
 			getAcceptOverlay().setAcceptEnabled(true);
 			DomesticTrade trade_offer = gameModel.getDomesticTrade();
 			
-			if(trade_offer.getReceiver() == -1 && getWaitOverlay().isModalShowing()){
-				getWaitOverlay().closeModal();
-				return;
-			}
-			
-			if(trade_offer.getReceiver() == -1){
-				return;
-			}
-			
-			if(trade_offer != null && trade_offer.getReceiver() == gameModel.getLocalPlayer().getPlayerIndex()){
-				for(ResourceType resource : ResourceType.values()){
-					if(trade_offer.getResourceList().getResourceByType(resource) > 0){
-						getAcceptOverlay().addGetResource(resource, trade_offer.getResourceList().getResourceByType(resource));
-						}
-					else{
-						getAcceptOverlay().addGiveResource(resource, trade_offer.getResourceList().getResourceByType(resource) * -1);
-						if(trade_offer.getResourceList().getResourceByType(resource) * -1 > gameModel.getLocalPlayer().getResourceList().getResourceByType(resource)){
-							getAcceptOverlay().setAcceptEnabled(false);
+			if(trade_offer != null){
+				if(trade_offer.getReceiver() == -1 && getWaitOverlay().isModalShowing()){
+					getWaitOverlay().closeModal();
+					return;
+				}
+				
+				if(trade_offer.getReceiver() == -1){
+					return;
+				}
+				
+				if(trade_offer != null && trade_offer.getReceiver() == gameModel.getLocalPlayer().getPlayerIndex()){
+					for(ResourceType resource : ResourceType.values()){
+						if(trade_offer.getResourceList().getResourceByType(resource) > 0){
+							getAcceptOverlay().addGetResource(resource, trade_offer.getResourceList().getResourceByType(resource));
+							}
+						else{
+							getAcceptOverlay().addGiveResource(resource, trade_offer.getResourceList().getResourceByType(resource) * -1);
+							if(trade_offer.getResourceList().getResourceByType(resource) * -1 > gameModel.getLocalPlayer().getResourceList().getResourceByType(resource)){
+								getAcceptOverlay().setAcceptEnabled(false);
+							}
 						}
 					}
+					getAcceptOverlay().setPlayerName(gameModel.getPlayers().getPlayer(trade_offer.getSender()).getName());
+					getAcceptOverlay().showModal();
 				}
-				getAcceptOverlay().setPlayerName(gameModel.getPlayers().getPlayer(trade_offer.getSender()).getName());
-				getAcceptOverlay().showModal();
 			}
 			
-			
-			
-			
-			//asdfasdfasdfasdf
 			Players players = gameModel.getPlayers();
 			
 			ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
