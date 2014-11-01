@@ -273,14 +273,6 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.addAIPlayer(botPlayer);
 	}
 	
-	public void addAllPlayersObserver(Observer o){
-		gameManager.getAllPlayers().addObserver(o);
-	}
-	
-	public void addTurnTrackerObserver(Observer o){
-		gameManager.getTurnTracker().addObserver(o);
-	}
-	
 	public void addGameListObserver(Observer o){
 		gameManager.getGameList().addObserver(o);
 	}

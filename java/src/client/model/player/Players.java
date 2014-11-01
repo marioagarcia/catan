@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class Players extends Observable {
+public class Players {
 
 	private List<Player> playerList;
 	private int localPlayerIndex;
@@ -70,11 +70,6 @@ public class Players extends Observable {
 		} else if (!playerList.equals(other.playerList))
 			return false;
 		return true;
-	}
-	
-	public void update(Object arg){
-		setChanged();
-		notifyObservers(arg);
 	}
 	
 }
