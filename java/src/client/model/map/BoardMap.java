@@ -98,15 +98,12 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 	public boolean isValid(EdgeLocation location){
 		location = location.getNormalizedLocation();
 		for(HexInterface hex : this.hexes.values()){
-			if(location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.North).getNormalizedLocation()) ||
-					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.NorthEast).getNormalizedLocation()) ||
-					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.NorthWest).getNormalizedLocation()) || 
-					location.equals(new EdgeLocation(hex.getLocation(),     EdgeDirection.South).getNormalizedLocation()) ||
-					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.SouthEast).getNormalizedLocation()) ||
-					location.equals(new EdgeLocation(hex.getLocation(), EdgeDirection.SouthWest).getNormalizedLocation())){
-				return true;
+			for(EdgeDirection direction : EdgeDirection.values()){
+				EdgeLocation test_location = new EdgeLocation(hex.getLocation(), direction);
+				if(test_location.getNormalizedLocation().equals(location)){
+					return true;
+				}
 			}
-				
 		}
 		return false;
 	}
