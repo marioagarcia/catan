@@ -10,7 +10,7 @@ import java.util.Observer;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.logging.GameLog;
+import client.model.GameModel;
 import client.model.logging.chat.GameChatInterface;
 import client.model.logging.chat.MessageDoesNotExistException;
 import client.model.logging.chat.MessageInterface;
@@ -22,14 +22,12 @@ import client.model.player.Players;
  * Chat controller implementation
  */
 public class ChatController extends Controller implements IChatController {
-	
-	ModelFacade facade = ModelFacade.getInstance(null);
 
 	public ChatController(IChatView view) {
 		
 		super(view);
 		
-		facade.getManager().getGameLog().addObserver(chatObserver);
+		ModelFacade.getInstance(null).addObserver(chatObserver);
 	}
 
 	@Override
@@ -39,11 +37,12 @@ public class ChatController extends Controller implements IChatController {
 
 	@Override
 	public void sendMessage(String message) {
-		facade.sendChat(message);		
+		ModelFacade.getInstance(null).sendChat(message);
 	}
-	
-	private void updateChat(GameChatInterface gameChat) {
-		Players players = facade.getManager().getAllPlayers();
+
+	private void updateChat(GameModel game_model) {
+		GameChatInterface game_chat = game_model.getGameLog().getGameChat();
+		Players players = game_model.getPlayers();
 		Map<String, CatanColor> colorByIdMap = new HashMap<String, CatanColor>();
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		
@@ -51,12 +50,12 @@ public class ChatController extends Controller implements IChatController {
 			colorByIdMap.put(player.getName(), player.getColor());
 		}
 		
-		for (int message_index = 0; message_index < gameChat.getSize(); message_index++) {
+		for (int message_index = 0; message_index < game_chat.getSize(); message_index++) {
 			MessageInterface message = null;
 			
 			try {
 				
-				message = gameChat.getMessage(message_index);
+				message = game_chat.getMessage(message_index);
 				
 			} catch (MessageDoesNotExistException e) {
 				e.printStackTrace();
@@ -75,9 +74,7 @@ public class ChatController extends Controller implements IChatController {
 		
 		@Override
 		public void update(Observable o, Object arg) {
-
-			GameLog gameLog = (GameLog)o;
-			ChatController.this.updateChat(gameLog.getGameChat());
+			ChatController.this.updateChat((GameModel)o);
 		}
 	};
 }
