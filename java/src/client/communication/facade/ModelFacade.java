@@ -285,6 +285,10 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.getLocalPlayer();
 	}
 	
+	public Players getAllPlayers() {
+		return gameManager.getAllPlayers();
+	}
+	
 	public GameInfo[] getGamesList(){
 		return gameManager.populateGameList();
 	}

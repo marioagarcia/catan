@@ -792,6 +792,10 @@ public class GameManager implements GameManagerInterface {
 	public Player getLocalPlayer() {
 		return gameModel.getLocalPlayer();
 	}
+	
+	public Players getAllPlayers() {
+		return gameModel.getPlayers();
+	}
 
 	public ServerPoller.ModelStateObserver getPollerObserver() {
 		return pollerObserver;
