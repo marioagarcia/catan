@@ -337,16 +337,14 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {	
 		System.out.println("Map Controller robPlayer " + victim);
 		
-		if (victim.getPlayerIndex() != -1){
-			if (playingSoldier){
-				currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
-				playingSoldier = false;
-				ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
-				ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
-			}
-			else{
-				currentState.robPlayer(victim, map.getRobberLocation());
-			}
+		if (playingSoldier){
+			currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
+			playingSoldier = false;
+			ModelFacade.getInstance(null).getManager().getLocalPlayer().setPlayedDevCard(true);
+			ModelFacade.getInstance(null).getManager().getLocalPlayer().update();
+		}
+		else{
+			currentState.robPlayer(victim, map.getRobberLocation());
 		}
 	}
 	
