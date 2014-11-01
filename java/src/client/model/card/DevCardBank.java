@@ -2,13 +2,11 @@ package client.model.card;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-
 import client.manager.interfaces.GMDevCardBankInterface;
 import shared.definitions.DevCardType;
 import shared.serialization.interfaces.SerializerDeckInterface;
 
-public class DevCardBank extends Observable implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface {
+public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface {
 
 	private Map<DevCardType, Integer> cards;
 	
@@ -106,10 +104,4 @@ public class DevCardBank extends Observable implements DevCardBankInterface, Ser
 		}
 		return 0;
 	}
-	
-	public void update(){
-		setChanged();
-		notifyObservers();
-	}
-	
 }

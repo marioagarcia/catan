@@ -2,12 +2,10 @@ package client.model.card;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-
 import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerBankInterface;
 
-public class ResourceCardBank extends Observable implements ResourceCardBankInterface, SerializerBankInterface {
+public class ResourceCardBank implements ResourceCardBankInterface, SerializerBankInterface {
 	
 	private Map<ResourceType, Integer> cards;
 	
@@ -98,10 +96,4 @@ public class ResourceCardBank extends Observable implements ResourceCardBankInte
 			return false;
 		return true;
 	}
-	
-	public void update(){
-		setChanged();
-		notifyObservers();
-	}
-
 }

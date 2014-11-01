@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Observable;
 import java.util.Set;
 
 import client.manager.interfaces.GMBoardMapInterface;
@@ -23,7 +22,7 @@ import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerMapInterface;
 
-public class BoardMap extends Observable implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
+public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
 	private Map<HexLocation, HexInterface> hexes;
 	private Map<EdgeLocation, Road> roads;
 	private Map<VertexLocation, City> cities;
@@ -499,11 +498,6 @@ public class BoardMap extends Observable implements BoardMapInterface, GMBoardMa
 		} else if (!settlements.equals(other.settlements))
 			return false;
 		return true;
-	}
-	
-	public void update(){
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	public ArrayList<Integer> getRobbablePlayers(HexLocation location){

@@ -6,7 +6,7 @@ import shared.serialization.interfaces.SerializerTurnTrackerInterface;
 import client.manager.interfaces.GMTurnTrackerInterface;
 import client.model.player.Players;
 
-public class TurnTracker extends Observable implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
+public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
 	
 	private Status status;
 	private int localPlayerIndex;
@@ -160,10 +160,4 @@ public class TurnTracker extends Observable implements TurntrackerInterface, GMT
 			return false;
 		return true;
 	}
-	
-	public void update(){
-		this.setChanged();
-		this.notifyObservers();
-	}
-
 }

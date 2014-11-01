@@ -11,7 +11,7 @@ import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 
-public class Player extends Observable implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
+public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
 	int cities;
 	CatanColor color;
 	int monuments;
@@ -505,10 +505,4 @@ public class Player extends Observable implements PlayerInterface, GMPlayerInter
 		
 		return playerString;
 	}
-
-	public void update(){
-		setChanged();
-		notifyObservers();
-	}
-	
 }

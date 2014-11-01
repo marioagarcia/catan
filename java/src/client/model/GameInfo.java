@@ -18,7 +18,7 @@ import client.model.player.PlayerInfo;
  * </ul>
  * 
  */
-public class GameInfo extends Observable implements SerializerGameInfoInterface
+public class GameInfo implements SerializerGameInfoInterface
 {
 	private int id;
 	private String title;
@@ -138,10 +138,5 @@ public class GameInfo extends Observable implements SerializerGameInfoInterface
 		return true;
 	}
 	
-	public void update(){
-		setChanged();
-		notifyObservers();
-	}
-
 }
 

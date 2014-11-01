@@ -1,8 +1,6 @@
 package client.model;
 
-import java.util.Observable;
-
-public class Winner extends Observable {
+public class Winner {
 	
 	private String name;
 	private int playerIndex;
@@ -70,10 +68,4 @@ public class Winner extends Observable {
 			return false;
 		return true;
 	}
-
-	public void update() {
-		setChanged();
-		notifyObservers();
-	}
-
 }

@@ -7,7 +7,7 @@ import client.model.logging.chat.GameChatInterface;
 import client.model.logging.history.GameHistoryLogInterface;
 import client.model.logging.history.HistoryLog;
 
-public class GameLog extends Observable implements GameLogInterface {
+public class GameLog implements GameLogInterface {
 
 	private GameHistoryLogInterface gameHistoryLog;
 	private GameChatInterface gameChat;
@@ -40,10 +40,5 @@ public class GameLog extends Observable implements GameLogInterface {
 	@Override
 	public void setGameHistoryLog(GameHistoryLogInterface gameHistoryLog) {
 		this.gameHistoryLog = gameHistoryLog;
-	}
-	
-	public void update() {
-		this.setChanged();
-		this.notifyObservers();
 	}
 }
