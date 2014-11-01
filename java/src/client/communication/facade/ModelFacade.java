@@ -289,10 +289,6 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.populateGameList();
 	}
 	
-	public Players getPlayers(){
-		return gameManager.getAllPlayers();
-	}
-	
 	public GameManager getManager(){
 		return gameManager;
 	}
@@ -304,12 +300,4 @@ public class ModelFacade implements ModelFacadeInterface {
 	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
 		return gameManager.getRobbablePlayers(location);
 	}
-	
-	public void setWinner(){
-		Winner winner = new Winner();
-		winner.setName(gameManager.getLocalPlayer().getName());
-		winner.setPlayerIndex(gameManager.getLocalPlayer().getPlayerIndex());
-		gameManager.setWinner(winner);
-	}
-
 }

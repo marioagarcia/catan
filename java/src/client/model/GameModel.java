@@ -1,6 +1,5 @@
 package client.model;
 
-import java.util.ArrayList;
 import java.util.Observable;
 
 import client.manager.GameData;
@@ -15,7 +14,16 @@ import client.model.turntracker.TurnTracker;
 
 public class GameModel extends Observable{
 	
-	GameData gameData;
+	private GameData gameData;
+	private Player localPlayer;
+	
+	public GameModel() {
+		localPlayer = new Player();
+	}
+	
+	public void setGameData(GameData game_data) {
+		gameData = game_data;
+	}
 	
 	public DevCardBank getDevCardBank(){
 		return gameData.devCardBank;
@@ -29,17 +37,16 @@ public class GameModel extends Observable{
 		return gameData.boardMap;
 	}
 
-	public ArrayList<Player> getPlayerList() {
-		return gameData.playerList;
-	}
-	
 	public Players getPlayers() {
 		return gameData.players;
 	}
 	
 	public Player getLocalPlayer() {
-		//return gameData.localPlayer;
-		return null;
+		return localPlayer;
+	}
+	
+	public void setLocalPlayer(Player local_player) {
+		localPlayer = local_player;
 	}
 	
 	public GameLog getGameLog() {
@@ -58,8 +65,13 @@ public class GameModel extends Observable{
 		return gameData.version;
 	}
 
-	public Winner getWinner() {
-		return gameData.winner;
+	public int getWinnerPlayerIndex() {
+		return gameData.winnerIndex;
+	}
+	
+	public void update() {
+		setChanged();
+		notifyObservers();
 	}
 
 }

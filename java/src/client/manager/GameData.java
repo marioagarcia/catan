@@ -36,8 +36,8 @@ public class GameData {
 	//TradeOffer (if there is one, Optional)
 	public DomesticTrade domesticTrade;
 
-	//Winner (null if there is no winner yet)
-	public Winner winner;
+	//Winner (-1 if there is no winner yet)
+	public int winnerIndex;
 	
 	//Version
 	public int version;
@@ -117,12 +117,12 @@ public class GameData {
 		this.version = version;
 	}
 
-	public Winner getWinner() {
-		return winner;
+	public int getWinnerPlayerIndex() {
+		return winnerIndex;
 	}
 
-	public void setWinner(Winner winner) {
-		this.winner = winner;
+	public void setWinner(int winner_index) {
+		this.winnerIndex = winner_index;
 	}
 	
 }

@@ -42,6 +42,7 @@ import client.manager.GameCommand;
 import client.manager.GameCommands;
 import client.manager.GameData;
 import client.model.GameInfo;
+import client.model.Winner;
 import client.model.card.DevCardBank;
 import client.model.card.DevCardList;
 import client.model.card.DomesticTrade;
@@ -583,11 +584,11 @@ public class ModelSerializer implements ModelSerializerInterface {
 		//Parse Trade Offer
 		gameData.setDomesticTrade(getTradeOffer(mainObject));
 		
-		int winner = mainObject.get("winner").getAsInt();
-		int version = mainObject.get("version").getAsInt();
+		//Winner is -1 if there is no winner yet
+		gameData.setWinner(mainObject.get("winner").getAsInt());
 		
-		//TODO gameData.setWinner(winner);
-		gameData.setVersion(version);
+		//Version
+		gameData.setVersion(mainObject.get("version").getAsInt());
 		
 		return gameData;
 	}
