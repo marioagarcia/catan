@@ -10,8 +10,11 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameModel;
 import client.model.card.MaritimeTrade;
+import client.model.map.BoardMap;
 import client.model.map.Port;
+import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
 
@@ -26,14 +29,22 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private final String stateMessageSelectGive = "Please select resources to give up in trade";
 	private final String stateMessageSelectGet = "Please select resources to receive in trade";
 	private final String stateMessageTrade = "Trade!!";
+	BoardMap boardMap;
+	Player localPlayer;
+	
 	
 	private class MaritimeTradeObserver implements Observer
 	{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			TurnTracker tt = (TurnTracker)o;
-			if(tt.getStatus() == Status.PLAYING && tt.getCurrentTurn() == ModelFacade.getInstance(null).getLocalPlayer().getPlayerIndex()) {
+			GameModel game_model = (GameModel)o;
+			
+			boardMap = game_model.getBoardMap();
+			localPlayer = game_model.getLocalPlayer();
+			
+			TurnTracker tt = game_model.getTurnTracker();
+			if(tt.getStatus() == Status.PLAYING && tt.getCurrentTurn() == game_model.getLocalPlayer().getPlayerIndex()) {
 				getTradeView().enableMaritimeTrade(true);
 			} else {
 				getTradeView().enableMaritimeTrade(false);
@@ -48,7 +59,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		setTradeOverlay(tradeOverlay);
 		this.trade = new MaritimeTrade();
 		getTradeView().enableMaritimeTrade(false);
-		ModelFacade.getInstance(null).getManager().getTurnTracker().addObserver(new MaritimeTradeObserver());
+		ModelFacade.getInstance(null).addObserver(new MaritimeTradeObserver());
 	}
 	
 	public IMaritimeTradeView getTradeView() {
@@ -126,7 +137,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	
 	private int determineRatio(ResourceType type){
 		int ratio = 4;
-		for(Port port : ModelFacade.getInstance(null).getManager().getBoardMap().getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
+		for(Port port : boardMap.getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
 			if(port.getResource() == PortType.THREE && ratio > 3){
 				ratio = 3;
 			}
@@ -140,7 +151,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	
 	private Port determineTradeLocation(ResourceType type){
 		Port best_port = null;
-		for( Port port : ModelFacade.getInstance(null).getManager().getBoardMap().getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
+		for( Port port : boardMap.getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
 			if(port.getResource().toString().equals(type.toString())){
 				return port;
 			}
@@ -154,7 +165,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private ResourceType[] getTradableTypes(){
 		Set<ResourceType> enabled_types = new HashSet<ResourceType>();
 		for(ResourceType type : ResourceType.values()){
-			if(this.determineRatio(type) <= ModelFacade.getInstance(null).getManager().getLocalPlayer().getResourceList().getResourceByType(type)){
+			if(this.determineRatio(type) <= localPlayer.getResourceList().getResourceByType(type)){
 				enabled_types.add(type);
 			}
 		}
