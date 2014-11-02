@@ -45,8 +45,20 @@ public class GameModel extends Observable{
 		return localPlayer;
 	}
 	
-	public void setLocalPlayer(Player local_player) {
-		localPlayer = local_player;
+	public void setLocalPlayer(Player p) {
+		
+		localPlayer.setCities(p.getCities());
+		localPlayer.setColor(p.getColor());
+		localPlayer.setMonuments(p.getMonuments());
+		localPlayer.setNewDevCards(p.getNewDevCards());
+		localPlayer.setOldDevCards(p.getOldDevCards());
+		localPlayer.setDiscarded(p.isDiscarded());
+		localPlayer.setPlayedDevCard(p.isPlayedDevCard());
+		localPlayer.setResourceList(p.getResourceList());
+		localPlayer.setRoads(p.getRoads());
+		localPlayer.setSettlements(p.getSettlements());
+		localPlayer.setSoldiers(p.getSoldiers());
+		localPlayer.setVictoryPoints(p.getVictoryPoints());
 	}
 	
 	public GameLog getGameLog() {
