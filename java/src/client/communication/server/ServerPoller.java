@@ -55,6 +55,22 @@ public class ServerPoller implements ServerPollerInterface
 		}
 	}
 	
+	public void stopPoller(){
+		if (isRunning){
+			pollMethod.cancel();
+			pollTimer.cancel();
+			isRunning = false;
+		}
+	}
+	
+	public void stopListPoller(){
+		if (gameListRunning){
+			listMethod.cancel();
+			listTimer.cancel();
+			gameListRunning = false;
+		}
+	}
+	
 	public void registerModelObserver(ModelStateObserver new_observer){
 		modelObservers.add(new_observer);
 	}

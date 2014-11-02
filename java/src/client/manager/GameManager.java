@@ -177,6 +177,7 @@ public class GameManager implements GameManagerInterface {
 			resetFromGameModel(serverProxy.getGameModel(true));
 
 			serverPoller.startPoller(3000);
+			serverPoller.stopListPoller();
 
 			return true;
 		}
