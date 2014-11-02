@@ -34,6 +34,10 @@ public class DiscardController extends Controller implements IDiscardController 
 			
 			if(turn_tracker.getStatus() == Status.DISCARDING && latest_model.getLocalPlayer().getNumberOfCards() <= 7){
 				ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
+				
+				if(getDiscardView().isModalShowing()){
+					getDiscardView().closeModal();
+				}
 				return;
 			}
 			
@@ -47,7 +51,9 @@ public class DiscardController extends Controller implements IDiscardController 
 			}
 
 			updateDiscardView();
-			getDiscardView().showModal();
+			if(!getDiscardView().isModalShowing()){
+				getDiscardView().showModal();
+			}
 		}
 	}
 	
@@ -88,7 +94,9 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	@Override
 	public void discard() {
-		getDiscardView().closeModal();
+		if(getDiscardView().isModalShowing()){
+			getDiscardView().closeModal();
+		}
 		ModelFacade.getInstance(null).discardCards(this.resourceList);
 	}
 	
