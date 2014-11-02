@@ -349,16 +349,19 @@ public class GameManager implements GameManagerInterface {
 
 		if(gameModel.getTurnTracker().getCurrentTurn() == player_index) {
 
-			if(gameModel.getTurnTracker().getStatus() == Status.FIRST_ROUND || gameModel.getTurnTracker().getStatus() == Status.SECOND_ROUND) {
+			if(gameModel.getTurnTracker().getStatus() == Status.FIRST_ROUND || 
+			   gameModel.getTurnTracker().getStatus() == Status.SECOND_ROUND) {
 				
 				int num_roads = gameModel.getBoardMap().getNumberOfRoadsByPlayerIndex(player_index);
 				int num_settlements = gameModel.getBoardMap().getNumberOfSettlementsByPlayerIndex(player_index);
 
-				if(gameModel.getTurnTracker().getStatus() == Status.FIRST_ROUND && num_roads < 1 && num_settlements < 1) {
+				if(gameModel.getTurnTracker().getStatus() == 
+				   Status.FIRST_ROUND && (num_roads < 1 || num_settlements < 1)) {
 					return false;
 				}
 
-				if(gameModel.getTurnTracker().getStatus() == Status.SECOND_ROUND && num_roads < 2 && num_settlements < 2) {
+				if(gameModel.getTurnTracker().getStatus() == 
+				   Status.SECOND_ROUND && (num_roads < 2 || num_settlements < 2)) {
 					return false;
 				}
 
