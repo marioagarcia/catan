@@ -158,7 +158,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
 
 		for(Player player : gameModel.getPlayers().getPlayerList()){
-			if(player.getPlayerIndex() != gameModel.getPlayers().getLocalPlayerIndex()){
+			if(player.getPlayerIndex() != gameModel.getLocalPlayer().getPlayerIndex()){
 				PlayerInfo new_info = new PlayerInfo(player.getId(), player.getName(), player.getPlayerIndex(), player.getColor());
 				players.add(new_info);
 			}
