@@ -56,7 +56,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				switch (tracker.getStatus()){
 					case SECOND_ROUND:
 					case FIRST_ROUND:
-						getView().setElementEnabled(ResourceBarElement.ROAD, !localPlayer.hasPlacedFreeRoad());
+						getView().setElementEnabled(ResourceBarElement.ROAD, !localPlayer.hasPlacedFreeRoad() && localPlayer.hasPlacedFreeSettlement());
 						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !localPlayer.hasPlacedFreeSettlement());
 						getView().setElementEnabled(ResourceBarElement.CITY, false);
 						getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
