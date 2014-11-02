@@ -101,7 +101,7 @@ public class RobView extends OverlayView implements IRobView {
 		if(candidateVictims != null)
 			numberOfPlayers = candidateVictims.length;
 		
-		//if(numberOfPlayers != 0){
+		if(numberOfPlayers != 0){
 			this.remove(buttonPanel);
 			buttonPanel = new JPanel();
 			buttonPanel.setBorder(BorderFactory.createEmptyBorder(25,0,25,0));
@@ -128,7 +128,7 @@ public class RobView extends OverlayView implements IRobView {
 				this.add(buttonPanel, BorderLayout.CENTER);
 				revalidate();
 			}
-		//}
+		}
 	}
 
 }

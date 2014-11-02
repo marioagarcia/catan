@@ -281,7 +281,15 @@ public class MapController extends Controller implements IMapController {
 		
 		map.setRobberLocation(hexLoc);
 		getView().placeRobber(hexLoc);
-		getRobView().setPlayers(ModelFacade.getInstance(null).getRobbablePlayers(hexLoc));
+		RobPlayerInfo[] rob_list = ModelFacade.getInstance(null).getRobbablePlayers(hexLoc);
+		
+		if (rob_list.length > 0){
+			getRobView().setPlayers(rob_list);
+		}
+		else{
+			setRobView(new RobView());
+		}
+		
 		getRobView().showModal();
 	}
 	
