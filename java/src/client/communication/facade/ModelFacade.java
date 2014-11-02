@@ -301,6 +301,10 @@ public class ModelFacade implements ModelFacadeInterface {
 		gameManager.getServerPoller().startListPoller(2000);
 	}
 	
+	public void stopListPoller(){
+		gameManager.getServerPoller().stopListPoller();
+	}
+	
 	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
 		return gameManager.getRobbablePlayers(location);
 	}

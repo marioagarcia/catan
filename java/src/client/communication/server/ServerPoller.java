@@ -94,7 +94,7 @@ public class ServerPoller implements ServerPollerInterface
 		public void run(){
 			String model = proxyObject.getGameModel(false);
 			
-			if (!model.equals("\"true\"") && !model.equals("\"Success\"")){
+			if (!model.equals("\"true\"") && !model.equals("Success")){
 				
 				latestModel = model;
 				
