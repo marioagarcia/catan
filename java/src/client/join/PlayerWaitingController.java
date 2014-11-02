@@ -21,7 +21,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
-		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
+		ModelFacade.getInstance(null).addObserver(gameModelObserver);
 	}
 
 	@Override
@@ -94,10 +94,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		}
 	}
 	//Observes the Players object and updates the view when the Players object changes
-	private class GameModelObserver implements Observer{
+	private Observer gameModelObserver = new Observer(){
 
 		@Override
 		public void update(Observable o, Object arg) {
+System.out.println("Updating");
 			TurnTracker tt = ((GameModel)o).getTurnTracker();
 			if(tt != null && tt.getStatus() != null){
 				if (getView().isModalShowing()){
@@ -108,6 +109,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				}
 			}	
 		}
-	}
+	};
 }
 
