@@ -71,8 +71,8 @@ public class RollController extends Controller implements IRollController {
 		if(!getResultView().isModalShowing()){
 			getResultView().showModal();
 		}
-		facade.roll(rolledNumber);
-		setIsRolling(false);
+		//facade.roll(rolledNumber);
+		//setIsRolling(false);
 
 	}
 	

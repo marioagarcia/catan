@@ -35,16 +35,6 @@ public class CatanPanel extends JPanel
 	{
 		this.setLayout(new BorderLayout());
 		
-		titlePanel = new TitlePanel();
-		midPanel = new MidPanel();
-		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel());
-		rightPanel = new RightPanel(midPanel.getMapController());
-		
-		this.add(titlePanel, BorderLayout.NORTH);
-		this.add(leftPanel, BorderLayout.WEST);
-		this.add(midPanel, BorderLayout.CENTER);
-		this.add(rightPanel, BorderLayout.EAST);
-		
 		discardView = new DiscardView();
 		discardWaitView = new WaitView();
 		discardWaitView.setMessage("Waiting for other Players to Discard");
@@ -57,6 +47,16 @@ public class CatanPanel extends JPanel
 		rollController = new RollController(rollView, rollResultView);
 		rollView.setController(rollController);
 		rollResultView.setController(rollController);
+		
+		titlePanel = new TitlePanel();
+		midPanel = new MidPanel();
+		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel());
+		rightPanel = new RightPanel(midPanel.getMapController());
+		
+		this.add(titlePanel, BorderLayout.NORTH);
+		this.add(leftPanel, BorderLayout.WEST);
+		this.add(midPanel, BorderLayout.CENTER);
+		this.add(rightPanel, BorderLayout.EAST);
 		
 		JButton testButton = new JButton("Test");
 		testButton.addActionListener(new ActionListener() {

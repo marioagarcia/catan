@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import javax.swing.*;
 
 import client.base.*;
+import client.communication.facade.ModelFacade;
 import client.utils.ImageUtils;
 
 
@@ -28,6 +29,8 @@ public class RollResultView extends OverlayView implements IRollResultView {
 	private JLabel rollLabel;
 	private ImageIcon picture;
 	private JLabel pictureLabel;
+	
+	private int rolledNumber;
 
 	public RollResultView() {
 		
@@ -83,6 +86,8 @@ public class RollResultView extends OverlayView implements IRollResultView {
 			if (e.getSource() == okayButton) {
 				
 				closeModal();
+				ModelFacade.getInstance(null).roll(rolledNumber);
+				((RollController)getController()).setIsRolling(false);
 			}
 		}	
 	};
@@ -94,6 +99,8 @@ public class RollResultView extends OverlayView implements IRollResultView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				closeModal();
+				ModelFacade.getInstance(null).roll(rolledNumber);
+				((RollController)getController()).setIsRolling(false);
 			}
 			
 		});
@@ -108,6 +115,7 @@ public class RollResultView extends OverlayView implements IRollResultView {
 
 	@Override
 	public void setRollValue(int value) {
+		rolledNumber = value;
 		String rollText = String.format("You rolled a %d.", value);
 		rollLabel.setText(rollText);
 	}
