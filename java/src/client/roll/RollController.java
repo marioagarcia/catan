@@ -63,7 +63,6 @@ public class RollController extends Controller implements IRollController {
 		DiceRoller diceRoller = new DiceRoller();
 		int rolledNumber = diceRoller.roll();
 		
-		facade.roll(rolledNumber);
 		if (getRollView().isModalShowing()){
 			getRollView().closeModal();
 		}
@@ -72,6 +71,7 @@ public class RollController extends Controller implements IRollController {
 		if(!getResultView().isModalShowing()){
 			getResultView().showModal();
 		}
+		facade.roll(rolledNumber);
 		setIsRolling(false);
 
 	}
