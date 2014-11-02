@@ -2,6 +2,7 @@ package client.manager;
 
 import java.util.ArrayList;
 import java.util.Observer;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -14,6 +15,7 @@ import client.communication.server.ServerProxyInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.GameModel;
+import client.model.card.DomesticTrade;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
@@ -646,6 +648,9 @@ public class GameManager implements GameManagerInterface {
 
 	@Override
 	public boolean offerTrade(GMDomesticTradeInterface trade, int otherPlayerIndex) {
+		
+System.out.println(((DomesticTrade)trade).toString());
+		
 		int local_player_index = gameModel.getLocalPlayer().getPlayerIndex();
 
 		ResourceList resource_list = new ResourceList(trade.getBrickCount(), trade.getOreCount(), trade.getSheepCount(), trade.getWheatCount(), trade.getWoodCount());

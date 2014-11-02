@@ -203,6 +203,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		ModelFacade.getInstance(null).offerTrade(trade, this.trade.getReceiver());
 		getTradeOverlay().closeModal();
 		getWaitOverlay().showModal();
+		resetTradeObject();
 	}
 
 	@Override
@@ -239,22 +240,27 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void cancelTrade() {
-
 		getTradeOverlay().closeModal();
+		resetTradeObject();
 	}
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-		ModelFacade.getInstance(null).acceptTrade(gameModel.getDomesticTrade(), willAccept);
+		getAcceptOverlay().reset();
 		getAcceptOverlay().closeModal();
+		ModelFacade.getInstance(null).acceptTrade(gameModel.getDomesticTrade(), willAccept);
+	}
+	
+	private void resetTradeObject(){
+		this.trade.setResourceList(new ResourceList(0,0,0,0,0));
 	}
 	
 	private void enableResourceSelectionButtons(ResourceType resource, boolean sending){
 		boolean can_go_down = Math.abs(this.trade.getResourceList().getResourceByType(resource)) > 0;
 		boolean can_go_up = !sending || this.trade.getResourceList().getResourceByType(resource) < gameModel.getLocalPlayer().getResourceList().getResourceByType(resource);
-		
+	
 		getTradeOverlay().setResourceAmountChangeEnabled(resource, can_go_up, can_go_down);
-		getTradeOverlay().setTradeEnabled(this.trade.getReceiver() != -1 && this.trade.getSender() != -1 && ModelFacade.getInstance(null).canOfferTrade(this.trade));
+		//getTradeOverlay().setTradeEnabled(this.trade.getReceiver() != -1 && this.trade.getSender() != -1 && ModelFacade.getInstance(null).canOfferTrade(this.trade));
 	}
 
 }
