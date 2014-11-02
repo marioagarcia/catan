@@ -2,7 +2,6 @@ package client.manager;
 
 import java.util.ArrayList;
 import java.util.Observer;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -15,25 +14,17 @@ import client.communication.server.ServerProxyInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.GameModel;
-import client.model.Winner;
-import client.model.card.DevCardBank;
-import client.model.card.DomesticTrade;
 import client.model.card.MaritimeTrade;
-import client.model.card.ResourceCardBank;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
 import client.model.logging.GameLog;
 import client.model.logging.chat.GameChat;
 import client.model.logging.history.HistoryLog;
-import client.model.map.BoardMap;
-import client.model.piece.Settlement;
 import client.model.player.Player;
-import client.model.player.PlayerInfo;
 import client.model.player.Players;
 import client.model.player.RobPlayerInfo;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
-import client.roll.DiceRoller;
 
 public class GameManager implements GameManagerInterface {
 
@@ -177,7 +168,6 @@ public class GameManager implements GameManagerInterface {
 			resetFromGameModel(serverProxy.getGameModel(true));
 
 			serverPoller.startPoller(3000);
-			serverPoller.stopListPoller();
 
 			return true;
 		}

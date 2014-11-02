@@ -57,7 +57,7 @@ public class ServerProxy implements ServerProxyInterface{
 		playerId = Integer.MAX_VALUE;
 		latestVersion = -1;
 		
-		String test_result =  doGet("/util/changeLogLevel", "{\"logLevel\": \"FINE\"}", false);
+		String test_result =  doGet("/util/changeLogLevel", "{\"logLevel\": \"WARNING\"}", false);
 	
 		if (test_result != null && test_result.equals("Success")){
 			validConnection = true;

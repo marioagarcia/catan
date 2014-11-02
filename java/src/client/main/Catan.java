@@ -58,6 +58,7 @@ public class Catan extends JFrame {
 				
 				while (!connected){
 					config_window.reset();
+					config_window.setLocationRelativeTo(null);
 					config_window.setVisible(true);
 					
 					String port = config_window.getPort();

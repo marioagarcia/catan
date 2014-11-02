@@ -46,7 +46,13 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			getView().setElementAmount(ResourceBarElement.ROAD, localPlayer.getRoads());
 			getView().setElementAmount(ResourceBarElement.SOLDIERS, localPlayer.getSoldiers());
 			
-			if (ModelFacade.getInstance(null).getManager().isLocalPlayersTurn()){
+			getView().setElementEnabled(ResourceBarElement.ROAD, false);
+			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+			getView().setElementEnabled(ResourceBarElement.CITY, false);
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
+			
+			if (tracker.isLocalPlayerTurn()){
 				switch (tracker.getStatus()){
 					case SECOND_ROUND:
 					case FIRST_ROUND:

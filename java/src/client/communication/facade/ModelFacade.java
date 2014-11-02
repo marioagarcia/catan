@@ -13,7 +13,6 @@ import client.communication.server.ServerProxyInterface;
 import client.manager.GameManager;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
-import client.model.Winner;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
@@ -299,6 +298,10 @@ public class ModelFacade implements ModelFacadeInterface {
 	
 	public void startListPoller(){
 		gameManager.getServerPoller().startListPoller(2000);
+	}
+	
+	public void stopListPoller(){
+		gameManager.getServerPoller().stopListPoller();
 	}
 	
 	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
