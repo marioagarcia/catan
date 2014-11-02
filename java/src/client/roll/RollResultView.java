@@ -116,7 +116,17 @@ public class RollResultView extends OverlayView implements IRollResultView {
 	@Override
 	public void setRollValue(int value) {
 		rolledNumber = value;
-		String rollText = String.format("You rolled a %d.", value);
+		String rollText;
+		
+		switch(value){
+			case 8:
+			case 11:
+				rollText = String.format("You rolled an %d.", value);
+				break;
+			default:
+				rollText = String.format("You rolled a %d.", value);
+		}
+		
 		rollLabel.setText(rollText);
 	}
 }

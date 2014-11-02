@@ -22,7 +22,7 @@ public class Catan extends JFrame {
 
 		client.base.OverlayView.setWindow(this);
 
-		this.setTitle("Settlers of Catan (Alpha)");
+		this.setTitle("Settlers of Catan (Beta)");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		catanPanel = new CatanPanel();
@@ -41,12 +41,7 @@ public class Catan extends JFrame {
 	//
 
 	public static void main(final String[] args) {
-		if (args.length > 1) {
-			ModelFacade.getInstance(new ServerProxy(args[0], args[1]));
-		} else {
-			ModelFacade.getInstance(null);
-		}
-
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -55,6 +50,7 @@ public class Catan extends JFrame {
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				
 				new Catan();
 
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
@@ -93,6 +89,32 @@ public class Catan extends JFrame {
 				loginView.setController(loginController);
 
 				loginController.start();
+				
+				ConfigView config_window = new ConfigView(null);
+				
+				boolean connected = false;
+				ServerProxy proxy = null;
+				
+				while (!connected){
+					config_window.reset();
+					config_window.setLocationRelativeTo(joinView);
+					config_window.setVisible(true);
+					
+					String port = config_window.getPort();
+					String host = config_window.getHost();
+					
+					proxy = new ServerProxy(port, host);
+					connected = proxy.isConnected();
+					
+					if (!connected){
+						System.out.println("Failed to connect");
+						config_window.setTitle("Could not connect to server");
+						config_window.revalidate();
+					}
+					
+				}
+				
+				ModelFacade.getInstance(proxy);
 			}
 		});
 	}

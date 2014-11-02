@@ -103,7 +103,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				if (getView().isModalShowing()){
 					getView().closeModal();
 				}
-				start();
+				if (!((PlayerWaitingView)getView()).isReady()){
+					start();
+				}
 			}	
 		}
 	}

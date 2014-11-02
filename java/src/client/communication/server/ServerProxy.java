@@ -25,6 +25,8 @@ public class ServerProxy implements ServerProxyInterface{
 	private int playerId;
 	private int latestVersion;
 	
+	private boolean validConnection = false;
+	
 	/**
 	 * Initializes the ServerProxy object with the given port and host name.
 	 * @param port The port number the server is listening on for requests from the ServerProxy.
@@ -54,6 +56,16 @@ public class ServerProxy implements ServerProxyInterface{
 		plainTextCookie = null;
 		playerId = Integer.MAX_VALUE;
 		latestVersion = -1;
+		
+		String test_result =  doGet("/util/changeLogLevel", "{\"logLevel\": \"FINE\"}", false);
+	
+		if (test_result != null && test_result.equals("Success")){
+			validConnection = true;
+		}
+	}
+	
+	public boolean isConnected(){
+		return validConnection;
 	}
 	
 	private String doGet(String url_path, String json_post_data, boolean needs_id){
@@ -119,19 +131,27 @@ public class ServerProxy implements ServerProxyInterface{
 			 }
 		}
 		catch (MalformedURLException m){
-			m.printStackTrace();
+			System.out.println("MALFORMED EXCEPTION");
+			validConnection = false;
+		//	m.printStackTrace();
 	        return null;
 	    } 
 		catch (ProtocolException p){
-	        p.printStackTrace();
+			System.out.println("PROTOCOL EXCEPTION");
+			validConnection = false;
+	      //  p.printStackTrace();
 	        return null;
 	    }
 		catch (IOException e){
-			e.printStackTrace();
+			System.out.println("IO EXCEPTION");
+			validConnection = false;
+			//e.printStackTrace();
 			return null;
 		}
 		finally{
-			connection.disconnect();
+			if (connection != null){
+				connection.disconnect();
+			}
 		}
 		
 		return response;
