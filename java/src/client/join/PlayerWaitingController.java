@@ -8,11 +8,7 @@ import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.manager.GameList;
 import client.model.GameInfo;
-import client.model.GameModel;
-import client.model.player.Player;
 import client.model.player.PlayerInfo;
-import client.model.player.Players;
-import client.model.turntracker.TurnTracker;
 
 
 /**
@@ -60,6 +56,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		
 		if(((PlayerWaitingView)getView()).isReady() && getView().isModalShowing()){ //If there are 4 players
 			getView().closeModal();
+			facade.stopListPoller();
 		}
 	}
 	

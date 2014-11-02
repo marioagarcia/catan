@@ -48,7 +48,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getAcceptOverlay().reset();
 			getAcceptOverlay().setAcceptEnabled(true);
 			DomesticTrade trade_offer = gameModel.getDomesticTrade();
-			
+				
 			if(trade_offer != null){
 				if(trade_offer.getReceiver() == -1 && getWaitOverlay().isModalShowing()){
 					getWaitOverlay().closeModal();
