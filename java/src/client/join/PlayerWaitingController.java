@@ -44,14 +44,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		String[] listAI = facade.getListAI(); //Retrieve AIList
 		//PlayerInfo[] players = getPlayerArray(facade.getAllPlayers()); //Retrieve player array
 		GameInfo localGameInfo = facade.getCurrentGame();
-System.out.println(localGameInfo);		
+	
 		//Find the updated current game from the game list and get the player list from that game
 		//
 		List<PlayerInfo> playerList = getPlayerList(localGameInfo); 
 		//Convert the list of players into an array of players
 		//
 		PlayerInfo[] players = getPlayerArray(playerList);
-		
+for(int i = 0; i < players.length; i++){
+	System.out.println(players[i].toString());
+}
 		getView().setAIChoices(listAI); //Set AIList
 		getView().setPlayers(players); //Set player list
 		if (!getView().isModalShowing()){
@@ -107,7 +109,11 @@ System.out.println(localGameInfo);
 
 		@Override
 		public void update(Observable o, Object arg) {
+System.out.println("Updating");
 			if(hasLoggedIn){
+				if (getView().isModalShowing()){
+					getView().closeModal();
+				}
 				start();
 			}
 /*			if(tt != null && tt.getStatus() != null){

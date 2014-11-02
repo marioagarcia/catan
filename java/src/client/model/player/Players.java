@@ -63,4 +63,13 @@ public class Players {
 		return true;
 	}
 	
+	@Override
+	public String toString(){
+		String str = "";
+		for(int i = 0; i < playerList.size(); i++){
+			str += playerList.get(i).toString() + "\n";
+		}
+		return str;
+	}
+	
 }
