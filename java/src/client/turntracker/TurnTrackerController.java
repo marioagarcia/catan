@@ -45,7 +45,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	}
 	
-	public void initializePlayers(Players players) {
+	public void initializePlayers(Players players, int local_player_index) {
 		
 		if(players.getPlayerList().size() == TOTAL_PLAYERS) {
 			playersInitialized = true;
@@ -57,7 +57,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 		}
 		
-		getView().setLocalPlayerColor(players.getPlayer(players.getLocalPlayerIndex()).getColor());
+		getView().setLocalPlayerColor(players.getPlayer(local_player_index).getColor());
 	}
 	
 	public void updatePlayers(Players players, TurnTracker turnTracker) {
@@ -98,7 +98,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			Players players = game_model.getPlayers();
 
 			if(!playersInitialized) {
-				initializePlayers(players);
+				initializePlayers(players, game_model.getLocalPlayer().getPlayerIndex());
 			}
 			else {
 				updatePlayers(players, turnTracker);
