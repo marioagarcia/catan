@@ -304,4 +304,8 @@ public class ModelFacade implements ModelFacadeInterface {
 	public RobPlayerInfo[] getRobbablePlayers(HexLocation location){
 		return gameManager.getRobbablePlayers(location);
 	}
+	
+	public GameInfo getCurrentGame(){
+		return gameManager.getCurrentGame();
+	}
 }

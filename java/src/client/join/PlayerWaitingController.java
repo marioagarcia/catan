@@ -6,6 +6,8 @@ import java.util.Observer;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.manager.GameList;
+import client.model.GameInfo;
 import client.model.GameModel;
 import client.model.player.Player;
 import client.model.player.PlayerInfo;
@@ -18,10 +20,14 @@ import client.model.turntracker.TurnTracker;
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 	
+	private GameList gameList;
+	Boolean hasLoggedIn;
+	
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
-		ModelFacade.getInstance(null).addObserver(gameModelObserver);
+		ModelFacade.getInstance(null).addGameListObserver(gameListObserver);
+		hasLoggedIn = false;
 	}
 
 	@Override
@@ -32,9 +38,19 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
+		hasLoggedIn = true;
 		ModelFacade facade = ModelFacade.getInstance(null);
+		
 		String[] listAI = facade.getListAI(); //Retrieve AIList
-		PlayerInfo[] players = getPlayerArray(facade.getAllPlayers()); //Retrieve player array
+		//PlayerInfo[] players = getPlayerArray(facade.getAllPlayers()); //Retrieve player array
+		GameInfo localGameInfo = facade.getCurrentGame();
+System.out.println(localGameInfo);		
+		//Find the updated current game from the game list and get the player list from that game
+		//
+		List<PlayerInfo> playerList = getPlayerList(localGameInfo); 
+		//Convert the list of players into an array of players
+		//
+		PlayerInfo[] players = getPlayerArray(playerList);
 		
 		getView().setAIChoices(listAI); //Set AIList
 		getView().setPlayers(players); //Set player list
@@ -47,29 +63,22 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		}
 	}
 	
-	public void refresh(){
-		if (getView().isModalShowing()){
-			getView().closeModal();
-		}
+	//Gets the list of players from the game from the updated game list that corresponds to the current game
+	public List<PlayerInfo> getPlayerList(GameInfo gi){
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
-		String[] listAI = facade.getListAI(); //Retrieve AIList
-		PlayerInfo[] players = getPlayerArray(facade.getAllPlayers()); //Retrieve player array
-		
-		getView().setAIChoices(listAI);
-		getView().setPlayers(players); //Set player list
-		if (!getView().isModalShowing()){
-			getView().showModal();
+		GameInfo[] gameList = facade.getGamesList();
+
+		for(int i = 0; i < gameList.length; i++){
+			if(gameList[i].getId() == gi.getId()){
+				return gameList[i].getPlayers();
+			}
 		}
-		
-		if(((PlayerWaitingView)getView()).isReady() && getView().isModalShowing()){ //If there are 4 players
-			getView().closeModal();
-		}
+		return null;
 	}
 	
 	//Turns the Players object into an array of players
-	public PlayerInfo[] getPlayerArray(Players playerObj){
-		List<Player> playerList = playerObj.getPlayerList();
+	public PlayerInfo[] getPlayerArray(List<PlayerInfo> playerList){
 		
 		PlayerInfo[] players = new PlayerInfo[playerList.size()];
 		
@@ -94,18 +103,19 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		}
 	}
 	//Observes the Players object and updates the view when the Players object changes
-	private Observer gameModelObserver = new Observer(){
+	private Observer gameListObserver = new Observer(){
 
 		@Override
 		public void update(Observable o, Object arg) {
-System.out.println("Updating");
-			TurnTracker tt = ((GameModel)o).getTurnTracker();
-			if(tt != null && tt.getStatus() != null){
+			if(hasLoggedIn){
+				start();
+			}
+/*			if(tt != null && tt.getStatus() != null){
 				if (getView().isModalShowing()){
 					getView().closeModal();
 				}
 					start();
-			}	
+			}	*/
 		}
 	};
 }
