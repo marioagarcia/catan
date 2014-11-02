@@ -233,6 +233,8 @@ public class GameManager implements GameManagerInterface {
 		int player_index = gameModel.getLocalPlayer().getPlayerIndex();
 		
 		gameModel.setGameData(game_data);
+		
+		gameModel.getTurnTracker().setLocalPlayerIndex(player_index);
 
 		gameModel.setLocalPlayer(gameModel.getPlayers().getPlayer(player_index));
 		

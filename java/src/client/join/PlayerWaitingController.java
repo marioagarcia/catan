@@ -104,9 +104,7 @@ System.out.println("Updating");
 				if (getView().isModalShowing()){
 					getView().closeModal();
 				}
-				if (!((PlayerWaitingView)getView()).isReady()){
 					start();
-				}
 			}	
 		}
 	};
