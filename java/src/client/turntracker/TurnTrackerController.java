@@ -98,11 +98,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			Players players = game_model.getPlayers();
 
 			if(!playersInitialized) {
-
 				initializePlayers(players);
 			}
 			else {
-
 				updatePlayers(players, turnTracker);
 			}
 
