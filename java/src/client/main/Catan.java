@@ -51,6 +51,30 @@ public class Catan extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				
+				ConfigView config_window = new ConfigView(null);
+				
+				boolean connected = false;
+				ServerProxy proxy = null;
+				
+				while (!connected){
+					config_window.reset();
+					config_window.setVisible(true);
+					
+					String port = config_window.getPort();
+					String host = config_window.getHost();
+					
+					proxy = new ServerProxy(port, host);
+					connected = proxy.isConnected();
+					
+					if (!connected){
+						config_window.setTitle("Could not connect to server");
+						config_window.revalidate();
+					}
+					
+				}
+				
+				ModelFacade.getInstance(proxy);
+				
 				new Catan();
 
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
@@ -89,32 +113,6 @@ public class Catan extends JFrame {
 				loginView.setController(loginController);
 
 				loginController.start();
-				
-				ConfigView config_window = new ConfigView(null);
-				
-				boolean connected = false;
-				ServerProxy proxy = null;
-				
-				while (!connected){
-					config_window.reset();
-					config_window.setLocationRelativeTo(joinView);
-					config_window.setVisible(true);
-					
-					String port = config_window.getPort();
-					String host = config_window.getHost();
-					
-					proxy = new ServerProxy(port, host);
-					connected = proxy.isConnected();
-					
-					if (!connected){
-						System.out.println("Failed to connect");
-						config_window.setTitle("Could not connect to server");
-						config_window.revalidate();
-					}
-					
-				}
-				
-				ModelFacade.getInstance(proxy);
 			}
 		});
 	}

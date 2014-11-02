@@ -149,9 +149,9 @@ public class ServerProxy implements ServerProxyInterface{
 			return null;
 		}
 		finally{
-			if (connection != null){
+			//if (connection != null){
 				connection.disconnect();
-			}
+			//}
 		}
 		
 		return response;
