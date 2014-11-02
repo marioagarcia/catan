@@ -87,6 +87,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			
 			
 			getTradeOverlay().setPlayers(player_info.toArray(new PlayerInfo[0]));
+			getTradeOverlay().reset();
 			trade.setSender(gameModel.getLocalPlayer().getPlayerIndex());
 		}
 		
@@ -170,6 +171,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		for(ResourceType resource : ResourceType.values()){
 			enableResourceSelectionButtons(resource, true);
 		}
+		getTradeOverlay().reset();
 		getTradeOverlay().showModal();
 	}
 
