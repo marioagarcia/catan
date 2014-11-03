@@ -140,21 +140,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		Boolean randTiles = newGameView.getRandomlyPlaceHexes();
 		Boolean randNumbers = newGameView.getRandomlyPlaceNumbers();
 		Boolean randPorts = newGameView.getUseRandomPorts();
-		//If creating the new game is successful
-		if(facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
-			populateGamesList(); //Get an updated list of games so this new game will be added to the list and update the view with it
-			
-			if (getNewGameView().isModalShowing()){
-				getNewGameView().closeModal();
-			}
-		}else{
-			messageView.setTitle("Create Game Error");
-			messageView.setMessage("Unable to create game.  Please try again");
-			messageView.showModal();
-		}
+		
+		//Close the modal if it's showing
 		if (getNewGameView().isModalShowing()){
 			getNewGameView().closeModal();
 		}
+		
+		//Create the new game
+		facade.createNewGame(gameName, randTiles, randNumbers, randPorts);
+		//Get an updated list of games so this new game will be added to the list and update the view with it
+		populateGamesList();
 	}
 
 	@Override
@@ -251,10 +246,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			if (getSelectColorView().isModalShowing()){
 				getSelectColorView().closeModal();
 			}
-			
-/*			messageView.setTitle("Join Game Error");
-			messageView.setMessage("Unable to join game.");
-			messageView.showModal();*/
 			JOptionPane.showMessageDialog(new Frame(), "Game is now full.  Please try a different game.", "Join Game Error", JOptionPane.ERROR_MESSAGE);
 			((SelectColorView)getSelectColorView()).enableAllColors();
 			((SelectColorView)getSelectColorView()).pressCancelButton();
