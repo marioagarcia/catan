@@ -105,9 +105,7 @@ public class MapController extends Controller implements IMapController {
 				
 				if (tracker.isLocalPlayerTurn()){
 					
-					Status state = tracker.getStatus();
-					
-					switch (state){
+					switch (tracker.getStatus()){
 						case SECOND_ROUND:
 						case FIRST_ROUND:
 							currentState = new FirstRoundState(MapController.this);
