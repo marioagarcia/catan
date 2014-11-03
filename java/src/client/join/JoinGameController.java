@@ -106,12 +106,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
+		ModelFacade.getInstance(null).startListPoller();
+		populateGamesList(); //Retrieve the games list from the server and populate the view with it
+
 		if (!getJoinGameView().isModalShowing()){
 			getJoinGameView().showModal();
 		}
 		
-		ModelFacade.getInstance(null).startListPoller();
-		populateGamesList(); //Retrieve the games list from the server and populate the view with it
 	}
 
 	@Override
