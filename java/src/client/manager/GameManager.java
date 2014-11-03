@@ -136,7 +136,7 @@ public class GameManager implements GameManagerInterface {
 
 		String game_info_json = serverProxy.createGame(json_string);
 
-		currentGame = modelSerializer.deserializeGameInfo(game_info_json);
+		//currentGame = modelSerializer.deserializeGameInfo(game_info_json);
 
 		if(currentGame != null)
 			return true;

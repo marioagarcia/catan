@@ -1,12 +1,15 @@
 package client.turntracker;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
+import client.model.GameInfo;
 import client.model.GameModel;
 import client.model.player.Player;
+import client.model.player.PlayerInfo;
 import client.model.player.Players;
 import client.model.turntracker.TurnTracker;
 import client.model.turntracker.TurntrackerInterface.Status;
@@ -25,6 +28,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 		super(view);
 
+		ModelFacade.getInstance(null).addGameListObserver(gameListObserver);
 		ModelFacade.getInstance(null).addObserver(gameModelObserver);
 
 		playersInitialized = false;
@@ -46,7 +50,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	public void initializePlayers(Players players, int local_player_index) {
-		
 		if(players.getPlayerList().size() == TOTAL_PLAYERS) {
 			playersInitialized = true;
 		}
@@ -58,6 +61,50 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		}
 		
 		getView().setLocalPlayerColor(players.getPlayer(local_player_index).getColor());
+	}
+	
+	private void addJoinedPlayers(){
+		ModelFacade facade = ModelFacade.getInstance(null);
+		
+		GameInfo localGameInfo = facade.getCurrentGame();
+	
+		//Find the updated current game from the game list and get the player list from that game
+		//
+		List<PlayerInfo> playerList = getPlayerList(localGameInfo); 
+		if(playerList == null){
+			return;
+		}
+		
+		if(playerList.size() == TOTAL_PLAYERS){
+			playersInitialized = true;
+		}
+		
+		if(playerList == null){
+			return;
+		}
+		
+		if(playerList.size() == TOTAL_PLAYERS){
+			playersInitialized = true;
+		}
+	
+		for(int i = 0; i < playerList.size(); i++){
+			PlayerInfo player = playerList.get(i);
+			getView().initializePlayer(i, player.getName(), player.getColor());
+		}
+	}
+	
+	//Gets the list of players from the game from the updated game list that corresponds to the current game
+	public List<PlayerInfo> getPlayerList(GameInfo gi){
+		ModelFacade facade = ModelFacade.getInstance(null);
+		
+		GameInfo[] gameList = facade.getGamesList();
+
+		for(int i = 0; i < gameList.length; i++){
+			if(gameList[i].getId() == gi.getId()){
+				return gameList[i].getPlayers();
+			}
+		}
+		return null;
 	}
 	
 	public void updatePlayers(Players players, TurnTracker turnTracker) {
@@ -85,6 +132,17 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 		ModelFacade.getInstance(null).finishTurn();
 	}
+	
+	private Observer gameListObserver = new Observer(){
+
+		@Override
+		public void update(Observable o, Object arg) {
+			if(!playersInitialized){
+				addJoinedPlayers();
+			}
+		}
+		
+	};
 
 	private Observer gameModelObserver = new Observer() {
 
