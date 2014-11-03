@@ -27,18 +27,19 @@ public class DiscardController extends Controller implements IDiscardController 
 		public void update(Observable o, Object arg){
 			
 			if(!isDiscarding){
-				//isDiscarding = true;
+				isDiscarding = true;
 				
 				GameModel latest_model = (GameModel) o;
 				TurnTracker turn_tracker = latest_model.getTurnTracker();
 				
 				if(turn_tracker.getStatus() != Status.DISCARDING){
+					isDiscarding = false;
 					return;
 				}
 				
 				if(turn_tracker.getStatus() == Status.DISCARDING && latest_model.getLocalPlayer().getNumberOfCards() <= 7){
 					ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
-					
+					isDiscarding = false;
 					if(getDiscardView().isModalShowing()){
 						getDiscardView().closeModal();
 					}
