@@ -38,7 +38,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ModelFacade facade = ModelFacade.getInstance(null);
 		
 		String[] listAI = facade.getListAI(); //Retrieve AIList
-		//PlayerInfo[] players = getPlayerArray(facade.getAllPlayers()); //Retrieve player array
 		GameInfo localGameInfo = facade.getCurrentGame();
 	
 		//Find the updated current game from the game list and get the player list from that game
