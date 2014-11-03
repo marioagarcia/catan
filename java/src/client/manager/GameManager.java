@@ -749,9 +749,12 @@ public class GameManager implements GameManagerInterface {
 		@Override
 		public void gameListChanged(String game_list_data) {
 
-			gameListContainer.setGameList(modelSerializer.deserializeGamesList(game_list_data));
-
-			gameListContainer.update();
+			ArrayList<GameInfo> new_list = modelSerializer.deserializeGamesList(game_list_data);
+			
+			if (!new_list.equals(gameListContainer.getGameList())){
+				gameListContainer.setGameList(new_list);
+				gameListContainer.update();
+			}
 		}
 	};
 
