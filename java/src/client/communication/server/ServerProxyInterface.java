@@ -221,4 +221,6 @@ public interface ServerProxyInterface{
 	abstract String robPlayer(String JSONString);
 	
 	abstract boolean validatePlayer(Player player);
+	
+	abstract void updateVersion(int version);
 }

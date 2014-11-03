@@ -125,6 +125,7 @@ public class ServerProxy implements ServerProxyInterface{
 				 }
 				 
 				 response = server_response.toString();
+				 
 			 }
 			 else{
 				 response = Integer.toString(connection.getResponseCode());
@@ -185,6 +186,13 @@ public class ServerProxy implements ServerProxyInterface{
 	public String joinGame(String JSONString){
 		methodUrl = "/games/join";
 		return doGet(methodUrl, JSONString, false);
+	}
+	
+	@Override
+	public void updateVersion(int version){
+		if (version > latestVersion){
+			latestVersion = version;
+		}
 	}
 
 	@Override

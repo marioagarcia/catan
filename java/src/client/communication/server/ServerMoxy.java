@@ -236,4 +236,9 @@ public class ServerMoxy implements ServerProxyInterface{
 	public String getGameModel(){
 		return getGameModel(true);
 	}
+
+	@Override
+	public void updateVersion(int version){
+		
+	}
 }

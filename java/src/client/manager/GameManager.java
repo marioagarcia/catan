@@ -3,6 +3,10 @@ package client.manager;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -15,7 +19,6 @@ import client.communication.server.ServerProxyInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
 import client.model.GameInfo;
 import client.model.GameModel;
-import client.model.card.DomesticTrade;
 import client.model.card.MaritimeTrade;
 import client.model.card.ResourceList;
 import client.model.card.TradeInterface;
@@ -201,6 +204,14 @@ public class GameManager implements GameManagerInterface {
 
 	public boolean resetFromGameModel(String json_model) {
 		
+		serverPoller.stopPoller();
+		
+		//Ensure that the proxy knows we got a new version behind its back.
+		JsonParser parser = new JsonParser();
+		JsonElement model_element = parser.parse(json_model);
+		JsonObject model_object = model_element.getAsJsonObject();
+		serverProxy.updateVersion(model_object.get("version").getAsInt());
+		
 		GameInfo[] game_list = populateGameList();
 		
 		for (GameInfo game_info : game_list) {
@@ -231,6 +242,8 @@ public class GameManager implements GameManagerInterface {
 		gameModel.setLocalPlayer(gameModel.getPlayers().getPlayer(player_index));
 		
 		gameModel.update();
+		
+		serverPoller.startPoller(3000);
 
 		return true;
 	}
@@ -740,6 +753,7 @@ public class GameManager implements GameManagerInterface {
 		@Override
 		public void modelChanged(String json_model) {
 
+			//System.out.println("Resetting from poller");
 			resetFromGameModel(json_model);
 		}
 	};

@@ -2,7 +2,6 @@ package client.communication.server;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,6 +12,8 @@ public class ServerPoller implements ServerPollerInterface
 	
 	private String latestModel;
 	private String latestGameList;
+	
+	boolean is_daemon = true;
 	
 	private Timer pollTimer = null;
 	private TimerTask pollMethod = null;
@@ -28,45 +29,42 @@ public class ServerPoller implements ServerPollerInterface
 		isRunning = false;
 		gameListRunning = false;
 		
-		boolean is_daemon = true;
-		pollTimer = new Timer(is_daemon);
-		pollMethod = new CatanPoller();
-		
-		listTimer = new Timer(is_daemon);
-		listMethod = new GameListPoller();
-		
 		modelObservers = new ArrayList<ModelStateObserver>();
 		gameListObservers = new ArrayList<GameListObserver>();
 	}
 	
 	public void startPoller(long interval){
 		if (!isRunning){
-			Date current_time = new Date();
-			pollTimer.scheduleAtFixedRate(pollMethod, current_time, interval);
+			
+			pollTimer = new Timer(is_daemon);
+			pollMethod = new CatanPoller();
+			pollTimer.schedule(pollMethod, 3000, 3000);
 			isRunning = true;
 		}
 	}
 	
 	public void startListPoller(long interval){
 		if (!gameListRunning){
-			Date current_time = new Date();
-			listTimer.scheduleAtFixedRate(listMethod, current_time, interval);
+			
+			listTimer = new Timer(is_daemon);
+			listMethod = new GameListPoller();
+			listTimer.schedule(listMethod, 3000, 3000);
 			gameListRunning = true;
 		}
 	}
 	
 	public void stopPoller(){
 		if (isRunning){
-			pollMethod.cancel();
 			pollTimer.cancel();
+			pollMethod.cancel();
 			isRunning = false;
 		}
 	}
 	
 	public void stopListPoller(){
 		if (gameListRunning){
-			listMethod.cancel();
 			listTimer.cancel();
+			listMethod.cancel();
 			gameListRunning = false;
 		}
 	}
@@ -94,8 +92,7 @@ public class ServerPoller implements ServerPollerInterface
 		public void run(){
 			String model = proxyObject.getGameModel(false);
 			
-			if (!model.equals("\"true\"") && !model.equals("Success")){
-				
+			if (!model.equals("\"true\"") && !model.equals("Success") && !model.equals(latestModel)){
 				latestModel = model;
 				
 				for (ModelStateObserver o : modelObservers){
