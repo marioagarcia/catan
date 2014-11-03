@@ -19,40 +19,45 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	private IWaitView waitView;
 	private ResourceList resourceList;
+	private Boolean isDiscarding;
 	
 	private class DiscardModelObserver implements Observer{
 		
 		@Override
 		public void update(Observable o, Object arg){
 			
-			GameModel latest_model = (GameModel) o;
-			TurnTracker turn_tracker = latest_model.getTurnTracker();
-			
-			if(turn_tracker.getStatus() != Status.DISCARDING){
-				return;
-			}
-			
-			if(turn_tracker.getStatus() == Status.DISCARDING && latest_model.getLocalPlayer().getNumberOfCards() <= 7){
-				ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
+			if(!isDiscarding){
+				//isDiscarding = true;
 				
-				if(getDiscardView().isModalShowing()){
-					getDiscardView().closeModal();
+				GameModel latest_model = (GameModel) o;
+				TurnTracker turn_tracker = latest_model.getTurnTracker();
+				
+				if(turn_tracker.getStatus() != Status.DISCARDING){
+					return;
 				}
-				return;
-			}
-			
-			for(ResourceType resource : ResourceType.values()){
-				int number_of_resource = latest_model.getLocalPlayer().getResourceList().getResourceByType(resource);
 				
-				getDiscardView().setResourceMaxAmount(resource, number_of_resource);
-				getDiscardView().setResourceDiscardAmount(resource, 0);
-				resourceList.setResourceByType(resource, 0);
-				getDiscardView().setDiscardButtonEnabled(false);
-			}
-
-			updateDiscardView();
-			if(!getDiscardView().isModalShowing()){
-				getDiscardView().showModal();
+				if(turn_tracker.getStatus() == Status.DISCARDING && latest_model.getLocalPlayer().getNumberOfCards() <= 7){
+					ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
+					
+					if(getDiscardView().isModalShowing()){
+						getDiscardView().closeModal();
+					}
+					return;
+				}
+				
+				for(ResourceType resource : ResourceType.values()){
+					int number_of_resource = latest_model.getLocalPlayer().getResourceList().getResourceByType(resource);
+					
+					getDiscardView().setResourceMaxAmount(resource, number_of_resource);
+					getDiscardView().setResourceDiscardAmount(resource, 0);
+					resourceList.setResourceByType(resource, 0);
+					getDiscardView().setDiscardButtonEnabled(false);
+				}
+	
+				updateDiscardView();
+				if(!getDiscardView().isModalShowing()){
+					getDiscardView().showModal();
+				}
 			}
 		}
 	}
@@ -70,6 +75,8 @@ public class DiscardController extends Controller implements IDiscardController 
 		
 		this.waitView = waitView;
 		ModelFacade.getInstance(null).addObserver(new DiscardModelObserver());
+		
+		isDiscarding = false;
 	}
 
 	public IDiscardView getDiscardView() {
@@ -98,6 +105,7 @@ public class DiscardController extends Controller implements IDiscardController 
 			getDiscardView().closeModal();
 		}
 		ModelFacade.getInstance(null).discardCards(this.resourceList);
+		isDiscarding = false;
 	}
 	
 	private void updateDiscardView(){
