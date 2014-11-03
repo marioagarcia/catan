@@ -649,8 +649,6 @@ public class GameManager implements GameManagerInterface {
 	@Override
 	public boolean offerTrade(GMDomesticTradeInterface trade, int otherPlayerIndex) {
 		
-System.out.println(((DomesticTrade)trade).toString());
-		
 		int local_player_index = gameModel.getLocalPlayer().getPlayerIndex();
 
 		ResourceList resource_list = new ResourceList(trade.getBrickCount(), trade.getOreCount(), trade.getSheepCount(), trade.getWheatCount(), trade.getWoodCount());
