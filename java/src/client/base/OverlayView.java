@@ -92,7 +92,6 @@ public class OverlayView extends PanelView implements IOverlayView
 		window.setGlassPane(overlayPanel);
 		overlayPanel.setVisible(true);
 		overlayStack.push(new OverlayInfo(this, overlayPanel));
-		
 	}
 	
 	/**
@@ -120,6 +119,7 @@ public class OverlayView extends PanelView implements IOverlayView
 				window.setGlassPane(defaultGlassPane);
 				window.getGlassPane().setVisible(false);
 			}
+			
 		}
 		
 	}
