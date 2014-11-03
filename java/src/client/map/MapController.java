@@ -297,6 +297,14 @@ public class MapController extends Controller implements IMapController {
 	
 	public void cancelMove() {
 		System.out.println("Map Controller cancelMove");
+		roadBuilding = false;
+		
+		roadBuildingOne = false;
+		roadBuildingTwo = false;
+		
+		roadBuildingLocationOne = null;
+		roadBuildingLocationTwo = null;
+		
 	}
 	
 	public void playSoldierCard() {
