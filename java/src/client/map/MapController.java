@@ -52,6 +52,7 @@ public class MapController extends Controller implements IMapController {
 	private BoardMap temp = new BoardMap();
 	
 	private boolean currentlyRobbing = false;
+	private boolean robbedPlayer = false;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -89,44 +90,52 @@ public class MapController extends Controller implements IMapController {
 		public void update(Observable o, Object arg){
 			GameModel latest_model = (GameModel) o;
 			
-			tracker = latest_model.getTurnTracker();
 			listOfPlayers = latest_model.getPlayers();
 			
-			map = latest_model.getBoardMap();
-			initFromModel(map);
+			if (!map.equals(latest_model.getBoardMap())){
+				map = latest_model.getBoardMap();
+				initFromModel(map);	
+			}
 			
 			localPlayer = latest_model.getLocalPlayer();
 			localPlayerColor = localPlayer.getColor();
 			
-			if (tracker.isLocalPlayerTurn()){
+			if (!tracker.equals(latest_model.getTurnTracker())){
+				tracker = latest_model.getTurnTracker();
 				
-				Status state = tracker.getStatus();
-				
-				switch (state){
-					case SECOND_ROUND:
-					case FIRST_ROUND:
-						currentState = new FirstRoundState(MapController.this);
-						currentlyRobbing = false;
-						break;
-					case PLAYING:
-						currentState = new PlayingState(MapController.this);
-						currentlyRobbing = false;
-						break;
-					case ROBBING:
-						if (!currentlyRobbing){
-							currentState = new RobbingState(MapController.this);
-							getView().startDrop(PieceType.ROBBER, localPlayerColor, false);
-							currentlyRobbing = true;
-						}
-						break;
-					default:
-						currentState = new GameState(MapController.this);
-						currentlyRobbing = false;
-						break;		
+				if (tracker.isLocalPlayerTurn()){
+					
+					Status state = tracker.getStatus();
+					
+					switch (state){
+						case SECOND_ROUND:
+						case FIRST_ROUND:
+							currentState = new FirstRoundState(MapController.this);
+							currentlyRobbing = false;
+							robbedPlayer = false;
+							break;
+						case PLAYING:
+							currentState = new PlayingState(MapController.this);
+							currentlyRobbing = false;
+							robbedPlayer = false;
+							break;
+						case ROBBING:
+							if (!currentlyRobbing && !robbedPlayer){
+								currentState = new RobbingState(MapController.this);
+								getView().startDrop(PieceType.ROBBER, localPlayerColor, false);
+								currentlyRobbing = true;
+							}
+							break;
+						default:
+							currentState = new GameState(MapController.this);
+							currentlyRobbing = false;
+							robbedPlayer = false;
+							break;		
+					}
 				}
-			}
-			else{
-				currentState = new GameState(MapController.this);
+				else{
+					currentState = new GameState(MapController.this);
+				}
 			}
 		}
 		
@@ -364,6 +373,7 @@ public class MapController extends Controller implements IMapController {
 		if (playingSoldier){
 			currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
 			playingSoldier = false;
+			robbedPlayer = true;
 		}
 		else{
 			currentState.robPlayer(victim, map.getRobberLocation());

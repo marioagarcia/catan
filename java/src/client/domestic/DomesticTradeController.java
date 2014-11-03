@@ -75,20 +75,21 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					getAcceptOverlay().setPlayerName(gameModel.getPlayers().getPlayer(trade_offer.getSender()).getName());
 					getAcceptOverlay().showModal();
 				}
+			
+				
+				Players players = gameModel.getPlayers();
+				
+				ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
+				
+				for(Player player : players.getPlayerList()){
+					if(player.getPlayerIndex() != gameModel.getLocalPlayer().getPlayerIndex());
+				}
+				
+				
+				getTradeOverlay().setPlayers(player_info.toArray(new PlayerInfo[0]));
+				getTradeOverlay().reset();
+				trade.setSender(gameModel.getLocalPlayer().getPlayerIndex());
 			}
-			
-			Players players = gameModel.getPlayers();
-			
-			ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
-			
-			for(Player player : players.getPlayerList()){
-				if(player.getPlayerIndex() != gameModel.getLocalPlayer().getPlayerIndex());
-			}
-			
-			
-			getTradeOverlay().setPlayers(player_info.toArray(new PlayerInfo[0]));
-			getTradeOverlay().reset();
-			trade.setSender(gameModel.getLocalPlayer().getPlayerIndex());
 		}
 		
 		
