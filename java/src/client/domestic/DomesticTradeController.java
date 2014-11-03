@@ -211,7 +211,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
 		this.trade.setReceiver(playerIndex);
-System.out.println((this.trade.getReceiver() != -1) + " : " + (this.trade.getSender() != -1) + " : " + ModelFacade.getInstance(null).canOfferTrade(this.trade));
 		getTradeOverlay().setTradeEnabled(this.trade.getReceiver() != -1 && this.trade.getSender() != -1 && ModelFacade.getInstance(null).canOfferTrade(this.trade));
 	}
 

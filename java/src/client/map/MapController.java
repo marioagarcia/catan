@@ -243,7 +243,6 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		System.out.println("Map Controller placeRoad");
 		int index = localPlayer.getPlayerIndex();
 		getView().placeRoad(edgeLoc, localPlayerColor);
 		
@@ -274,19 +273,16 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		System.out.println("Map Controller placeSettlement");
 		getView().placeSettlement(vertLoc, localPlayerColor);
 		currentState.buildSettlement(vertLoc);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		System.out.println("Map Controller placeCity");
 		currentState.buildCity(vertLoc);
 		getView().placeCity(vertLoc, localPlayerColor);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		System.out.println("Map Controller placeRobber");
 		
 		map.setRobberLocation(hexLoc);
 		getView().placeRobber(hexLoc);
@@ -299,12 +295,10 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		System.out.println("Map Controller startMove");
 		getView().startDrop(pieceType, localPlayerColor, true);	
 	}
 	
 	public void cancelMove() {
-		System.out.println("Map Controller cancelMove");
 		
 		if (roadBuilding){
 			roadBuilding = false;
@@ -329,14 +323,11 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void playSoldierCard() {
-		System.out.println("Map Controller playSoldierCard");
 		playingSoldier = true;
 		getView().startDrop(PieceType.ROBBER, CatanColor.WHITE, true);
 	}
 	
 	public void playRoadBuildingCard() {
-
-		System.out.println("Map Controller playRoadBuildingCard");
 		//Should they be allowed to play the card at all if they don't have 2 roads? Because cancelling the second road will not play the card
 		
 		roadBuilding = true;
@@ -367,7 +358,6 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
-		System.out.println("Map Controller robPlayer " + victim);
 		
 		if (playingSoldier){
 			currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
