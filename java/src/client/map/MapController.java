@@ -80,7 +80,7 @@ public class MapController extends Controller implements IMapController {
 		waterHexes.add(new HexLocation(-3, 3));
 		waterHexes.add(new HexLocation(-3, 2));
 		
-		
+		map = new BoardMap();
 		setRobView(robView);
 	}
 	
