@@ -12,6 +12,7 @@ import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.model.GameModel;
 import client.model.map.BoardMap;
+import client.model.map.Hex;
 import client.model.map.HexInterface;
 import client.model.map.Port;
 import client.model.piece.City;
@@ -49,14 +50,13 @@ public class MapController extends Controller implements IMapController {
 	private EdgeLocation roadBuildingLocationTwo = null;
 	
 	private BoardMap temp = new BoardMap();
-	private Map<EdgeLocation, Road> temp_roads = new HashMap<EdgeLocation, Road>();
 	
 	private boolean currentlyRobbing = false;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
-
+		
 		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
 		
 		waterHexes = new ArrayList<HexLocation>();
@@ -160,7 +160,6 @@ public class MapController extends Controller implements IMapController {
 			
 		}
 		
-		
 		//Draw water hexes
 		for (HexLocation location : waterHexes){
 			
@@ -211,7 +210,12 @@ public class MapController extends Controller implements IMapController {
 		int index = localPlayer.getPlayerIndex();
 		Status status = tracker.getStatus();
 		
-		return (currentState.canBuildRoad(edgeLoc) || (roadBuilding && num_roads >= 1 && temp.canBuildRoad(edgeLoc, index, status)));
+		if (roadBuilding){
+			return (num_roads >= 1 && temp.canBuildRoad(edgeLoc, index, status));
+		}
+		else{
+			return currentState.canBuildRoad(edgeLoc);
+		}
 		
 	}
 
@@ -242,22 +246,19 @@ public class MapController extends Controller implements IMapController {
 			if (!roadBuildingOne){
 				roadBuildingOne = true;
 				roadBuildingLocationOne = edgeLoc;
+				temp.getRoads().put(edgeLoc, new Road(index, edgeLoc));
 				
-				temp_roads.put(edgeLoc, new Road(index, edgeLoc));
-				
-				temp.setRoads(temp_roads);
 			}
 			else{
 				roadBuildingTwo = true;
 				roadBuildingLocationTwo = edgeLoc;
-				temp_roads.put(edgeLoc, new Road(index, edgeLoc));
+				temp.getRoads().put(edgeLoc, new Road(index, edgeLoc));
 				
 				if (roadBuildingOne && roadBuildingTwo){
 					if(currentState.playRoadBuilding(roadBuildingLocationOne, roadBuildingLocationTwo)){
 						roadBuildingLocationOne = null;
 						roadBuildingLocationTwo = null;
 						roadBuilding = false;
-						temp.setRoads(map.getRoads());
 					}
 				}
 			}
@@ -291,19 +292,31 @@ public class MapController extends Controller implements IMapController {
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		System.out.println("Map Controller startMove");
-		getView().startDrop(pieceType, localPlayerColor, true);
-		
+		getView().startDrop(pieceType, localPlayerColor, true);	
 	}
 	
 	public void cancelMove() {
 		System.out.println("Map Controller cancelMove");
-		roadBuilding = false;
+		
+		if (roadBuilding){
+			roadBuilding = false;
+		}
 		
 		roadBuildingOne = false;
 		roadBuildingTwo = false;
 		
+		if (roadBuildingLocationOne != null){
+			((MapView)getView()).removeRoad(roadBuildingLocationOne);
+		}
+		
+		if (roadBuildingLocationTwo != null){
+			((MapView)getView()).removeRoad(roadBuildingLocationTwo);
+		}
+		
 		roadBuildingLocationOne = null;
 		roadBuildingLocationTwo = null;
+
+		this.temp = copy_map();
 		
 	}
 	
@@ -316,20 +329,33 @@ public class MapController extends Controller implements IMapController {
 	public void playRoadBuildingCard() {
 
 		System.out.println("Map Controller playRoadBuildingCard");
+		//Should they be allowed to play the card at all if they don't have 2 roads? Because cancelling the second road will not play the card
 		
 		roadBuilding = true;
 		
-		temp.getHexes().clear();
-		temp.setHexes(map.getHexes());
-		
-		temp.getRoads().clear();
-		temp_roads.clear();
-		
-		temp_roads.putAll(map.getRoads());
-		temp.setRoads(temp_roads);
+		this.temp = copy_map();
 		
 		getView().startDrop(PieceType.ROAD, localPlayerColor, true);
 		getView().startDrop(PieceType.ROAD, localPlayerColor, true);		
+	}
+	
+	private BoardMap copy_map(){
+		BoardMap temp = new BoardMap();
+		
+		Map<HexLocation, HexInterface> temp_hexes = new HashMap<HexLocation, HexInterface>();
+		Map<EdgeLocation, Road> temp_roads = new HashMap<EdgeLocation, Road>();
+		
+		for (Map.Entry<HexLocation, HexInterface> hexes : map.getHexes().entrySet()){
+			temp_hexes.put(new HexLocation(hexes.getKey().getX(), hexes.getKey().getY()), new Hex(hexes.getValue().getLocation(), hexes.getValue().getType(), hexes.getValue().getNumber()));
+		}
+		
+		for (Map.Entry<EdgeLocation, Road> roads : map.getRoads().entrySet()){
+			temp_roads.put(new EdgeLocation(roads.getKey().getHexLoc(), roads.getKey().getDir()), new Road(roads.getValue().getPlayerIndex(), roads.getValue().getLocation()));
+		}
+		
+		temp.setHexes(temp_hexes);
+		temp.setRoads(temp_roads);
+		return temp;
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	

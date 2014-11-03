@@ -69,6 +69,11 @@ public class MapView extends PanelView implements IMapView
 		map.placeRoad(edgeLoc, color);
 	}
 	
+	public void removeRoad(EdgeLocation edgeLoc)
+	{
+		map.removeRoad(edgeLoc);
+	}
+	
 	@Override
 	public void placeSettlement(VertexLocation vertLoc, CatanColor color)
 	{
@@ -285,7 +290,6 @@ public class MapView extends PanelView implements IMapView
 		
 		public void cancelDrop()
 		{
-			
 			map.cancelDrop();
 		}
 		
