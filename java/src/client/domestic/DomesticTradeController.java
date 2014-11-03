@@ -38,6 +38,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		public void update(Observable o, Object arg) {
 			gameModel = (GameModel)o;
 			
+			trade.setSender(gameModel.getLocalPlayer().getPlayerIndex());
+			
 			TurnTracker tt = gameModel.getTurnTracker();
 			if(tt.getStatus().equals(Status.PLAYING) && tt.isLocalPlayerTurn()){
 				getTradeView().enableDomesticTrade(true);
@@ -88,7 +90,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				
 				getTradeOverlay().setPlayers(player_info.toArray(new PlayerInfo[0]));
 				getTradeOverlay().reset();
-				trade.setSender(gameModel.getLocalPlayer().getPlayerIndex());
 			}
 		}
 		
@@ -210,6 +211,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
 		this.trade.setReceiver(playerIndex);
+System.out.println((this.trade.getReceiver() != -1) + " : " + (this.trade.getSender() != -1) + " : " + ModelFacade.getInstance(null).canOfferTrade(this.trade));
 		getTradeOverlay().setTradeEnabled(this.trade.getReceiver() != -1 && this.trade.getSender() != -1 && ModelFacade.getInstance(null).canOfferTrade(this.trade));
 	}
 
