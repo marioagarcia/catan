@@ -106,12 +106,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		ModelFacade.getInstance(null).startListPoller();
-		populateGamesList(); //Retrieve the games list from the server and populate the view with it
-		
 		if (!getJoinGameView().isModalShowing()){
 			getJoinGameView().showModal();
 		}
+		
+		ModelFacade.getInstance(null).startListPoller();
+		populateGamesList(); //Retrieve the games list from the server and populate the view with it
 	}
 
 	@Override
@@ -171,11 +171,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			((SelectColorView)getSelectColorView()).setColorEnabled(getPlayerColor(), true);
 			//Disable the join button until the user selects their color
 			((SelectColorView)getSelectColorView()).disableJoinButton();
-			getSelectColorView().showModal();
+			if(!getSelectColorView().isModalShowing()){
+				getSelectColorView().showModal();
+			}
 		}else{
 			//If the player is not in the game, disable the join button until an available color is selected
 			((SelectColorView)getSelectColorView()).disableJoinButton();
-			getSelectColorView().showModal();
+			if(!getSelectColorView().isModalShowing()){
+				getSelectColorView().showModal();
+			}
 		}
 	}
 	
