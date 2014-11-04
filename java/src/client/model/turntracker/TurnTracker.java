@@ -103,7 +103,7 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 
 	@Override
 	public void setTurnTracker(String status, int currentTurn, int longestRoad,
-			int largestArmy){
+			int largestArmy) {
 		
 		this.status = statusFromString(status);
 		this.currentPlayerIndex = currentTurn;
