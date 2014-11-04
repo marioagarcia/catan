@@ -50,7 +50,9 @@ public class GameHistoryView extends PanelView implements IGameHistoryView
 			{
 				logPanel.setEntries(entries);
 				JScrollBar vertical = logScroll.getVerticalScrollBar();
+				logPanel.revalidate();
 				vertical.setValue(vertical.getMaximum());
+				logPanel.revalidate();
 			}
 		});
 	}
