@@ -5,6 +5,7 @@ import java.util.*;
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.model.GameModel;
+import client.model.map.BoardMap;
 import client.model.player.Player;
 import client.model.turntracker.TurnTracker;
 
@@ -34,6 +35,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			
 			tracker = latest_model.getTurnTracker();
 			localPlayer = latest_model.getLocalPlayer();
+			int local_index = localPlayer.getPlayerIndex();
+			BoardMap latest_map = latest_model.getBoardMap();
 			
 			getView().setElementAmount(ResourceBarElement.BRICK, localPlayer.getResourceList().getBrick());
 			getView().setElementAmount(ResourceBarElement.ORE, localPlayer.getResourceList().getOre());
@@ -55,9 +58,23 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			if (tracker.isLocalPlayerTurn()){
 				switch (tracker.getStatus()){
 					case SECOND_ROUND:
+						boolean hasPlacedSecondRoad = (localPlayer.hasPlacedFreeRoad() || latest_map.getNumberOfRoadsByPlayerIndex(local_index) == 2);
+						boolean hasPlacedSecondSettlement = (localPlayer.hasPlacedFreeSettlement() || latest_map.getNumberOfSettlementsByPlayerIndex(local_index) == 2);
+						
+						getView().setElementEnabled(ResourceBarElement.ROAD, (!hasPlacedSecondRoad && hasPlacedSecondSettlement));
+						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !hasPlacedSecondSettlement);
+						
+						getView().setElementEnabled(ResourceBarElement.CITY, false);
+						getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+						getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
+						break;
 					case FIRST_ROUND:
-						getView().setElementEnabled(ResourceBarElement.ROAD, !localPlayer.hasPlacedFreeRoad() && localPlayer.hasPlacedFreeSettlement());
-						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !localPlayer.hasPlacedFreeSettlement());
+						boolean hasPlacedFirstRoad = (localPlayer.hasPlacedFreeRoad() || latest_map.getNumberOfRoadsByPlayerIndex(local_index) == 1);
+						boolean hasPlacedFirstSettlement = (localPlayer.hasPlacedFreeSettlement() || latest_map.getNumberOfSettlementsByPlayerIndex(local_index) == 1);
+						
+						getView().setElementEnabled(ResourceBarElement.ROAD, (!hasPlacedFirstRoad && hasPlacedFirstSettlement));
+						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, !hasPlacedFirstSettlement);
+						
 						getView().setElementEnabled(ResourceBarElement.CITY, false);
 						getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
 						getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);

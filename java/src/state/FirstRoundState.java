@@ -26,6 +26,11 @@ public class FirstRoundState extends GameState{
 	public boolean buildRoad(EdgeLocation location){
 		
 		playedRoad = facade.buildRoad(location);
+		
+		//After placing road in setup, your turn should end automatically
+		if (playedRoad){
+			facade.finishTurn();
+		}
 		return playedRoad;
 	}
 	
