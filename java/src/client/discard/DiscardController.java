@@ -19,27 +19,27 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	private IWaitView waitView;
 	private ResourceList resourceList;
-	private Boolean isDiscarding;
+//	private Boolean isDiscarding;
+	private TurnTracker oldTurnTracker;
 	
 	private class DiscardModelObserver implements Observer{
 		
 		@Override
 		public void update(Observable o, Object arg){
 			
-			if(!isDiscarding){
-				isDiscarding = true;
-				
-				GameModel latest_model = (GameModel) o;
-				TurnTracker turn_tracker = latest_model.getTurnTracker();
+			GameModel latest_model = (GameModel) o;
+			TurnTracker turn_tracker = latest_model.getTurnTracker();
+
+			if(turn_tracker.getCurrentTurn() != oldTurnTracker.getCurrentTurn() || turn_tracker.getStatus() != oldTurnTracker.getStatus()){
+				oldTurnTracker = turn_tracker;
 				
 				if(turn_tracker.getStatus() != Status.DISCARDING){
-					isDiscarding = false;
 					return;
 				}
 				
-				if(turn_tracker.getStatus() == Status.DISCARDING && latest_model.getLocalPlayer().getNumberOfCards() <= 7){
+				if(latest_model.getLocalPlayer().getNumberOfCards() <= 7){
 					ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
-					isDiscarding = false;
+					
 					if(getDiscardView().isModalShowing()){
 						getDiscardView().closeModal();
 					}
@@ -77,7 +77,8 @@ public class DiscardController extends Controller implements IDiscardController 
 		this.waitView = waitView;
 		ModelFacade.getInstance(null).addObserver(new DiscardModelObserver());
 		
-		isDiscarding = false;
+		oldTurnTracker = new TurnTracker();
+		oldTurnTracker.setStatus(null);
 	}
 
 	public IDiscardView getDiscardView() {
@@ -106,7 +107,6 @@ public class DiscardController extends Controller implements IDiscardController 
 			getDiscardView().closeModal();
 		}
 		ModelFacade.getInstance(null).discardCards(this.resourceList);
-		isDiscarding = false;
 	}
 	
 	private void updateDiscardView(){
