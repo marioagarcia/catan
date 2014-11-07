@@ -42,15 +42,13 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canJoinGame(int game_id, int player_id, CatanColor color,
-			GameInfo game) {
+	public boolean canJoinGame(int game_id, int player_id, CatanColor color) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean joinGame(int game_id, int player_id, CatanColor color,
-			GameInfo game) {
+	public boolean joinGame(int game_id, int player_id, CatanColor color) {
 		// TODO Auto-generated method stub
 		return false;
 	}

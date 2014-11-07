@@ -59,8 +59,17 @@ public interface ServerModelFacadeInterface {
 	 * the game or there is an available spot in the game, and the color
 	 * is valid, false otherwise
 	 */
-	public boolean canJoinGame(int game_id, int player_id, CatanColor color, GameInfo game);
-	public boolean joinGame(int game_id, int player_id, CatanColor color, GameInfo game);
+	public boolean canJoinGame(int game_id, int player_id, CatanColor color);
+	
+	/**
+	 * Adds the player to game
+	 * @param game_id 
+	 * @param player_id
+	 * @param color
+	 * @param game
+	 * @return
+	 */
+	public boolean joinGame(int game_id, int player_id, CatanColor color);
 	
 
 	/**
