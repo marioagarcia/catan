@@ -9,7 +9,7 @@ import shared.model.card.ResourceList;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 import client.misc.*;
 
 

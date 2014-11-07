@@ -14,9 +14,9 @@ public class MaritimeTrade extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.manager.ServerModelFacade#canMaritimeTrade(shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) canMaritimeTrade} with 
+	 * Calls {@link server.facade.ServerModelFacade#canMaritimeTrade(shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) canMaritimeTrade} with 
 	 * the parameters provided to the constructor to ensure this move is valid
-	 * If valid, a call is then made to {@link server.manager.ServerModelFacade#maritimeTrade(shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) maritimeTrade}
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#maritimeTrade(shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) maritimeTrade}
 	 */
 	@Override
 	public void execute() {

@@ -7,7 +7,7 @@ import shared.model.map.BoardMap;
 import shared.model.player.Player;
 import shared.model.turntracker.TurnTracker;
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 
 /**
  * Implementation for the resource bar controller

@@ -15,7 +15,7 @@ import shared.model.logging.chat.MessageInterface;
 import shared.model.player.Player;
 import shared.model.player.Players;
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 
 
 /**

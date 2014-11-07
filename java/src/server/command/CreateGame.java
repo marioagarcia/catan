@@ -18,7 +18,7 @@ public class CreateGame extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.manager.ServerModelFacade#createNewGame(String, boolean, boolean, boolean) createNewGame} on the facade
+	 * Calls {@link server.facade.ServerModelFacade#createNewGame(String, boolean, boolean, boolean) createNewGame} on the facade
 	 */
 	@Override
 	public void execute() {

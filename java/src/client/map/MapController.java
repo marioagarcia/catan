@@ -22,7 +22,7 @@ import state.GameState;
 import state.PlayingState;
 import state.RobbingState;
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 
 
 /**

@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import javax.swing.*;
 
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 import client.utils.ImageUtils;
 
 

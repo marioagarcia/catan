@@ -5,7 +5,7 @@ import java.awt.Frame;
 import javax.swing.JOptionPane;
 
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 import client.misc.*;
 
 /**

@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import shared.model.GameModel;
 import shared.model.turntracker.TurnTracker;
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 
 
 /**
