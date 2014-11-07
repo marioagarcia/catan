@@ -305,9 +305,9 @@ public interface ServerModelFacadeInterface {
 	public boolean canBuyDevCard(int game_id, int player_index);
 	
 	/**
-	 * gets a development card for the player 
-	 * @param game_id
-	 * @param player_index
+	 * Gets a development card for the player 
+	 * @param game_id The ID of the game to buy a dev card in
+	 * @param player_index The index of the player buying the dev card
 	 * @return true if the card was given to the player correctly
 	 */
 	public boolean buyDevCard(int game_id, int player_index);
@@ -323,6 +323,15 @@ public interface ServerModelFacadeInterface {
 	 * otherwise
 	 */
 	public boolean canPlayYearOfPlenty(int game_id, int player_index, ResourceType type1, ResourceType type2);
+	
+	/**
+	 * 
+	 * @param game_id The ID of the game this card is being played in
+	 * @param player_index The index of the player using this development card
+	 * @param type1 The first type of resource that the player wants
+	 * @param type2 The second type of resource that the player wants
+	 * @return True if the card was played successfully, and the resources requested are in the bank
+	 */
 	public boolean playYearOfPlenty(int game_id, int player_index, ResourceType type1, ResourceType type2);
 	/**
 	 * Checks that the first road location is connected to one of the player's
@@ -338,6 +347,15 @@ public interface ServerModelFacadeInterface {
 	 * roads, false otherwise
 	 */
 	public boolean canPlayRoadBuilding(int game_id, int player_index, EdgeLocation location1, EdgeLocation location2);
+	
+	/**
+	 * Plays this dev card. Adds two roads for the given player to the map
+	 * @param game_id The ID of the game this card is being used in
+	 * @param player_index The index of the player using this development card
+	 * @param location1 The location of the first road the player is building
+	 * @param location2 The location of the second road the player is building
+	 * @return True if the player has enough roads to place two roads, and the two locations are valid
+	 */
 	public boolean playRoadBuilding(int game_id, int player_index, EdgeLocation location1, EdgeLocation location2);
 	
 	/**
@@ -350,21 +368,48 @@ public interface ServerModelFacadeInterface {
 	 * @return true if successful 
 	 */
 	public boolean canPlaySoldier(int game_id, int player_index, HexLocation oldLocation, HexLocation newLocation, int victimIndex);
+	
+	/**
+	 * Plays the soldier development card and allows the player to move the robber
+	 * @param game_id The ID of the game this card is being played in
+	 * @param player_index The index of the player using this card
+	 * @param newLocation The new location of the robber
+	 * @param victimIndex The index of the player to be robbed
+	 * @return True if the robber is moved to a location other than his current, and the victim has cards to steal
+	 */
 	public boolean playSoldier(int game_id, int player_index, HexLocation newLocation, int victimIndex);
 	
 	/**
 	 * Checks that the it is the player's turn and that the player has the monopoly dev card
-	 * @return true
+	 * @return True if it is the player's turn, and they ave not already played a dev card this turn
 	 */
 	public boolean canPlayMonopoly(int game_id, int player_index);
+	
+	/**
+	 * Plays the monopoly development card and allows the player to steal all of one type of resource form all other players
+	 * @param game_id The ID of the game that this card is being played in
+	 * @param player_index The index of the player using this card
+	 * @param resourceType The type of resource to steal from all players
+	 * @return True if the card was played successfully
+	 */
 	public boolean playMonopoly(int game_id, int player_index, ResourceType resourceType);
 	
 	/**
 	 * Checks that the it is the player's turn and that the player has the monument dev card
-	 * @return true
+	 * @return True if it is the player's turn and they have at least one monument dev card
 	 */
 	public boolean canPlayMonument(int game_id, int player_index);
+	
+	/**
+	 * Uses the monument dev card and gives the player 1 victory point
+	 * @param game_id The ID of the game the card is being used in
+	 * @param player_index The index of the player using the card
+	 * @return True if it is the player's turn and they have the monument card
+	 */
 	public boolean playMonument(int game_id, int player_index);
 	
+	/**
+	 * @return An object containing the current list of games hosted on the server
+	 */
 	public GameList getGameList();
 }
