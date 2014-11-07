@@ -75,49 +75,186 @@ public interface ServerModelSerializerInterface {
 	/**
 	 * Serializes a GameCommands object into a json string
 	 * 
-	 * @param gameCommands 
-	 * @return
+	 * @param gameCommands An object consisting of a list of GameCommand objects which consists of
+	 * a command type (string), a player index (int), and a message (string)
+	 * @return A json representation of a GameCommands object
 	 */
 	public String serializeGetGameCommands(GameCommands gameCommands);
 	
+	/**
+	 * Deserializes a json string into an AIRequestParameters object
+	 * 
+	 * @param jsonString A json representation of AIRequestParameters
+	 * @return An AIRequestParameters object which consists of an AI type (string)
+	 */
 	public AIRequestParameters deserializeAIRequest(String jsonString);
 	
+	/**
+	 * Serializes an array of AI types (strings) into a json string
+	 * 
+	 * @param aiList A list of AI types (strings)
+	 * @return A json representation of an array of AI types (strings) 
+	 */
 	public String serializeGetListAI(String[] aiList);
 	
+	/**
+	 * Deserializes a json string into a SendChatParameters object
+	 * 
+	 * @param jsonString A json representation of SendChatParameters
+	 * @return A SendChatParameters object consisting of a type (string), a player
+	 * index (int), and a message (string)
+	 */
 	public SendChatParameters deserializeSendChat(String jsonString);
 	
+	/**
+	 * Deserializes a json string into a RollNumberParameters object
+	 * 
+	 * @param jsonString A json representation of RollNumberParameters
+	 * @return A RollNumberParameters object consisting of a type (string), a player
+	 * index (int), and a rolled number (int)
+	 */
 	public RollNumberParameters deserializeRollNumber(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a RobPlayerParameters object
+	 * 
+	 * @param jsonString A json representation of RobPlayerParameters
+	 * @return A RobPlayerParameters object consisting of a type (string), a player index (int),
+	 * a victim index (int), and a location (HexLocation)
+	 */
 	public RobPlayerParameters deserializeRobPlayer(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a FinishTurnParameters object
+	 * 
+	 * @param jsonString A json representation of FinishTurnParameters
+	 * @return A FinishTurnParameters object consisting of a type (string) and a player index (int)
+	 */
 	public FinishTurnParameters deserializeFinishTurn(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a BuyDevCardParameters object
+	 * 
+	 * @param jsonString A json representation of BuyDevCardParameters
+	 * @return A BuyDevCardParameters object consisting of a type (string) and a player index (int)
+	 */
 	public BuyDevCardParameters deserializeBuyDevCard(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a YearOfPlentyParameters object
+	 * 
+	 * @param jsonString A json representation of YearOfPlentyParameters
+	 * @return A YearOfPlentyParameters object consisting of a type (string), player index (int), and
+	 * two resources (strings)
+	 */
 	public YearOfPlentyParameters deserializeYearOfPlenty(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a RoadBuildingParameters object
+	 * 
+	 * @param jsonString A json representation of RoadBuildingParameters
+	 * @return A RoadBuildingParameters object consisting of a type (string), a player index (int), and
+	 * two locations (EdgeLocationParameters)
+	 */
 	public RoadBuildingParameters deserializeRoadBuilding(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a SoldierParameters object
+	 * 
+	 * @param jsonString A json representation of SoldierParameters
+	 * @return A SoldierParameters object consisting of a type (string), a player index (int), a victim
+	 * index (int), and location (HexLocation)
+	 */
 	public SoldierParameters deserializeSoldier(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a MonopolyParameters object
+	 * 
+	 * @param jsonString A json representation of MonopolyParameters
+	 * @return A MonopolyParameters object consisting of a type (string), a resource (string), and a player
+	 * index (int)
+	 */
 	public MonopolyParameters deserializeMonopoly(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a MonumentParameters object
+	 * 
+	 * @param jsonString A json representation of MonumentParameters
+	 * @return A MonumentParameters object consisting of a type (string) and player index (int)
+	 */
 	public MonumentParameters deserializeMonument(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a BuildRoadParameters object
+	 * 
+	 * @param jsonString A json representation of BuildRoadParameters
+	 * @return A BuildRoadParameters object consisting of a type (string), a player index (int), a road location
+	 * (EdgeLocationParameters), and a Boolean representing whether it is free to place this road or not, i.e. whether
+	 * it is the setup round
+	 */
 	public BuildRoadParameters deserializeBuildRoad(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a BuildSettlementParameters object
+	 * 
+	 * @param jsonString A json representation of BuildSettlementParameters
+	 * @return A BuildSettlementParameters object consisting of a type (string), a player index (int), a vertex location 
+	 * (VertexLocationParameters), and a Boolean representing whether it is free to place this road or not, i.e. whether
+	 * it is the setup round
+	 */
 	public BuildSettlementParameters deserializeSettlement(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a BuildCityParameters object
+	 * 
+	 * @param jsonString A json representation of BuildCityParameters
+	 * @return A BuildCityParameters object consisting of a type (string), a player index (int), a vertex location 
+	 * (VertexLocationParameters)
+	 */
 	public BuildCityParameters deserializeBuildCity(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a OfferTradeParameters object
+	 * 
+	 * @param jsonString A json representation of OfferTradeParameters
+	 * @return An OfferTradeParameters object consisting of a type (string), a player index (int), a resource list, and a
+	 * receiver index (int)
+	 */
 	public OfferTradeParameters deserializeOfferTrade(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a AcceptTradeParameters object
+	 * 
+	 * @param jsonString A json representation of AcceptTradeParameters
+	 * @return An AcceptTradeParameters object consisting of a type (string), a player index (int), and a Boolean representing
+	 * whether the player accepts the trade offer or not
+	 */
 	public AcceptTradeParameters deserializeAcceptTrade(String jsonString);
 	
+	/**
+	 * Deserializes a jsonString into a MaritimeTradeParameters object
+	 * 
+	 * @param jsonString A json representation of MaritimeTradeParameters
+	 * @return A MaritimeTradeParameters object consisting of a type (string), a player index (int), a ratio (int), an input
+	 * resource (string), and output resource (string)
+	 */
 	public MaritimeTradeParameters deserializeMaritimeTrade(String jsonString);
 	
-	public DiscardCardsParameters serializeDiscardCards(String jsonString);
+	/**
+	 * Deserializes a jsonString into a DiscardCardsParameters object
+	 * 
+	 * @param jsonString A json representation of DiscardCardsParameters
+	 * @return A DiscardCardsParameters object consisting of a type (string), a player index (int), and discarded cards 
+	 * (SerializerResourceListInterface)
+	 */
+	public DiscardCardsParameters deserializeDiscardCards(String jsonString);
 	
+	/**
+	 * Serializes a GameData object into a json string
+	 * 
+	 * @param gameData An object that represents the game model
+	 * @return A json representation of a GameData object
+	 */
 	public String serializeGameModel(GameData gameData);
 	
 	
