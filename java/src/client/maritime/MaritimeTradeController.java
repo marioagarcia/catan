@@ -8,15 +8,15 @@ import java.util.Set;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+import shared.model.GameModel;
+import shared.model.card.MaritimeTrade;
+import shared.model.map.BoardMap;
+import shared.model.map.Port;
+import shared.model.player.Player;
+import shared.model.turntracker.TurnTracker;
+import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.GameModel;
-import client.model.card.MaritimeTrade;
-import client.model.map.BoardMap;
-import client.model.map.Port;
-import client.model.player.Player;
-import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**

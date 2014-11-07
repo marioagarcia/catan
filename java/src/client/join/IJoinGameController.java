@@ -1,8 +1,8 @@
 package client.join;
 
 import client.base.*;
-import client.model.GameInfo;
 import shared.definitions.*;
+import shared.model.GameInfo;
 
 /**
  * Interface for the join game controller

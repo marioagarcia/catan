@@ -3,11 +3,11 @@ package client.points;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.model.GameModel;
+import shared.model.Winner;
+import shared.model.player.Player;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.GameModel;
-import client.model.Winner;
-import client.model.player.Player;
 
 
 /**

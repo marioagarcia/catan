@@ -10,9 +10,9 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-import com.google.gson.*;
+import shared.model.player.Player;
 
-import client.model.player.Player;
+import com.google.gson.*;
 
 public class ServerProxy implements ServerProxyInterface{
 	private String serverPortNumber;

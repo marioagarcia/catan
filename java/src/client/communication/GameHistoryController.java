@@ -4,10 +4,10 @@ import java.util.*;
 
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.GameModel;
-import client.model.logging.history.LogLineInterface;
-import client.model.player.Player;
 import shared.definitions.*;
+import shared.model.GameModel;
+import shared.model.logging.history.LogLineInterface;
+import shared.model.player.Player;
 
 
 /**

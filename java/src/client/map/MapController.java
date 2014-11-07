@@ -4,25 +4,25 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.GameModel;
+import shared.model.map.BoardMap;
+import shared.model.map.Hex;
+import shared.model.map.HexInterface;
+import shared.model.map.Port;
+import shared.model.piece.City;
+import shared.model.piece.Road;
+import shared.model.piece.Settlement;
+import shared.model.player.Player;
+import shared.model.player.Players;
+import shared.model.player.RobPlayerInfo;
+import shared.model.turntracker.TurnTracker;
+import shared.model.turntracker.TurntrackerInterface.Status;
 import state.FirstRoundState;
 import state.GameState;
 import state.PlayingState;
 import state.RobbingState;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.GameModel;
-import client.model.map.BoardMap;
-import client.model.map.Hex;
-import client.model.map.HexInterface;
-import client.model.map.Port;
-import client.model.piece.City;
-import client.model.piece.Road;
-import client.model.piece.Settlement;
-import client.model.player.Player;
-import client.model.player.Players;
-import client.model.player.RobPlayerInfo;
-import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**

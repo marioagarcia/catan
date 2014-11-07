@@ -10,11 +10,12 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import shared.definitions.CatanColor;
-import client.model.card.DevCardList;
-import client.model.card.ResourceList;
-import client.model.card.Trade;
-import client.model.player.Player;
+import shared.model.card.DevCardList;
+import shared.model.card.ResourceList;
+import shared.model.card.Trade;
+import shared.model.player.Player;
 
 /**
  * @author mario
@@ -93,7 +94,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canOfferTrade(client.model.card.TradeInterface)}.
+	 * Test method for {@link shared.model.player.Player#canOfferTrade(shared.model.card.TradeInterface)}.
 	 */
 	@Test
 	public void testCanOfferTrade() {
@@ -109,7 +110,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canBuyDevCard()}.
+	 * Test method for {@link shared.model.player.Player#canBuyDevCard()}.
 	 */
 	@Test
 	public void testCanBuyDevCard() {
@@ -117,7 +118,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canPlayYearOfPlenty()}.
+	 * Test method for {@link shared.model.player.Player#canPlayYearOfPlenty()}.
 	 */
 	@Test
 	public void testCanPlayYearOfPlenty() {
@@ -125,7 +126,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canPlayRoadBuilding()}.
+	 * Test method for {@link shared.model.player.Player#canPlayRoadBuilding()}.
 	 */
 	@Test
 	public void testCanPlayRoadBuilding() {
@@ -133,7 +134,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canPlaySoldier()}.
+	 * Test method for {@link shared.model.player.Player#canPlaySoldier()}.
 	 */
 	@Test
 	public void testCanPlaySoldier() {
@@ -141,7 +142,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canAcceptTrade(client.model.card.TradeInterface)}.
+	 * Test method for {@link shared.model.player.Player#canAcceptTrade(shared.model.card.TradeInterface)}.
 	 */
 	@Test
 	public void testCanAcceptTrade() {
@@ -149,7 +150,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canDiscardCards(client.model.card.ResourceList)}.
+	 * Test method for {@link shared.model.player.Player#canDiscardCards(shared.model.card.ResourceList)}.
 	 */
 	@Test
 	public void testCanDiscardCards() {
@@ -157,7 +158,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canPlayMonument()}.
+	 * Test method for {@link shared.model.player.Player#canPlayMonument()}.
 	 */
 	@Test
 	public void testCanPlayMonument() {
@@ -165,7 +166,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link client.model.player.Player#canPlayMonopoly()}.
+	 * Test method for {@link shared.model.player.Player#canPlayMonopoly()}.
 	 */
 	@Test
 	public void testCanPlayMonopoly() {

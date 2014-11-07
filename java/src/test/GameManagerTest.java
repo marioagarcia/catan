@@ -8,7 +8,7 @@
 //import client.communication.server.ServerMoxy;
 //import client.communication.server.ServerProxyInterface;
 //import client.manager.GameManager;
-//import client.model.GameInfo;
+//import shared.model.GameInfo;
 //
 //
 //public class GameManagerTest {

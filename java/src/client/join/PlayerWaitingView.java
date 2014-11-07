@@ -6,8 +6,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import shared.model.player.PlayerInfo;
 import client.base.*;
-import client.model.player.PlayerInfo;
 import client.utils.*;
 
 

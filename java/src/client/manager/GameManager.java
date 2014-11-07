@@ -12,24 +12,24 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.GameInfo;
+import shared.model.GameModel;
+import shared.model.card.MaritimeTrade;
+import shared.model.card.ResourceList;
+import shared.model.card.TradeInterface;
+import shared.model.logging.GameLog;
+import shared.model.logging.chat.GameChat;
+import shared.model.logging.history.HistoryLog;
+import shared.model.player.Player;
+import shared.model.player.Players;
+import shared.model.player.RobPlayerInfo;
+import shared.model.turntracker.TurnTracker;
+import shared.model.turntracker.TurntrackerInterface.Status;
 import shared.serialization.ModelSerializer;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
 import client.manager.interfaces.GMDomesticTradeInterface;
-import client.model.GameInfo;
-import client.model.GameModel;
-import client.model.card.MaritimeTrade;
-import client.model.card.ResourceList;
-import client.model.card.TradeInterface;
-import client.model.logging.GameLog;
-import client.model.logging.chat.GameChat;
-import client.model.logging.history.HistoryLog;
-import client.model.player.Player;
-import client.model.player.Players;
-import client.model.player.RobPlayerInfo;
-import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface.Status;
 
 public class GameManager implements GameManagerInterface {
 

@@ -1,9 +1,9 @@
 package client.map;
 
 import client.base.*;
-import client.model.player.RobPlayerInfo;
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.player.RobPlayerInfo;
 
 /**
  * Interface for the map controller

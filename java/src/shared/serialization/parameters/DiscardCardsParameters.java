@@ -1,7 +1,7 @@
 package shared.serialization.parameters;
 
+import shared.model.card.ResourceList;
 import shared.serialization.interfaces.SerializerResourceListInterface;
-import client.model.card.ResourceList;
 
 public class DiscardCardsParameters extends MasterParameterInterface{
 

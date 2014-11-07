@@ -8,14 +8,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
+import shared.model.GameModel;
+import shared.model.logging.chat.GameChatInterface;
+import shared.model.logging.chat.MessageDoesNotExistException;
+import shared.model.logging.chat.MessageInterface;
+import shared.model.player.Player;
+import shared.model.player.Players;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.GameModel;
-import client.model.logging.chat.GameChatInterface;
-import client.model.logging.chat.MessageDoesNotExistException;
-import client.model.logging.chat.MessageInterface;
-import client.model.player.Player;
-import client.model.player.Players;
 
 
 /**

@@ -1,6 +1,6 @@
 package client.communication.server;
 
-import client.model.player.Player;
+import shared.model.player.Player;
 
 /**
  * This interface is our last step to communicating with the server. It contains the methods that implement

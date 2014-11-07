@@ -1,6 +1,6 @@
 package client.manager.interfaces;
 
-import client.model.card.TradeInterface;
+import shared.model.card.TradeInterface;
 
 public interface GMPlayerInterface {
 	

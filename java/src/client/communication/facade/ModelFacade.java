@@ -7,18 +7,18 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.GameInfo;
+import shared.model.card.MaritimeTrade;
+import shared.model.card.ResourceList;
+import shared.model.card.TradeInterface;
+import shared.model.player.Player;
+import shared.model.player.Players;
+import shared.model.player.RobPlayerInfo;
 import client.communication.server.ServerMoxy;
 import client.communication.server.ServerProxy;
 import client.communication.server.ServerProxyInterface;
 import client.manager.GameManager;
 import client.manager.interfaces.GMDomesticTradeInterface;
-import client.model.GameInfo;
-import client.model.card.MaritimeTrade;
-import client.model.card.ResourceList;
-import client.model.card.TradeInterface;
-import client.model.player.Player;
-import client.model.player.Players;
-import client.model.player.RobPlayerInfo;
 
 public class ModelFacade implements ModelFacadeInterface {
 	

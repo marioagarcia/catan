@@ -1,8 +1,8 @@
 package client.domestic;
 
 import client.base.*;
-import client.model.player.PlayerInfo;
 import shared.definitions.*;
+import shared.model.player.PlayerInfo;
 
 /**
  * Implementation of the domestic trade overlay, which allows the user to

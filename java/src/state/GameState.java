@@ -3,9 +3,9 @@ package state;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.player.RobPlayerInfo;
 import client.communication.facade.ModelFacade;
 import client.map.MapController;
-import client.model.player.RobPlayerInfo;
 
 public class GameState
 {

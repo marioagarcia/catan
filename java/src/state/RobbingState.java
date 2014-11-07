@@ -1,8 +1,8 @@
 package state;
 
 import shared.locations.HexLocation;
+import shared.model.player.RobPlayerInfo;
 import client.map.MapController;
-import client.model.player.RobPlayerInfo;
 
 public class RobbingState extends GameState{
 

@@ -3,7 +3,7 @@ package client.manager;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import client.model.GameInfo;
+import shared.model.GameInfo;
 
 public class GameList extends Observable{
 	

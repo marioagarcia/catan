@@ -2,15 +2,15 @@ package client.manager;
 
 import java.util.ArrayList;
 
-import client.model.Winner;
-import client.model.card.DevCardBank;
-import client.model.card.DomesticTrade;
-import client.model.card.ResourceCardBank;
-import client.model.logging.GameLog;
-import client.model.map.BoardMap;
-import client.model.player.Player;
-import client.model.player.Players;
-import client.model.turntracker.TurnTracker;
+import shared.model.Winner;
+import shared.model.card.DevCardBank;
+import shared.model.card.DomesticTrade;
+import shared.model.card.ResourceCardBank;
+import shared.model.logging.GameLog;
+import shared.model.map.BoardMap;
+import shared.model.player.Player;
+import shared.model.player.Players;
+import shared.model.turntracker.TurnTracker;
 
 public class GameData {
 

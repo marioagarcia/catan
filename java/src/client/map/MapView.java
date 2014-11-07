@@ -6,9 +6,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import client.base.*;
-import client.model.player.RobPlayerInfo;
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.player.RobPlayerInfo;
 
 /**
  * Implementation for the map view

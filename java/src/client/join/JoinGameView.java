@@ -5,9 +5,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import shared.model.GameInfo;
+import shared.model.player.PlayerInfo;
 import client.base.*;
-import client.model.GameInfo;
-import client.model.player.PlayerInfo;
 
 /**
  * Implementation for the join game view, which lets the user select a game to

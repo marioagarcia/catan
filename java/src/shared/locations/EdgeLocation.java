@@ -3,7 +3,7 @@ package shared.locations;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import client.model.map.BoardMap;
+import shared.model.map.BoardMap;
 
 /**
  * Represents the location of an edge on a hex map

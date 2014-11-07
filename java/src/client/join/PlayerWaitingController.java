@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.model.GameInfo;
+import shared.model.player.PlayerInfo;
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.manager.GameList;
-import client.model.GameInfo;
-import client.model.player.PlayerInfo;
 
 
 /**

@@ -8,7 +8,7 @@ import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import client.model.map.Port;
+import shared.model.map.Port;
 
 public class PortTest {
 

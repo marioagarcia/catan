@@ -1,8 +1,8 @@
 package shared.serialization.interfaces;
 
-import client.model.card.DevCardList;
-import client.model.card.ResourceList;
 import shared.definitions.CatanColor;
+import shared.model.card.DevCardList;
+import shared.model.card.ResourceList;
 
 public interface SerializerPlayerInterface {
 

@@ -13,8 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import shared.definitions.*;
+import shared.model.player.PlayerInfo;
 import client.base.*;
-import client.model.player.PlayerInfo;
 
 
 /**

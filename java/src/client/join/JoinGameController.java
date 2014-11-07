@@ -9,12 +9,12 @@ import java.util.Observer;
 import javax.swing.JOptionPane;
 
 import shared.definitions.CatanColor;
+import shared.model.GameInfo;
+import shared.model.player.Player;
+import shared.model.player.PlayerInfo;
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.misc.*;
-import client.model.GameInfo;
-import client.model.player.Player;
-import client.model.player.PlayerInfo;
 
 
 /**

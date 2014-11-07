@@ -2,12 +2,13 @@ package client.discard;
 
 import java.util.Observable;
 import java.util.Observer;
+
 import shared.definitions.*;
+import shared.model.GameModel;
+import shared.model.card.ResourceList;
+import shared.model.turntracker.TurnTracker;
+import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
-import client.model.GameModel;
-import client.model.card.ResourceList;
-import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface.Status;
 import client.communication.facade.ModelFacade;
 import client.misc.*;
 

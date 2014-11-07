@@ -2,7 +2,7 @@ package shared.serialization.interfaces;
 
 import java.util.ArrayList;
 
-import client.model.player.PlayerInfo;
+import shared.model.player.PlayerInfo;
 
 public interface SerializerGameInfoInterface {
 

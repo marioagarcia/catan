@@ -12,12 +12,12 @@
 //import client.communication.facade.ModelFacade;
 //import client.communication.server.ServerMoxy;
 //import client.manager.GameManager;
-//import client.model.GameInfo;
-//import client.model.card.DevCardList;
-//import client.model.card.DomesticTrade;
-//import client.model.card.ResourceList;
-//import client.model.player.PlayerInfo;
-//import client.model.turntracker.TurntrackerInterface.Status;
+//import shared.model.GameInfo;
+//import shared.model.card.DevCardList;
+//import shared.model.card.DomesticTrade;
+//import shared.model.card.ResourceList;
+//import shared.model.player.PlayerInfo;
+//import shared.model.turntracker.TurntrackerInterface.Status;
 //
 //public class FacadeTest {
 //

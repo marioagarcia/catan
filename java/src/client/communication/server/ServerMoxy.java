@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import shared.model.player.Player;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import client.model.player.Player;
 
 public class ServerMoxy implements ServerProxyInterface{
 	private int gameId;

@@ -3,7 +3,7 @@ package shared.serialization;
 import java.util.ArrayList;
 
 import client.manager.GameCommands;
-import client.model.GameInfo;
+import shared.model.GameInfo;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;

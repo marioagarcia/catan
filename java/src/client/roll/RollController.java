@@ -7,10 +7,10 @@ import java.util.Timer;
 
 import javax.swing.JOptionPane;
 
+import shared.model.GameModel;
+import shared.model.turntracker.TurnTracker;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.GameModel;
-import client.model.turntracker.TurnTracker;
 
 
 /**

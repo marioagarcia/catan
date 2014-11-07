@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import client.model.map.Hex;
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
+import shared.model.map.Hex;
 
 public class HexTest {
 

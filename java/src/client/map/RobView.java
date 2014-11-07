@@ -9,8 +9,8 @@ import javax.swing.border.Border;
 import java.util.*;
 
 import shared.definitions.PieceType;
+import shared.model.player.RobPlayerInfo;
 import client.base.*;
-import client.model.player.RobPlayerInfo;
 
 
 /**

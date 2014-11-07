@@ -1,10 +1,10 @@
 package client.manager.interfaces;
 
-import client.model.piece.Settlement;
-import client.model.turntracker.TurntrackerInterface.Status;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.piece.Settlement;
+import shared.model.turntracker.TurntrackerInterface.Status;
 
 public interface GMBoardMapInterface {
 	

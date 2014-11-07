@@ -2,12 +2,12 @@ package shared.serialization.interfaces;
 
 import java.util.ArrayList;
 
-import client.model.map.Hex;
-import client.model.map.Port;
-import client.model.piece.City;
-import client.model.piece.Road;
-import client.model.piece.Settlement;
 import shared.locations.HexLocation;
+import shared.model.map.Hex;
+import shared.model.map.Port;
+import shared.model.piece.City;
+import shared.model.piece.Road;
+import shared.model.piece.Settlement;
 
 public interface SerializerMapInterface {
 

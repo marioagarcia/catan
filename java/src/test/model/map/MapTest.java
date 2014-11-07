@@ -1,25 +1,28 @@
 package test.model.map;
 
 import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 import org.junit.Test;
+
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.model.card.DevCardList;
+import shared.model.card.MaritimeTrade;
+import shared.model.card.ResourceList;
+import shared.model.map.BoardMap;
+import shared.model.player.Player;
+import shared.model.turntracker.TurnTracker;
+import shared.model.turntracker.TurntrackerInterface.Status;
 import shared.serialization.ModelSerializer;
 import client.manager.GameData;
-import client.model.card.DevCardList;
-import client.model.card.MaritimeTrade;
-import client.model.card.ResourceList;
-import client.model.map.BoardMap;			
-import client.model.player.Player;
-import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface.Status;
 
 public class MapTest {
 	

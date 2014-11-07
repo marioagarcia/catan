@@ -3,11 +3,11 @@ import java.util.List;
 import java.util.Observer;
 
 import client.manager.interfaces.GMDomesticTradeInterface;
-import client.model.GameInfo;
-import client.model.card.*;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.*;
+import shared.model.GameInfo;
+import shared.model.card.*;
 /**
  * This class ensures that the preconditions for the actions the different model classes
  * attempt are met.

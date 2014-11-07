@@ -1,6 +1,6 @@
 package shared.serialization.parameters;
 
-import client.model.card.ResourceList;
+import shared.model.card.ResourceList;
 
 public class OfferTradeParameters extends MasterParameterInterface{
 

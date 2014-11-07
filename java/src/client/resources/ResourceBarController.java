@@ -2,12 +2,12 @@ package client.resources;
 
 import java.util.*;
 
+import shared.model.GameModel;
+import shared.model.map.BoardMap;
+import shared.model.player.Player;
+import shared.model.turntracker.TurnTracker;
 import client.base.*;
 import client.communication.facade.ModelFacade;
-import client.model.GameModel;
-import client.model.map.BoardMap;
-import client.model.player.Player;
-import client.model.turntracker.TurnTracker;
 
 /**
  * Implementation for the resource bar controller

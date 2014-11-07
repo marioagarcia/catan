@@ -7,17 +7,17 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.*;
+import shared.model.GameModel;
+import shared.model.card.DomesticTrade;
+import shared.model.card.ResourceList;
+import shared.model.player.Player;
+import shared.model.player.PlayerInfo;
+import shared.model.player.Players;
+import shared.model.turntracker.TurnTracker;
+import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
 import client.communication.facade.ModelFacade;
 import client.misc.*;
-import client.model.GameModel;
-import client.model.card.DomesticTrade;
-import client.model.card.ResourceList;
-import client.model.player.Player;
-import client.model.player.PlayerInfo;
-import client.model.player.Players;
-import client.model.turntracker.TurnTracker;
-import client.model.turntracker.TurntrackerInterface.Status;
 
 
 /**
