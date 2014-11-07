@@ -1,12 +1,14 @@
 package server.command;
 
-import shared.serialization.parameters.MasterParameterInterface;
-
 public class ChangeLogLevel extends CatanCommand {
 
+	public ChangeLogLevel(String parameters){
+		
+	}
+	
 	@Override
-	public void execute(MasterParameterInterface parameter_package) {
+	public void execute() {
 		// TODO Auto-generated method stub
-
+		
 	}
 }

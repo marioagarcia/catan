@@ -1,19 +1,16 @@
 package server.command;
 
-import shared.serialization.parameters.MasterParameterInterface;
+import shared.serialization.parameters.AcceptTradeParameters;
 
-public class AcceptTrade implements CatanCommandInterface {
+public class AcceptTrade extends CatanCommand {
 
-	@Override
-	public void execute(MasterParameterInterface parameter_package) {
-		// TODO Auto-generated method stub
-
+	public AcceptTrade(AcceptTradeParameters parameters){
+		
 	}
-
+	
 	@Override
-	public boolean wasSuccessful() {
+	public void execute() {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
-
 }

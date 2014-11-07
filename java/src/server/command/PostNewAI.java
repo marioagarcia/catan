@@ -1,12 +1,14 @@
 package server.command;
 
-import shared.serialization.parameters.MasterParameterInterface;
-
 public class PostNewAI extends CatanCommand {
 
+	public PostNewAI(){
+		
+	}
+	
 	@Override
-	public void execute(MasterParameterInterface parameter_package) {
+	public void execute() {
 		// TODO Auto-generated method stub
-
+		
 	}
 }
