@@ -23,13 +23,13 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean loginPlayer(int game_id, String username, String password) {
+	public boolean loginPlayer(String username, String password) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean registerPlayer(int game_id, String username, String password) {
+	public boolean registerPlayer(String username, String password) {
 		// TODO Auto-generated method stub
 		return false;
 	}

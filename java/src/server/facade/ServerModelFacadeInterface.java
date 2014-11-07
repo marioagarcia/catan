@@ -29,7 +29,7 @@ public interface ServerModelFacadeInterface {
 	 * @param password the password of the user
 	 * @return true if the player was successfully logged in
 	 */
-	public boolean loginPlayer(int game_id, String username, String password);
+	public boolean loginPlayer(String username, String password);
 	
 	/**
 	 * sends a request to the server to register the player with the given credentials
@@ -37,7 +37,7 @@ public interface ServerModelFacadeInterface {
 	 * @param password the password of the user
 	 * @return true if the player was successfully registered
 	 */
-	public boolean registerPlayer(int game_id, String username, String password);
+	public boolean registerPlayer(String username, String password);
 	/**
 	 * Sends a request to the server to create a new game with the given information
 	 * @param gameName title of the game
