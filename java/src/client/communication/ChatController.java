@@ -9,13 +9,13 @@ import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.model.GameModel;
-import shared.model.facade.ModelFacade;
 import shared.model.logging.chat.GameChatInterface;
 import shared.model.logging.chat.MessageDoesNotExistException;
 import shared.model.logging.chat.MessageInterface;
 import shared.model.player.Player;
 import shared.model.player.Players;
 import client.base.*;
+import client.manager.ClientModelFacade;
 
 
 /**
@@ -27,7 +27,7 @@ public class ChatController extends Controller implements IChatController {
 		
 		super(view);
 		
-		ModelFacade.getInstance(null).addObserver(chatObserver);
+		ClientModelFacade.getInstance(null).addObserver(chatObserver);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ChatController extends Controller implements IChatController {
 
 	@Override
 	public void sendMessage(String message) {
-		ModelFacade.getInstance(null).sendChat(message);
+		ClientModelFacade.getInstance(null).sendChat(message);
 	}
 
 	private void updateChat(GameModel game_model) {

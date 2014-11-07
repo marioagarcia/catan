@@ -2,9 +2,9 @@ package shared.model.turntracker;
 
 import java.util.Observable;
 
+import shared.model.manager.interfaces.GMTurnTrackerInterface;
 import shared.model.player.Players;
 import shared.serialization.interfaces.SerializerTurnTrackerInterface;
-import client.manager.interfaces.GMTurnTrackerInterface;
 
 public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
 	

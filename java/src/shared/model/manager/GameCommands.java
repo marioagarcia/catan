@@ -1,4 +1,4 @@
-package client.manager;
+package shared.model.manager;
 
 import java.util.ArrayList;
 import java.util.Collection;

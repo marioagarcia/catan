@@ -2,8 +2,8 @@ package shared.serialization;
 
 import java.util.ArrayList;
 
-import client.manager.GameCommands;
 import shared.model.GameInfo;
+import shared.model.manager.GameCommands;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -304,5 +304,5 @@ public interface ModelSerializerInterface
 	 * @param data The string from the server that needs to be deserialized
 	 * @return CatanModel The updated CatanModel that was just deserialized
 	 */
-	public client.manager.GameData deserializeGameModel(String data);
+	public shared.model.manager.GameData deserializeGameModel(String data);
 }

@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 
 import javax.swing.*;
 
-import shared.model.facade.ModelFacade;
 import client.base.*;
+import client.manager.ClientModelFacade;
 import client.utils.ImageUtils;
 
 
@@ -86,7 +86,7 @@ public class RollResultView extends OverlayView implements IRollResultView {
 			if (e.getSource() == okayButton) {
 				
 				closeModal();
-				ModelFacade.getInstance(null).roll(rolledNumber);
+				ClientModelFacade.getInstance(null).roll(rolledNumber);
 				((RollController)getController()).setIsRolling(false);
 			}
 		}	
@@ -99,7 +99,7 @@ public class RollResultView extends OverlayView implements IRollResultView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				closeModal();
-				ModelFacade.getInstance(null).roll(rolledNumber);
+				ClientModelFacade.getInstance(null).roll(rolledNumber);
 				((RollController)getController()).setIsRolling(false);
 			}
 			

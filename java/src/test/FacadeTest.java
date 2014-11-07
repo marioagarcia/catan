@@ -11,7 +11,7 @@
 //import shared.definitions.ResourceType;
 //import shared.model.facade.ModelFacade;
 //import client.communication.server.ServerMoxy;
-//import client.manager.GameManager;
+//import shared.model.manager.GameManager;
 //import shared.model.GameInfo;
 //import shared.model.card.DevCardList;
 //import shared.model.card.DomesticTrade;
@@ -21,12 +21,12 @@
 //
 //public class FacadeTest {
 //
-//	private ModelFacade facade;
-//	private GameManager manager;
+//	private ClientModelFacade facade;
+//	private ClientGameManager manager;
 //	
 //	@Before
 //	public void setUp(){
-//		facade = ModelFacade.getInstance(new ServerMoxy());
+//		facade = ClientModelFacade.getInstance(new ServerMoxy());
 //		manager = facade.getManager();
 //
 //		facade.loginPlayer("Sam", "sam");

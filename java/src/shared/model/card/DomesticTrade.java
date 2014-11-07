@@ -1,7 +1,7 @@
 package shared.model.card;
 
-import client.manager.interfaces.GMDomesticTradeInterface;
 import shared.definitions.ResourceType;
+import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
 public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface {
 

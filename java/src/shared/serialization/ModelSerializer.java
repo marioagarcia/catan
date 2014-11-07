@@ -23,6 +23,9 @@ import shared.model.logging.chat.GameChat;
 import shared.model.logging.chat.Message;
 import shared.model.logging.history.HistoryLog;
 import shared.model.logging.history.LogLine;
+import shared.model.manager.GameCommand;
+import shared.model.manager.GameCommands;
+import shared.model.manager.GameData;
 import shared.model.map.BoardMap;
 import shared.model.map.Hex;
 import shared.model.map.Port;
@@ -60,10 +63,6 @@ import shared.serialization.parameters.SoldierParameters;
 import shared.serialization.parameters.YearOfPlentyParameters;
 
 import com.google.gson.*;
-
-import client.manager.GameCommand;
-import client.manager.GameCommands;
-import client.manager.GameData;
 
 public class ModelSerializer implements ModelSerializerInterface {
 	

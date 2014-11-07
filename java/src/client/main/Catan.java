@@ -2,11 +2,11 @@ package client.main;
 
 import javax.swing.*;
 
-import shared.model.facade.ModelFacade;
 import client.catan.*;
 import client.communication.server.ServerProxy;
 import client.login.*;
 import client.join.*;
+import client.manager.ClientModelFacade;
 import client.misc.*;
 import client.base.*;
 
@@ -74,7 +74,7 @@ public class Catan extends JFrame {
 					
 				}
 				
-				ModelFacade.getInstance(proxy);
+				ClientModelFacade.getInstance(proxy);
 				
 				new Catan();
 

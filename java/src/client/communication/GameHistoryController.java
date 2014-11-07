@@ -3,9 +3,9 @@ package client.communication;
 import java.util.*;
 
 import client.base.*;
+import client.manager.ClientModelFacade;
 import shared.definitions.*;
 import shared.model.GameModel;
-import shared.model.facade.ModelFacade;
 import shared.model.logging.history.LogLineInterface;
 import shared.model.player.Player;
 
@@ -28,7 +28,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		
 		super(view);
 		
-		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
+		ClientModelFacade.getInstance(null).addObserver(new GameModelObserver());
 	}
 	
 	@Override

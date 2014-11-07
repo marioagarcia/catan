@@ -6,11 +6,11 @@ import shared.model.card.DevCardBank;
 import shared.model.card.DomesticTrade;
 import shared.model.card.ResourceCardBank;
 import shared.model.logging.GameLog;
+import shared.model.manager.GameData;
 import shared.model.map.BoardMap;
 import shared.model.player.Player;
 import shared.model.player.Players;
 import shared.model.turntracker.TurnTracker;
-import client.manager.GameData;
 
 public class GameModel extends Observable{
 	

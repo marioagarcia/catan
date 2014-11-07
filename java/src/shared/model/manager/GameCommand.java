@@ -1,4 +1,4 @@
-package client.manager;
+package shared.model.manager;
 
 import shared.serialization.interfaces.SerializerGameCommandInterface;
 

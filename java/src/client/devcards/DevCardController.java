@@ -6,9 +6,9 @@ import java.util.Observer;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.model.GameModel;
-import shared.model.facade.ModelFacade;
 import shared.model.player.Player;
 import client.base.*;
+import client.manager.ClientModelFacade;
 
 
 /**
@@ -67,7 +67,7 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
 		
-		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
+		ClientModelFacade.getInstance(null).addObserver(new GameModelObserver());
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -94,11 +94,11 @@ public class DevCardController extends Controller implements IDevCardController 
 	public void buyCard() {
 		
 		getBuyCardView().closeModal();
-		if(!ModelFacade.getInstance(null).canBuyDevCard()){
+		if(!ClientModelFacade.getInstance(null).canBuyDevCard()){
 			return;
 		}
 		
-		ModelFacade.getInstance(null).buyDevCard();
+		ClientModelFacade.getInstance(null).buyDevCard();
 	}
 
 	@Override
@@ -115,18 +115,18 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		if(!ModelFacade.getInstance(null).canPlayMonopoly()){
+		if(!ClientModelFacade.getInstance(null).canPlayMonopoly()){
 			return;
 		}
-		ModelFacade.getInstance(null).playMonopoly(resource);
+		ClientModelFacade.getInstance(null).playMonopoly(resource);
 	}
 
 	@Override
 	public void playMonumentCard() {
-		if(!ModelFacade.getInstance(null).canPlayMonument()){
+		if(!ClientModelFacade.getInstance(null).canPlayMonument()){
 			return;
 		}
-		ModelFacade.getInstance(null).playMonument();
+		ClientModelFacade.getInstance(null).playMonument();
 	}
 
 	@Override
@@ -143,10 +143,10 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		if(!ModelFacade.getInstance(null).canPlayYearOfPlenty(resource1, resource2)){
+		if(!ClientModelFacade.getInstance(null).canPlayYearOfPlenty(resource1, resource2)){
 			return;
 		}
-		ModelFacade.getInstance(null).playYearOfPlenty(resource1, resource2);
+		ClientModelFacade.getInstance(null).playYearOfPlenty(resource1, resource2);
 	}
 
 }

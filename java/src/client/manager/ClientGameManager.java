@@ -20,6 +20,11 @@ import shared.model.card.TradeInterface;
 import shared.model.logging.GameLog;
 import shared.model.logging.chat.GameChat;
 import shared.model.logging.history.HistoryLog;
+import shared.model.manager.GameCommands;
+import shared.model.manager.GameData;
+import shared.model.manager.GameList;
+import shared.model.manager.GameManagerInterface;
+import shared.model.manager.interfaces.GMDomesticTradeInterface;
 import shared.model.player.Player;
 import shared.model.player.Players;
 import shared.model.player.RobPlayerInfo;
@@ -29,9 +34,8 @@ import shared.serialization.ModelSerializer;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
-import client.manager.interfaces.GMDomesticTradeInterface;
 
-public class GameManager implements GameManagerInterface {
+public class ClientGameManager implements GameManagerInterface {
 
 	private ServerProxyInterface serverProxy;
 	private ModelSerializer modelSerializer;
@@ -42,7 +46,7 @@ public class GameManager implements GameManagerInterface {
 	private GameCommands gameCommands;
 	private GameModel gameModel;
 
-	public GameManager(ServerProxyInterface serverProxy) {
+	public ClientGameManager(ServerProxyInterface serverProxy) {
 
 		this.serverProxy = serverProxy;
 

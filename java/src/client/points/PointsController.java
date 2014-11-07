@@ -5,9 +5,9 @@ import java.util.Observer;
 
 import shared.model.GameModel;
 import shared.model.Winner;
-import shared.model.facade.ModelFacade;
 import shared.model.player.Player;
 import client.base.*;
+import client.manager.ClientModelFacade;
 
 
 /**
@@ -31,7 +31,7 @@ public class PointsController extends Controller implements IPointsController {
 
 		setFinishedView(finishedView);
 
-		ModelFacade.getInstance(null).addObserver(gameModelObserver);
+		ClientModelFacade.getInstance(null).addObserver(gameModelObserver);
 
 		hasWinner = false;
 	}

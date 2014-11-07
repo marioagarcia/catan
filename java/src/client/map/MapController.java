@@ -5,7 +5,6 @@ import java.util.*;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.GameModel;
-import shared.model.facade.ModelFacade;
 import shared.model.map.BoardMap;
 import shared.model.map.Hex;
 import shared.model.map.HexInterface;
@@ -23,6 +22,7 @@ import state.GameState;
 import state.PlayingState;
 import state.RobbingState;
 import client.base.*;
+import client.manager.ClientModelFacade;
 
 
 /**
@@ -58,7 +58,7 @@ public class MapController extends Controller implements IMapController {
 		
 		super(view);
 		
-		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
+		ClientModelFacade.getInstance(null).addObserver(new GameModelObserver());
 		
 		waterHexes = new ArrayList<HexLocation>();
 		waterHexes.add(new HexLocation(-3, 1));
@@ -287,7 +287,7 @@ public class MapController extends Controller implements IMapController {
 		map.setRobberLocation(hexLoc);
 		getView().placeRobber(hexLoc);
 		
-		RobPlayerInfo[] rob_list = ModelFacade.getInstance(null).getRobbablePlayers(hexLoc);
+		RobPlayerInfo[] rob_list = ClientModelFacade.getInstance(null).getRobbablePlayers(hexLoc);
 		
 		getRobView().setPlayers(rob_list);
 		

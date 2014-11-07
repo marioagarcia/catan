@@ -8,8 +8,8 @@ import shared.model.card.DevCardList;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.manager.interfaces.GMPlayerInterface;
 import shared.serialization.interfaces.SerializerPlayerInterface;
-import client.manager.interfaces.GMPlayerInterface;
 
 public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
 	int cities;

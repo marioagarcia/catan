@@ -3,11 +3,11 @@ package client.resources;
 import java.util.*;
 
 import shared.model.GameModel;
-import shared.model.facade.ModelFacade;
 import shared.model.map.BoardMap;
 import shared.model.player.Player;
 import shared.model.turntracker.TurnTracker;
 import client.base.*;
+import client.manager.ClientModelFacade;
 
 /**
  * Implementation for the resource bar controller
@@ -24,7 +24,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		
-		ModelFacade.getInstance(null).addObserver(new GameModelObserver());
+		ClientModelFacade.getInstance(null).addObserver(new GameModelObserver());
 	}
 	
 	private class GameModelObserver implements Observer{

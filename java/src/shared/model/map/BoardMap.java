@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import client.manager.interfaces.GMBoardMapInterface;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.model.manager.interfaces.GMBoardMapInterface;
 import shared.model.map.luts.EdgesAdjacentToVertex;
 import shared.model.map.luts.EdgesAdjacentToVertexResult;
 import shared.model.map.luts.VertexesAdjacentToEdge;

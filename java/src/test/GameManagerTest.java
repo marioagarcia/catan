@@ -7,7 +7,7 @@
 //import shared.definitions.CatanColor;
 //import client.communication.server.ServerMoxy;
 //import client.communication.server.ServerProxyInterface;
-//import client.manager.GameManager;
+//import shared.model.manager.GameManager;
 //import shared.model.GameInfo;
 //
 //
@@ -17,7 +17,7 @@
 //	public void test() {
 //		ServerProxyInterface proxy = new ServerMoxy();
 //		
-//		GameManager manager = new GameManager(proxy);
+//		ClientGameManager manager = new ClientGameManager(proxy);
 //		
 //		manager.loginPlayer("Sam", "sam");
 //		

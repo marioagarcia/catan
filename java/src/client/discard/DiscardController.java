@@ -6,10 +6,10 @@ import java.util.Observer;
 import shared.definitions.*;
 import shared.model.GameModel;
 import shared.model.card.ResourceList;
-import shared.model.facade.ModelFacade;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
+import client.manager.ClientModelFacade;
 import client.misc.*;
 
 
@@ -39,7 +39,7 @@ public class DiscardController extends Controller implements IDiscardController 
 				}
 				
 				if(latest_model.getLocalPlayer().getNumberOfCards() <= 7){
-					ModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
+					ClientModelFacade.getInstance(null).discardCards(new ResourceList(0,0,0,0,0));
 					
 					if(getDiscardView().isModalShowing()){
 						getDiscardView().closeModal();
@@ -76,7 +76,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		resourceList = new ResourceList(0,0,0,0,0);
 		
 		this.waitView = waitView;
-		ModelFacade.getInstance(null).addObserver(new DiscardModelObserver());
+		ClientModelFacade.getInstance(null).addObserver(new DiscardModelObserver());
 		
 		oldTurnTracker = new TurnTracker();
 		oldTurnTracker.setStatus(null);
@@ -107,7 +107,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		if(getDiscardView().isModalShowing()){
 			getDiscardView().closeModal();
 		}
-		ModelFacade.getInstance(null).discardCards(this.resourceList);
+		ClientModelFacade.getInstance(null).discardCards(this.resourceList);
 	}
 	
 	private void updateDiscardView(){
@@ -118,12 +118,12 @@ public class DiscardController extends Controller implements IDiscardController 
 			getDiscardView().setResourceDiscardAmount(resource, this.resourceList.getResourceByType(resource));
 		}
 		
-		int amount_to_discard = ModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards()/2;
+		int amount_to_discard = ClientModelFacade.getInstance(null).getLocalPlayer().getNumberOfCards()/2;
 		
 		getDiscardView().setDiscardButtonEnabled(total_cards == amount_to_discard);
 		
 		for(ResourceType resource : ResourceType.values()){
-			boolean increase = this.resourceList.getResourceByType(resource) < ModelFacade.getInstance(null).getLocalPlayer().getResourceList().getResourceByType(resource);
+			boolean increase = this.resourceList.getResourceByType(resource) < ClientModelFacade.getInstance(null).getLocalPlayer().getResourceList().getResourceByType(resource);
 			boolean decrease = this.resourceList.getResourceByType(resource) > 0;
 			getDiscardView().setResourceAmountChangeEnabled(resource, increase, decrease);
 		}

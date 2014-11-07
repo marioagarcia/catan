@@ -10,10 +10,10 @@ import javax.swing.JOptionPane;
 
 import shared.definitions.CatanColor;
 import shared.model.GameInfo;
-import shared.model.facade.ModelFacade;
 import shared.model.player.Player;
 import shared.model.player.PlayerInfo;
 import client.base.*;
+import client.manager.ClientModelFacade;
 import client.misc.*;
 
 
@@ -47,7 +47,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
 		
-		ModelFacade.getInstance(null).addGameListObserver(new GameListObserver());
+		ClientModelFacade.getInstance(null).addGameListObserver(new GameListObserver());
 		getUpdates = true;
 	}
 	
@@ -106,7 +106,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		ModelFacade.getInstance(null).startListPoller();
+		ClientModelFacade.getInstance(null).startListPoller();
 		populateGamesList(); //Retrieve the games list from the server and populate the view with it
 
 		if (!getJoinGameView().isModalShowing()){
@@ -136,7 +136,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		String gameName = newGameView.getTitle();
 		Boolean randTiles = newGameView.getRandomlyPlaceHexes();
 		Boolean randNumbers = newGameView.getRandomlyPlaceNumbers();
@@ -190,7 +190,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 	
 	public void populateGamesList(){
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		GameInfo[] games = facade.getGamesList(); //Retrieve the list of games from the server		
 		PlayerInfo player = new PlayerInfo(); //Get the local player's color, name, and id 
 		player.setPlayerInfo(null, facade.getLocalPlayer().getName(), facade.getLocalPlayer().getPlayerId());
@@ -224,7 +224,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		if(chosenGame == null){ //This was primarily used in the beginning for testing
 
 			if (getSelectColorView().isModalShowing()){

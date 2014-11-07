@@ -1,4 +1,4 @@
-package client.manager.interfaces;
+package shared.model.manager.interfaces;
 
 public interface GMDevCardBankInterface {
 	

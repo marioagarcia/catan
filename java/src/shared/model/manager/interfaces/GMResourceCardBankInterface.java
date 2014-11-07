@@ -1,4 +1,4 @@
-package client.manager.interfaces;
+package shared.model.manager.interfaces;
 
 import shared.definitions.ResourceType;
 

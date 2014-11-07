@@ -3,17 +3,17 @@ package state;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.facade.ModelFacade;
 import shared.model.player.RobPlayerInfo;
+import client.manager.ClientModelFacade;
 import client.map.MapController;
 
 public class GameState
 {
-	protected ModelFacade facade = null;
+	protected ClientModelFacade facade = null;
 	protected MapController controller = null;
 	
 	public GameState(MapController c){
-		facade = ModelFacade.getInstance(null);
+		facade = ClientModelFacade.getInstance(null);
 		controller = c;
 	}
 	

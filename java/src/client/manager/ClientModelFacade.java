@@ -1,4 +1,4 @@
-package shared.model.facade;
+package client.manager;
 
 import java.util.Observer;
 
@@ -11,39 +11,39 @@ import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.facade.ModelFacadeInterface;
+import shared.model.manager.interfaces.GMDomesticTradeInterface;
 import shared.model.player.Player;
 import shared.model.player.Players;
 import shared.model.player.RobPlayerInfo;
 import client.communication.server.ServerMoxy;
 import client.communication.server.ServerProxy;
 import client.communication.server.ServerProxyInterface;
-import client.manager.GameManager;
-import client.manager.interfaces.GMDomesticTradeInterface;
 
-public class ModelFacade implements ModelFacadeInterface {
+public class ClientModelFacade implements ModelFacadeInterface {
 	
-	private static ModelFacade facadeInstance = null;
-	private GameManager gameManager;
+	private static ClientModelFacade facadeInstance = null;
+	private ClientGameManager gameManager;
 	
-	protected ModelFacade(ServerProxyInterface proxy)
+	protected ClientModelFacade(ServerProxyInterface proxy)
 	{
 		if (proxy != null)
 		{
-			this.gameManager = new GameManager(proxy);
+			this.gameManager = new ClientGameManager(proxy);
 		}
 		else
 		{
-			this.gameManager = new GameManager(new ServerMoxy());
+			this.gameManager = new ClientGameManager(new ServerMoxy());
 		}
 	}
 	
-	public static ModelFacade getInstance(ServerProxyInterface proxy){
+	public static ClientModelFacade getInstance(ServerProxyInterface proxy){
 		if(facadeInstance == null){
 			if(proxy == null){
-				facadeInstance = new ModelFacade(new ServerProxy(null, null));
+				facadeInstance = new ClientModelFacade(new ServerProxy(null, null));
 			}else
 			{
-				facadeInstance = new ModelFacade(proxy);
+				facadeInstance = new ClientModelFacade(proxy);
 			}
 		}
 		return facadeInstance;
@@ -292,7 +292,7 @@ public class ModelFacade implements ModelFacadeInterface {
 		return gameManager.populateGameList();
 	}
 	
-	public GameManager getManager(){
+	public ClientGameManager getManager(){
 		return gameManager;
 	}
 	

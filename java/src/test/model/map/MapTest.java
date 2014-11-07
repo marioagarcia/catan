@@ -17,12 +17,12 @@ import shared.locations.VertexLocation;
 import shared.model.card.DevCardList;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
+import shared.model.manager.GameData;
 import shared.model.map.BoardMap;
 import shared.model.player.Player;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import shared.serialization.ModelSerializer;
-import client.manager.GameData;
 
 public class MapTest {
 	

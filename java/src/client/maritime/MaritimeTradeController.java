@@ -10,13 +10,13 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import shared.model.GameModel;
 import shared.model.card.MaritimeTrade;
-import shared.model.facade.ModelFacade;
 import shared.model.map.BoardMap;
 import shared.model.map.Port;
 import shared.model.player.Player;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
+import client.manager.ClientModelFacade;
 
 
 /**
@@ -59,7 +59,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		setTradeOverlay(tradeOverlay);
 		this.trade = new MaritimeTrade();
 		getTradeView().enableMaritimeTrade(false);
-		ModelFacade.getInstance(null).addObserver(new MaritimeTradeObserver());
+		ClientModelFacade.getInstance(null).addObserver(new MaritimeTradeObserver());
 	}
 	
 	public IMaritimeTradeView getTradeView() {
@@ -93,7 +93,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		if(port != null){
 			location = port.getLocation();
 		}
-		ModelFacade.getInstance(null).getManager().maritimeTrade(location, trade);
+		ClientModelFacade.getInstance(null).getManager().maritimeTrade(location, trade);
 		getTradeOverlay().closeModal();
 	}
 
@@ -107,7 +107,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		this.trade.setResourceOut(resource);
 		
 		Port port = this.determineTradeLocation(this.trade.getResourceIn());
-		this.getTradeOverlay().setTradeEnabled(ModelFacade.getInstance(null).canMaritimeTrade((port == null) ? null : port.getLocation(), trade));
+		this.getTradeOverlay().setTradeEnabled(ClientModelFacade.getInstance(null).canMaritimeTrade((port == null) ? null : port.getLocation(), trade));
 
 		getTradeOverlay().selectGetOption(resource, 1);
 		getTradeOverlay().setStateMessage(this.stateMessageTrade);
@@ -137,7 +137,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	
 	private int determineRatio(ResourceType type){
 		int ratio = 4;
-		for(Port port : boardMap.getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
+		for(Port port : boardMap.getPortsByPlayer(ClientModelFacade.getInstance(null).getLocalPlayer())){
 			if(port.getResource() == PortType.THREE && ratio > 3){
 				ratio = 3;
 			}
@@ -151,7 +151,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	
 	private Port determineTradeLocation(ResourceType type){
 		Port best_port = null;
-		for( Port port : boardMap.getPortsByPlayer(ModelFacade.getInstance(null).getLocalPlayer())){
+		for( Port port : boardMap.getPortsByPlayer(ClientModelFacade.getInstance(null).getLocalPlayer())){
 			if(port.getResource().toString().equals(type.toString())){
 				return port;
 			}

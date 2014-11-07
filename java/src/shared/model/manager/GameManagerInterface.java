@@ -1,13 +1,14 @@
-package client.manager;
-import java.util.List;
+package shared.model.manager;
 import java.util.Observer;
 
-import client.manager.interfaces.GMDomesticTradeInterface;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 import shared.model.GameInfo;
 import shared.model.card.*;
+import shared.model.manager.interfaces.GMDomesticTradeInterface;
+import shared.model.player.Player;
+import shared.model.player.Players;
 /**
  * This class ensures that the preconditions for the actions the different model classes
  * attempt are met.
@@ -20,7 +21,7 @@ public interface GameManagerInterface
 	 * sends a request to the server to login the player with the given credentials
 	 * @param username the name of the user
 	 * @param password the password of the user
-	 * @return true if the player was succesfully logged in
+	 * @return true if the player was successfully logged in
 	 */
 	public boolean loginPlayer(String username, String password);
 	
@@ -28,7 +29,7 @@ public interface GameManagerInterface
 	 * sends a request to the server to register the player with the given credentials
 	 * @param username the name of the user
 	 * @param password the password of the user
-	 * @return true if the player was succesfully registered
+	 * @return true if the player was successfully registered
 	 */
 	public boolean registerPlayer(String username, String password);
 	/**
@@ -274,5 +275,11 @@ public interface GameManagerInterface
 	public boolean playMonument();
 	
 	public boolean isLocalPlayersTurn();
+
+	public GameList getGameList();
+
+	public Player getLocalPlayer();
+
+	public Players getAllPlayers();
 	
 }

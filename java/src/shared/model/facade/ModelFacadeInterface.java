@@ -11,7 +11,7 @@ import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
-import client.manager.interfaces.GMDomesticTradeInterface;
+import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
 /**
  * This class ensures the game's data and state are properly stored in the Catan Model

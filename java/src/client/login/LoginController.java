@@ -4,8 +4,8 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
-import shared.model.facade.ModelFacade;
 import client.base.*;
+import client.manager.ClientModelFacade;
 import client.misc.*;
 
 /**
@@ -67,7 +67,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void signIn() {
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		
 		String username = this.getLoginView().getLoginUsername(); //Get the username from the view
 		String password = this.getLoginView().getLoginPassword(); //Get the password from the view
@@ -86,7 +86,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void register() {
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		
 		String username = this.getLoginView().getRegisterUsername(); //Get username from the view
 		String password = this.getLoginView().getRegisterPassword(); //Get password from the view

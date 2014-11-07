@@ -5,10 +5,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.model.GameInfo;
-import shared.model.facade.ModelFacade;
+import shared.model.manager.GameList;
 import shared.model.player.PlayerInfo;
 import client.base.*;
-import client.manager.GameList;
+import client.manager.ClientModelFacade;
 
 
 /**
@@ -22,7 +22,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
-		ModelFacade.getInstance(null).addGameListObserver(gameListObserver);
+		ClientModelFacade.getInstance(null).addGameListObserver(gameListObserver);
 		hasLoggedIn = false;
 	}
 
@@ -35,7 +35,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 		hasLoggedIn = true;
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		
 		String[] listAI = facade.getListAI(); //Retrieve AIList
 		GameInfo localGameInfo = facade.getCurrentGame();
@@ -61,7 +61,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	
 	//Gets the list of players from the game from the updated game list that corresponds to the current game
 	public List<PlayerInfo> getPlayerList(GameInfo gi){
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		
 		GameInfo[] gameList = facade.getGamesList();
 
@@ -90,7 +90,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
-		ModelFacade facade = ModelFacade.getInstance(null);
+		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		
 		String ai = getView().getSelectedAI();//Retrieve the selected AI
 		
