@@ -110,7 +110,23 @@ public interface PlayerInterface
 	 */
 	public boolean canPlayMonopoly();
 	
+	/**
+	 * determines whether or not the Player can build a road
+	 * @return boolean whether or not the Player can build a road
+	 */
+	public boolean canBuildRoad();
 	
+	/**
+	 * determines whether or not the Player can build a Settlement
+	 * @return boolean whether or not the Player can build a Settlement
+	 */
+	public boolean canBuildSettlement();
+	
+	/**
+	 * determines whether or not the Player can build a City
+	 * @return boolean whether or not the Player can build a City
+	 */
+	public boolean canBuildCity();
 	
 	
 }

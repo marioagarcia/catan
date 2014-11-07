@@ -184,7 +184,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		this.name = playerName;
 		this.color = playerColor;	
 	}
-	
+
+	@Override
 	public boolean canBuildRoad(){
 		boolean canBuildRoad = false;
 		if(resourceList.getWood() >= 1 &&
@@ -195,7 +196,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		
 		return canBuildRoad;
 	}
-	
+
+	@Override
 	public boolean canBuildSettlement(){
 		boolean canBuildSettlement = false;
 		
@@ -207,7 +209,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		
 		return canBuildSettlement;
 	}
-	
+
+	@Override
 	public boolean canBuildCity(){
 		boolean canBuildCity = false;
 		//the player has 2 wheat, 3 ore, 1 city
@@ -217,7 +220,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		
 		return canBuildCity;
 	}
-	
+
+	@Override
 	public boolean canMaritimeTrade(MaritimeTrade trade){
 		boolean result = false;
 		int resourceAmount = 0;
