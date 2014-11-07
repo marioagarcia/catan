@@ -881,22 +881,5 @@ public class ModelSerializer implements ModelSerializerInterface {
 		
 		return tradeOffer;
 	}
-
-/*	public static void main(String[] args){
-		ModelSerializer ms = new ModelSerializer();
-		
-		File file = new File(args[0]);
-		
-		String content = "";
-		try {
-			content = new Scanner(file).useDelimiter("\\Z").next();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		ms.deserializeGameModel(content);
-		
-	}*/
 	
 }
