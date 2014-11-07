@@ -18,6 +18,11 @@ public interface TurntrackerInterface {
 	 * @return the integer number of the current turn, 0 being the setup phase
 	 */
 	public int getCurrentTurn();
+	
+	/**
+	 * Changes the index representing whose turn it is
+	 * @param currentPlayerIndex The new current player's index
+	 */
 	public void setCurrentTurn(int currentPlayerIndex);
 	
 	/**
