@@ -14,7 +14,7 @@ import com.sun.net.httpserver.*;
 
 public class Server {
 
-	private static final int SERVER_PORT_NUMBER = 8080;
+	private static final int SERVER_PORT_NUMBER = 8081;
 	private static final int MAX_WAITING_CONNECTIONS = 10;
 	
 	private HttpServer server;
