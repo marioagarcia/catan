@@ -7,7 +7,6 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;

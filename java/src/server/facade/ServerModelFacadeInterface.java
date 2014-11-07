@@ -7,7 +7,6 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
@@ -62,12 +61,11 @@ public interface ServerModelFacadeInterface {
 	public boolean canJoinGame(int game_id, int player_id, CatanColor color);
 	
 	/**
-	 * Adds the player to game
-	 * @param game_id 
-	 * @param player_id
-	 * @param color
-	 * @param game
-	 * @return
+	 * Adds the player to the specified game
+	 * @param game_id the id of the desired game
+	 * @param player_id the player that should be added
+	 * @param color the color that the player choose
+	 * @return  true if the player was successfully added
 	 */
 	public boolean joinGame(int game_id, int player_id, CatanColor color);
 	
@@ -120,6 +118,14 @@ public interface ServerModelFacadeInterface {
 	 * @return true if the user is in the game
 	 */
 	public boolean canSendChat(int game_id, int player_index);
+	
+	/**
+	 * Adds a chat sent by the specific player
+	 * @param game_id the specific game id
+	 * @param player_index they player sending the chat
+	 * @param chatMessage the message that was sent
+	 * @return true if the chat was added successfully
+	 */
 	public boolean sendChat(int game_id, int player_index, String chatMessage);
 	
 	/**
@@ -130,6 +136,15 @@ public interface ServerModelFacadeInterface {
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
 	public boolean canAcceptTrade(int game_id, int player_index, TradeInterface trade);
+	
+	/**
+	 * Accepts or rejects the trade being offered
+	 * @param game_id the specific game
+	 * @param player_index the index of the player accepting or rejecting the trade
+	 * @param trade the cards being offered
+	 * @param accept true if the player accepted the offer
+	 * @return true if the trade was recorded successfully
+	 */
 	public boolean acceptTrade(int game_id, int player_index, TradeInterface trade, boolean accept);
 	
 	/**
@@ -141,6 +156,14 @@ public interface ServerModelFacadeInterface {
 	 * being discarded, false otherwise
 	 */
 	public boolean canDiscardCards(int game_id, int player_index, ResourceList list);
+	
+	/**
+	 * discards card in the a players hand
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @param list the list of cards to be discarded
+	 * @return true if the cards were discarded successfully
+	 */
 	public boolean discardCards(int game_id, int player_index, ResourceList list);
 	
 	/**
@@ -150,6 +173,14 @@ public interface ServerModelFacadeInterface {
 	 * false otherwise
 	 */
 	public boolean canRoll(int game_id, int player_index);
+	
+	/**
+	 * rolls the number given for the specific player
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @param number the number rolled
+	 * @return true if the rolled number was correctly recorded
+	 */
 	public boolean roll(int game_id, int player_index, int number);
 	
 	/**
@@ -161,6 +192,14 @@ public interface ServerModelFacadeInterface {
 	 * and if the player has the necessary resources, false otherwise
 	 */
 	public boolean canBuildRoad(int game_id, int player_index, EdgeLocation location);
+	
+	/**
+	 * Builds a road for the specific player in the specific location
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @param location the location for the road to be built in
+	 * @return true if the road was built correctly
+	 */
 	public boolean buildRoad(int game_id, int player_index, EdgeLocation location);
 	
 	/**
@@ -173,7 +212,16 @@ public interface ServerModelFacadeInterface {
 	 * false otherwise
 	 */
 	public boolean canBuildSettlement(int game_id, int player_index, VertexLocation location);
+	
+	/**
+	 * Builds a settlement for the specific player in the specific location
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @param location the location for the settlement to be built in
+	 * @return true if the settlement was built correctly
+	 */
 	public boolean buildSettlement(int game_id, int player_index, VertexLocation location);
+	
 	/**
 	 * Checks that the player has a settlement on the location where the player wants
 	 * to build a city and that the player has 3 ore and 2 wheat (possibly vice versa)
@@ -182,6 +230,14 @@ public interface ServerModelFacadeInterface {
 	 * @return true if it was successful
 	 */
 	public boolean canBuildCity(int game_id, int player_index, VertexLocation location);
+	
+	/**
+	 * Builds a city for the specific player in the specific location
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @param location the location for the city to be built in
+	 * @return true if the city was built correctly
+	 */
 	public boolean buildCity(int game_id, int player_index, VertexLocation location);
 	
 	/**
@@ -191,6 +247,15 @@ public interface ServerModelFacadeInterface {
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
 	public boolean canOfferTrade(int game_id, int player_index, TradeInterface trade);
+	
+	/**
+	 * called when a trade is offered to a specific player
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @param trade the set of cards to be traded
+	 * @param otherPlayerIndex self explanatory 
+	 * @return true if the offer was traded correctly
+	 */
 	public boolean offerTrade(int game_id, int player_index, GMDomesticTradeInterface trade, int otherPlayerIndex);
 	
 	/**
@@ -204,6 +269,15 @@ public interface ServerModelFacadeInterface {
 	 * otherwise
 	 */
 	public boolean canMaritimeTrade(int game_id, int player_index, EdgeLocation location, MaritimeTrade trade);
+	
+	/**
+	 * sets a trade with the cardBank and the specific player
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @param location the location of the port so it can be checked against the player
+	 * @param trade the cards to be traded
+	 * @return true if the cards were traded correctly
+	 */
 	public boolean maritimeTrade(int game_id, int player_index, EdgeLocation location, MaritimeTrade trade);
 	
 	/**
@@ -212,6 +286,13 @@ public interface ServerModelFacadeInterface {
 	 * @return true if the client model status is "playing", false otherwise
 	 */
 	public boolean canFinishTurn(int game_id, int player_index);
+	
+	/**
+	 * finished the player's turn in the specific game
+	 * @param game_id the specific game 
+	 * @param player_index the specific player in the specific game
+	 * @return true if the player's turn was finished
+	 */
 	public boolean finishTurn(int game_id, int player_index);
 	
 	/**
@@ -222,6 +303,13 @@ public interface ServerModelFacadeInterface {
 	 * the bank has dev cards left, false otherwise
 	 */
 	public boolean canBuyDevCard(int game_id, int player_index);
+	
+	/**
+	 * gets a development card for the player 
+	 * @param game_id
+	 * @param player_index
+	 * @return true if the card was given to the player correctly
+	 */
 	public boolean buyDevCard(int game_id, int player_index);
 	
 	//dev cards
