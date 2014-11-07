@@ -4,9 +4,9 @@ import javax.swing.*;
 
 import client.catan.*;
 import client.communication.server.ServerProxy;
+import client.facade.ClientModelFacade;
 import client.login.*;
 import client.join.*;
-import client.manager.ClientModelFacade;
 import client.misc.*;
 import client.base.*;
 

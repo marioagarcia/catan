@@ -23,19 +23,18 @@ import shared.model.logging.history.HistoryLog;
 import shared.model.manager.GameCommands;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
-import shared.model.manager.GameManagerInterface;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 import shared.model.player.Player;
 import shared.model.player.Players;
 import shared.model.player.RobPlayerInfo;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
-import shared.serialization.ModelSerializer;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
+import client.serialization.ModelSerializer;
 
-public class ClientGameManager implements GameManagerInterface {
+public class ClientGameManager implements ClientGameManagerInterface {
 
 	private ServerProxyInterface serverProxy;
 	private ModelSerializer modelSerializer;

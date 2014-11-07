@@ -18,9 +18,9 @@ public class FinishTurn extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.manager.ServerModelFacade#canFinishTurn() canFinishTurn} with the parameters provided to the constructor
+	 * Calls {@link server.facade.ServerModelFacade#canFinishTurn(int, int) canFinishTurn} with the parameters provided to the constructor
 	 * to ensure this move is valid
-	 * If valid, a call is then made to {@link server.manager.ServerModelFacade#finishTurn() finishTurn}
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#finishTurn(int, int) finishTurn}
 	 */
 	@Override
 	public void execute() {

@@ -13,7 +13,7 @@ import shared.model.GameInfo;
 import shared.model.player.Player;
 import shared.model.player.PlayerInfo;
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 import client.misc.*;
 
 

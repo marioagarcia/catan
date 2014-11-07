@@ -8,7 +8,7 @@ import shared.definitions.ResourceType;
 import shared.model.GameModel;
 import shared.model.player.Player;
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 
 
 /**

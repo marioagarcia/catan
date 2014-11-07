@@ -1,4 +1,4 @@
-package shared.model.facade;
+package server.facade;
 
 import java.util.Observer;
 
@@ -11,27 +11,23 @@ import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.manager.GameList;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
-/**
- * This class ensures the game's data and state are properly stored in the Catan Model
- * as well as the server. 
- */
-public interface ModelFacadeInterface {
-	
+public interface ServerModelFacadeInterface {
 	/**
 	 * adds an observer to the game's model
 	 * this allows the observer to be notified when the game model is updated
 	 * you must first be in a game to call this method
 	 * @param observer the Observer which is to be added to the model
 	 */
-	public void addObserver(Observer observer);
+	public void addObserver(int game_id, Observer observer);
 
 	/**
 	 * sends a request to the server to login the player with the given credentials
 	 * @param username the name of the user
 	 * @param password the password of the user
-	 * @return true if the player was succesfully logged in
+	 * @return true if the player was successfully logged in
 	 */
 	public boolean loginPlayer(String username, String password);
 	
@@ -39,7 +35,7 @@ public interface ModelFacadeInterface {
 	 * sends a request to the server to register the player with the given credentials
 	 * @param username the name of the user
 	 * @param password the password of the user
-	 * @return true if the player was succesfully registered
+	 * @return true if the player was successfully registered
 	 */
 	public boolean registerPlayer(String username, String password);
 	/**
@@ -63,28 +59,37 @@ public interface ModelFacadeInterface {
 	 * the game or there is an available spot in the game, and the color
 	 * is valid, false otherwise
 	 */
-	public boolean canJoinGame(CatanColor color, GameInfo game);
-	public boolean joinGame(CatanColor color, GameInfo game);
+	public boolean canJoinGame(int game_id, int player_id, CatanColor color);
+	
+	/**
+	 * Adds the player to game
+	 * @param game_id 
+	 * @param player_id
+	 * @param color
+	 * @param game
+	 * @return
+	 */
+	public boolean joinGame(int game_id, int player_id, CatanColor color);
 	
 
 	/**
 	 * Saves the current game
 	 * @return true if the server was able to save the game
 	 */
-	public boolean saveGame();
+	public boolean saveGame(int game_id);
 	
 	/**
 	 * Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) 
 	 * The id is the same as the original game id.
 	 * @return true if the game was correctly loaded
 	 */
-	public boolean loadGame();
+	public boolean loadGame(int game_id);
 	
 	/**
 	 * This gets the current game model from the server and updates all the model classes
 	 * @return true if all model classes were correctly updated
 	 */
-	public boolean updateGameModel();
+	public boolean updateGameModel(int game_id);
 	
 	/**
 	 * Checks that the player has a valid user and a valid game id
@@ -92,7 +97,7 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise 
 	 */
-	public boolean resetGame();
+	public boolean resetGame(int game_id);
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -100,7 +105,7 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise  
 	 */
-	public boolean getGameCommands();
+	public boolean getGameCommands(int game_id);
 	
 	/**
 	 * Checks that the player has a valid user id and a valid game id
@@ -108,14 +113,14 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has a valid user id and a valid game id, 
 	 * false otherwise  
 	 */
-	public boolean postGameCommands();
+	public boolean postGameCommands(int game_id);
 	
 	/**
 	 * There are no preconditions so just checks for a valid palyer and game cookie
 	 * @return true if the user is in the game
 	 */
-	public boolean canSendChat();
-	public boolean sendChat(String chatMessage);
+	public boolean canSendChat(int game_id, int player_index);
+	public boolean sendChat(int game_id, int player_index, String chatMessage);
 	
 	/**
 	 * Checks that the player being offered the trade has the resources that the person whose
@@ -124,8 +129,8 @@ public interface ModelFacadeInterface {
 	 * @param trade representing the conditions of a trade. Resources, etc.
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
-	public boolean canAcceptTrade(TradeInterface trade);
-	public boolean acceptTrade(TradeInterface trade, boolean accept);
+	public boolean canAcceptTrade(int game_id, int player_index, TradeInterface trade);
+	public boolean acceptTrade(int game_id, int player_index, TradeInterface trade, boolean accept);
 	
 	/**
 	 * Checks that a player has over 7 cards and that the player has the cards
@@ -135,8 +140,8 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has over 7 cards and the player has the cards
 	 * being discarded, false otherwise
 	 */
-	public boolean canDiscardCards(ResourceList list);
-	public boolean discardCards(ResourceList list);
+	public boolean canDiscardCards(int game_id, int player_index, ResourceList list);
+	public boolean discardCards(int game_id, int player_index, ResourceList list);
 	
 	/**
 	 * Checks that it is the player's turn and that the model status is "rolling"
@@ -144,8 +149,8 @@ public interface ModelFacadeInterface {
 	 * @return true if it is the player's turn and the model status is "rolling",
 	 * false otherwise
 	 */
-	public boolean canRoll();
-	public boolean roll(int number);
+	public boolean canRoll(int game_id, int player_index);
+	public boolean roll(int game_id, int player_index, int number);
 	
 	/**
 	 * Checks that the road location is open, the road location is connected to 
@@ -155,8 +160,8 @@ public interface ModelFacadeInterface {
 	 * @return true if the location is open, connected to another road, is not on water, 
 	 * and if the player has the necessary resources, false otherwise
 	 */
-	public boolean canBuildRoad(EdgeLocation location);
-	public boolean buildRoad(EdgeLocation location);
+	public boolean canBuildRoad(int game_id, int player_index, EdgeLocation location);
+	public boolean buildRoad(int game_id, int player_index, EdgeLocation location);
 	
 	/**
 	 * Checks that the settlement location is open, not on water, connected to 
@@ -167,8 +172,8 @@ public interface ModelFacadeInterface {
 	 * player's roads, and the player has the resources to build a settlement,
 	 * false otherwise
 	 */
-	public boolean canBuildSettlement(VertexLocation location);
-	public boolean buildSettlement(VertexLocation location);
+	public boolean canBuildSettlement(int game_id, int player_index, VertexLocation location);
+	public boolean buildSettlement(int game_id, int player_index, VertexLocation location);
 	/**
 	 * Checks that the player has a settlement on the location where the player wants
 	 * to build a city and that the player has 3 ore and 2 wheat (possibly vice versa)
@@ -176,8 +181,8 @@ public interface ModelFacadeInterface {
 	 * @param location The location where the player wants to build a city
 	 * @return true if it was successful
 	 */
-	public boolean canBuildCity(VertexLocation location);
-	public boolean buildCity(VertexLocation location);
+	public boolean canBuildCity(int game_id, int player_index, VertexLocation location);
+	public boolean buildCity(int game_id, int player_index, VertexLocation location);
 	
 	/**
 	 * Checks that the player has the resources that he is offering in the trade
@@ -185,8 +190,8 @@ public interface ModelFacadeInterface {
 	 * @param trade the resources to offer
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
-	public boolean canOfferTrade(TradeInterface trade);
-	public boolean offerTrade(GMDomesticTradeInterface trade, int otherPlayerIndex);
+	public boolean canOfferTrade(int game_id, int player_index, TradeInterface trade);
+	public boolean offerTrade(int game_id, int player_index, GMDomesticTradeInterface trade, int otherPlayerIndex);
 	
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 
@@ -198,16 +203,16 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
-	public boolean canMaritimeTrade(EdgeLocation location, MaritimeTrade trade);
-	public boolean maritimeTrade(EdgeLocation location, MaritimeTrade trade);
+	public boolean canMaritimeTrade(int game_id, int player_index, EdgeLocation location, MaritimeTrade trade);
+	public boolean maritimeTrade(int game_id, int player_index, EdgeLocation location, MaritimeTrade trade);
 	
 	/**
 	 * Checks the turn tracker to make sure that the client model status is "playing"
 	 * 
 	 * @return true if the client model status is "playing", false otherwise
 	 */
-	public boolean canFinishTurn();
-	public boolean finishTurn();
+	public boolean canFinishTurn(int game_id, int player_index);
+	public boolean finishTurn(int game_id, int player_index);
 	
 	/**
 	 * Checks that the player has 1 sheep, 1 wheat, and 1 ore and that 
@@ -216,8 +221,8 @@ public interface ModelFacadeInterface {
 	 * @return true if the player has the resources to buy a dev card and 
 	 * the bank has dev cards left, false otherwise
 	 */
-	public boolean canBuyDevCard();
-	public boolean buyDevCard();
+	public boolean canBuyDevCard(int game_id, int player_index);
+	public boolean buyDevCard(int game_id, int player_index);
 	
 	//dev cards
 	
@@ -229,8 +234,8 @@ public interface ModelFacadeInterface {
 	 * @return true if the resources the player specifies are in the bank, false
 	 * otherwise
 	 */
-	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2);
-	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2);
+	public boolean canPlayYearOfPlenty(int game_id, int player_index, ResourceType type1, ResourceType type2);
+	public boolean playYearOfPlenty(int game_id, int player_index, ResourceType type1, ResourceType type2);
 	/**
 	 * Checks that the first road location is connected to one of the player's
 	 * roads, the second road location is connected to one of the player's roads
@@ -244,8 +249,8 @@ public interface ModelFacadeInterface {
 	 * previous location, neither location is on water, and the player has two
 	 * roads, false otherwise
 	 */
-	public boolean canPlayRoadBuilding(EdgeLocation location1, EdgeLocation location2);
-	public boolean playRoadBuilding(EdgeLocation location1, EdgeLocation location2);
+	public boolean canPlayRoadBuilding(int game_id, int player_index, EdgeLocation location1, EdgeLocation location2);
+	public boolean playRoadBuilding(int game_id, int player_index, EdgeLocation location1, EdgeLocation location2);
 	
 	/**
 	 * Checks that the robber isn't being kept in the same place and that the 
@@ -256,20 +261,22 @@ public interface ModelFacadeInterface {
 	 * @param victimIndex The player being robbed
 	 * @return true if successful 
 	 */
-	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int victimIndex);
-	public boolean playSoldier(HexLocation newLocation, int victimIndex);
+	public boolean canPlaySoldier(int game_id, int player_index, HexLocation oldLocation, HexLocation newLocation, int victimIndex);
+	public boolean playSoldier(int game_id, int player_index, HexLocation newLocation, int victimIndex);
 	
 	/**
 	 * Checks that the it is the player's turn and that the player has the monopoly dev card
 	 * @return true
 	 */
-	public boolean canPlayMonopoly();
-	public boolean playMonopoly(ResourceType resourceType);
+	public boolean canPlayMonopoly(int game_id, int player_index);
+	public boolean playMonopoly(int game_id, int player_index, ResourceType resourceType);
 	
 	/**
 	 * Checks that the it is the player's turn and that the player has the monument dev card
 	 * @return true
 	 */
-	public boolean canPlayMonument();
-	public boolean playMonument();
+	public boolean canPlayMonument(int game_id, int player_index);
+	public boolean playMonument(int game_id, int player_index);
+	
+	public GameList getGameList();
 }

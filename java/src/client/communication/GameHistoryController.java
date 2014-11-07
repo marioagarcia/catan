@@ -3,7 +3,7 @@ package client.communication;
 import java.util.*;
 
 import client.base.*;
-import client.manager.ClientModelFacade;
+import client.facade.ClientModelFacade;
 import shared.definitions.*;
 import shared.model.GameModel;
 import shared.model.logging.history.LogLineInterface;

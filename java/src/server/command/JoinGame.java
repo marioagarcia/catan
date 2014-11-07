@@ -18,9 +18,9 @@ public class JoinGame extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.manager.ServerModelFacade#canJoinGame(shared.definitions.CatanColor, shared.model.GameInfo) canJoinGame} with the parameters provided to the constructor
+	 * Calls {@link server.facade.ServerModelFacade#canJoinGame(shared.definitions.CatanColor, shared.model.GameInfo) canJoinGame} with the parameters provided to the constructor
 	 * to ensure this move is valid
-	 * If valid, a call is then made to {@link server.manager.ServerModelFacade#joinGame(shared.definitions.CatanColor, shared.model.GameInfo) joinGame}
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#joinGame(shared.definitions.CatanColor, shared.model.GameInfo) joinGame}
 	 */
 	@Override
 	public void execute() {

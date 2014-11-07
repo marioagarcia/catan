@@ -1,4 +1,4 @@
-package client.manager;
+package client.facade;
 
 import java.util.Observer;
 
@@ -11,7 +11,6 @@ import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
-import shared.model.facade.ModelFacadeInterface;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 import shared.model.player.Player;
 import shared.model.player.Players;
@@ -19,8 +18,9 @@ import shared.model.player.RobPlayerInfo;
 import client.communication.server.ServerMoxy;
 import client.communication.server.ServerProxy;
 import client.communication.server.ServerProxyInterface;
+import client.manager.ClientGameManager;
 
-public class ClientModelFacade implements ModelFacadeInterface {
+public class ClientModelFacade implements ClientModelFacadeInterface {
 	
 	private static ClientModelFacade facadeInstance = null;
 	private ClientGameManager gameManager;

@@ -11,47 +11,24 @@ import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
-import shared.model.manager.GameList;
-import shared.model.manager.GameManagerInterface;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
-import shared.model.player.Player;
-import shared.model.player.Players;
 
-public class SeverGameManager implements GameManagerInterface {
+public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public void addObserver(Observer observer) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public boolean loginPlayer(String username, String password) {
+	public boolean canJoinGame(int playerId, CatanColor color, GameInfo game) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean registerPlayer(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean createNewGame(String gameName, boolean randTiles,
-			boolean randNumbers, boolean randPorts) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canJoinGame(CatanColor color, GameInfo game) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean joinGame(CatanColor color, GameInfo game) {
+	public boolean joinGame(int game_id, CatanColor color, GameInfo game) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -70,12 +47,6 @@ public class SeverGameManager implements GameManagerInterface {
 
 	@Override
 	public boolean updateGameModel() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean resetGame() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -105,223 +76,206 @@ public class SeverGameManager implements GameManagerInterface {
 	}
 
 	@Override
-	public boolean canSendChat() {
+	public boolean canSendChat(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean sendChat(String chatMessage) {
+	public boolean sendChat(int player_index, String chatMessage) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canAcceptTrade(TradeInterface trade) {
+	public boolean canAcceptTrade(int player_index, TradeInterface trade) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean acceptTrade(TradeInterface trade, boolean accept) {
+	public boolean acceptTrade(int player_index, TradeInterface trade,
+			boolean accept) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canDiscardCards(ResourceList list) {
+	public boolean canDiscardCards(int player_index, ResourceList list) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean discardCards(ResourceList list) {
+	public boolean discardCards(int player_index, ResourceList list) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canRoll() {
+	public boolean canRoll(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean roll(int number) {
+	public boolean roll(int player_index, int number) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canBuildRoad(EdgeLocation location) {
+	public boolean canBuildRoad(int player_index, EdgeLocation location) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean buildRoad(EdgeLocation location) {
+	public boolean buildRoad(int player_index, EdgeLocation location) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canBuildSettlement(VertexLocation location) {
+	public boolean canBuildSettlement(int player_index, VertexLocation location) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean buildSettlement(VertexLocation location) {
+	public boolean buildSettlement(int player_index, VertexLocation location) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canBuildCity(VertexLocation location) {
+	public boolean canBuildCity(int player_index, VertexLocation location) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean buildCity(VertexLocation location) {
+	public boolean buildCity(int player_index, VertexLocation location) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canOfferTrade(TradeInterface trade) {
+	public boolean canOfferTrade(int player_index, TradeInterface trade) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean offerTrade(GMDomesticTradeInterface trade,
+	public boolean offerTrade(int player_index, GMDomesticTradeInterface trade,
 			int otherPlayerIndex) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canMaritimeTrade(EdgeLocation location, MaritimeTrade trade) {
+	public boolean canMaritimeTrade(int player_index, EdgeLocation location,
+			MaritimeTrade trade) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean maritimeTrade(EdgeLocation location, MaritimeTrade trade) {
+	public boolean maritimeTrade(int player_index, EdgeLocation location,
+			MaritimeTrade trade) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canFinishTurn() {
+	public boolean canFinishTurn(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean finishTurn() {
+	public boolean finishTurn(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canBuyDevCard() {
+	public boolean canBuyDevCard(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean buyDevCard() {
+	public boolean buyDevCard(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayYearOfPlenty(ResourceType type1, ResourceType type2) {
+	public boolean canPlayYearOfPlenty(int player_index, ResourceType type1,
+			ResourceType type2) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean playYearOfPlenty(ResourceType type1, ResourceType type2) {
+	public boolean playYearOfPlenty(int player_index, ResourceType type1,
+			ResourceType type2) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayRoadBuilding(EdgeLocation location1,
+	public boolean canPlayRoadBuilding(int player_index,
+			EdgeLocation location1, EdgeLocation location2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean playRoadBuilding(int player_index, EdgeLocation location1,
 			EdgeLocation location2) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean playRoadBuilding(EdgeLocation location1,
-			EdgeLocation location2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canPlaySoldier(HexLocation oldLocation,
+	public boolean canPlaySoldier(int player_index, HexLocation oldLocation,
 			HexLocation newLocation, int victimIndex) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean playSoldier(HexLocation newLocation, int victimIndex) {
+	public boolean playSoldier(int player_index, HexLocation newLocation,
+			int victimIndex) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayMonopoly() {
+	public boolean canPlayMonopoly(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean playMonopoly(ResourceType resourceType) {
+	public boolean playMonopoly(int player_index, ResourceType resourceType) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayMonument() {
+	public boolean canPlayMonument(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean playMonument() {
+	public boolean playMonument(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public boolean isLocalPlayersTurn() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public GameList getGameList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Player getLocalPlayer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Players getAllPlayers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

@@ -18,8 +18,8 @@ public class BuildSettlement extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.manager.ServerModelFacade#canBuildSettlement(shared.locations.VertexLocation) canBuildSettlement} to ensure the move is valid
-	 * If valid, a call is then made to {@link server.manager.ServerModelFacade#buildSettlement(shared.locations.VertexLocation) buildSettlement}
+	 * Calls {@link server.facade.ServerModelFacade#canBuildSettlement(int, int, shared.locations.VertexLocation) canBuildSettlement} to ensure the move is valid
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#buildSettlement(int, int, shared.locations.VertexLocation) buildSettlement}
 	 */
 	@Override
 	public void execute() {

@@ -17,6 +17,12 @@ public interface ModelCommunicatorInterface {
 	public GameData getGameModel(int game_id);
 	
 	/**
+	 * @param name The name of a game currently saved on the server
+	 * @return A {@link shared.model.manager.GameData} object with all the current information about the state of the saved game
+	 */
+	public GameData loadGameModel(String name);
+	
+	/**
 	 * @return A {@link shared.model.manager.GameList} object containing information about the games running on the server
 	 */
 	public GameList getGameList();
