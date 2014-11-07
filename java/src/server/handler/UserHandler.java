@@ -8,6 +8,12 @@ import com.sun.net.httpserver.HttpHandler;
 public class UserHandler implements HttpHandler{
 
 	@Override
+	/**
+	 * Parses the HttpExchange object to determine where to re-route and 
+	 * extracts the parameters object and has it deserialized by the serializer; then 
+	 * calls the method on the UserHandlerFacadeInterface that corresponds to the 
+	 * re-route and passes the parameters object into that method
+	 */
 	public void handle(HttpExchange arg0) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("In user handler");
