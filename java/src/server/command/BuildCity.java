@@ -18,8 +18,8 @@ public class BuildCity extends CatanCommand {
 	}
 	
 	/**
-	 * If the move is valid, places a city on the map and updates the player's resources, piece count, and victory points.
-	 * After this method is called, the player will have 3 less wheat, 2 less ore, 1 more settlement, 1 less city, and 1 more victory point.
+	 * Calls the {@link server.manager.ServerModelFacade#canBuildCity(shared.locations.VertexLocation) canBuildCity} to ensure the move is valid
+	 * If valid, a call is then made to {@link server.manager.ServerModelFacade#buildCity(shared.locations.VertexLocation) buildCity}
 	 */
 	@Override
 	public void execute() {

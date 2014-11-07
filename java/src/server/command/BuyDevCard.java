@@ -18,9 +18,8 @@ public class BuyDevCard extends CatanCommand {
 	}
 	
 	/**
-	 * Ensures that the game is in the right state, and the player has enough resources to buy a development card
-	 * After this method is called, the player will have 1 less wheat, sheep, and ore, and a development card
-	 * added to their NewDevCardList
+	 * Calls {@link server.manager.ServerModelFacade#canBuyDevCard() canBuyDevCard} to ensure the move is valid
+	 * If valid, a call is them made to {@link server.manager.ServerModelFacade#buyDevCard() buyDevCard}
 	 */
 	@Override
 	public void execute() {

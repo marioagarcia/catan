@@ -18,7 +18,8 @@ public class BuildRoad extends CatanCommand {
 	}
 	
 	/**
-	 * Ensures the move is valid. If it is valid, the road will be added to the map, and the player's resources and piece count will be updated
+	 * Calls {@link server.manager.ServerModelFacade#canBuildRoad(shared.locations.EdgeLocation) canBuildRoad} to ensure the move is valid
+	 * If valid, a call is then made to {@link server.manager.ServerModelFacade#buildRoad(shared.locations.EdgeLocation) buildRoad}
 	 */
 	@Override
 	public void execute() {
