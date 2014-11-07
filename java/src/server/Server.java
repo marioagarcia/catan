@@ -2,8 +2,6 @@ package server;
 
 import java.io.*;
 import java.net.*;
-import java.rmi.ServerException;
-
 import server.handler.GameHandler;
 import server.handler.GamesHandler;
 import server.handler.MovesHandler;

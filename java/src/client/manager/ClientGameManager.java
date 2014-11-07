@@ -137,14 +137,9 @@ public class ClientGameManager implements ClientGameManagerInterface {
 
 		String json_string = modelSerializer.serializeCreateGameRequest(param);
 
-		String game_info_json = serverProxy.createGame(json_string);
+		serverProxy.createGame(json_string);
 
-		//currentGame = modelSerializer.deserializeGameInfo(game_info_json);
-
-		if(currentGame != null)
-			return true;
-
-		return false;
+		return (currentGame != null);
 	}
 
 	@Override
@@ -277,7 +272,7 @@ public class ClientGameManager implements ClientGameManagerInterface {
 		if(gameCommands == null)
 			return false;
 
-		String json_string = null; //TODO modelSerializer.serializePostGameCommands(gameCommands);
+		String json_string = null;
 
 		serverProxy.postGameCommands(json_string);
 

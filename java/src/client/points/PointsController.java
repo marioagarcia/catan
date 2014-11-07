@@ -2,9 +2,7 @@ package client.points;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import shared.model.GameModel;
-import shared.model.Winner;
 import shared.model.player.Player;
 import client.base.*;
 import client.facade.ClientModelFacade;

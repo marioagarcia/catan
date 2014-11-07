@@ -15,7 +15,7 @@ public interface TurntrackerInterface {
 	public void setStatus(Status status);
 	
 	/**
-	 * @return the integer number of the current turn, 0 being the setup phase
+	 * @return the integer representing the player index of the player whose turn it is
 	 */
 	public int getCurrentTurn();
 	

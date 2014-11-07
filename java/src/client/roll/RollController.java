@@ -1,14 +1,7 @@
 package client.roll;
 
-import java.awt.Frame;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Timer;
-
-import javax.swing.JOptionPane;
-
-import shared.model.GameModel;
-import shared.model.turntracker.TurnTracker;
 import client.base.*;
 import client.facade.ClientModelFacade;
 
@@ -58,7 +51,6 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-		ClientModelFacade facade = ClientModelFacade.getInstance(null);
 		
 		DiceRoller diceRoller = new DiceRoller();
 		int rolledNumber = diceRoller.roll();
@@ -71,8 +63,6 @@ public class RollController extends Controller implements IRollController {
 		if(!getResultView().isModalShowing()){
 			getResultView().showModal();
 		}
-		//facade.roll(rolledNumber);
-		//setIsRolling(false);
 
 	}
 	
@@ -84,7 +74,6 @@ public class RollController extends Controller implements IRollController {
 
 		@Override
 		public void update(Observable o, Object arg) {
-			TurnTracker tt = ((GameModel)o).getTurnTracker();
 			
 			if(ClientModelFacade.getInstance(null).canRoll() && !isRolling){
 				startRoll();

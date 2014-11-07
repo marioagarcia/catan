@@ -4,10 +4,8 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
-import shared.locations.VertexLocation;
 import shared.model.GameModel;
 import shared.model.card.MaritimeTrade;
 import shared.model.map.BoardMap;

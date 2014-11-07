@@ -1,18 +1,15 @@
 package client.serialization;
 
 import java.util.ArrayList;
-
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PortType;
-import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.GameInfo;
-import shared.model.Winner;
 import shared.model.card.DevCardBank;
 import shared.model.card.DevCardList;
 import shared.model.card.DomesticTrade;
