@@ -1,7 +1,6 @@
 package shared.locations;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import shared.model.map.BoardMap;
 

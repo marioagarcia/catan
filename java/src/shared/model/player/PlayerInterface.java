@@ -1,6 +1,7 @@
 package shared.model.player;
 
 import shared.definitions.CatanColor;
+import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
 
@@ -58,4 +59,58 @@ public interface PlayerInterface
 	 * @return the number of cards currently in the players deck
 	 */
 	public int getNumberOfCards();
+	
+	/**
+	 * determines whether it is possible for the Player to make the given Maritime trade
+	 * @param trade the offered MaritimeTrade
+	 * @return boolean whether or not the Player may make the given MaritimeTrade
+	 */
+	public boolean canMaritimeTrade(MaritimeTrade trade);
+	
+	/**
+	 * determines whether or not the Player can make the given trade
+	 * @param trade the TradeInterface object representing the offered trade
+	 * @return boolean whether or not the Player may offer the given trade
+	 */
+	public boolean canOfferTrade(TradeInterface trade);
+	
+	/**
+	 * determines whether or not the Player may buy a dev card
+	 * @return boolean, whether or not the Player may purchase a dev card
+	 */
+	public boolean canBuyDevCard();
+	
+	/**
+	 * determines whether or not the Player can buy a year of plenty card
+	 * @return boolean whether or not the Player can play a year of plenty card
+	 */
+	public boolean canPlayYearOfPlenty();
+	
+	/**
+	 * determines whether or not the Player can play a road building card
+	 * @return boolean whether or not the Player can play a road building card
+	 */
+	public boolean canPlayRoadBuilding();
+	
+	/**
+	 * determines whether or not the Player can Play a Soldier card
+	 * @return boolean whether or not the Player can play a Soldier card
+	 */
+	public boolean canPlaySoldier();
+	
+	/**
+	 * determines whether or not the Player can play a Monument card
+	 * @return boolean whether or not the Player can play a Monument card
+	 */
+	public boolean canPlayMonument();
+	
+	/**
+	 * determines whether or not the Player can play a Monopoly card
+	 * @return boolean whether or not the Player can play a Monopoly card
+	 */
+	public boolean canPlayMonopoly();
+	
+	
+	
+	
 }
