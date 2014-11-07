@@ -1,38 +1,128 @@
 package server.handler.facade.real;
 
+import shared.model.manager.GameData;
+import shared.serialization.parameters.*;
+
 public interface MovesHandlerFacadeInterface extends HandlerFacadeInterface{
+
+	/**
+	 * Creates a SendChat command object and calls execute on it
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData sendChat(SendChatParameters params);
 	
-	public Boolean sendChat();
+	/**
+	 * Creates a RollNumber command object and calls execute on it
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData rollNumber(RollNumberParameters params);
 	
-	public Boolean rollNumber();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData robPlayer(RobPlayerParameters params);
 	
-	public Boolean robPlayer();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData finishTurn(FinishTurnParameters params);
 	
-	public Boolean finishTurn();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData buyDevCard(BuyDevCardParameters params);
 	
-	public Boolean buyDevCard();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData playYearOfPlenty(YearOfPlentyParameters params);
 	
-	public Boolean playYearOfPlenty();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData playRoadBuilding(RoadBuildingParameters params);
 	
-	public Boolean playRoadBuilding();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData playSoldier(SoldierParameters params);
 	
-	public Boolean playSoldier();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData playMonopoly(MonopolyParameters params);
 	
-	public Boolean playMonopoly();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData playMonument(MonumentParameters params);
 	
-	public Boolean playMonument();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData buildRoad(BuildRoadParameters params);
 	
-	public Boolean buildRoad();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData buildSettlement(BuildSettlementParameters params);
 	
-	public Boolean buildSettlement();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData buildCity(BuildCityParameters params);
 	
-	public Boolean buildCity();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData offerTrade(OfferTradeParameters params);
 	
-	public Boolean offerTrade();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData acceptTrade(AcceptTradeParameters params);
 	
-	public Boolean acceptTrade();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData maritimeTrade(MaritimeTradeParameters params);
 	
-	public Boolean maritimeTrade();
-	
-	public Boolean discardCards();
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public GameData discardCards(DiscardCardsParameters params);
 }

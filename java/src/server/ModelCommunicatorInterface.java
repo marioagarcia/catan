@@ -1,7 +1,7 @@
 package server;
 
-import client.manager.GameData;
-import client.manager.GameList;
+import shared.model.manager.GameData;
+import shared.model.manager.GameList;
 
 public interface ModelCommunicatorInterface {
 

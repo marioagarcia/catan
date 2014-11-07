@@ -43,7 +43,7 @@ public class Server {
 
 		server.setExecutor(null); // use the default executor
 		
-		server.createContext("/User", userHandler);
+		server.createContext("/", userHandler);
 		server.createContext("/Games", gamesHandler);
 		server.createContext("/Game", gameHandler);
 		server.createContext("/Moves", movesHandler);
