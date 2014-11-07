@@ -2,13 +2,13 @@ package shared.model.logging.chat;
 
 public interface MessageInterface {
 	/**
-	 * Used to extract the message content
+	 * Used to set the message content
 	 * @param content the message content
 	 */
 	public void setMessageContent(String content);
 	
 	/**
-	 * returns the player who corresponds to this message
+	 * sets the player who sent the message
 	 * @param playerName the player that sent the chat
 	 */
 	public void setPlayerName(String playerName);

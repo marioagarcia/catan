@@ -17,7 +17,7 @@ public interface PlayerInterface
 	
 	/**
 	 * Gets the Color representing this Player in the current game
-	 * @return the Color representing this Player
+	 * @return the CatanColor representing this Player
 	 */
 	public CatanColor getColor();
 	

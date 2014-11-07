@@ -2,7 +2,6 @@ package shared.model.manager;
 
 import java.util.ArrayList;
 
-import shared.model.Winner;
 import shared.model.card.DevCardBank;
 import shared.model.card.DomesticTrade;
 import shared.model.card.ResourceCardBank;

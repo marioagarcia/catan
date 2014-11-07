@@ -11,6 +11,10 @@ public interface GameLogInterface
 	 */
 	public GameChatInterface getGameChat();
 
+	/**
+	 * set the value of the GameChatInterface which the GameLogInterface contains
+	 * @param gameChat
+	 */
 	public void setGameChat(GameChatInterface gameChat);
 	
 	/**
@@ -19,5 +23,9 @@ public interface GameLogInterface
 	 */
 	public GameHistoryLogInterface getGameHistoryLog();
 	
+	/**
+	 * set the GameHistoryLogInterface object which the GameLogInterface contains
+	 * @param gameHistoryLog
+	 */
 	public void setGameHistoryLog(GameHistoryLogInterface gameHistoryLog);
 }

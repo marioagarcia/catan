@@ -1,7 +1,5 @@
 package shared.model.player;
 
-import java.util.Observable;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.model.card.DevCardList;

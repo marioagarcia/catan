@@ -10,10 +10,9 @@ public interface GameHistoryLogInterface
 	
 	/**
 	 * returns the entry at a particular index if the index is valid
-	 * raises LogEntryDoesNotExistException if index does not exist
+	 * else, returns null
 	 * @param logIndex the index which you want to access
 	 * @return object implementing the MoveLogInterface
-	 * throws LogEntryDoesNotExistException
 	 */
 	public LogLineInterface getLogLine(int logIndex);
 	

@@ -1,7 +1,5 @@
 package shared.model.logging;
 
-import java.util.Observable;
-
 import shared.model.logging.chat.GameChat;
 import shared.model.logging.chat.GameChatInterface;
 import shared.model.logging.history.GameHistoryLogInterface;

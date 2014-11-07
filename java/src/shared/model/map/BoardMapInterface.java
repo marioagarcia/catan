@@ -9,7 +9,7 @@ import shared.locations.HexLocation;
 public interface BoardMapInterface {
 
 	/**
-	 * returns the hex at the following location
+	 * returns the hex at the given location
 	 * @param location the location to be associated with the hex requested
 	 * @return HexInterface the hex associated with the given location
 	 * @throws HexNotFoundException if the hex doesn't exist

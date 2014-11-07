@@ -18,7 +18,7 @@ public interface GMPlayerInterface {
 	public boolean canBuyDevCard();
 	
 	/**
-	 * Determines that the player has the year of plenty, it hasn't played a dev card this turn
+	 * Determines that the player has the year of plenty, hasn't played a dev card this turn
 	 * @return true if player has the year of plenty card and the resources passed in
 	 */
 	public boolean canPlayYearOfPlenty();
@@ -30,20 +30,20 @@ public interface GMPlayerInterface {
 	public boolean canPlayRoadBuilding();
 
 	/**
-	 * Determines that the player has the soldier card and it hasn't played a dev card this turn
-	 * @return true if the player has the soldier card and it hasn't played a dev card this turn
+	 * Determines that the player has the soldier card and hasn't played a dev card this turn
+	 * @return true if the player has the soldier card and hasn't played a dev card this turn
 	 */
 	public boolean canPlaySoldier();
 	
 	/**
-	 * Determines that the player has the Monument card and it hasn't played a dev card this turn
-	 * @return true if the player has the Monument card and it hasn't played a dev card this turn
+	 * Determines that the player has the Monument card and hasn't played a dev card this turn
+	 * @return true if the player has the Monument card and hasn't played a dev card this turn
 	 */
 	public boolean canPlayMonument();
 	
 	/**
-	 * Determines that the player has the Monopoly card and it hasn't played a dev card this turn
-	 * @return true if the player has the Monopoly card and it hasn't played a dev card this turn
+	 * Determines that the player has the Monopoly card and hasn't played a dev card this turn
+	 * @return true if the player has the Monopoly card and hasn't played a dev card this turn
 	 */
 	public boolean canPlayMonopoly();
 	

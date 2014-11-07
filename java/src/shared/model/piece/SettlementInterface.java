@@ -8,12 +8,12 @@ import shared.locations.VertexLocation;
 public interface SettlementInterface extends BuildingInterface
 {
 	/**
-	 * @param corner The HexCorner that this Settlement will be placed on. Must not be currently occupied by another City or Settlement.
+	 * @param corner The VertexLocation that this Settlement will be placed on. Must not be currently occupied by another City or Settlement.
 	 */
 	public abstract void setLocation(VertexLocation corner);
 	
 	/**
-	 * @return The HexCorner where this Settlement is placed on the game board. Null if this Settlement is not on the board.
+	 * @return The VertexLocation where this Settlement is placed on the game board
 	 */
 	public abstract VertexLocation getLocation();
 }

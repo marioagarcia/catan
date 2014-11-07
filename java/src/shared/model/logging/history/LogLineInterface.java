@@ -8,6 +8,10 @@ public interface LogLineInterface
 	 */
 	public String getMove();
 	
+	/**
+	 * set the string form of the move
+	 * @param move information about the move
+	 */
 	public void setMove(String move);
 	
 	/**
@@ -17,6 +21,10 @@ public interface LogLineInterface
 	 */
 	public String getPlayerName();
 	
+	/**
+	 * set the name of the player who made the move
+	 * @param playerName
+	 */
 	public void setPlayerName(String playerName);
 	
 	

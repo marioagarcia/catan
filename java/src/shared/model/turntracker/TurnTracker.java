@@ -1,9 +1,6 @@
 package shared.model.turntracker;
 
-import java.util.Observable;
-
 import shared.model.manager.interfaces.GMTurnTrackerInterface;
-import shared.model.player.Players;
 import shared.serialization.interfaces.SerializerTurnTrackerInterface;
 
 public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
@@ -13,7 +10,6 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 	private int currentPlayerIndex;
 	private int playerWithLongestRoad;
 	private int playerWithLargestArmy;
-	private Players players;
 	
 	public TurnTracker(Status status, int currentTurnNumber, int longestRoad, int largestArmy){
 		this.status = status;

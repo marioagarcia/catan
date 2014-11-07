@@ -13,7 +13,7 @@ public interface CityInterface extends BuildingInterface
 	public abstract void setLocation(VertexLocation corner);
 	
 	/**
-	 * @return The HexCorner where this City is placed on the game board. Null if this City is not on the board.
+	 * @return The VertexLocation where this City is placed on the game board. Null if this City is not on the board.
 	 */
 	public abstract VertexLocation getLocation();
 }
