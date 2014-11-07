@@ -29,10 +29,10 @@ import shared.model.player.Players;
 import shared.model.player.RobPlayerInfo;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
-import shared.serialization.ModelSerializer;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
+import client.serialization.ModelSerializer;
 
 public class ClientGameManager implements ClientGameManagerInterface {
 

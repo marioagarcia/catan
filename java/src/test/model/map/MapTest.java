@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
+import client.serialization.ModelSerializer;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -22,7 +23,6 @@ import shared.model.map.BoardMap;
 import shared.model.player.Player;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
-import shared.serialization.ModelSerializer;
 
 public class MapTest {
 	
