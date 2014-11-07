@@ -4,8 +4,8 @@ public class LoadGameRequestParameters extends MasterParameterInterface{
 
 	private String name;
 	
-	public LoadGameRequestParameters(String nme){
-		name = nme;
+	public LoadGameRequestParameters(String name){
+		this.name = name;
 	}
 
 	public String getName() {
