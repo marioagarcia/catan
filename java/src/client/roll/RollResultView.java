@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 
 import javax.swing.*;
 
+import shared.model.facade.ModelFacade;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 import client.utils.ImageUtils;
 
 

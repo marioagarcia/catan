@@ -4,8 +4,8 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
+import shared.model.facade.ModelFacade;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 import client.misc.*;
 
 /**

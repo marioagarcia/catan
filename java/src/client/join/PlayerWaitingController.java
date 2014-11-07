@@ -5,9 +5,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.model.GameInfo;
+import shared.model.facade.ModelFacade;
 import shared.model.player.PlayerInfo;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 import client.manager.GameList;
 
 

@@ -9,7 +9,7 @@
 //
 //import shared.definitions.CatanColor;
 //import shared.definitions.ResourceType;
-//import client.communication.facade.ModelFacade;
+//import shared.model.facade.ModelFacade;
 //import client.communication.server.ServerMoxy;
 //import client.manager.GameManager;
 //import shared.model.GameInfo;

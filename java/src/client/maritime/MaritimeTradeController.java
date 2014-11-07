@@ -10,13 +10,13 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import shared.model.GameModel;
 import shared.model.card.MaritimeTrade;
+import shared.model.facade.ModelFacade;
 import shared.model.map.BoardMap;
 import shared.model.map.Port;
 import shared.model.player.Player;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 
 
 /**

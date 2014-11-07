@@ -2,8 +2,8 @@ package client.main;
 
 import javax.swing.*;
 
+import shared.model.facade.ModelFacade;
 import client.catan.*;
-import client.communication.facade.ModelFacade;
 import client.communication.server.ServerProxy;
 import client.login.*;
 import client.join.*;

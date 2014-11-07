@@ -6,13 +6,13 @@ import java.util.Observer;
 
 import shared.model.GameInfo;
 import shared.model.GameModel;
+import shared.model.facade.ModelFacade;
 import shared.model.player.Player;
 import shared.model.player.PlayerInfo;
 import shared.model.player.Players;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 
 
 /**

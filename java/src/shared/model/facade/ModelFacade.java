@@ -1,4 +1,4 @@
-package client.communication.facade;
+package shared.model.facade;
 
 import java.util.Observer;
 

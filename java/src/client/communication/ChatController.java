@@ -9,13 +9,13 @@ import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.model.GameModel;
+import shared.model.facade.ModelFacade;
 import shared.model.logging.chat.GameChatInterface;
 import shared.model.logging.chat.MessageDoesNotExistException;
 import shared.model.logging.chat.MessageInterface;
 import shared.model.player.Player;
 import shared.model.player.Players;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 
 
 /**

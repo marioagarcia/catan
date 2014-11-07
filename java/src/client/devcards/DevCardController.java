@@ -6,9 +6,9 @@ import java.util.Observer;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.model.GameModel;
+import shared.model.facade.ModelFacade;
 import shared.model.player.Player;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 
 
 /**

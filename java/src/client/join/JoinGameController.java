@@ -10,10 +10,10 @@ import javax.swing.JOptionPane;
 
 import shared.definitions.CatanColor;
 import shared.model.GameInfo;
+import shared.model.facade.ModelFacade;
 import shared.model.player.Player;
 import shared.model.player.PlayerInfo;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 import client.misc.*;
 
 

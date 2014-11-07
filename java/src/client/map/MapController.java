@@ -5,6 +5,7 @@ import java.util.*;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.GameModel;
+import shared.model.facade.ModelFacade;
 import shared.model.map.BoardMap;
 import shared.model.map.Hex;
 import shared.model.map.HexInterface;
@@ -22,7 +23,6 @@ import state.GameState;
 import state.PlayingState;
 import state.RobbingState;
 import client.base.*;
-import client.communication.facade.ModelFacade;
 
 
 /**
