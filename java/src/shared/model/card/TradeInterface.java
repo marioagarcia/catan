@@ -8,6 +8,7 @@ public interface TradeInterface {
 	 * sets the number of a card type that we want to get
 	 * @param type the resource type
 	 * @param count the number of the card that we will give/get
+	 * @return void
 	 * a positive number means that we will give them the cards
 	 * a negative number means that we expect cards in return
 	 */

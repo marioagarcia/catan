@@ -22,7 +22,7 @@ public interface ResourceCardBankInterface
 	public boolean containsCards(ResourceType type1, ResourceType type2);
 	
 	/**
-	 * Removes a card from the Player's CardInventory and places it in the CardBank.
+	 * Removes a card from the Player's CardInventory
 	 * The Player must have at least one of the given Card objects when this method is called. 
 	 * @param type The Card type to be removed
 	 * @return the card that was removed

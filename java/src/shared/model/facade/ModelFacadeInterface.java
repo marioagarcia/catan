@@ -19,6 +19,12 @@ import shared.model.manager.interfaces.GMDomesticTradeInterface;
  */
 public interface ModelFacadeInterface {
 	
+	/**
+	 * adds an observer to the game's model
+	 * this allows the observer to be notified when the game model is updated
+	 * you must first be in a game to call this method
+	 * @param observer the Observer which is to be added to the model
+	 */
 	public void addObserver(Observer observer);
 
 	/**
