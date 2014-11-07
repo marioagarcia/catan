@@ -18,8 +18,8 @@ public class BuildRoad extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#canBuildRoad(shared.locations.EdgeLocation) canBuildRoad} to ensure the move is valid
-	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#buildRoad(shared.locations.EdgeLocation) buildRoad}
+	 * Calls {@link server.facade.ServerModelFacade#canBuildRoad(int, int, shared.locations.EdgeLocation) canBuildRoad} to ensure the move is valid
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#buildRoad(int, int, shared.locations.EdgeLocation) buildRoad}
 	 */
 	@Override
 	public void execute() {

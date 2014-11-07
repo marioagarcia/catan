@@ -19,8 +19,8 @@ public class AcceptTrade extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#canAcceptTrade(shared.model.card.TradeInterface) canAcceptTrade} on the model facade to ensure this move is valid.
-	 * If the move is valid, a call is then made to {@link server.facade.ServerModelFacade#acceptTrade(shared.model.card.TradeInterface, boolean) AcceptTrade}
+	 * Calls {@link server.facade.ServerModelFacade#canAcceptTrade(int, int, shared.model.card.TradeInterface) canAcceptTrade} on the model facade to ensure this move is valid.
+	 * If the move is valid, a call is then made to {@link server.facade.ServerModelFacade#acceptTrade(int, int, shared.model.card.TradeInterface, boolean) AcceptTrade}
 	 */
 	@Override
 	public void execute() {

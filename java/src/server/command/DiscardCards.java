@@ -18,9 +18,9 @@ public class DiscardCards extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#canDiscardCards(shared.model.card.ResourceList) canDiscardCards} with the parameters provided to the constructor
+	 * Calls {@link server.facade.ServerModelFacade#canDiscardCards(int, int, shared.model.card.ResourceList) canDiscardCards} with the parameters provided to the constructor
 	 * to ensure this move is valid
-	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#discardCards(shared.model.card.ResourceList) discardCards}
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#discardCards(int, int, shared.model.card.ResourceList) discardCards}
 	 */
 	@Override
 	public void execute() {

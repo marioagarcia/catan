@@ -2,21 +2,25 @@ package server.command;
 
 import shared.serialization.parameters.MaritimeTradeParameters;
 
+/**
+ * A Command object that updates a game to reflect a change in a player's resources from a maritime trade
+ * @author Kevin
+ */
 public class MaritimeTrade extends CatanCommand {
 
 	/**
-	 * 
-	 * @param parameters
-	 * @param game_id
+	 * Initializes the MaritimeTrade object with data necessary for updating the game model
+	 * @param parameters An object containing the player index of the person trading, the ratio of the trade, and the resources to be given/received
+	 * @param game_id The integer ID of a game this action will be applied to
 	 */
 	public MaritimeTrade(MaritimeTradeParameters parameters, int game_id){
 		
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#canMaritimeTrade(shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) canMaritimeTrade} with 
+	 * Calls {@link server.facade.ServerModelFacade#canMaritimeTrade(int, int, shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) canMaritimeTrade} with 
 	 * the parameters provided to the constructor to ensure this move is valid
-	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#maritimeTrade(shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) maritimeTrade}
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#maritimeTrade(int, int, shared.locations.EdgeLocation, shared.model.card.MaritimeTrade) maritimeTrade}
 	 */
 	@Override
 	public void execute() {

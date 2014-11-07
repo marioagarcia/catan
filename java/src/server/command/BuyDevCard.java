@@ -18,8 +18,8 @@ public class BuyDevCard extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#canBuyDevCard() canBuyDevCard} to ensure the move is valid
-	 * If valid, a call is them made to {@link server.facade.ServerModelFacade#buyDevCard() buyDevCard}
+	 * Calls {@link server.facade.ServerModelFacade#canBuyDevCard(int, int) canBuyDevCard} to ensure the move is valid
+	 * If valid, a call is them made to {@link server.facade.ServerModelFacade#buyDevCard(int, int) buyDevCard}
 	 */
 	@Override
 	public void execute() {

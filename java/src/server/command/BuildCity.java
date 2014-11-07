@@ -18,8 +18,8 @@ public class BuildCity extends CatanCommand {
 	}
 	
 	/**
-	 * Calls the {@link server.facade.ServerModelFacade#canBuildCity(shared.locations.VertexLocation) canBuildCity} to ensure the move is valid
-	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#buildCity(shared.locations.VertexLocation) buildCity}
+	 * Calls the {@link server.facade.ServerModelFacade#canBuildCity(int, int, shared.locations.VertexLocation) canBuildCity} to ensure the move is valid
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#buildCity(int, int, shared.locations.VertexLocation) buildCity}
 	 */
 	@Override
 	public void execute() {

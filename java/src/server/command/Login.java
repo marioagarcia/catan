@@ -17,7 +17,7 @@ public class Login extends CatanCommand {
 	}
 	
 	/**
-	 * Checks the current list of Registered users. If valid credentials are provided, logs the user in an sets their player cookie
+	 * Calls {@link server.facade.ServerModelFacade#loginPlayer(int, String, String) loginPlayer}
 	 */
 	@Override
 	public void execute() {
