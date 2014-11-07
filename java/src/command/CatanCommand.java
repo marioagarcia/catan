@@ -2,8 +2,18 @@ package command;
 
 import shared.serialization.parameters.MasterParameterInterface;
 
-public interface CatanCommand{
-	
-	//Should these return 'object' to be cast back on the other end? Or maybe json depending where there serializing happens?
-	public void execute(MasterParameterInterface parameter_package);
+public abstract class CatanCommand implements CatanCommandInterface {
+
+	@Override
+	public void execute(MasterParameterInterface parameter_package) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean wasSuccessful() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
