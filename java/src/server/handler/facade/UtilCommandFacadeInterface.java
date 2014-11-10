@@ -1,6 +1,6 @@
-package server.handler.facade.real;
+package server.handler.facade;
 
-public interface UtilHandlerFacadeInterface {
+public interface UtilCommandFacadeInterface {
 
 	/**
 	 * Creates a ChangeLogLevel command object and calls execute on it

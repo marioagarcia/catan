@@ -2,10 +2,16 @@ package server.handler;
 
 import java.io.IOException;
 
+import server.handler.facade.GameCommandFacadeInterface;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class GameHandler implements HttpHandler{
+	
+	public GameHandler(GameCommandFacadeInterface gameCommandFacade){
+		
+	}
 
 	@Override
 	/**

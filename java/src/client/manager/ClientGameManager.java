@@ -32,12 +32,12 @@ import shared.model.turntracker.TurntrackerInterface.Status;
 import shared.serialization.parameters.*;
 import client.communication.server.ServerPoller;
 import client.communication.server.ServerProxyInterface;
-import client.serialization.ModelSerializer;
+import client.serialization.ClientModelSerializer;
 
 public class ClientGameManager implements ClientGameManagerInterface {
 
 	private ServerProxyInterface serverProxy;
-	private ModelSerializer modelSerializer;
+	private ClientModelSerializer modelSerializer;
 	private ServerPoller serverPoller;
 	private GameList gameListContainer;
 	private GameInfo currentGame;
@@ -59,7 +59,7 @@ public class ClientGameManager implements ClientGameManagerInterface {
 
 	private void init() {
 		
-		modelSerializer = new ModelSerializer();
+		modelSerializer = new ClientModelSerializer();
 
 		gameListContainer = new GameList();
 		
@@ -775,7 +775,7 @@ public class ClientGameManager implements ClientGameManagerInterface {
 		return serverProxy;
 	}
 
-	public ModelSerializer getModelSerializer() {
+	public ClientModelSerializer getModelSerializer() {
 		return modelSerializer;
 	}
 

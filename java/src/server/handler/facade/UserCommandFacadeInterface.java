@@ -1,8 +1,8 @@
-package server.handler.facade.real;
+package server.handler.facade;
 
 import shared.serialization.parameters.CredentialsParameters;
 
-public interface UserHandlerFacadeInterface extends HandlerFacadeInterface{
+public interface UserCommandFacadeInterface {
 
 	/**
 	 * Creates a Login command object and calls execute on it

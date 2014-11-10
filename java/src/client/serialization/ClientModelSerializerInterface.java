@@ -33,7 +33,7 @@ import shared.serialization.parameters.YearOfPlentyParameters;
  * This class handles all serialization of data going to the server and 
  * deserialization of data coming from the server.
  */
-public interface ModelSerializerInterface 
+public interface ClientModelSerializerInterface 
 {
 	/**
 	 * Serializes a users credentials into a Json string.  Used to register and login

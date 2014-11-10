@@ -116,8 +116,33 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 	    	}
 	    }
 	    return null;
-	  }
+	}
 
+	public String statusToString(Status status){
+		String returnValue = "";
+		switch(status){
+			case FIRST_ROUND:
+				returnValue = "FirstRound";
+				break;
+			case SECOND_ROUND:
+				returnValue = "SecondRound";
+				break;
+			case PLAYING:
+				returnValue = "Playing";
+				break;
+			case ROBBING:
+				returnValue = "Robbing";
+				break;
+			case DISCARDING:
+				returnValue = "Discarding";
+				break;
+			case ROLLING:
+				returnValue = "Rolling";
+				break;
+		}
+		return returnValue;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

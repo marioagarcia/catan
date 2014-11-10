@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
-import client.serialization.ModelSerializer;
+import client.serialization.ClientModelSerializer;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -26,10 +26,10 @@ import shared.model.turntracker.TurntrackerInterface.Status;
 
 public class MapTest {
 	
-	ModelSerializer ms;
+	ClientModelSerializer ms;
 
 	public GameData getGameData() {
-		ms = new ModelSerializer();
+		ms = new ClientModelSerializer();
 	
 		
 		

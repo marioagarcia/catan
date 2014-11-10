@@ -2,11 +2,17 @@ package server.handler;
 
 import java.io.IOException;
 
+import server.handler.facade.MovesCommandFacadeInterface;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class MovesHandler implements HttpHandler{
 
+	public MovesHandler(MovesCommandFacadeInterface movesCommandFacade){
+		
+	}
+	
 	@Override
 	/**
 	 * Parses the HttpExchange object to determine where to re-route and 

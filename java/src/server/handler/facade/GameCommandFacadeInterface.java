@@ -1,11 +1,11 @@
-package server.handler.facade.real;
+package server.handler.facade;
 
 import java.util.ArrayList;
 
 import shared.model.manager.GameData;
 import shared.serialization.parameters.MasterParameterInterface;
 
-public interface GameHandlerFacadeInterface extends HandlerFacadeInterface{
+public interface GameCommandFacadeInterface {
 	
 	/**
 	 * Creates a ModelCommunicator object and calls getGameModel() on it
