@@ -9,8 +9,14 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class MovesHandler implements HttpHandler{
 
-	public MovesHandler(MovesCommandFacadeInterface movesCommandFacade){
+	private MovesCommandFacadeInterface facade;
+	
+	public MovesHandler(){
 		
+	}
+	
+	public void setMovesCommandFacadeInterface(MovesCommandFacadeInterface facade){
+		this.facade = facade;
 	}
 	
 	@Override

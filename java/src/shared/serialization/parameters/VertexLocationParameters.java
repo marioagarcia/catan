@@ -4,9 +4,9 @@ import shared.locations.VertexLocation;
 
 public class VertexLocationParameters extends MasterParameterInterface{
 
+	private String direction;
 	private int x;
 	private int y;
-	private String direction;
 	
 	public VertexLocationParameters(VertexLocation location){
 		x = location.getHexLoc().getX();

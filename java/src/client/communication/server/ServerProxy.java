@@ -58,7 +58,7 @@ public class ServerProxy implements ServerProxyInterface{
 		latestVersion = -1;
 		
 		String test_result =  doGet("/util/changeLogLevel", "{\"logLevel\": \"WARNING\"}", false);
-	
+
 		if (test_result != null && test_result.equals("Success")){
 			validConnection = true;
 		}
@@ -146,7 +146,7 @@ public class ServerProxy implements ServerProxyInterface{
 		catch (IOException e){
 			System.out.println("IO EXCEPTION");
 			validConnection = false;
-			//e.printStackTrace();
+			e.printStackTrace();
 			return null;
 		}
 		finally{
