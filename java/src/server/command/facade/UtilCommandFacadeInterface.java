@@ -1,4 +1,4 @@
-package server.handler.facade;
+package server.command.facade;
 
 public interface UtilCommandFacadeInterface {
 

@@ -1,6 +1,6 @@
-package server.handler.facade.real;
+package server.command.facade.real;
 
-import server.handler.facade.MovesCommandFacadeInterface;
+import server.command.facade.MovesCommandFacadeInterface;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;

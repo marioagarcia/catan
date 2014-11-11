@@ -1,6 +1,6 @@
-package server.handler.facade.mock;
+package server.command.facade.mock;
 
-import server.handler.facade.UtilCommandFacadeInterface;
+import server.command.facade.UtilCommandFacadeInterface;
 
 public class MockUtilCommandFacade implements UtilCommandFacadeInterface{
 

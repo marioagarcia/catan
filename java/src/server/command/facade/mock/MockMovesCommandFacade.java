@@ -1,6 +1,6 @@
-package server.handler.facade.mock;
+package server.command.facade.mock;
 
-import server.handler.facade.MovesCommandFacadeInterface;
+import server.command.facade.MovesCommandFacadeInterface;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.*;
 

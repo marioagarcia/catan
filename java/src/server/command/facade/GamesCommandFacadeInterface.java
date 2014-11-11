@@ -1,4 +1,4 @@
-package server.handler.facade;
+package server.command.facade;
 
 import shared.model.GameInfo;
 import shared.model.manager.GameList;

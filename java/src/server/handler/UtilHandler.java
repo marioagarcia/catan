@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
-import server.handler.facade.UtilCommandFacadeInterface;
+import server.command.facade.UtilCommandFacadeInterface;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;

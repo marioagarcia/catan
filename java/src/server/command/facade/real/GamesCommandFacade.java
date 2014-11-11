@@ -1,6 +1,6 @@
-package server.handler.facade.mock;
+package server.command.facade.real;
 
-import server.handler.facade.GamesCommandFacadeInterface;
+import server.command.facade.GamesCommandFacadeInterface;
 import shared.model.GameInfo;
 import shared.model.manager.GameList;
 import shared.serialization.parameters.CreateGameRequestParameters;
@@ -8,7 +8,7 @@ import shared.serialization.parameters.JoinGameRequestParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.SaveGameRequestParameters;
 
-public class MockGamesCommandFacade implements GamesCommandFacadeInterface{
+public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameList getGamesList() {
@@ -39,6 +39,5 @@ public class MockGamesCommandFacade implements GamesCommandFacadeInterface{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

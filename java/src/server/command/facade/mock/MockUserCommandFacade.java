@@ -1,6 +1,6 @@
-package server.handler.facade.mock;
+package server.command.facade.mock;
 
-import server.handler.facade.UserCommandFacadeInterface;
+import server.command.facade.UserCommandFacadeInterface;
 import shared.serialization.parameters.CredentialsParameters;
 
 public class MockUserCommandFacade implements UserCommandFacadeInterface{

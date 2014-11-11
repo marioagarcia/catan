@@ -1,6 +1,6 @@
-package server.handler.facade.real;
+package server.command.facade.real;
 
-import server.handler.facade.UtilCommandFacadeInterface;
+import server.command.facade.UtilCommandFacadeInterface;
 
 public class UtilCommandFacade implements UtilCommandFacadeInterface{
 

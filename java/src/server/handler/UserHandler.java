@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import server.handler.facade.UserCommandFacadeInterface;
-import server.handler.facade.real.UserCommandFacade;
+import server.command.facade.UserCommandFacadeInterface;
+import server.command.facade.real.UserCommandFacade;
+import server.serialization.ServerModelSerializer;
 import shared.serialization.parameters.CredentialsParameters;
 
 import com.google.gson.Gson;
@@ -18,9 +20,10 @@ import com.sun.net.httpserver.HttpHandler;
 public class UserHandler implements HttpHandler{
 
 	private UserCommandFacadeInterface facade;
+	private ServerModelSerializer serializer;
 	
-	public UserHandler(){
-		
+	public void setUserCommandFacadeInterface(UserCommandFacadeInterface facade){
+		this.facade = facade;
 	}
 	
 	@Override
@@ -31,17 +34,21 @@ public class UserHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
+		
 		StringBuilder request = new StringBuilder();
+		//Read the request into a buffered reader
 		BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 		
+		//Transfer what was read into the buffered reader to a stringbuilder
 		String line;
 		while((line = reader.readLine()) != null){
 			request.append(line);
 		}
+		//Put the stringbuilder into a string
 		String jsonString = request.toString();
 
-		Gson gson = new Gson();
-		CredentialsParameters credentials = gson.fromJson(jsonString, CredentialsParameters.class);
+		//Send the json to the deserializer and get the credentials back
+		CredentialsParameters credentials = serializer.deserializeCredentials(jsonString);
 
 		String uri = exchange.getRequestURI().toString();
 		Boolean successful = false;
@@ -53,15 +60,20 @@ public class UserHandler implements HttpHandler{
 			System.out.println("URI not recognized");
 		}
 		
-		if(successful){
-			// @ TODO Send a successful response
-		}else{
-			// @ TODO Send an unsuccessful response
-		}
-		
-	}
+		String response;
+		int responseCode;
 
-	public void setUserCommandFacadeInterface(UserCommandFacadeInterface facade){
-		this.facade = facade;
+		if(successful){
+			response = "Success";
+			responseCode = 200;
+		}else{
+			response = "Failed to login - bad username or password.";
+			responseCode = 400;	
+		}
+System.out.println("Response code: " + responseCode + "\nResponse: " + response);		
+		exchange.sendResponseHeaders(responseCode, response.length());
+		OutputStream os = exchange.getResponseBody();
+		os.write(response.getBytes());
+		os.close();
 	}
 }

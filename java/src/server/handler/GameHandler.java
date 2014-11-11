@@ -2,7 +2,7 @@ package server.handler;
 
 import java.io.IOException;
 
-import server.handler.facade.GameCommandFacadeInterface;
+import server.command.facade.GameCommandFacadeInterface;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

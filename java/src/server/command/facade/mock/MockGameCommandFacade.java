@@ -1,12 +1,12 @@
-package server.handler.facade.real;
+package server.command.facade.mock;
 
 import java.util.ArrayList;
 
-import server.handler.facade.GameCommandFacadeInterface;
+import server.command.facade.GameCommandFacadeInterface;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.MasterParameterInterface;
 
-public class GameCommandFacade implements GameCommandFacadeInterface{
+public class MockGameCommandFacade implements GameCommandFacadeInterface{
 
 	@Override
 	public GameData getModel() {
@@ -43,5 +43,6 @@ public class GameCommandFacade implements GameCommandFacadeInterface{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
