@@ -1,6 +1,6 @@
 package server.command;
 
-import shared.serialization.parameters.JoinGameRequestParameters;
+import shared.serialization.parameters.JoinGameParameters;
 
 /**
  * A Command object that attempts to place a player into game 
@@ -13,7 +13,7 @@ public class JoinGame extends CatanCommand {
 	 * Initializes the JoinGame object with the data needed to put a player into a given game
 	 * @param parameters an object containing the ID of the game to be joined, and the color the player will use
 	 */
-	public JoinGame(JoinGameRequestParameters parameters){
+	public JoinGame(JoinGameParameters parameters){
 		
 	}
 	

@@ -3,9 +3,9 @@ package server.command.facade;
 import shared.model.GameInfo;
 import shared.model.manager.GameList;
 import shared.serialization.parameters.CreateGameRequestParameters;
-import shared.serialization.parameters.JoinGameRequestParameters;
+import shared.serialization.parameters.JoinGameParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
-import shared.serialization.parameters.SaveGameRequestParameters;
+import shared.serialization.parameters.SaveGameParameters;
 
 public interface GamesCommandFacadeInterface {
 	
@@ -32,7 +32,7 @@ public interface GamesCommandFacadeInterface {
 	 * @param params An object containing the id and color of the player joining the game
 	 * @return Whether or not the join was successful; true if successful, false otherwise
 	 */
-	public Boolean joinGame(JoinGameRequestParameters params);
+	public Boolean joinGame(JoinGameParameters params);
 	
 	/**
 	 * Creates a SaveGame command object and calls execute on it
@@ -41,7 +41,7 @@ public interface GamesCommandFacadeInterface {
 	 * saved to
 	 * @return Whether or not the game was successfully saved; true if successful, false otherwise
 	 */
-	public Boolean saveGame(SaveGameRequestParameters params);
+	public Boolean saveGame(SaveGameParameters params);
 	
 	/**
 	 * Creates a LoadGame command object and calls execute on it

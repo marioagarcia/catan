@@ -132,7 +132,7 @@ public class ClientModelSerializer implements ClientModelSerializerInterface {
 	}
 	
 	@Override
-	public String serializeJoinGameRequest(JoinGameRequestParameters params){
+	public String serializeJoinGameRequest(JoinGameParameters params){
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(params);
 		
@@ -140,7 +140,7 @@ public class ClientModelSerializer implements ClientModelSerializerInterface {
 	}
 	
 	@Override
-	public String serializeSaveGameRequest(SaveGameRequestParameters params){
+	public String serializeSaveGameRequest(SaveGameParameters params){
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(params);
 		

@@ -13,7 +13,7 @@ import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.CredentialsParameters;
 import shared.serialization.parameters.DiscardCardsParameters;
 import shared.serialization.parameters.FinishTurnParameters;
-import shared.serialization.parameters.JoinGameRequestParameters;
+import shared.serialization.parameters.JoinGameParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.AIRequestParameters;
 import shared.serialization.parameters.MaritimeTradeParameters;
@@ -24,7 +24,7 @@ import shared.serialization.parameters.OfferTradeParameters;
 import shared.serialization.parameters.RoadBuildingParameters;
 import shared.serialization.parameters.RobPlayerParameters;
 import shared.serialization.parameters.RollNumberParameters;
-import shared.serialization.parameters.SaveGameRequestParameters;
+import shared.serialization.parameters.SaveGameParameters;
 import shared.serialization.parameters.SendChatParameters;
 import shared.serialization.parameters.SoldierParameters;
 import shared.serialization.parameters.YearOfPlentyParameters;
@@ -74,7 +74,7 @@ public interface ClientModelSerializerInterface
 	 * @param params An object containing a player's ID and a player's chosen color
 	 * @return A Json string of the serialized join game request
 	 */
-	public String serializeJoinGameRequest(JoinGameRequestParameters params);
+	public String serializeJoinGameRequest(JoinGameParameters params);
 	
 	/**
 	 * Serializes a save game request into a Json string
@@ -83,7 +83,7 @@ public interface ClientModelSerializerInterface
 	 * the game under
 	 * @return A Json string of the serialized save game request
 	 */
-	public String serializeSaveGameRequest(SaveGameRequestParameters params);
+	public String serializeSaveGameRequest(SaveGameParameters params);
 	
 	/**
 	 * Serializes a load game request into a Json string

@@ -47,6 +47,7 @@ import shared.serialization.parameters.FinishTurnParameters;
 import shared.serialization.parameters.GameInfoParameters;
 import shared.serialization.parameters.GameModelParameters;
 import shared.serialization.parameters.HexParameters;
+import shared.serialization.parameters.JoinGameParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.LogParameters;
 import shared.serialization.parameters.MapParameters;
@@ -63,7 +64,7 @@ import shared.serialization.parameters.RoadBuildingParameters;
 import shared.serialization.parameters.RoadParameters;
 import shared.serialization.parameters.RobPlayerParameters;
 import shared.serialization.parameters.RollNumberParameters;
-import shared.serialization.parameters.SaveGameRequestParameters;
+import shared.serialization.parameters.SaveGameParameters;
 import shared.serialization.parameters.SendChatParameters;
 import shared.serialization.parameters.SettlementParameters;
 import shared.serialization.parameters.SoldierParameters;
@@ -164,11 +165,17 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		Gson gson = new Gson();
 		return gson.toJson(serializableGameInfo);
 	}
+	
+	@Override
+	public JoinGameParameters deserializeJoinGameRequest(String jsonString){
+		Gson gson = new Gson();
+		return gson.fromJson(jsonString, JoinGameParameters.class);
+	}
 
 	@Override
-	public SaveGameRequestParameters deserializeSaveGameRequest(String jsonString) {
+	public SaveGameParameters deserializeSaveGameRequest(String jsonString) {
 		Gson gson = new Gson();
-		return gson.fromJson(jsonString, SaveGameRequestParameters.class);
+		return gson.fromJson(jsonString, SaveGameParameters.class);
 	}
 
 	@Override

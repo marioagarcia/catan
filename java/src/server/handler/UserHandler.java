@@ -22,6 +22,10 @@ public class UserHandler implements HttpHandler{
 	private UserCommandFacadeInterface facade;
 	private ServerModelSerializer serializer;
 	
+	public UserHandler(){
+		serializer = new ServerModelSerializer();
+	}
+	
 	public void setUserCommandFacadeInterface(UserCommandFacadeInterface facade){
 		this.facade = facade;
 	}
@@ -57,7 +61,7 @@ public class UserHandler implements HttpHandler{
 		}else if(uri.equals("/user/register")){
 			successful = facade.register(credentials);
 		}else{
-			System.out.println("URI not recognized");
+			System.out.println("URI not recognized.");
 		}
 		
 		String response;
@@ -70,7 +74,7 @@ public class UserHandler implements HttpHandler{
 			response = "Failed to login - bad username or password.";
 			responseCode = 400;	
 		}
-System.out.println("Response code: " + responseCode + "\nResponse: " + response);		
+	
 		exchange.sendResponseHeaders(responseCode, response.length());
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());

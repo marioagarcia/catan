@@ -49,12 +49,20 @@ public interface ServerModelSerializerInterface {
 	public String serializeGameInfo(GameInfo gameInfo);
 	
 	/**
-	 * Deserializes a json string into a SaveGameRequestParameters
+	 * Deserializes a json string into a JoinGameParameters object
+	 * 
+	 * @param jsonString A json representation of JoinGameParameters
+	 * @return A JoinGameParameters object consisting of a game id (int) and a color (string)
+	 */
+	public JoinGameParameters deserializeJoinGameRequest(String jsonString);
+	
+	/**
+	 * Deserializes a json string into a SaveGameRequestParameters object
 	 * 
 	 * @param jsonString A json representation of SaveGameRequestParameters
 	 * @return A SaveGameRequestParameters object consisting of a game id (int) and game name (string)
 	 */
-	public SaveGameRequestParameters deserializeSaveGameRequest(String jsonString);
+	public SaveGameParameters deserializeSaveGameRequest(String jsonString);
 	
 	/**
 	 * Deserializes a json string into a LoadGameRequestParameters object

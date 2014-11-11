@@ -158,7 +158,7 @@ public class ClientGameManager implements ClientGameManagerInterface {
 
 	@Override
 	public boolean joinGame(CatanColor color, GameInfo game) {
-		JoinGameRequestParameters param = new JoinGameRequestParameters(game.getId(), color.toString().toLowerCase());
+		JoinGameParameters param = new JoinGameParameters(game.getId(), color.toString().toLowerCase());
 
 		String json_string = modelSerializer.serializeJoinGameRequest(param);
 

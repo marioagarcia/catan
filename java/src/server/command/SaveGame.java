@@ -1,6 +1,6 @@
 package server.command;
 
-import shared.serialization.parameters.SaveGameRequestParameters;
+import shared.serialization.parameters.SaveGameParameters;
 
 /**
  * A Command object that captures the current state of a game and saves it locally
@@ -12,7 +12,7 @@ public class SaveGame extends CatanCommand {
 	 * Initializes the SaveGame object with the data necessary to save one of the games hosted on the server
 	 * @param parameters An object containing the ID and name of the game to be saved
 	 */
-	public SaveGame(SaveGameRequestParameters parameters){
+	public SaveGame(SaveGameParameters parameters){
 		
 	}
 	
