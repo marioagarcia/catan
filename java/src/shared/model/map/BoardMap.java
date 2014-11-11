@@ -541,4 +541,51 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		
 		return players_on_hex;
 	}
+
+	
+	@Override
+	public void buildRoad(EdgeLocation location, int player_index, Status status) {
+		assert(this.canBuildRoad(location, player_index, status));
+		
+		this.roads.put(location, new Road(player_index, location));
+	}
+
+	
+	@Override
+	public void buildSettlement(VertexLocation location, int player_index, boolean setupPhase) {
+		assert(this.canBuildSettlement(location, player_index, setupPhase));
+		
+		this.settlements.put(location, new Settlement(player_index, location));
+	}
+
+	
+	@Override
+	public void buildCity(VertexLocation location, int player_index) {
+		assert(this.canBuildCity(location, player_index));
+		
+		this.settlements.remove(location);
+		
+		City city = new City();
+		city.setLocation(location);
+		city.setPlayerIndex(player_index);
+		
+		this.cities.put(location, city);
+	}
+
+	
+	@Override
+	public void playRoadBuilding(EdgeLocation location1, EdgeLocation location2, int player_index) {
+		assert(this.canPlayRoadBuilding(location1, location2, player_index));
+		
+		this.roads.put(location1, new Road(player_index, location1));
+		this.roads.put(location2, new Road(player_index, location2));
+	}
+
+	
+	@Override
+	public void playSoldier(HexLocation oldLocation, HexLocation newLocation, int player_index) {
+		assert(this.canPlaySoldier(oldLocation, newLocation, player_index));
+		
+		this.robberLocation = newLocation;
+	}
 }
