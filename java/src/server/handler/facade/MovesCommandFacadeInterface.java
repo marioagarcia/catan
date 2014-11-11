@@ -1,9 +1,9 @@
-package server.handler.facade.real;
+package server.handler.facade;
 
 import shared.model.manager.GameData;
 import shared.serialization.parameters.*;
 
-public interface MovesHandlerFacadeInterface extends HandlerFacadeInterface{
+public interface MovesCommandFacadeInterface {
 
 	/**
 	 * Creates a SendChat command object and calls execute on it

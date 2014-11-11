@@ -1,4 +1,4 @@
-package server.handler.facade.real;
+package server.handler.facade;
 
 import shared.model.GameInfo;
 import shared.model.manager.GameList;
@@ -7,7 +7,7 @@ import shared.serialization.parameters.JoinGameRequestParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.SaveGameRequestParameters;
 
-public interface GamesHandlerFacadeInterface extends HandlerFacadeInterface{
+public interface GamesCommandFacadeInterface {
 	
 	/**
 	 * Creates a ModelCommunicator object and calls getGameList() on it

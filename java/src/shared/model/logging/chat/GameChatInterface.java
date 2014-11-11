@@ -9,7 +9,7 @@ public interface GameChatInterface
 	 * @return MessageInterface instance if index exists
 	 * @throws MessageDoesNotExistException if index is not valid
 	 */
-	public MessageInterface getMessage(int messageIndex) throws MessageDoesNotExistException;
+	public MessageInterface getMessage(int messageIndex);
 	
 	/**
 	 * gets the number of messages in the game chat history

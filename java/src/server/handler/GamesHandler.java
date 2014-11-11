@@ -2,11 +2,17 @@ package server.handler;
 
 import java.io.IOException;
 
+import server.handler.facade.GamesCommandFacadeInterface;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class GamesHandler implements HttpHandler{
 
+	public GamesHandler(GamesCommandFacadeInterface gamesCommandFacade){
+		
+	}
+	
 	@Override
 	/**
 	 * Parses the HttpExchange object to determine where to re-route and 

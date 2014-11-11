@@ -2,11 +2,17 @@ package server.handler;
 
 import java.io.IOException;
 
+import server.handler.facade.UserCommandFacadeInterface;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class UserHandler implements HttpHandler{
 
+	public UserHandler(UserCommandFacadeInterface userCommandFacade){
+		
+	}
+	
 	@Override
 	/**
 	 * Parses the HttpExchange object to determine where to re-route and 
@@ -16,7 +22,6 @@ public class UserHandler implements HttpHandler{
 	 */
 	public void handle(HttpExchange arg0) throws IOException {
 		// TODO Auto-generated method stub
-		System.out.println("In user handler");
 	}
 
 }

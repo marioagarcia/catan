@@ -53,13 +53,7 @@ public class ChatController extends Controller implements IChatController {
 		for (int message_index = 0; message_index < game_chat.getSize(); message_index++) {
 			MessageInterface message = null;
 			
-			try {
-				
-				message = game_chat.getMessage(message_index);
-				
-			} catch (MessageDoesNotExistException e) {
-				e.printStackTrace();
-			}
+			message = game_chat.getMessage(message_index);
 			
 			LogEntry log_entry = new LogEntry(colorByIdMap.get(message.getPlayerName()), message.getMessageContent());
 			

@@ -38,7 +38,7 @@ import shared.serialization.parameters.*;
 
 import com.google.gson.*;
 
-public class ModelSerializer implements ModelSerializerInterface {
+public class ClientModelSerializer implements ClientModelSerializerInterface {
 	
 	@Override
 	public String serializeCredentials(CredentialsParameters credentials){

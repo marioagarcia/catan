@@ -17,7 +17,7 @@ public class Login extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#loginPlayer(int, String, String) loginPlayer}
+	 * Calls {@link server.facade.ServerModelFacade#loginPlayer(String, String) loginPlayer}
 	 */
 	@Override
 	public void execute() {

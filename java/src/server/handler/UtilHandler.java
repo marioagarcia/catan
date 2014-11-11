@@ -2,11 +2,17 @@ package server.handler;
 
 import java.io.IOException;
 
+import server.handler.facade.UtilCommandFacadeInterface;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class UtilHandler implements HttpHandler{
 
+	public UtilHandler(UtilCommandFacadeInterface utilCommandFacade){
+		
+	}
+	
 	@Override
 	/**
 	 * Parses the HttpExchange object to determine where to re-route and 

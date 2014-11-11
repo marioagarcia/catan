@@ -11,8 +11,7 @@ public class GameChat implements GameChatInterface {
 	}
 	
 	@Override
-	public MessageInterface getMessage(int messageIndex)
-			throws MessageDoesNotExistException {
+	public MessageInterface getMessage(int messageIndex){
 		return messageList.get(messageIndex);
 	}
 
