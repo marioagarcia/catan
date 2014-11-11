@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.model.card.DomesticTrade;
 import shared.serialization.parameters.AcceptTradeParameters;
 
 /**
@@ -8,6 +9,8 @@ import shared.serialization.parameters.AcceptTradeParameters;
  */
 public class AcceptTrade extends CatanCommand {
 
+	private DomesticTrade trade = null;
+	private boolean accept = false;
 	/**
 	 * Initializes the AcceptTrade object with all the information it needs to apply changes to the model
 	 * to reflect the results of a trade offer
@@ -16,6 +19,9 @@ public class AcceptTrade extends CatanCommand {
 	 */
 	public AcceptTrade(AcceptTradeParameters parameters, int game_id){
 		
+		this.playerIndex = parameters.getPlayerIndex();
+		this.gameId = game_id;
+		this.accept = parameters.getWillAccept();
 	}
 	
 	/**
@@ -24,6 +30,10 @@ public class AcceptTrade extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub		
+		
+		if (facadeInstance.canAcceptTrade(gameId, playerIndex, trade)){
+			
+			success = facadeInstance.acceptTrade(gameId, playerIndex, trade, accept);
+		}	
 	}
 }
