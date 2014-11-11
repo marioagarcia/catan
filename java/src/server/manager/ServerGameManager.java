@@ -1,7 +1,6 @@
 package server.manager;
 
 import java.util.Observer;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -18,12 +17,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public void addObserver(Observer observer) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean canJoinGame(int playerId, CatanColor color, GameInfo game) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -277,5 +274,5 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		return false;
 	}
 
-	
+
 }

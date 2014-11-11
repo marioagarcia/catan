@@ -698,7 +698,9 @@ public class ClientGameManager implements ClientGameManagerInterface {
 
 	@Override
 	public boolean canDiscardCards(ResourceList list) {
-		return (gameModel.getLocalPlayer().canDiscardCards(list) && (gameModel.getTurnTracker().getStatus() == Status.PLAYING || gameModel.getTurnTracker().getStatus() == Status.DISCARDING));
+		return (gameModel.getLocalPlayer().canDiscardCards(list) && 
+				(gameModel.getTurnTracker().getStatus() == Status.PLAYING ||
+				gameModel.getTurnTracker().getStatus() == Status.DISCARDING));
 	}
 
 	@Override

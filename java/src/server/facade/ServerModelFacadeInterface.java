@@ -52,7 +52,7 @@ public interface ServerModelFacadeInterface {
 	 * is already in the game or there is an available spot in the game,
 	 * and the color submitted is a valid color
 	 * 
-	 * @param game The game the player wants to join
+	 * @param game_id The game the player wants to join
 	 * @param color The color the player submitted
 	 * @return true if the player has a valid user cookie set, is already in
 	 * the game or there is an available spot in the game, and the color

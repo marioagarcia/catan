@@ -17,7 +17,7 @@ public class Register extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#registerPlayer(int, String, String) registerPlayer} 
+	 * Calls {@link server.facade.ServerModelFacade#registerPlayer(String, String) registerPlayer} 
 	 */
 	@Override
 	public void execute() {
