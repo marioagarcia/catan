@@ -1,7 +1,10 @@
 package server.facade;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observer;
 
+import server.manager.ServerGameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -15,6 +18,20 @@ import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
 public class ServerModelFacade implements ServerModelFacadeInterface {
 
+	private static ServerModelFacade facadeInstance = null;
+	private Map<Integer, ServerGameManager> gamesList;
+	
+	protected ServerModelFacade()
+	{
+		gamesList = new HashMap<Integer, ServerGameManager>();
+	}
+	
+	public static ServerModelFacade getInstance(){
+		if(facadeInstance == null){
+				facadeInstance = new ServerModelFacade();
+		}
+		return facadeInstance;
+	}
 	@Override
 	public void addObserver(int game_id, Observer observer) {
 		// TODO Auto-generated method stub

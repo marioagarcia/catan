@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 import shared.model.GameInfo;
@@ -36,13 +37,16 @@ import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
 import shared.serialization.parameters.BuildSettlementParameters;
 import shared.serialization.parameters.BuyDevCardParameters;
+import shared.serialization.parameters.CityParameters;
 import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.CredentialsParameters;
 import shared.serialization.parameters.DevCardListParameters;
 import shared.serialization.parameters.DiscardCardsParameters;
+import shared.serialization.parameters.EdgeLocationParameters;
 import shared.serialization.parameters.FinishTurnParameters;
 import shared.serialization.parameters.GameInfoParameters;
 import shared.serialization.parameters.GameModelParameters;
+import shared.serialization.parameters.HexParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.LogParameters;
 import shared.serialization.parameters.MapParameters;
@@ -54,14 +58,18 @@ import shared.serialization.parameters.MonumentParameters;
 import shared.serialization.parameters.OfferTradeParameters;
 import shared.serialization.parameters.PlayerInfoParameters;
 import shared.serialization.parameters.PlayerParameters;
+import shared.serialization.parameters.PortParameters;
 import shared.serialization.parameters.RoadBuildingParameters;
+import shared.serialization.parameters.RoadParameters;
 import shared.serialization.parameters.RobPlayerParameters;
 import shared.serialization.parameters.RollNumberParameters;
 import shared.serialization.parameters.SaveGameRequestParameters;
 import shared.serialization.parameters.SendChatParameters;
+import shared.serialization.parameters.SettlementParameters;
 import shared.serialization.parameters.SoldierParameters;
 import shared.serialization.parameters.TradeOfferParameters;
 import shared.serialization.parameters.TurnTrackerParameters;
+import shared.serialization.parameters.VertexLocationParameters;
 import shared.serialization.parameters.YearOfPlentyParameters;
 
 public class ServerModelSerializer implements ServerModelSerializerInterface{
@@ -318,42 +326,54 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		
 		//Get the number of hexes in boardmap and create a serializable array of hexes based on that number
 		int numHexes = boardMap.getHexes().size();
-		Hex[] hexes = new Hex[numHexes];
+		HexParameters[] hexes = new HexParameters[numHexes];
 
 		//Iterate through each hex in boardmap and put them in the serializable hex array
 		int index = 0;
 		for(Object hex : boardMap.getHexes().values()){
-			hexes[index++] = (Hex)hex;
+			Hex currHex = (Hex)hex;
+			if(currHex.getType() == HexType.DESERT || currHex.getType() == HexType.WATER){
+				hexes[index++] = new HexParameters(null, currHex.getLocation(), null);
+			}else{
+				hexes[index++] = new HexParameters(currHex.getType().toString().toLowerCase(),
+												 currHex.getLocation(), currHex.getNumber());
+			}
 		}
 		
 		//Get the number of roads in boardmap and create a serializable array of roads based on that number
 		int numRoads = boardMap.getRoads().size();
-		Road[] roads = new Road[numRoads];
+		RoadParameters[] roads = new RoadParameters[numRoads];
 		
 		//Iterate through each road in boardmap and put them in the serializable road array
 		index = 0;
 		for(Object road : boardMap.getRoads().values()){
-			roads[index++] = (Road)road;
+			Road currRoad = (Road)road;
+			EdgeLocationParameters edgeLocationParameters = new EdgeLocationParameters(currRoad.getLocation());
+			roads[index++] = new RoadParameters(currRoad.getPlayerIndex(), edgeLocationParameters);
 		}
 		
 		//Get the number of cities in boardmap and create a serializable array of cities based on that number
 		int numCities = boardMap.getCities().size();
-		City[] cities = new City[numCities];
+		CityParameters[] cities = new CityParameters[numCities];
 		
 		//Iterate through each city in boardmap and put them in the serializable city array
 		index = 0;
 		for(Object city : boardMap.getCities().values()){
-			cities[index++] = (City)city;
+			City currCity = (City)city;
+			VertexLocationParameters location = new VertexLocationParameters(currCity.getLocation());
+			cities[index++] = new CityParameters(currCity.getPlayerIndex(), location);
 		}
 		
 		//Get the number of settlements in boardmap and create a serializable array of settlements based on that number
 		int numSettlements = boardMap.getSettlements().size();
-		Settlement[] settlements = new Settlement[numSettlements];
+		SettlementParameters[] settlements = new SettlementParameters[numSettlements];
 		
 		//Iterate through each settlement in boardmap and put them in the serializable settlement array
 		index = 0;
 		for(Object settlement : boardMap.getSettlements().values()){
-			settlements[index++] = (Settlement)settlement;
+			Settlement currSettlement = (Settlement)settlement;
+			VertexLocationParameters location = new VertexLocationParameters(currSettlement.getLocation());
+			settlements[index++] = new SettlementParameters(currSettlement.getPlayerIndex(), location);
 		}
 		
 		//Get the radius from boardMap
@@ -361,12 +381,20 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		
 		//Get the number of ports in boardmap and create a serializable array of ports based on that number
 		int numPorts = boardMap.getPorts().size();
-		Port[] ports = new Port[numPorts];
+		PortParameters[] ports = new PortParameters[numPorts];
 		
 		//Iterate through each port in boardmap and put them in the serializable port array
 		index = 0;
 		for(Object port : boardMap.getPorts().values()){
-			ports[index++] = (Port)port;
+			Port currPort = (Port)port;
+			HexLocation location = currPort.getLocation().getHexLoc();
+			String resource = currPort.getResource().toString().toLowerCase();
+			String direction = currPort.getLocation().getDir().toString();
+			if(resource.equals("three")){
+				ports[index++] = new PortParameters(currPort.getRatio(), null, direction, location);
+			}else{
+				ports[index++] = new PortParameters(currPort.getRatio(), resource, direction, location);
+			}
 		}
 		
 		//Get the robber from boardMap
@@ -484,7 +512,7 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 									player.getColor().toString().toLowerCase()); 
 	}
 	
-	public static void main(String[] args){
+//	public static void main(String[] args){
 /*		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		
 		PlayerInfo p1 = new PlayerInfo();
@@ -538,7 +566,7 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		games.add(g1); games.add(g2); games.add(g3);
 		System.out.println(new ServerModelSerializer().serializeGamesList(games));*/
 		
-	}
+//	}
 }
 
 

@@ -1,5 +1,7 @@
 package server.command;
 
+import server.facade.ServerModelFacade;
+
 /**
  * Provides a default implementation of the setSuccess and wasSuccessful methods that the other command classes can extend
  * @author Kevin
@@ -7,6 +9,9 @@ package server.command;
 public abstract class CatanCommand implements CatanCommandInterface {
 	
 	protected boolean success;
+	protected int playerIndex = -1;
+	protected int gameId = -1;
+	protected ServerModelFacade facadeInstance = ServerModelFacade.getInstance();
 
 	@Override
 	public abstract void execute();

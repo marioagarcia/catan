@@ -7,10 +7,10 @@ public class ResourceList implements SerializerResourceListInterface {
 
 
 	private int brick;
-	private int ore;
+	private int wood;
 	private int sheep;
 	private int wheat;
-	private int wood;
+	private int ore;
 		
 	public ResourceList(int b, int o, int s, int wh, int wo){
 		brick = b;

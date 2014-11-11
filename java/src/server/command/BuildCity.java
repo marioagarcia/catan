@@ -1,5 +1,8 @@
 package server.command;
 
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.serialization.parameters.BuildCityParameters;
 
 /**
@@ -8,6 +11,7 @@ import shared.serialization.parameters.BuildCityParameters;
  */
 public class BuildCity extends CatanCommand {
 
+	private VertexLocation location = null;
 	/**
 	 * Initializes the BuildCity object with the information it needs to make changes to the model
 	 * @param parameters An object containing the player performing the move, and the location to place the new city 
@@ -15,6 +19,16 @@ public class BuildCity extends CatanCommand {
 	 */
 	public BuildCity(BuildCityParameters parameters, int game_id){
 		
+		this.playerIndex = parameters.getPlayerIndex();
+		this.gameId = game_id;
+		
+		int x = parameters.getVertexLocation().getX();
+		int y = parameters.getVertexLocation().getY();
+		
+		HexLocation hex_loc = new HexLocation(x, y);
+		VertexDirection direction = VertexDirection.valueOf(parameters.getVertexLocation().getDirection());
+		
+		this.location = new VertexLocation(hex_loc, direction);
 	}
 	
 	/**
@@ -23,6 +37,10 @@ public class BuildCity extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub		
+		
+		if (facadeInstance.canBuildCity(gameId, playerIndex, location)){
+			
+			success = facadeInstance.buildCity(gameId, playerIndex, location);
+		}
 	}
 }

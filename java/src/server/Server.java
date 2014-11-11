@@ -32,31 +32,9 @@ public class Server {
 	private static final int MAX_WAITING_CONNECTIONS = 10;
 	
 	private HttpServer server;
-	private UserCommandFacadeInterface userCommandFacade;
-	private GamesCommandFacadeInterface gamesCommandFacade;
-	private GameCommandFacadeInterface gameCommandFacade;
-	private MovesCommandFacadeInterface movesCommandFacade;
-	private UtilCommandFacadeInterface utilCommandFacade;
-	
 	
 	private Server() {
 		return;
-	}
-	
-	private void setMockCommandFacade(){
-		userCommandFacade = new MockUserCommandFacade();
-		gamesCommandFacade = new MockGamesCommandFacade();
-		gameCommandFacade = new MockGameCommandFacade();
-		movesCommandFacade = new MockMovesCommandFacade();
-		utilCommandFacade = new MockUtilCommandFacade();
-	}
-	
-	private void setCommandFacade(){
-		userCommandFacade = new UserCommandFacade();
-		gamesCommandFacade = new GamesCommandFacade();
-		gameCommandFacade = new GameCommandFacade();
-		movesCommandFacade = new MovesCommandFacade();
-		utilCommandFacade = new UtilCommandFacade();
 	}
 	
 	private void run() {
@@ -71,23 +49,45 @@ public class Server {
 
 		server.setExecutor(null); // use the default executor
 		
-		server.createContext("/User", userHandler);
-		server.createContext("/Games", gamesHandler);
-		server.createContext("/Game", gameHandler);
-		server.createContext("/Moves", movesHandler);
-		server.createContext("/Util", utilHandler);
+		server.createContext("/user", userHandler);
+		server.createContext("/games", gamesHandler);
+		server.createContext("/game", gameHandler);
+		server.createContext("/moves", movesHandler);
+		server.createContext("/util", utilHandler);
 
 		server.start();
 	}
 
-	private HttpHandler userHandler = new UserHandler(userCommandFacade);
-	private HttpHandler gamesHandler = new GamesHandler(gamesCommandFacade);
-	private HttpHandler gameHandler = new GameHandler(gameCommandFacade);
-	private HttpHandler movesHandler = new MovesHandler(movesCommandFacade);
-	private HttpHandler utilHandler = new UtilHandler(utilCommandFacade);
+	private UserHandler userHandler = new UserHandler();
+	private GamesHandler gamesHandler = new GamesHandler();
+	private GameHandler gameHandler = new GameHandler();
+	private MovesHandler movesHandler = new MovesHandler();
+	private UtilHandler utilHandler = new UtilHandler();
+	
+	private void setMockCommandFacade(){
+		userHandler.setUserCommandFacadeInterface(new MockUserCommandFacade());
+		gamesHandler.setGamesCommandFacadeInterface(new MockGamesCommandFacade());
+		gameHandler.setGameCommandFacadeInterface(new MockGameCommandFacade());
+		movesHandler.setMovesCommandFacadeInterface(new MockMovesCommandFacade());
+		utilHandler.setUtilCommandHandler(new MockUtilCommandFacade());
+	}
+	
+	private void setCommandFacade(){
+		userHandler.setUserCommandFacadeInterface(new UserCommandFacade());
+		gamesHandler.setGamesCommandFacadeInterface(new GamesCommandFacade());
+		gameHandler.setGameCommandFacadeInterface(new GameCommandFacade());
+		movesHandler.setMovesCommandFacadeInterface(new MovesCommandFacade());
+		utilHandler.setUtilCommandHandler(new UtilCommandFacade());
+		//userCommandFacade = new UserCommandFacade();
+		//gamesCommandFacade = new GamesCommandFacade();
+		//gameCommandFacade = new GameCommandFacade();
+		//movesCommandFacade = new MovesCommandFacade();
+		//utilCommandFacade = new UtilCommandFacade();
+	}
 	
 	public static void main(String[] args) {
 		Server s = new Server();
+		
 		if(args.length == 0){
 			s.setCommandFacade();
 			s.run();

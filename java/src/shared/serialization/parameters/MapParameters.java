@@ -9,16 +9,16 @@ import shared.model.piece.Settlement;
 
 public class MapParameters {
 	
-	private Hex[] hexes;
-	private Road[] roads;
-	private City[] cities;
-	private Settlement[] settlements;
+	private HexParameters[] hexes;
+	private RoadParameters[] roads;
+	private CityParameters[] cities;
+	private SettlementParameters[] settlements;
 	private int radius;
-	private Port[] ports;
+	private PortParameters[] ports;
 	private HexLocation robber;
 	
-	public MapParameters(Hex[] hexes, Road[] roads, City[] cities, Settlement[] settlements, 
-						 int radius, Port[] ports, HexLocation robber){
+	public MapParameters(HexParameters[] hexes, RoadParameters[] roads, CityParameters[] cities, SettlementParameters[] settlements, 
+						 int radius, PortParameters[] ports, HexLocation robber){
 		this.hexes = hexes;
 		this.roads = roads;
 		this.cities = cities;
@@ -28,35 +28,35 @@ public class MapParameters {
 		this.robber = robber;
 	}
 
-	public Hex[] getHexes() {
+	public HexParameters[] getHexes() {
 		return hexes;
 	}
 
-	public void setHexes(Hex[] hexes) {
+	public void setHexes(HexParameters[] hexes) {
 		this.hexes = hexes;
 	}
 
-	public Road[] getRoads() {
+	public RoadParameters[] getRoads() {
 		return roads;
 	}
 
-	public void setRoads(Road[] roads) {
+	public void setRoads(RoadParameters[] roads) {
 		this.roads = roads;
 	}
 
-	public City[] getCities() {
+	public CityParameters[] getCities() {
 		return cities;
 	}
 
-	public void setCities(City[] cities) {
+	public void setCities(CityParameters[] cities) {
 		this.cities = cities;
 	}
 
-	public Settlement[] getSettlements() {
+	public SettlementParameters[] getSettlements() {
 		return settlements;
 	}
 
-	public void setSettlements(Settlement[] settlements) {
+	public void setSettlements(SettlementParameters[] settlements) {
 		this.settlements = settlements;
 	}
 
@@ -68,11 +68,11 @@ public class MapParameters {
 		this.radius = radius;
 	}
 
-	public Port[] getPorts() {
+	public PortParameters[] getPorts() {
 		return ports;
 	}
 
-	public void setPorts(Port[] ports) {
+	public void setPorts(PortParameters[] ports) {
 		this.ports = ports;
 	}
 

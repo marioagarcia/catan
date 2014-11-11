@@ -1,5 +1,8 @@
 package server.command;
 
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.serialization.parameters.BuildRoadParameters;
 
 /**
@@ -8,12 +11,25 @@ import shared.serialization.parameters.BuildRoadParameters;
  */
 public class BuildRoad extends CatanCommand {
 
+	private EdgeLocation location = null;
+	
 	/**
 	 * Initializes the BuildRoad object with all the information necessary to make changes to the model
 	 * @param parameters An object containing the index of the player building the road, its location, and whether it is free 
 	 * @param game_id The integer ID of the game the operation is to be performed on. Must be an ID for an existing game
 	 */
 	public BuildRoad(BuildRoadParameters parameters, int game_id){
+		
+		this.playerIndex = parameters.getPlayerIndex();
+		this.gameId = game_id;
+		
+		int x = parameters.getRoadLocation().getX();
+		int y = parameters.getRoadLocation().getY();
+		
+		HexLocation hex_loc = new HexLocation(x, y);
+		EdgeDirection direction = EdgeDirection.valueOf(parameters.getRoadLocation().getDirection());
+		
+		location = new EdgeLocation(hex_loc, direction);
 		
 	}
 	
@@ -23,7 +39,11 @@ public class BuildRoad extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canBuildRoad(gameId, playerIndex, location)){
+			
+			success = facadeInstance.buildRoad(gameId, playerIndex, location);
+		}
 		
 	}
 }

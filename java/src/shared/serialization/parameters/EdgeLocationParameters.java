@@ -4,9 +4,9 @@ import shared.locations.EdgeLocation;
 
 public class EdgeLocationParameters extends MasterParameterInterface{
 
+	private String direction;
 	private int x;
 	private int y;
-	private String direction;
 	
 	public EdgeLocationParameters(EdgeLocation location){
 		x = location.getHexLoc().getX();

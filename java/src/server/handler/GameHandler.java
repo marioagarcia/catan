@@ -9,8 +9,14 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class GameHandler implements HttpHandler{
 	
-	public GameHandler(GameCommandFacadeInterface gameCommandFacade){
+	private GameCommandFacadeInterface facade;
+	
+	public GameHandler(){
 		
+	}
+	
+	public void setGameCommandFacadeInterface(GameCommandFacadeInterface facade){
+		this.facade = facade;
 	}
 
 	@Override
