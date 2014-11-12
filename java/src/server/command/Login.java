@@ -8,12 +8,16 @@ import shared.serialization.parameters.CredentialsParameters;
  */
 public class Login extends CatanCommand {
 
+	private String username = null;
+	private String password = null;
 	/**
 	 * Initializes the Login object with the data needed to log a player in to the server
 	 * @param parameters an object containing the username and password
 	 */
 	public Login(CredentialsParameters parameters){
 		
+		this.username = parameters.getUsername();
+		this.password = parameters.getPassword();
 	}
 	
 	/**
@@ -21,7 +25,8 @@ public class Login extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		success = facadeInstance.loginPlayer(username, password);
 		
 	}
 }
