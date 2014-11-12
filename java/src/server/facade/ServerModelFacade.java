@@ -13,6 +13,7 @@ import shared.locations.VertexLocation;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
@@ -87,9 +88,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean updateGameModel(int game_id) {
+	public GameData getGameModel(int game_id) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -324,6 +325,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public GameList getGameList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AIManager getAIList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
