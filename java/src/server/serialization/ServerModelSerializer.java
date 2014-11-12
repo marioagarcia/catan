@@ -519,8 +519,14 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 									player.getColor().toString().toLowerCase()); 
 	}
 	
-//	public static void main(String[] args){
-/*		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
+/*	public static void main(String[] args){
+		ServerModelSerializer serializer = new ServerModelSerializer();
+		GameInfo gameInfo = new GameInfo();
+		gameInfo.setId(3);
+		gameInfo.setTitle("string");
+		
+		System.out.println(serializer.serializeGameInfo(gameInfo));
+		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		
 		PlayerInfo p1 = new PlayerInfo();
 		p1.setPlayerInfo(CatanColor.ORANGE, "Sam", 0);
@@ -571,9 +577,9 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		g4.setGameInfo("string", 3, new ArrayList<PlayerInfo>(4));
 		
 		games.add(g1); games.add(g2); games.add(g3);
-		System.out.println(new ServerModelSerializer().serializeGamesList(games));*/
+		System.out.println(new ServerModelSerializer().serializeGamesList(games));
 		
-//	}
+	}*/
 }
 
 

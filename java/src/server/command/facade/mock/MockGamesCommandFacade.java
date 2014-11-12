@@ -2,6 +2,7 @@ package server.command.facade.mock;
 
 import server.command.facade.GamesCommandFacadeInterface;
 import shared.model.GameInfo;
+import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.JoinGameParameters;
@@ -35,7 +36,7 @@ public class MockGamesCommandFacade implements GamesCommandFacadeInterface{
 	}
 
 	@Override
-	public Boolean loadGame(LoadGameRequestParameters params) {
+	public GameData loadGame(LoadGameRequestParameters params) {
 		// TODO Auto-generated method stub
 		return null;
 	}

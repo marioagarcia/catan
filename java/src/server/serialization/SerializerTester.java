@@ -601,16 +601,13 @@ public class SerializerTester {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ServerModelSerializer sms = new ServerModelSerializer();
-		SerializerTester st = new SerializerTester();
-		System.out.println(json);
-		
-		GameData gd = st.deserializeGameModel(json);
-		String json2 = sms.serializeGameModel(gd);
-		System.out.println(json2);
-		gd = st.deserializeGameModel(json2);
-		//json = sms.serializeGameModel(gd);
+		ServerModelSerializer serializer = new ServerModelSerializer();
+		SerializerTester tester = new SerializerTester();
 		//System.out.println(json);
+		
+		GameData gameData = tester.deserializeGameModel(json);
+		String json2 = serializer.serializeGameModel(gameData);
+		System.out.println(json2);
 		
 	}
 	
