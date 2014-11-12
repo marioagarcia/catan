@@ -28,7 +28,6 @@ public class CookieParser {
 		
 		if (cookie.contains("catan.game")){
 			gameId = Integer.parseInt(pieces[1].split("=")[1]);
-			
 		}
 		
 		cookie = pieces[0].split("=")[1];
@@ -60,7 +59,6 @@ public class CookieParser {
 		sb.append("%22%2C%22playerID%22%3A");
 		sb.append(id);
 		sb.append("%7D;Path=/;");
-		
 		
 		return sb.toString();
 	}
