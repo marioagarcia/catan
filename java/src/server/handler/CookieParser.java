@@ -50,7 +50,7 @@ public class CookieParser {
 		
 	}
 	
-	public String generateLoginCookie(String user, String password, int id){
+	public static String generateLoginCookie(String user, String password, int id){
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("catan.user=%7B%22name%22%3A%22");
@@ -65,7 +65,7 @@ public class CookieParser {
 		return sb.toString();
 	}
 	
-	public String generateJoinCookie(int game_id){
+	public static String generateJoinCookie(int game_id){
 		
 		return "catan.game=" + game_id + ";Path=/;";
 	}
