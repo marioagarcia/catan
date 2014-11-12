@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
@@ -149,7 +150,7 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 			
 			//Convert the playerInfo into a PlayerInfoParameters (serializable player)
 			PlayerInfoParameters serializablePlayer = new PlayerInfoParameters(player.getName(),
-																			   player.getColor().toString(),
+																			   player.getColor().toString().toLowerCase(),
 																			   player.getId());
 			
 			//Add the serializable player to the serializable list of players
@@ -508,9 +509,19 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		//Get resource list from player
 		ResourceList resources = player.getResourceList();
 		//Get old dev cards from player
-		DevCardList oldDevCards = player.getOldDevCards();
+		DevCardList oldCards = player.getOldDevCards();
+		DevCardListParameters oldDevCards = new DevCardListParameters(oldCards.getYearOfPlenty(),
+																	  oldCards.getMonopoly(),
+																	  oldCards.getSoldier(),
+																	  oldCards.getRoadBuild(),
+																	  oldCards.getMonument());
 		//Get new dev cards from player
-		DevCardList newDevCards = player.getNewDevCards();
+		DevCardList newCards = player.getNewDevCards();
+		DevCardListParameters newDevCards = new DevCardListParameters(newCards.getYearOfPlenty(),
+																	  newCards.getMonopoly(),
+																	  newCards.getSoldier(),
+																	  newCards.getRoadBuild(),
+																	  newCards.getMonument());
 		
 		return new PlayerParameters(resources, oldDevCards, newDevCards, player.getRoads(), player.getCities(),
 									player.getSettlements(), player.getSoldiers(), player.getVictoryPoints(),
@@ -522,8 +533,17 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 /*	public static void main(String[] args){
 		ServerModelSerializer serializer = new ServerModelSerializer();
 		GameInfo gameInfo = new GameInfo();
-		gameInfo.setId(3);
-		gameInfo.setTitle("string");
+		PlayerInfo player1 = new PlayerInfo();
+		player1.setPlayerInfo(CatanColor.BLUE, "ButtHole", 1);
+		PlayerInfo player2 = new PlayerInfo();
+		player2.setPlayerInfo(CatanColor.RED, "ButtFace", 7);
+		PlayerInfo player3 = new PlayerInfo();
+		player3.setPlayerInfo(CatanColor.BROWN, "ButtHead", 13);
+		
+		ArrayList<PlayerInfo> playerList = new ArrayList<PlayerInfo>();
+		playerList.add(player1); playerList.add(player2); playerList.add(player3);
+		
+		gameInfo.setGameInfo("This IS the game", 79, playerList);
 		
 		System.out.println(serializer.serializeGameInfo(gameInfo));
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();

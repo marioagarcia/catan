@@ -4,6 +4,8 @@ import server.command.facade.GamesCommandFacadeInterface;
 import shared.model.GameInfo;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
+import shared.model.mock.MockGameInfo;
+import shared.model.mock.MockGameList;
 import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.JoinGameParameters;
 import shared.serialization.parameters.LoadGameRequestParameters;
@@ -13,26 +15,22 @@ public class MockGamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameList getGamesList() {
-		// TODO Auto-generated method stub
-		return null;
+		 return new MockGameList();
 	}
 
 	@Override
 	public GameInfo createGame(CreateGameRequestParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockGameInfo(params.getName());
 	}
 
 	@Override
 	public Boolean joinGame(JoinGameParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
 	public Boolean saveGame(SaveGameParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override

@@ -33,6 +33,7 @@ import shared.model.manager.GameData;
 import shared.model.map.BoardMap;
 import shared.model.map.Hex;
 import shared.model.map.Port;
+import shared.model.mock.MockGameModel;
 import shared.model.piece.City;
 import shared.model.piece.Road;
 import shared.model.piece.Settlement;
@@ -601,9 +602,10 @@ public class SerializerTester {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(json);
+		
 		ServerModelSerializer serializer = new ServerModelSerializer();
 		SerializerTester tester = new SerializerTester();
-		//System.out.println(json);
 		
 		GameData gameData = tester.deserializeGameModel(json);
 		String json2 = serializer.serializeGameModel(gameData);

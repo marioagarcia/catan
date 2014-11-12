@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import server.command.facade.GamesCommandFacadeInterface;
 import server.serialization.ServerModelSerializer;
@@ -41,7 +42,10 @@ public class GamesHandler implements HttpHandler{
 		String response;
 		int responseCode;
 		Boolean successful;
+		
+		int gameID = -1;
 		String jsonString = getJsonString(exchange.getRequestBody());
+		
 		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/games/list")){
@@ -65,6 +69,7 @@ public class GamesHandler implements HttpHandler{
 			}
 		}else if(uri.equals("/games/join")){
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
+			gameID = params.getId();
 			successful = facade.joinGame(params);
 			if(successful){
 				response = "Success";
@@ -93,6 +98,17 @@ public class GamesHandler implements HttpHandler{
 			responseCode = 400;
 		}
 		
+		if(gameID != -1){
+			//If gameID is not -1 then it was a join game request
+			//Set the cookie based on the id of the game that was joined
+			String cookie = CookieParser.generateJoinCookie(gameID);
+			ArrayList<String> cookieList = new ArrayList<String>();
+			cookieList.add(cookie);
+			
+			//Put the cookie in the response headers and send the response headers with the response and response code
+			exchange.getResponseHeaders().put("Set-Cookie", cookieList);
+		}
+			
 		exchange.sendResponseHeaders(responseCode, response.length());
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
