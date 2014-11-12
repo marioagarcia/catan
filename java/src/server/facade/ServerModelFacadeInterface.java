@@ -10,6 +10,7 @@ import shared.locations.VertexLocation;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
@@ -84,10 +85,12 @@ public interface ServerModelFacadeInterface {
 	public boolean loadGame(int game_id);
 	
 	/**
-	 * This gets the current game model from the server and updates all the model classes
-	 * @return true if all model classes were correctly updated
+	 * Retrieves the game model associated with a game id
+	 * 
+	 * @param game_id The id of the game being retrieved
+	 * @return The game model associated with the given id
 	 */
-	public boolean updateGameModel(int game_id);
+	public GameData getGameModel(int game_id);
 	
 	/**
 	 * Checks that the player has a valid user and a valid game id
@@ -412,4 +415,11 @@ public interface ServerModelFacadeInterface {
 	 * @return An object containing the current list of games hosted on the server
 	 */
 	public GameList getGameList();
+	
+	/**
+	 * Retrieves the AIManager which stores the possible AI players to choose from
+	 * 
+	 * @return An object that contains a list of strings that represent all of the possible AI players
+	 */
+	public AIManager getAIList();
 }
