@@ -156,7 +156,6 @@ public class EdgeLocation
 	}
 
 	public static EdgeLocation[] getAdjacent(VertexLocation vertexLocation){
-		//TODO this needs to capture the third road
 		VertexDirection[] vertexDirections = new VertexDirection[6];
 		vertexDirections[0] = VertexDirection.NorthEast;
 		vertexDirections[1] = VertexDirection.East;
