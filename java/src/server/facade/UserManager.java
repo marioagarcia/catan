@@ -34,6 +34,16 @@ public class UserManager {
 		}
 	}
 	
+	public int getPlayerId(String name){
+		
+		if (userList.containsKey(name)){
+			return userList.get(name).getID();
+		}
+		else{
+			return -1;
+		}
+	}
+	
 	
 
 }

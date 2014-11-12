@@ -34,6 +34,11 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		}
 		return facadeInstance;
 	}
+	
+	public int getPlayerId(String name){
+		return userList.getPlayerId(name);
+	}
+	
 	@Override
 	public void addObserver(int game_id, Observer observer) {
 		// TODO Auto-generated method stub
