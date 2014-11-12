@@ -20,10 +20,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	private static ServerModelFacade facadeInstance = null;
 	private Map<Integer, ServerGameManager> gamesList;
+	private UserManager userList = null;
 	
 	protected ServerModelFacade()
 	{
 		gamesList = new HashMap<Integer, ServerGameManager>();
+		userList = new UserManager();
 	}
 	
 	public static ServerModelFacade getInstance(){
@@ -40,14 +42,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean loginPlayer(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		return userList.canLogin(username, password);
 	}
 
 	@Override
 	public boolean registerPlayer(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		return userList.register(username, password);
 	}
 
 	@Override

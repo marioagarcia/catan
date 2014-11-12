@@ -22,11 +22,15 @@ public class UserManager {
 		return (userList.containsKey(name) && userList.get(name).getPassword().equals(password));
 	}
 	
-	public void addUser(String username, String password){
+	public boolean register(String username, String password){
 		
 		if (canRegister(username)){
 			userList.put(username, new User(username, password, currentID));
 			currentID++;
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 	
