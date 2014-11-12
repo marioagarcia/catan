@@ -9,6 +9,7 @@ import shared.serialization.parameters.RollNumberParameters;
  */
 public class RollNumber extends CatanCommand {
 
+	private int number = -1;
 	/**
 	 * Initializes the RollNumber object with the data necessary to update the game model
 	 * @param parameters An object containing the index of the player who rolled, and the number the rolled
@@ -16,6 +17,10 @@ public class RollNumber extends CatanCommand {
 	 */
 	public RollNumber(RollNumberParameters parameters, int game_id){
 		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
+		
+		this.number = parameters.getNumber();
 	}
 	
 	/**
@@ -24,7 +29,11 @@ public class RollNumber extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canRoll(gameId, playerIndex)){
+			
+			success = facadeInstance.roll(gameId, playerIndex, number);
+		}
 		
 	}
 }
