@@ -8,12 +8,17 @@ import shared.serialization.parameters.CredentialsParameters;
  */
 public class Register extends CatanCommand {
 
+	private String username = null;
+	private String password = null;
+	
 	/**
 	 * Initializes the Register object with the data necessary to register a new user
 	 * @param parameters An object containing the username and password of the person wishing to register
 	 */
 	public Register(CredentialsParameters parameters){
 		
+		username = parameters.getUsername();
+		password = parameters.getPassword();
 	}
 	
 	/**
@@ -21,7 +26,8 @@ public class Register extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		success = facadeInstance.registerPlayer(username, password);
 		
 	}
 }

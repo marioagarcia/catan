@@ -9,9 +9,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLDecoder;
-
 import shared.model.player.Player;
-
 import com.google.gson.*;
 
 public class ServerProxy implements ServerProxyInterface{
