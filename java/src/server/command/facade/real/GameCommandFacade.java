@@ -2,12 +2,13 @@ package server.command.facade.real;
 
 import java.util.ArrayList;
 
+import server.command.ResetGame;
 import server.command.facade.GameCommandFacadeInterface;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.MasterParameterInterface;
 
 public class GameCommandFacade implements GameCommandFacadeInterface{
-
+	
 	@Override
 	public GameData getModel() {
 		// TODO Auto-generated method stub
@@ -16,8 +17,14 @@ public class GameCommandFacade implements GameCommandFacadeInterface{
 
 	@Override
 	public GameData reset() {
-		// TODO Auto-generated method stub
-		return null;
+		ResetGame reset = new ResetGame();
+		reset.execute();
+		if(reset.wasSuccessful()){
+			// @ TODO get a game model and return it
+			return null;
+		}else{
+			return null;
+		}
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package server.command.facade;
 
 import shared.model.GameInfo;
+import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.JoinGameParameters;
@@ -49,6 +50,6 @@ public interface GamesCommandFacadeInterface {
 	 * @param params An object containing the name of the saved game being loaded
 	 * @return Whether or not loading the game was successful; true if successful, false otherwise
 	 */
-	public Boolean loadGame(LoadGameRequestParameters params);
+	public GameData loadGame(LoadGameRequestParameters params);
 	
 }
