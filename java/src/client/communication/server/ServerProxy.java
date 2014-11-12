@@ -380,4 +380,16 @@ public class ServerProxy implements ServerProxyInterface{
 		methodUrl = "/moves/robPlayer";
 		return doGet(methodUrl, JSONString, true);
 	}
+
+	@Override
+	public String LoadGame(String JSONString) {
+		methodUrl = "/util/load";
+		return doGet(methodUrl, JSONString, true);
+	}
+
+	@Override
+	public String SaveGame(String JSONString) {
+		methodUrl = "/util/save";
+		return doGet(methodUrl, JSONString, true);
+	}
 }

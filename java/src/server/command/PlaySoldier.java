@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.locations.HexLocation;
 import shared.serialization.parameters.SoldierParameters;
 
 /**
@@ -8,6 +9,10 @@ import shared.serialization.parameters.SoldierParameters;
  */
 public class PlaySoldier extends CatanCommand {
 
+	private HexLocation oldLocation = null;
+	private HexLocation newLocation = null;
+	private int victimIndex = -1;
+	
 	/**
 	 * Initializes the PlaySoldier object with the data necessary to update the game model
 	 * @param parameters An object containing the index of the player using this dev card, the new location to move the robber to, and the index of the robbing victim
@@ -15,6 +20,18 @@ public class PlaySoldier extends CatanCommand {
 	 */
 	public PlaySoldier(SoldierParameters parameters, int game_id){
 		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
+		
+		//Need a way to get the robber's current location for can method. Or assume that this will be checked in the manager/map
+		//oldLocation = map.getRobberLocation()
+		
+		int x1 = parameters.getLocation().getX();
+		int y1 = parameters.getLocation().getY();
+		
+		newLocation = new HexLocation(x1, y1);
+		
+		victimIndex = parameters.getVictimIndex();
 	}
 	
 	/**
@@ -24,7 +41,11 @@ public class PlaySoldier extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canPlaySoldier(gameId, playerIndex, oldLocation, newLocation, victimIndex)){
+			
+			success = facadeInstance.playSoldier(gameId, playerIndex, newLocation, victimIndex);
+		}
 		
 	}
 }

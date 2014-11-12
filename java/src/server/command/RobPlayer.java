@@ -23,7 +23,8 @@ public class RobPlayer extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+	
+		//ServerModelFacade has no rob player
 		
 	}
 }

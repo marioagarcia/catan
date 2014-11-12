@@ -37,6 +37,20 @@ public interface ServerProxyInterface{
 	abstract String createGame(String JSONString);
 	
 	/**
+	 * Loads a game from the server. The game is set to the same state it was at when saved
+	 * @param JSONString
+	 * @return A JSONString representing the game model being loaded
+	 */
+	abstract String LoadGame(String JSONString);
+	
+	/**
+	 * Saves a given game on the server to be loaded at a later time
+	 * @param JSONString
+	 * @return A JSONString indicating the success of the operation
+	 */
+	abstract String SaveGame(String JSONString);
+	
+	/**
 	 * Adds a player to the game and sets their game cookie
 	 * @param JSONString that contains a player cookie and a color
 	 * @return JSONString a result

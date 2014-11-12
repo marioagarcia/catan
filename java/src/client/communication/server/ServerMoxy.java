@@ -241,4 +241,14 @@ public class ServerMoxy implements ServerProxyInterface{
 	public void updateVersion(int version){
 		
 	}
+
+	@Override
+	public String LoadGame(String JSONString) {
+		return readFile("JSON" + File.separator + "getGameModel.txt");
+	}
+
+	@Override
+	public String SaveGame(String JSONString) {
+		return "Success";
+	}
 }

@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.definitions.ResourceType;
 import shared.serialization.parameters.YearOfPlentyParameters;
 
 /**
@@ -8,6 +9,8 @@ import shared.serialization.parameters.YearOfPlentyParameters;
  */
 public class PlayYearOfPlenty extends CatanCommand {
 
+	private String resourceString1 = null;
+	private String resourceString2 = null;
 	/**
 	 * Initializes the PleyYearOfPlenty with the data needed to update the game model
 	 * @param parameters An object containing the index of the player using the card, and the two resources their will receive
@@ -15,6 +18,11 @@ public class PlayYearOfPlenty extends CatanCommand {
 	 */
 	public PlayYearOfPlenty(YearOfPlentyParameters parameters, int game_id){
 		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
+		
+		this.resourceString1 = parameters.getResource1();
+		this.resourceString2 = parameters.getResource2();
 	}
 	
 	/**
@@ -24,7 +32,11 @@ public class PlayYearOfPlenty extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canPlayYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1), ResourceType.valueOf(resourceString2))){
+			
+			success = facadeInstance.playYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1), ResourceType.valueOf(resourceString2));
+		}
 		
 	}
 }
