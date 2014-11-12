@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.locations.EdgeLocation;
 import shared.serialization.parameters.MaritimeTradeParameters;
 
 /**
@@ -8,12 +9,16 @@ import shared.serialization.parameters.MaritimeTradeParameters;
  */
 public class MaritimeTrade extends CatanCommand {
 
+	private EdgeLocation location = null;
 	/**
 	 * Initializes the MaritimeTrade object with data necessary for updating the game model
 	 * @param parameters An object containing the player index of the person trading, the ratio of the trade, and the resources to be given/received
 	 * @param game_id The integer ID of a game this action will be applied to
 	 */
 	public MaritimeTrade(MaritimeTradeParameters parameters, int game_id){
+		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
 		
 	}
 	
@@ -24,7 +29,11 @@ public class MaritimeTrade extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canMaritimeTrade(gameId, playerIndex, location, null)){
+			
+			success = facadeInstance.maritimeTrade(gameId, playerIndex, location, null);
+		}
 		
 	}
 }

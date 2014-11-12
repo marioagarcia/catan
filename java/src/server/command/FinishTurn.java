@@ -15,6 +15,8 @@ public class FinishTurn extends CatanCommand {
 	 */
 	public FinishTurn(FinishTurnParameters parameters, int game_id){
 		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
 	}
 	
 	/**
@@ -24,7 +26,11 @@ public class FinishTurn extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canFinishTurn(gameId, playerIndex)){
+			
+			success = facadeInstance.finishTurn(gameId, playerIndex);
+		}
 		
 	}
 }

@@ -15,6 +15,8 @@ public class PlayMonument extends CatanCommand {
 	 */
 	public PlayMonument(MonumentParameters parameters, int game_id){
 		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
 	}
 	
 	/**
@@ -24,7 +26,11 @@ public class PlayMonument extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+
+		if (facadeInstance.canPlayMonument(gameId, playerIndex)){
+			
+			success = facadeInstance.playMonument(gameId, playerIndex);
+		}
 		
 	}
 }

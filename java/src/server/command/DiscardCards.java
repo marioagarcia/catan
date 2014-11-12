@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.model.card.ResourceList;
 import shared.serialization.parameters.DiscardCardsParameters;
 
 /**
@@ -8,6 +9,7 @@ import shared.serialization.parameters.DiscardCardsParameters;
  */
 public class DiscardCards extends CatanCommand {
 
+	ResourceList discards = null;
 	/**
 	 * Initializes the DiscardCards object with the data needed to update the model 
 	 * @param parameters An object containing the index of the player discarding, and the list of cards to get remove from the player's resources
@@ -15,6 +17,10 @@ public class DiscardCards extends CatanCommand {
 	 */
 	public DiscardCards(DiscardCardsParameters parameters, int game_id){
 		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
+		
+		discards = parameters.getDiscardedCards();
 	}
 	
 	/**
@@ -24,7 +30,11 @@ public class DiscardCards extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canDiscardCards(gameId, playerIndex, discards)){
+			
+			success = facadeInstance.discardCards(gameId, playerIndex, discards);
+		}
 		
 	}
 }

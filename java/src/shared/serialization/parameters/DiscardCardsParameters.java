@@ -1,15 +1,14 @@
 package shared.serialization.parameters;
 
 import shared.model.card.ResourceList;
-import shared.serialization.interfaces.SerializerResourceListInterface;
 
 public class DiscardCardsParameters extends MasterParameterInterface{
 
 	private String type;
 	private int playerIndex;
-	private SerializerResourceListInterface discardedCards;
+	private ResourceList discardedCards;
 	
-	public DiscardCardsParameters(int index, SerializerResourceListInterface discards){
+	public DiscardCardsParameters(int index, ResourceList discards){
 		type = "discardCards";
 		playerIndex = index;
 		discardedCards = discards;
@@ -31,7 +30,7 @@ public class DiscardCardsParameters extends MasterParameterInterface{
 		this.playerIndex = playerIndex;
 	}
 
-	public SerializerResourceListInterface getDiscardedCards() {
+	public ResourceList getDiscardedCards() {
 		return discardedCards;
 	}
 

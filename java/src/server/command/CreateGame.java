@@ -8,6 +8,11 @@ import shared.serialization.parameters.CreateGameRequestParameters;
  */
 public class CreateGame extends CatanCommand {
 
+	private String name = null;
+	private boolean randomTiles = false;
+	private boolean randomNumbers = false;
+	private boolean randomPorts = false;
+	
 	/**
 	 * 
 	 * @param parameters An object containing details about how the new game should be setup: random tiles, random numbers, random ports, and
@@ -15,6 +20,10 @@ public class CreateGame extends CatanCommand {
 	 */
 	public CreateGame(CreateGameRequestParameters parameters){
 		
+		name = parameters.getName();
+		randomTiles = parameters.isRandomTiles();
+		randomNumbers = parameters.isRandomNumbers();
+		randomPorts = parameters.isRandomPorts();
 	}
 	
 	/**
@@ -22,7 +31,8 @@ public class CreateGame extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+	
+		success = facadeInstance.createNewGame(name, randomTiles, randomNumbers, randomPorts);
 		
 	}
 }

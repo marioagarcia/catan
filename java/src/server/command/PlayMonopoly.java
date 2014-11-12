@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.definitions.ResourceType;
 import shared.serialization.parameters.MonopolyParameters;
 
 /**
@@ -9,13 +10,18 @@ import shared.serialization.parameters.MonopolyParameters;
  */
 public class PlayMonopoly extends CatanCommand {
 
+	private String resourceString = null;
 	/**
 	 * Initializes the PlayMonopoly object with the data necessary to change the state of the game to reflect a player using the monopoly card
-	 * @param paramaters An object containing the player index of the player using the card, and the resource to be taken
+	 * @param parameters An object containing the player index of the player using the card, and the resource to be taken
 	 * @param game_id The integer ID of the game this action will be applied to
 	 */
-	public PlayMonopoly(MonopolyParameters paramaters, int game_id){
+	public PlayMonopoly(MonopolyParameters parameters, int game_id){
 		
+		this.gameId = game_id;
+		this.playerIndex = parameters.getPlayerIndex();
+		
+		resourceString = parameters.getResource();
 	}
 	
 	/**
@@ -25,7 +31,11 @@ public class PlayMonopoly extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		if (facadeInstance.canPlayMonopoly(gameId, playerIndex)){
+			
+			success = facadeInstance.playMonopoly(gameId, playerIndex, ResourceType.valueOf(resourceString));
+		}
 		
 	}
 }
