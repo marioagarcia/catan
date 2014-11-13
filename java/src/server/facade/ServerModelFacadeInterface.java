@@ -423,7 +423,20 @@ public interface ServerModelFacadeInterface {
 	 */
 	public AIManager getAIList();
 	
+	/**
+	 * Verifies the user's credentials in the list of registered users
+	 * @param name The username to verify
+	 * @param password The password associated with this user
+	 * @param id The id associated with this user
+	 * @return True if all the user credentials match those stored
+	 */
 	public boolean verifyUser(String name, String password, int id);
 	
+	/**
+	 * Verifies that a given player is playing in the given game
+	 * @param player_id The id of the player to verify
+	 * @param game_id The id of the game being checked
+	 * @return True if the given game contains the given player
+	 */
 	public boolean verifyGame(int player_id, int game_id);
 }
