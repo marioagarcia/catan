@@ -24,7 +24,7 @@ public class MockGamesCommandFacade implements GamesCommandFacadeInterface{
 	}
 
 	@Override
-	public Boolean joinGame(JoinGameParameters params) {
+	public Boolean joinGame(JoinGameParameters params, int playerId) {
 		return true;
 	}
 

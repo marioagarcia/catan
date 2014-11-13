@@ -32,8 +32,8 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 	}
 
 	@Override
-	public Boolean joinGame(JoinGameParameters params) {
-		JoinGame command = new JoinGame(params, -1);
+	public Boolean joinGame(JoinGameParameters params, int playerId) {
+		JoinGame command = new JoinGame(params, playerId);
 		command.execute();
 		return command.wasSuccessful();
 	}

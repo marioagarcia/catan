@@ -33,7 +33,7 @@ public interface GamesCommandFacadeInterface {
 	 * @param params An object containing the id and color of the player joining the game
 	 * @return Whether or not the join was successful; true if successful, false otherwise
 	 */
-	public Boolean joinGame(JoinGameParameters params);
+	public Boolean joinGame(JoinGameParameters params, int playerId);
 	
 	/**
 	 * Creates a SaveGame command object and calls execute on it

@@ -43,7 +43,6 @@ public class UserHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
-//System.out.println(exchange.getRequestHeaders().values());		
 		StringBuilder request = new StringBuilder();
 		//Read the request into a buffered reader
 		BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));

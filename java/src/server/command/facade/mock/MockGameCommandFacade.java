@@ -12,7 +12,6 @@ public class MockGameCommandFacade implements GameCommandFacadeInterface{
 
 	@Override
 	public GameData getModel(int gameId) {
-		System.out.println("Trying to get Model");
 		return new MockGameModel().getGameData();
 	}
 
