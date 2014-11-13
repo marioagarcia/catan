@@ -1,7 +1,23 @@
 package server.command.facade.real;
 
+import server.command.AcceptTrade;
+import server.command.BuildCity;
+import server.command.BuildRoad;
+import server.command.BuildSettlement;
+import server.command.BuyDevCard;
+import server.command.DiscardCards;
+import server.command.FinishTurn;
+import server.command.MaritimeTrade;
+import server.command.OfferTrade;
+import server.command.PlayMonopoly;
+import server.command.PlayMonument;
+import server.command.PlayRoadBuilding;
+import server.command.PlaySoldier;
+import server.command.PlayYearOfPlenty;
+import server.command.RobPlayer;
+import server.command.RollNumber;
+import server.command.SendChat;
 import server.command.facade.MovesCommandFacadeInterface;
-import shared.model.manager.GameData;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -23,105 +39,105 @@ import shared.serialization.parameters.YearOfPlentyParameters;
 public class MovesCommandFacade implements MovesCommandFacadeInterface{
 
 	@Override
-	public GameData sendChat(SendChatParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean sendChat(SendChatParameters params, int gameId) {
+		SendChat command = new SendChat(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData rollNumber(RollNumberParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean rollNumber(RollNumberParameters params, int gameId) {
+		RollNumber command = new RollNumber(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData robPlayer(RobPlayerParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean robPlayer(RobPlayerParameters params, int gameId) {
+		RobPlayer command = new RobPlayer(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData finishTurn(FinishTurnParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean finishTurn(FinishTurnParameters params, int gameId) {
+		FinishTurn command = new FinishTurn(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData buyDevCard(BuyDevCardParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean buyDevCard(BuyDevCardParameters params, int gameId) {
+		BuyDevCard command = new BuyDevCard(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData playYearOfPlenty(YearOfPlentyParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean playYearOfPlenty(YearOfPlentyParameters params, int gameId) {
+		PlayYearOfPlenty command = new PlayYearOfPlenty(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData playRoadBuilding(RoadBuildingParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean playRoadBuilding(RoadBuildingParameters params, int gameId) {
+		PlayRoadBuilding command = new PlayRoadBuilding(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData playSoldier(SoldierParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean playSoldier(SoldierParameters params, int gameId) {
+		PlaySoldier command = new PlaySoldier(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData playMonopoly(MonopolyParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean playMonopoly(MonopolyParameters params, int gameId) {
+		PlayMonopoly command = new PlayMonopoly(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData playMonument(MonumentParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean playMonument(MonumentParameters params, int gameId) {
+		PlayMonument command = new PlayMonument(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData buildRoad(BuildRoadParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean buildRoad(BuildRoadParameters params, int gameId) {
+		BuildRoad command = new BuildRoad(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData buildSettlement(BuildSettlementParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean buildSettlement(BuildSettlementParameters params, int gameId) {
+		BuildSettlement command = new BuildSettlement(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData buildCity(BuildCityParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean buildCity(BuildCityParameters params, int gameId) {
+		BuildCity command = new BuildCity(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData offerTrade(OfferTradeParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean offerTrade(OfferTradeParameters params, int gameId) {
+		OfferTrade command = new OfferTrade(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData acceptTrade(AcceptTradeParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean acceptTrade(AcceptTradeParameters params, int gameId) {
+		AcceptTrade command = new AcceptTrade(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData maritimeTrade(MaritimeTradeParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean maritimeTrade(MaritimeTradeParameters params, int gameId) {
+		MaritimeTrade command = new MaritimeTrade(params, gameId);
+		return command.wasSuccessful();
 	}
 
 	@Override
-	public GameData discardCards(DiscardCardsParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean discardCards(DiscardCardsParameters params, int gameId) {
+		DiscardCards command = new DiscardCards(params, gameId);
+		return command.wasSuccessful();
 	}
 
 }

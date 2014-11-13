@@ -7,104 +7,104 @@ import shared.serialization.parameters.*;
 public class MockMovesCommandFacade implements MovesCommandFacadeInterface{
 
 	@Override
-	public GameData sendChat(SendChatParameters params) {
+	public boolean sendChat(SendChatParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData rollNumber(RollNumberParameters params) {
+	public boolean rollNumber(RollNumberParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData robPlayer(RobPlayerParameters params) {
+	public boolean robPlayer(RobPlayerParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData finishTurn(FinishTurnParameters params) {
+	public boolean finishTurn(FinishTurnParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData buyDevCard(BuyDevCardParameters params) {
+	public boolean buyDevCard(BuyDevCardParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData playYearOfPlenty(YearOfPlentyParameters params) {
+	public boolean playYearOfPlenty(YearOfPlentyParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData playRoadBuilding(RoadBuildingParameters params) {
+	public boolean playRoadBuilding(RoadBuildingParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData playSoldier(SoldierParameters params) {
+	public boolean playSoldier(SoldierParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData playMonopoly(MonopolyParameters params) {
+	public boolean playMonopoly(MonopolyParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData playMonument(MonumentParameters params) {
+	public boolean playMonument(MonumentParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData buildRoad(BuildRoadParameters params) {
+	public boolean buildRoad(BuildRoadParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData buildSettlement(BuildSettlementParameters params) {
+	public boolean buildSettlement(BuildSettlementParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData buildCity(BuildCityParameters params) {
+	public boolean buildCity(BuildCityParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData offerTrade(OfferTradeParameters params) {
+	public boolean offerTrade(OfferTradeParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData acceptTrade(AcceptTradeParameters params) {
+	public boolean acceptTrade(AcceptTradeParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData maritimeTrade(MaritimeTradeParameters params) {
+	public boolean maritimeTrade(MaritimeTradeParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
-	public GameData discardCards(DiscardCardsParameters params) {
+	public boolean discardCards(DiscardCardsParameters params, int gameId) {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 }
