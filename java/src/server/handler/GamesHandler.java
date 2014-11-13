@@ -68,8 +68,7 @@ public class GamesHandler implements HttpHandler{
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/join")){
-System.out.println(exchange.getRequestHeaders().values().toString());
-			String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
+			String cookie = exchange.getRequestHeaders().values().toString();
 			CookieParser cookieParser = new CookieParser(cookie);
 			
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
