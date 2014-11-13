@@ -10,6 +10,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
@@ -348,6 +349,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public AIManager getAIList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GameInfo getGameInfo(String title) {
 		// TODO Auto-generated method stub
 		return null;
 	}

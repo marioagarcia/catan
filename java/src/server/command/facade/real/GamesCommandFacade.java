@@ -25,8 +25,7 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 		CreateGame command = new CreateGame(params);
 		command.execute();
 		if(command.wasSuccessful()){
-			// TODO Get and return a GameInfo
-			return null;
+			return ServerModelFacade.getInstance().getGameInfo(params.getName());
 		}else{
 			return null;
 		}
