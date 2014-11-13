@@ -21,6 +21,8 @@ public class CookieParser {
 	private boolean containsId = false;
 	
 	public CookieParser(String cookie){
+		cookie = cookie.replace("[", "");
+		cookie = cookie.replace("]", "");
 		parseCookie(cookie);
 		valid = verifyInfo();
 	}
@@ -40,6 +42,7 @@ public class CookieParser {
 		cookie = pieces[0].split("=")[1];
 		
 		try {
+			
 			String plainTextCookie = URLDecoder.decode(cookie, "UTF-8");
 			JsonParser parser = new JsonParser();
 			JsonElement cookie_element = parser.parse(plainTextCookie);
