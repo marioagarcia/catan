@@ -55,6 +55,23 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean registerPlayer(String username, String password) {
 		return userList.register(username, password);
 	}
+	
+	@Override
+	public boolean verifyUser(String name, String password, int id) {
+		return userList.verifyUser(name, password, id);
+	}
+	
+	@Override
+	public boolean verifyGame(int player_id, int game_id) {
+		if (gamesList.containsKey(game_id)){
+			//return gamesList.get(game_id).containsPlayer(player_id); Implement, Mario!
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 
 	@Override
 	public boolean createNewGame(String gameName, boolean randTiles,
@@ -334,6 +351,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
 	
 }

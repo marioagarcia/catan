@@ -422,4 +422,8 @@ public interface ServerModelFacadeInterface {
 	 * @return An object that contains a list of strings that represent all of the possible AI players
 	 */
 	public AIManager getAIList();
+	
+	public boolean verifyUser(String name, String password, int id);
+	
+	public boolean verifyGame(int player_id, int game_id);
 }

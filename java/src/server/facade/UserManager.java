@@ -22,6 +22,17 @@ public class UserManager {
 		return (userList.containsKey(name) && userList.get(name).getPassword().equals(password));
 	}
 	
+	public boolean verifyUser(String name, String password, int id){
+		
+		if (userList.containsKey(name)){
+			User compareUser = userList.get(name);
+			return (compareUser.getPassword().equals(password) && compareUser.getID() == id);
+		}
+		else{
+			return false;
+		}
+	}
+	
 	public boolean register(String username, String password){
 		
 		if (canRegister(username)){

@@ -3,6 +3,8 @@ package server.handler;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import server.facade.ServerModelFacade;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -14,9 +16,13 @@ public class CookieParser {
 	
 	private int gameId = -1;
 	private int playerId = -1;
+	private boolean valid = false;
+	
+	private boolean containsId = false;
 	
 	public CookieParser(String cookie){
 		parseCookie(cookie);
+		valid = verifyInfo();
 	}
 	/**
 	 * Breaks a cookie down into its separate elements
@@ -27,6 +33,7 @@ public class CookieParser {
 		String[] pieces = cookie.split(";");
 		
 		if (cookie.contains("catan.game")){
+			containsId = true;
 			gameId = Integer.parseInt(pieces[1].split("=")[1]);
 		}
 		
@@ -94,5 +101,24 @@ public class CookieParser {
 	 */
 	public int getPlayerID(){
 		return this.playerId;
+	}
+	
+	public boolean isValidCookie(){
+		return valid;
+	}
+	
+	private boolean verifyInfo(){
+		if (user != null && password != null && playerId != -1 && ServerModelFacade.getInstance().verifyUser(user, password, playerId)){
+				
+				if (containsId){
+					return ServerModelFacade.getInstance().verifyGame(playerId, gameId);
+				}
+				else{
+					return true;
+				}
+		}
+		else{
+			return false;
+		}	
 	}
 }
