@@ -68,12 +68,12 @@ public class GamesHandler implements HttpHandler{
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/join")){
-			String cookie = exchange.getRequestHeaders().values().toString();
+			String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
+System.out.println(cookie);
 			CookieParser cookieParser = new CookieParser(cookie);
-			
+System.out.println("Parsed the cookie");			
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
-			gameID = params.getId();
-			successful = facade.joinGame(params, params.getId());
+			successful = facade.joinGame(params, cookieParser.getPlayerID());
 			if(successful){
 				response = "Success";
 				responseCode = 200;
