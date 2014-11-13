@@ -4,6 +4,7 @@ import server.command.CreateGame;
 import server.command.JoinGame;
 import server.command.SaveGame;
 import server.command.facade.GamesCommandFacadeInterface;
+import server.facade.ServerModelFacade;
 import shared.model.GameInfo;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
@@ -16,8 +17,7 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameList getGamesList() {
-		// TODO Auto-generated method stub
-		return null;
+		return ServerModelFacade.getInstance().getGameList();
 	}
 
 	@Override

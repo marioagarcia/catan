@@ -11,13 +11,13 @@ import shared.serialization.parameters.MasterParameterInterface;
 public class MockGameCommandFacade implements GameCommandFacadeInterface{
 
 	@Override
-	public GameData getModel() {
+	public GameData getModel(int gameId) {
 		System.out.println("Trying to get Model");
 		return new MockGameModel().getGameData();
 	}
 
 	@Override
-	public GameData reset() {
+	public GameData reset(int gameId) {
 		return new MockGameModel().getGameData();
 	}
 

@@ -7,6 +7,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
@@ -422,6 +423,14 @@ public interface ServerModelFacadeInterface {
 	 * @return An object that contains a list of strings that represent all of the possible AI players
 	 */
 	public AIManager getAIList();
+	
+	/**
+	 * Retrieves the gameInfo with the given title (used just after a game has been created)
+	 * 
+	 * @param title The title of the gameInfo being retrieved
+	 * @return A GameInfo object consisting of a title, an id, and a list of PlayerInfos
+	 */
+	public GameInfo getGameInfo(String title);
 	
 	/**
 	 * Verifies the user's credentials in the list of registered users
