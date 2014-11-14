@@ -31,9 +31,9 @@ public class AcceptTrade extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canAcceptTrade(gameId, playerIndex, trade)){
+		if (facadeInstance.canAcceptTrade(gameId, playerIndex)){
 			
-			success = facadeInstance.acceptTrade(gameId, playerIndex, trade, accept);
+			success = facadeInstance.acceptTrade(gameId, playerIndex, accept);
 		}	
 	}
 }

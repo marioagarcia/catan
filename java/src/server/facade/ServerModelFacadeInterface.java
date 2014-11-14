@@ -8,7 +8,6 @@ import shared.locations.VertexLocation;
 import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
-import shared.model.card.TradeInterface;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 
@@ -83,14 +82,6 @@ public interface ServerModelFacadeInterface {
 	public GameData getGameModel(int game_id);
 	
 	/**
-	 * Checks that the player has a valid user and a valid game id
-	 * 
-	 * @return true if the player has a valid user id and a valid game id, 
-	 * false otherwise 
-	 */
-	public boolean resetGame(int game_id);
-	
-	/**
 	 * There are no preconditions so just checks for a valid palyer and game cookie
 	 * @return true if the user is in the game
 	 */
@@ -109,20 +100,18 @@ public interface ServerModelFacadeInterface {
 	 * Checks that the player being offered the trade has the resources that the person whose
 	 * turn it is wants
 	 *
-	 * @param trade representing the conditions of a trade. Resources, etc.
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
-	public boolean canAcceptTrade(int game_id, int player_index, TradeInterface trade);
+	public boolean canAcceptTrade(int game_id, int player_index);
 	
 	/**
 	 * Accepts or rejects the trade being offered
 	 * @param game_id the specific game
 	 * @param player_index the index of the player accepting or rejecting the trade
-	 * @param trade the cards being offered
 	 * @param accept true if the player accepted the offer
 	 * @return true if the trade was recorded successfully
 	 */
-	public boolean acceptTrade(int game_id, int player_index, TradeInterface trade, boolean accept);
+	public boolean acceptTrade(int game_id, int player_index, boolean accept);
 	
 	/**
 	 * Checks that a player has over 7 cards and that the player has the cards
