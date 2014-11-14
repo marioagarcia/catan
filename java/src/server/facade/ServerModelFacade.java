@@ -388,7 +388,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		}
 		
 		current_list.setGameList(new_list);
-		return null;
+		return current_list;
 	}
 
 	@Override

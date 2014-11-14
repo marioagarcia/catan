@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import server.command.facade.GamesCommandFacadeInterface;
 import server.serialization.ServerModelSerializer;
 import shared.model.GameInfo;
+import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.serialization.parameters.CreateGameRequestParameters;
 import shared.serialization.parameters.JoinGameParameters;
+import shared.serialization.parameters.LoadGameRequestParameters;
 import shared.serialization.parameters.SaveGameParameters;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -69,7 +71,7 @@ public class GamesHandler implements HttpHandler{
 			}
 		}else if(uri.equals("/games/join")){
 			//Get the cookie from the request
-			String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
+			String cookie = (String)exchange.getRequestHeaders().values().toArray()[0];
 			CookieParser cookieParser = new CookieParser(cookie);		
 			//Deserialize the json string into a JoinGameParameters object
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
@@ -94,10 +96,15 @@ public class GamesHandler implements HttpHandler{
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/load")){
-			// @ TODO implement this
-			response = "";
-			responseCode = 99999;
-			
+			LoadGameRequestParameters params = serializer.deserializeLoadGameRequest(jsonString);
+			GameData gameData = facade.loadGame(params);
+			if(gameData != null){
+				response = serializer.serializeGameModel(gameData);
+				responseCode = 200;
+			}else{
+				response = "Failed to load game.";
+				responseCode = 400;
+			}
 		}else{
 			response = "Games URI not recognized.";
 			responseCode = 400;
