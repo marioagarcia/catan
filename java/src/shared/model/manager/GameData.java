@@ -21,7 +21,6 @@ public class GameData {
 	
 	//Players
 	public Players players;
-	public ArrayList<Player> playerList;
 
 	//GameLog
 	public GameLog gameLog;
@@ -70,14 +69,14 @@ public class GameData {
 	}
 
 	public ArrayList<Player> getPlayerList() {
-		return playerList;
+		return new ArrayList<Player>(this.players.getPlayerList());
 	}
 	public Players getPlayers() {
 		return players;
 	}
 
 	public void setPlayerList(ArrayList<Player> playerList) {
-		this.playerList = playerList;
+		this.players.setPlayerList(playerList);
 	}
 	
 	public void setPlayers(Players players) {
