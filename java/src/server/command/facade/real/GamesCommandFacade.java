@@ -2,6 +2,7 @@ package server.command.facade.real;
 
 import server.command.CreateGame;
 import server.command.JoinGame;
+import server.command.LoadGame;
 import server.command.SaveGame;
 import server.command.facade.GamesCommandFacadeInterface;
 import server.facade.ServerModelFacade;
@@ -47,8 +48,9 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameData loadGame(LoadGameRequestParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+		LoadGame command = new LoadGame(params);
+		command.execute();
+		return command.getGameData();
 	}
 
 }

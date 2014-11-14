@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.model.manager.GameData;
 import shared.serialization.parameters.LoadGameRequestParameters;
 
 /**
@@ -9,6 +10,7 @@ import shared.serialization.parameters.LoadGameRequestParameters;
 public class LoadGame extends CatanCommand {
 
 	private String gameName = null;
+	private GameData gameData = null;
 	/**
 	 * Initializes the LoadGame object with the data necessary to load one of the games hosted on the server
 	 * @param parameters An object containing the ID and name of the game to be loaded
@@ -22,9 +24,11 @@ public class LoadGame extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		
-		success = facadeInstance.loadGame(gameName);
-		
+		gameData = facadeInstance.loadGame(gameName);
+	}
+	
+	public GameData getGameData(){
+		return gameData;
 	}
 }
 
