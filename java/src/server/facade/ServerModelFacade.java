@@ -378,20 +378,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
 			
-			GameInfo new_info = new GameInfo();
-			Players players = game.getValue().getPlayers();
-			
-			ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
-			
-			for (Player player : players.getPlayerList()){
-				
-				PlayerInfo new_player_info = new PlayerInfo();
-				new_player_info.setPlayerInfo(player.getColor(), player.getName(), player.getId());
-				
-				player_info.add(new_player_info);
-			}
-			
-			new_info.setGameInfo(game.getValue().getGameTitle(), game.getValue().getGameId(), player_info);
+			GameInfo new_info = generateGameInfo(game.getValue());
 			new_list.add(new_info);
 		}
 		
@@ -404,11 +391,40 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private GameInfo generateGameInfo(ServerGameManager game){
+		
+		GameInfo new_info = new GameInfo();
+		Players players = game.getPlayers();
+		
+		ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
+		
+		for (Player player : players.getPlayerList()){
+			
+			PlayerInfo new_player_info = new PlayerInfo();
+			new_player_info.setPlayerInfo(player.getColor(), player.getName(), player.getId());
+			
+			player_info.add(new_player_info);
+		}
+		
+		new_info.setGameInfo(game.getGameTitle(), game.getGameId(), player_info);
+		
+		return new_info;
+		
+	}
 
 	@Override
 	public GameInfo getGameInfo(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
+			if (game.getValue().getGameTitle().equals(title)){
+				
+				GameInfo new_info = generateGameInfo(game.getValue());
+				return new_info;
+			}
+		}
+		
+		return null;	
 	}
 
 	@Override
