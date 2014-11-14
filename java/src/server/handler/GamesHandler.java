@@ -43,7 +43,7 @@ public class GamesHandler implements HttpHandler{
 		int responseCode;
 		Boolean successful;
 		
-		int gameID = -1;
+		int gameId = -1;
 		String jsonString = getJsonString(exchange.getRequestBody());
 		
 		
@@ -68,13 +68,15 @@ public class GamesHandler implements HttpHandler{
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/join")){
+			//Get the cookie from the request
 			String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
-System.out.println(cookie);
-			CookieParser cookieParser = new CookieParser(cookie);
-System.out.println("Parsed the cookie");			
+			CookieParser cookieParser = new CookieParser(cookie);		
+			//Deserialize the json string into a JoinGameParameters object
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
 			successful = facade.joinGame(params, cookieParser.getPlayerID());
 			if(successful){
+				//If join game was successful, set the gameId
+				gameId = cookieParser.getGameID();
 				response = "Success";
 				responseCode = 200;
 			}else{
@@ -101,10 +103,10 @@ System.out.println("Parsed the cookie");
 			responseCode = 400;
 		}
 		
-		if(gameID != -1){
+		if(gameId != -1){
 			//If gameID is not -1 then it was a join game request
 			//Set the cookie based on the id of the game that was joined
-			String cookie = CookieParser.generateJoinCookie(gameID);
+			String cookie = CookieParser.generateJoinCookie(gameId);
 			ArrayList<String> cookieList = new ArrayList<String>();
 			cookieList.add(cookie);
 			
