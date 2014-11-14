@@ -15,6 +15,12 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
 	{
 		this.cards = new HashMap<DevCardType, Integer>();
 	}
+
+	public static DevCardBank createBankForNewGame(){
+		DevCardBank bank = new DevCardBank();
+		bank.setDeck(2, 2, 14, 2, 5);
+		return bank;
+	}
 	
 	public DevCardBank(Map<DevCardType, Integer> cards){
 		this.cards = cards;

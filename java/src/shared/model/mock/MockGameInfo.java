@@ -1,7 +1,6 @@
 package shared.model.mock;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import shared.model.GameInfo;
 import shared.model.player.PlayerInfo;
