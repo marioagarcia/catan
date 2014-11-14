@@ -15,7 +15,6 @@ import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
-import shared.model.manager.interfaces.GMDomesticTradeInterface;
 import shared.model.player.Player;
 import shared.model.player.PlayerInfo;
 import shared.model.player.Players;
@@ -410,6 +409,13 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public GameInfo getGameInfo(String title) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean robPlayer(int player_index, int game_id, int victim_index,
+			HexLocation location) {
+		
+		return true;
 	}
 
 	

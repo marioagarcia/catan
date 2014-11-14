@@ -11,7 +11,6 @@ import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
-import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
 public interface ServerModelFacadeInterface {
 
@@ -422,4 +421,6 @@ public interface ServerModelFacadeInterface {
 	 * @return True if the given game contains the given player
 	 */
 	public boolean verifyGame(int player_id, int game_id);
+	
+	public boolean robPlayer(int player_index, int game_id, int victim_index, HexLocation location);
 }
