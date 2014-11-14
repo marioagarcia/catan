@@ -1,7 +1,5 @@
 package server.facade;
 
-import java.util.Observer;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -16,13 +14,6 @@ import shared.model.manager.GameList;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
 public interface ServerModelFacadeInterface {
-	/**
-	 * adds an observer to the game's model
-	 * this allows the observer to be notified when the game model is updated
-	 * you must first be in a game to call this method
-	 * @param observer the Observer which is to be added to the model
-	 */
-	public void addObserver(int game_id, Observer observer);
 
 	/**
 	 * sends a request to the server to login the player with the given credentials
@@ -99,22 +90,6 @@ public interface ServerModelFacadeInterface {
 	 * false otherwise 
 	 */
 	public boolean resetGame(int game_id);
-	
-	/**
-	 * Checks that the player has a valid user id and a valid game id
-	 * 
-	 * @return true if the player has a valid user id and a valid game id, 
-	 * false otherwise  
-	 */
-	public boolean getGameCommands(int game_id);
-	
-	/**
-	 * Checks that the player has a valid user id and a valid game id
-	 * 
-	 * @return true if the player has a valid user id and a valid game id, 
-	 * false otherwise  
-	 */
-	public boolean postGameCommands(int game_id);
 	
 	/**
 	 * There are no preconditions so just checks for a valid palyer and game cookie
@@ -246,10 +221,10 @@ public interface ServerModelFacadeInterface {
 	/**
 	 * Checks that the player has the resources that he is offering in the trade
 	 * 
-	 * @param trade the resources to offer
+	 * @param resources the resources to offer
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
-	public boolean canOfferTrade(int game_id, int player_index, TradeInterface trade);
+	public boolean canOfferTrade(int game_id, int player_index, ResourceList resources);
 	
 	/**
 	 * called when a trade is offered to a specific player
@@ -259,7 +234,7 @@ public interface ServerModelFacadeInterface {
 	 * @param otherPlayerIndex self explanatory 
 	 * @return true if the offer was traded correctly
 	 */
-	public boolean offerTrade(int game_id, int player_index, GMDomesticTradeInterface trade, int otherPlayerIndex);
+	public boolean offerTrade(int game_id, int player_index, ResourceList resources, int otherPlayerIndex);
 	
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 

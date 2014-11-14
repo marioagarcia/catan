@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.model.card.ResourceList;
 import shared.serialization.parameters.OfferTradeParameters;
 
 /**
@@ -9,13 +10,18 @@ import shared.serialization.parameters.OfferTradeParameters;
  */
 public class OfferTrade extends CatanCommand {
 
+	ResourceList resourceList = null;
+	int otherPlayerIndex;
 	/**
 	 * Initializes the OfferTrade object with the data necessary to update the game model to offer a trade
 	 * @param parameters An object the index of the player offering and receiving the trade, and the resources that will be exchanged
 	 * @param game_id The integer ID of the game this action will applied to
 	 */
 	public OfferTrade(OfferTradeParameters parameters, int game_id){
-		
+		this.playerIndex = parameters.getPlayerIndex();
+		this.gameId = game_id;
+		this.resourceList = parameters.getOffer();
+		this.otherPlayerIndex = parameters.getReceiver();
 	}
 	
 	/**
@@ -25,7 +31,8 @@ public class OfferTrade extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
+		if(facadeInstance.canOfferTrade(gameId, playerIndex, resourceList)){
+		facadeInstance.offerTrade(gameId, playerIndex, resourceList, otherPlayerIndex)
+		}
 	}
 }
