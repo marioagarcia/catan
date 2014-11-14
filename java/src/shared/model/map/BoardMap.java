@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import shared.definitions.HexType;
@@ -51,12 +52,11 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		
 		int[] x_values = {-2,-1,0,1,2};
 		int[] start = {0,-1,-2,-2,-2};
-		int[] end = {2,2,2,2,1};
+		int[] end = {2,2,2,1,0};
 		
 		for(int i = 0; i < x_values.length; i++)
 			for(int y = start[i]; y <= end[i]; y++)
 				hexes.add(new HexLocation(x_values[i],y));
-
 		return hexes;
 	}
 	
@@ -74,6 +74,8 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		hexes.add(new HexLocation(-1,-2));
 		hexes.add(new HexLocation(1,2));
 		hexes.add(new HexLocation(2,1));
+		hexes.add(new HexLocation(-3,0));
+		hexes.add(new HexLocation(3,-3));
 		
 		return hexes;
 	}
@@ -95,30 +97,33 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 	
 	private Map<EdgeLocation, Port> generatePorts(boolean random, int number_of_ports){
+		Random random_generator = new Random(System.currentTimeMillis());
 		Map<EdgeLocation, Port> ports = new HashMap<EdgeLocation, Port>();
 		if(random){
 			EdgeLocation[] potential_locations = this.generatePotentialPortLocations().toArray(new EdgeLocation[0]);
-			
 			ArrayList<PortType> port_types = new ArrayList<PortType>(Arrays.asList(PortType.values()));
-			for(int i = 0; i < 3; i++){
+			for(int i = 0; i < 4; i++){
 				port_types.add(PortType.THREE);
 			}
-			
 			//create 3:1 ports
 			for(PortType type : port_types){
 				int index;
 				do{
-					index = (int)Math.random() % potential_locations.length;
+					index = random_generator.nextInt() % potential_locations.length;
 				} while(ports.keySet().contains(potential_locations[index]));
-				
-				ports.put(potential_locations[index], new Port(type, potential_locations[index], 3));
+				if(type == PortType.THREE){
+					ports.put(potential_locations[index], new Port(type, potential_locations[index], 3));
+				}
+				else{
+					ports.put(potential_locations[index], new Port(type, potential_locations[index], 2));
+				}
 			}
 		}
 		else {
 			ports.put(new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 
 					new Port(PortType.ORE,   new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 2));
 			ports.put(new  EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthEast), 
-					new Port(PortType.THREE, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthEast), 3));
+					new Port(PortType.THREE, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest), 3));
 			ports.put(new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 
 					new Port(PortType.THREE, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 3));
 			ports.put(new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast), 
@@ -138,7 +143,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 	
 	private Map<HexLocation, HexInterface> generateHexes(boolean random_hexes, boolean random_chits) {
-		//TODO random chits is not yet implemented
+		Random random = new Random(System.currentTimeMillis());
 		Map<HexLocation, HexInterface> hexes = new HashMap<HexLocation, HexInterface>();
 		
 		for(HexLocation location : this.getAllowedWaterHexLocations()){
@@ -161,35 +166,60 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			number_of_each_hex_type.put(HexType.WHEAT, 4);
 			number_of_each_hex_type.put(HexType.WOOD, 4);
 			
-			for(HexType type : HexType.values()){
+			for(HexType type : number_of_each_hex_type.keySet()){
 				for(int i = 0; i < number_of_each_hex_type.get(type); i++){
-					int index = (int)Math.random() % land_hexes.size();
+					int index  = random.nextInt() % land_hexes.size();
 					
 					HexLocation location = land_hexes.get(index);
 					land_hexes.remove(index);
 					hexes.put(location, new Hex(location, type, -1));
 				}
 			}
-			
-			//add numbers randomly to the hexes
 			Integer[] chits_array = {2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12};
-			ArrayList<Integer> chits = new ArrayList<Integer>(Arrays.asList(chits_array));
-			
-			for(HexLocation location : hexes.keySet()){
-				int index = (int)Math.random() % chits.size();
+			if(random_chits){
+				//add numbers randomly to the hexes
+				ArrayList<Integer> chits = new ArrayList<Integer>(Arrays.asList(chits_array));
+				for(HexLocation location : hexes.keySet()){
+					if(hexes.get(location).getType() == HexType.DESERT || hexes.get(location).getType() == HexType.WATER){
+						continue;
+					}
+					int index = random.nextInt() % chits.size();
+					
+					int chit = chits.get(index);
+					chits.remove(index);
+					
+					HexInterface hex = hexes.get(location);
+					hex.setNumber(chit);
+					hexes.put(location, hex);
+				}
+			}
+			else{
+				for(int i = 0; i < chits_array.length * 31; i++){
+					int first_location = random.nextInt() % chits_array.length;
+					int second_location = random.nextInt() % chits_array.length;
+					
+					int temp = chits_array[first_location];
+					chits_array[first_location] = chits_array[second_location];
+					chits_array[second_location] = temp;
+				}
 				
-				int chit = chits.get(index);
-				chits.remove(index);
-				
-				HexInterface hex = hexes.get(location);
-				hex.setNumber(chit);
-				hexes.put(location, hex);
+				int index = 0;
+				for(HexLocation location : hexes.keySet()){
+					if(hexes.get(location).getType() == HexType.WATER || hexes.get(location).getType() == HexType.DESERT){
+						continue;
+					}
+					
+					HexInterface hex = hexes.get(location);
+					hex.setNumber(chits_array[index++]);
+					hexes.put(location, hex);
+				}
 			}
 			
 		}
 		else {
 			hexes.put(new HexLocation(-2,0), new Hex(new HexLocation(-2,0), HexType.ORE, 5));
-			hexes.put(new HexLocation(1,-1), new Hex(new HexLocation(1,-1), HexType.ORE,9));
+			hexes.put(new HexLocation(1,-1), new Hex(new HexLocation(1,-1), HexType.ORE, 9));
+			hexes.put(new HexLocation(-1,2), new Hex(new HexLocation(-1,2), HexType.ORE, 3));
 			
 			hexes.put(new HexLocation(-1,-1), new Hex(new HexLocation(-1,-1), HexType.BRICK, 8));
 			hexes.put(new HexLocation(1,-2), new Hex(new HexLocation(1,-2), HexType.BRICK, 4));
@@ -209,6 +239,8 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			hexes.put(new HexLocation(0,0), new Hex(new HexLocation(0,0), HexType.WHEAT, 11));
 			hexes.put(new HexLocation(0,2), new Hex(new HexLocation(0,2), HexType.WHEAT, 8));
 			hexes.put(new HexLocation(2,0), new Hex(new HexLocation(2,0), HexType.WHEAT, 6));
+			
+			hexes.put(new HexLocation(0,-2), new Hex(new HexLocation(0,-2), HexType.DESERT, -1));
 		}
 		
 		return hexes;
@@ -238,6 +270,18 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BoardMap [hexes=" + hexes + ", roads=" + roads + ", cities="
+				+ cities + ", settlements=" + settlements + ", ports=" + ports
+				+ ", numberOfPorts=" + numberOfPorts + ", DEFAULT_RADIUS="
+				+ DEFAULT_RADIUS + ", radius=" + radius + ", robberLocation="
+				+ robberLocation + "]";
+	}
+
 	public void setHexes(Map<HexLocation, HexInterface> hexes) {
 		this.hexes = hexes;
 	}
