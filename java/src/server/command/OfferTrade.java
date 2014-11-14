@@ -31,8 +31,10 @@ public class OfferTrade extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
+		
 		if(facadeInstance.canOfferTrade(gameId, playerIndex, resourceList)){
-		facadeInstance.offerTrade(gameId, playerIndex, resourceList, otherPlayerIndex)
+			
+			success = facadeInstance.offerTrade(gameId, playerIndex, resourceList, otherPlayerIndex);
 		}
 	}
 }

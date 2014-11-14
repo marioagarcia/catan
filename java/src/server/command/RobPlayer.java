@@ -1,5 +1,6 @@
 package server.command;
 
+import shared.locations.HexLocation;
 import shared.serialization.parameters.RobPlayerParameters;
 
 /**
@@ -7,14 +8,18 @@ import shared.serialization.parameters.RobPlayerParameters;
  * @author Kevin
  */
 public class RobPlayer extends CatanCommand {
-
+	private int victimIndex;
+	private HexLocation location;
 	/**
 	 * Initializes the RobPlayer object with the data necessary to update the game model
 	 * @param parameters An object containing the index of the player moving the robber, the new location of the robber, and the index of the victim
 	 * @param game_id The ID of the game this action will be applied to
 	 */
 	public RobPlayer(RobPlayerParameters parameters, int game_id){
-		
+		this.playerIndex = parameters.getPlayerIndex();
+		this.gameId = game_id;
+		this.victimIndex = parameters.getVictimIndex();
+		this.location = parameters.getLocation();
 	}
 	
 	//We will need to add functionality to our server facade to do these things
@@ -24,7 +29,6 @@ public class RobPlayer extends CatanCommand {
 	@Override
 	public void execute() {
 	
-		//ServerModelFacade has no rob player
-		
+		success = facadeInstance.robPlayer(playerIndex, gameId, victimIndex, location);
 	}
 }
