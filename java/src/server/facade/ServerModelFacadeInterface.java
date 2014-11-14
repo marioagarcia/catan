@@ -234,7 +234,7 @@ public interface ServerModelFacadeInterface {
 	 * @param otherPlayerIndex self explanatory 
 	 * @return true if the offer was traded correctly
 	 */
-	public boolean offerTrade(int game_id, int player_index, GMDomesticTradeInterface trade, int otherPlayerIndex);
+	public boolean offerTrade(int game_id, int player_index, ResourceList resources, int otherPlayerIndex);
 	
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 

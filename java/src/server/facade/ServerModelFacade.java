@@ -261,7 +261,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean offerTrade(int game_id, int player_index,
-			GMDomesticTradeInterface trade, int otherPlayerIndex) {
+			ResourceList resources, int otherPlayerIndex) {
 		// TODO Auto-generated method stub
 		return false;
 	}
