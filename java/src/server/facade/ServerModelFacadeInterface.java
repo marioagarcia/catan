@@ -7,9 +7,11 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
@@ -78,16 +80,18 @@ public interface ServerModelFacadeInterface {
 	
 	/**
 	 * Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) 
-	 * The id is the same as the original game id.
+	 * The game_name is the same as the original game name.
 	 * @return true if the game was correctly loaded
 	 */
-	public boolean loadGame(int game_id);
+	public boolean loadGame(String game_name);
 	
 	/**
-	 * This gets the current game model from the server and updates all the model classes
-	 * @return true if all model classes were correctly updated
+	 * Retrieves the game model associated with a game id
+	 * 
+	 * @param game_id The id of the game being retrieved
+	 * @return The game model associated with the given id
 	 */
-	public boolean updateGameModel(int game_id);
+	public GameData getGameModel(int game_id);
 	
 	/**
 	 * Checks that the player has a valid user and a valid game id
@@ -412,4 +416,36 @@ public interface ServerModelFacadeInterface {
 	 * @return An object containing the current list of games hosted on the server
 	 */
 	public GameList getGameList();
+	
+	/**
+	 * Retrieves the AIManager which stores the possible AI players to choose from
+	 * 
+	 * @return An object that contains a list of strings that represent all of the possible AI players
+	 */
+	public AIManager getAIList();
+	
+	/**
+	 * Retrieves the gameInfo with the given title (used just after a game has been created)
+	 * 
+	 * @param title The title of the gameInfo being retrieved
+	 * @return A GameInfo object consisting of a title, an id, and a list of PlayerInfos
+	 */
+	public GameInfo getGameInfo(String title);
+	
+	/**
+	 * Verifies the user's credentials in the list of registered users
+	 * @param name The username to verify
+	 * @param password The password associated with this user
+	 * @param id The id associated with this user
+	 * @return True if all the user credentials match those stored
+	 */
+	public boolean verifyUser(String name, String password, int id);
+	
+	/**
+	 * Verifies that a given player is playing in the given game
+	 * @param player_id The id of the player to verify
+	 * @param game_id The id of the game being checked
+	 * @return True if the given game contains the given player
+	 */
+	public boolean verifyGame(int player_id, int game_id);
 }

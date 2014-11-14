@@ -4,20 +4,20 @@ import java.util.ArrayList;
 
 import server.command.facade.GameCommandFacadeInterface;
 import shared.model.manager.GameData;
+import shared.model.mock.MockAIList;
+import shared.model.mock.MockGameModel;
 import shared.serialization.parameters.MasterParameterInterface;
 
 public class MockGameCommandFacade implements GameCommandFacadeInterface{
 
 	@Override
-	public GameData getModel() {
-		// TODO Auto-generated method stub
-		return null;
+	public GameData getModel(int gameId) {
+		return new MockGameModel().getGameData();
 	}
 
 	@Override
-	public GameData reset() {
-		// TODO Auto-generated method stub
-		return null;
+	public GameData reset(int gameId) {
+		return new MockGameModel().getGameData();
 	}
 
 	@Override
@@ -34,14 +34,13 @@ public class MockGameCommandFacade implements GameCommandFacadeInterface{
 
 	@Override
 	public Boolean AddAI(String aiType) {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
 	public String[] getListAI() {
-		// TODO Auto-generated method stub
-		return null;
+		MockAIList mockAIList = new MockAIList();
+		return mockAIList.getListAI();
 	}
 
 

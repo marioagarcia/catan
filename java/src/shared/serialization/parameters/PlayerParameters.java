@@ -6,8 +6,8 @@ import shared.model.card.ResourceList;
 public class PlayerParameters {
 
 		private ResourceList resources;
-		private DevCardList oldDevCards;
-		private DevCardList newDevCards;
+		private DevCardListParameters oldDevCards;
+		private DevCardListParameters newDevCards;
 		private int roads;
 		private int cities;
 		private int settlements;
@@ -21,8 +21,8 @@ public class PlayerParameters {
 		private String name;
 		private String color;
 		
-		public PlayerParameters(ResourceList resources, DevCardList oldDevCards, DevCardList newDevCards, int roads, int cities, 
-								int settlements, int soldiers, int victoryPoints, int monuments, boolean playedDevCard, 
+		public PlayerParameters(ResourceList resources, DevCardListParameters oldDevCards, DevCardListParameters newDevCards, int roads, 
+								int cities, int settlements, int soldiers, int victoryPoints, int monuments, boolean playedDevCard, 
 								boolean discarded, int playerID, int playerIndex, String name, String color){
 			this.resources = resources;
 			this.oldDevCards = oldDevCards;
@@ -49,19 +49,19 @@ public class PlayerParameters {
 			this.resources = resources;
 		}
 
-		public DevCardList getOldDevCards() {
+		public DevCardListParameters getOldDevCards() {
 			return oldDevCards;
 		}
 
-		public void setOldDevCards(DevCardList oldDevCards) {
+		public void setOldDevCards(DevCardListParameters oldDevCards) {
 			this.oldDevCards = oldDevCards;
 		}
 
-		public DevCardList getNewDevCards() {
+		public DevCardListParameters getNewDevCards() {
 			return newDevCards;
 		}
 
-		public void setNewDevCards(DevCardList newDevCards) {
+		public void setNewDevCards(DevCardListParameters newDevCards) {
 			this.newDevCards = newDevCards;
 		}
 

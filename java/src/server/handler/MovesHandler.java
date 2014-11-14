@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import server.command.facade.MovesCommandFacadeInterface;
+import server.facade.ServerModelFacade;
 import server.serialization.ServerModelSerializer;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.AcceptTradeParameters;
@@ -52,69 +53,91 @@ public class MovesHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
-		Gson gson = new Gson();
-		GameData gameData = null;
+		//Get the cookie from the request headers
+		String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
+		//Parse the cookie
+		CookieParser cookieParser = new CookieParser(cookie);
+		//Validate the user
+		if(!cookieParser.isValidCookie()){
+			//If the user is not valid, send an invalid user response
+			sendInvalidUserResponse(exchange);
+			return;
+		}
+		
+		//Get the game id from the cookie parser; all of the moves require it
+		int gameId = cookieParser.getGameID();
+		//This boolean will represent the success or failure of the move
+		boolean successful = false;
+		
+		//Get the request and put it in a string
 		String jsonString = getJsonString(exchange.getRequestBody());
 		
+		//Get the URI from the request
 		String uri = exchange.getRequestURI().toString();
+		
+		//On each switch: Deserialize the json string into the appropriate parameters object, then call the appropriate move
+		//passing in the parameters object
+		Gson gson = new Gson();
 		switch(uri){
 			case "/moves/sendChat":
-				gameData = facade.sendChat(gson.fromJson(jsonString, SendChatParameters.class));
+				successful = facade.sendChat(gson.fromJson(jsonString, SendChatParameters.class), gameId);
 				break;
 			case "/moves/acceptTrade":
-				gameData = facade.acceptTrade(gson.fromJson(jsonString, AcceptTradeParameters.class));
+				successful = facade.acceptTrade(gson.fromJson(jsonString, AcceptTradeParameters.class), gameId);
 				break;
 			case "/moves/discardCards":
-				gameData = facade.discardCards(gson.fromJson(jsonString, DiscardCardsParameters.class));
+				successful = facade.discardCards(gson.fromJson(jsonString, DiscardCardsParameters.class), gameId);
 				break;
 			case "/moves/rollNumber":
-				gameData = facade.rollNumber(gson.fromJson(jsonString, RollNumberParameters.class));
+				successful = facade.rollNumber(gson.fromJson(jsonString, RollNumberParameters.class), gameId);
 				break;
 			case "/moves/buildRoad":
-				gameData = facade.buildRoad(gson.fromJson(jsonString, BuildRoadParameters.class));
+				successful = facade.buildRoad(gson.fromJson(jsonString, BuildRoadParameters.class), gameId);
 				break;
 			case "/moves/buildSettlement":
-				gameData = facade.buildSettlement(gson.fromJson(jsonString, BuildSettlementParameters.class));
+				successful = facade.buildSettlement(gson.fromJson(jsonString, BuildSettlementParameters.class), gameId);
 				break;
 			case "/moves/buildCity":
-				gameData = facade.buildCity(gson.fromJson(jsonString, BuildCityParameters.class));
+				successful = facade.buildCity(gson.fromJson(jsonString, BuildCityParameters.class), gameId);
 				break;
 			case "/moves/offerTrade":
-				gameData = facade.offerTrade(gson.fromJson(jsonString, OfferTradeParameters.class));
+				successful = facade.offerTrade(gson.fromJson(jsonString, OfferTradeParameters.class), gameId);
 				break;
 			case "/moves/maritimeTrade":
-				gameData = facade.maritimeTrade(gson.fromJson(jsonString, MaritimeTradeParameters.class));
+				successful = facade.maritimeTrade(gson.fromJson(jsonString, MaritimeTradeParameters.class), gameId);
 				break;
 			case "/moves/finishTurn":
-				gameData = facade.finishTurn(gson.fromJson(jsonString, FinishTurnParameters.class));
+				successful = facade.finishTurn(gson.fromJson(jsonString, FinishTurnParameters.class), gameId);
 				break;
 			case "/moves/buyDevCard":
-				gameData = facade.buyDevCard(gson.fromJson(jsonString, BuyDevCardParameters.class));
+				successful = facade.buyDevCard(gson.fromJson(jsonString, BuyDevCardParameters.class), gameId);
 				break;
 			case "/moves/Year_of_Plenty":
-				gameData = facade.playYearOfPlenty(gson.fromJson(jsonString, YearOfPlentyParameters.class));
+				successful = facade.playYearOfPlenty(gson.fromJson(jsonString, YearOfPlentyParameters.class), gameId);
 				break;
 			case "/moves/Road_Building":
-				gameData = facade.playRoadBuilding(gson.fromJson(jsonString, RoadBuildingParameters.class));
+				successful = facade.playRoadBuilding(gson.fromJson(jsonString, RoadBuildingParameters.class), gameId);
 				break;
 			case "/moves/Soldier":
-				gameData = facade.playSoldier(gson.fromJson(jsonString, SoldierParameters.class));
+				successful = facade.playSoldier(gson.fromJson(jsonString, SoldierParameters.class), gameId);
 				break;
 			case "/moves/Monopoly":
-				gameData = facade.playMonopoly(gson.fromJson(jsonString, MonopolyParameters.class));
+				successful = facade.playMonopoly(gson.fromJson(jsonString, MonopolyParameters.class), gameId);
 				break;
 			case "/moves/Monument":
-				gameData = facade.playMonument(gson.fromJson(jsonString, MonumentParameters.class));
+				successful = facade.playMonument(gson.fromJson(jsonString, MonumentParameters.class), gameId);
 				break;
 			case "/moves/robPlayer":
-				gameData = facade.robPlayer(gson.fromJson(jsonString, RobPlayerParameters.class));
+				successful = facade.robPlayer(gson.fromJson(jsonString, RobPlayerParameters.class), gameId);
 				break;
 		}
 		
 		
 		String response;
 		int responseCode;
-		if(gameData != null){
+		if(successful){
+			//If the move was successful, get the updated game model
+			GameData gameData = ServerModelFacade.getInstance().getGameModel(gameId);
 			response = serializer.serializeGameModel(gameData);
 			responseCode = 200;
 		}else{
@@ -140,5 +163,12 @@ public class MovesHandler implements HttpHandler{
 		//The StringBuilder is now the json from the exchange, so return it's string
 		return request.toString();
 	}
-
+	
+	private void sendInvalidUserResponse(HttpExchange exchange) throws IOException{
+		String response = "Invalid user.";
+		exchange.sendResponseHeaders(400, response.length());
+		OutputStream os = exchange.getResponseBody();
+		os.write(response.getBytes());
+		os.close();
+	}
 }

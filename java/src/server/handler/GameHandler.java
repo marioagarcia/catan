@@ -42,10 +42,16 @@ public class GameHandler implements HttpHandler{
 		if(uri.equals("/game/model")){
 			// @ TODO Must retrieve the game model
 			//	But in the meantime...
-			response = "";
-			responseCode = 200;
+			GameData gameData = facade.getModel(0);
+			if(gameData != null){
+				response = serializer.serializeGameModel(gameData);
+				responseCode = 200;
+			}else{
+				response = "Failed to get game model.";
+				responseCode = 400;
+			}
 		}else if(uri.equals("/game/reset")){
-			 GameData gameData = facade.reset();
+			 GameData gameData = facade.reset(0);
 			 if(gameData != null){
 				 response = serializer.serializeGameModel(gameData);
 				 responseCode = 200;

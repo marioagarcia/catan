@@ -12,14 +12,14 @@ public interface GameCommandFacadeInterface {
 	 * 
 	 * @return A copy of the game model
 	 */
-	public GameData getModel();
+	public GameData getModel(int gameId);
 	
 	/**
 	 * Creates a ResetGame command object and calls execute on it
 	 * 
 	 * @return A copy of the game model after it has been reset
 	 */
-	public GameData reset();
+	public GameData reset(int gameId);
 	
 	/**
 	 * Creates a CatanCommand command object and calls execute on it

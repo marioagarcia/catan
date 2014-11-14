@@ -4,22 +4,23 @@ import java.util.ArrayList;
 
 import server.command.ResetGame;
 import server.command.facade.GameCommandFacadeInterface;
+import server.facade.ServerModelFacade;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.MasterParameterInterface;
 
 public class GameCommandFacade implements GameCommandFacadeInterface{
 	
 	@Override
-	public GameData getModel() {
+	public GameData getModel(int gameId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public GameData reset() {
-		ResetGame reset = new ResetGame();
-		reset.execute();
-		if(reset.wasSuccessful()){
+	public GameData reset(int gameId) {
+		ResetGame command = new ResetGame();
+		command.execute();
+		if(command.wasSuccessful()){
 			// @ TODO get a game model and return it
 			return null;
 		}else{
@@ -47,8 +48,7 @@ public class GameCommandFacade implements GameCommandFacadeInterface{
 
 	@Override
 	public String[] getListAI() {
-		// TODO Auto-generated method stub
-		return null;
+		return ServerModelFacade.getInstance().getAIList().getAiList();
 	}
 
 }

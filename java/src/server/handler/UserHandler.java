@@ -7,9 +7,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
+import server.command.Login;
+import server.command.Register;
 import server.command.facade.UserCommandFacadeInterface;
 import server.command.facade.real.UserCommandFacade;
+import server.facade.ServerModelFacade;
 import server.serialization.ServerModelSerializer;
 import shared.serialization.parameters.CredentialsParameters;
 
@@ -38,7 +43,6 @@ public class UserHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
-System.out.println(exchange.getRequestHeaders().values());		
 		StringBuilder request = new StringBuilder();
 		//Read the request into a buffered reader
 		BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
@@ -74,7 +78,16 @@ System.out.println(exchange.getRequestHeaders().values());
 			response = "Failed to login - bad username or password.";
 			responseCode = 400;	
 		}
-	
+
+		//Get the id of the player who registered/logged in
+		int id = ServerModelFacade.getInstance().getPlayerId(credentials.getUsername());
+		//Create a cookie with the user's name, password, and id
+		String cookie = CookieParser.generateLoginCookie(credentials.getUsername(), credentials.getPassword(), id);
+		ArrayList<String> cookieList = new ArrayList<String>();
+		cookieList.add(cookie);
+		
+		//Put the cookie in the response headers and send the response headers with the response and response code
+		exchange.getResponseHeaders().put("Set-Cookie", cookieList);
 		exchange.sendResponseHeaders(responseCode, response.length());
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());

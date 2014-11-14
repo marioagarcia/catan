@@ -7,14 +7,12 @@ public class MockUserCommandFacade implements UserCommandFacadeInterface{
 
 	@Override
 	public Boolean login(CredentialsParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
 	public Boolean register(CredentialsParameters params) {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 	
 }

@@ -4,6 +4,7 @@ import server.command.CreateGame;
 import server.command.JoinGame;
 import server.command.SaveGame;
 import server.command.facade.GamesCommandFacadeInterface;
+import server.facade.ServerModelFacade;
 import shared.model.GameInfo;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
@@ -16,8 +17,7 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameList getGamesList() {
-		// TODO Auto-generated method stub
-		return null;
+		return ServerModelFacade.getInstance().getGameList();
 	}
 
 	@Override
@@ -25,16 +25,15 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 		CreateGame command = new CreateGame(params);
 		command.execute();
 		if(command.wasSuccessful()){
-			// TODO Get and return a GameInfo
-			return null;
+			return ServerModelFacade.getInstance().getGameInfo(params.getName());
 		}else{
 			return null;
 		}
 	}
 
 	@Override
-	public Boolean joinGame(JoinGameParameters params) {
-		JoinGame command = new JoinGame(params, -1);
+	public Boolean joinGame(JoinGameParameters params, int playerId) {
+		JoinGame command = new JoinGame(params, playerId);
 		command.execute();
 		return command.wasSuccessful();
 	}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import server.command.facade.GamesCommandFacadeInterface;
 import server.serialization.ServerModelSerializer;
@@ -41,7 +42,10 @@ public class GamesHandler implements HttpHandler{
 		String response;
 		int responseCode;
 		Boolean successful;
+		
+		int gameId = -1;
 		String jsonString = getJsonString(exchange.getRequestBody());
+		
 		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/games/list")){
@@ -64,9 +68,15 @@ public class GamesHandler implements HttpHandler{
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/join")){
+			//Get the cookie from the request
+			String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
+			CookieParser cookieParser = new CookieParser(cookie);		
+			//Deserialize the json string into a JoinGameParameters object
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
-			successful = facade.joinGame(params);
+			successful = facade.joinGame(params, cookieParser.getPlayerID());
 			if(successful){
+				//If join game was successful, set the gameId
+				gameId = params.getId();
 				response = "Success";
 				responseCode = 200;
 			}else{
@@ -93,6 +103,17 @@ public class GamesHandler implements HttpHandler{
 			responseCode = 400;
 		}
 		
+		if(gameId != -1){
+			//If gameID is not -1 then it was a join game request
+			//Set the cookie based on the id of the game that was joined
+			String cookie = CookieParser.generateJoinCookie(gameId);
+			ArrayList<String> cookieList = new ArrayList<String>();
+			cookieList.add(cookie);
+		
+			//Put the cookie in the response headers and send the response headers with the response and response code
+			exchange.getResponseHeaders().put("Set-Cookie", cookieList);
+		}
+			
 		exchange.sendResponseHeaders(responseCode, response.length());
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());

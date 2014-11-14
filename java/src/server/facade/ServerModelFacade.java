@@ -10,9 +10,11 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
@@ -54,6 +56,23 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean registerPlayer(String username, String password) {
 		return userList.register(username, password);
 	}
+	
+	@Override
+	public boolean verifyUser(String name, String password, int id) {
+		return userList.verifyUser(name, password, id);
+	}
+	
+	@Override
+	public boolean verifyGame(int player_id, int game_id) {
+		if (gamesList.containsKey(game_id)){
+			//return gamesList.get(game_id).containsPlayer(player_id); Implement, Mario!
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 
 	@Override
 	public boolean createNewGame(String gameName, boolean randTiles,
@@ -81,15 +100,15 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean loadGame(int game_id) {
+	public boolean loadGame(String game_name) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean updateGameModel(int game_id) {
+	public GameData getGameModel(int game_id) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -327,6 +346,19 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public AIManager getAIList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GameInfo getGameInfo(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }
