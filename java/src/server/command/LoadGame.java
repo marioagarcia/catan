@@ -23,8 +23,7 @@ public class LoadGame extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		//Facade load game should take a string
-		success = facadeInstance.loadGame(gameId);
+		success = facadeInstance.loadGame(gameName);
 		
 	}
 }

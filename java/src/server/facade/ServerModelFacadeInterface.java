@@ -80,10 +80,10 @@ public interface ServerModelFacadeInterface {
 	
 	/**
 	 * Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) 
-	 * The id is the same as the original game id.
+	 * The game_name is the same as the original game name.
 	 * @return true if the game was correctly loaded
 	 */
-	public boolean loadGame(int game_id);
+	public boolean loadGame(String game_name);
 	
 	/**
 	 * Retrieves the game model associated with a game id

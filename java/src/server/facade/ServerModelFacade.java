@@ -100,7 +100,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean loadGame(int game_id) {
+	public boolean loadGame(String game_name) {
 		// TODO Auto-generated method stub
 		return false;
 	}
