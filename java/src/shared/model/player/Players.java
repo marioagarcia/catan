@@ -3,6 +3,8 @@ package shared.model.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.definitions.CatanColor;
+
 public class Players {
 
 	private List<Player> playerList;
@@ -34,6 +36,21 @@ public class Players {
 
 	public void setPlayerList(List<Player> playerList) {
 		this.playerList = playerList;
+	}
+	
+	public int size(){
+		return playerList.size();
+	}
+	
+	public boolean isColorUsed(CatanColor color){
+		
+		for (Player p : playerList){
+			if (p.getColor() == color){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	@Override

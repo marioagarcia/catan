@@ -3,8 +3,6 @@ package server.facade;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observer;
-
 import server.manager.ServerGameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -45,12 +43,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public int getPlayerId(String name){
 		return userList.getPlayerId(name);
 	}
-	
-	@Override
-	public void addObserver(int game_id, Observer observer) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public boolean loginPlayer(String username, String password) {
@@ -70,8 +62,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean verifyGame(int player_id, int game_id) {
 		if (gamesList.containsKey(game_id)){
-			//return gamesList.get(game_id).containsPlayer(player_id); Implement, Mario!
-			return true;
+			return gamesList.get(game_id).containsPlayerId(player_id);
 		}
 		else{
 			return false;
@@ -89,8 +80,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			if (game.getValue().getGameTitle().equals(gameName)){
 				exists = true;
-			}
-			
+			}	
 		}
 		
 		if (!exists){
@@ -104,14 +94,45 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean canJoinGame(int game_id, int player_id, CatanColor color) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		if (gamesList.containsKey(game_id)){
+			
+			if (gamesList.get(game_id).containsPlayerId(player_id)){
+				
+				return (gamesList.get(game_id).getPlayers().getPlayerByID(player_id).getColor() == color);
+				
+			}
+			else{
+				return (gamesList.get(game_id).getPlayers().size() < 4 && !gamesList.get(game_id).getPlayers().isColorUsed(color));
+			}
+			
+		}
+		else{
+			
+			return false;
+		}
 	}
 
 	@Override
 	public boolean joinGame(int game_id, int player_id, CatanColor color) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		if (gamesList.containsKey(game_id)){
+			
+			if (gamesList.get(game_id).containsPlayerId(player_id)){
+				return true;
+			}
+			else{
+				
+				Player p = new Player();
+				p.setColor(color);
+				
+				gamesList.get(game_id).getPlayers().addPlayer(p);
+				return true;
+			}
+		}
+		else{
+			return false;
+		}
 	}
 
 	@Override
@@ -134,18 +155,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean resetGame(int game_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean getGameCommands(int game_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean postGameCommands(int game_id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -245,7 +254,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean canOfferTrade(int game_id, int player_index,
-			TradeInterface trade) {
+			ResourceList resources) {
 		// TODO Auto-generated method stub
 		return false;
 	}
