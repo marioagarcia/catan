@@ -10,11 +10,14 @@ import java.util.Set;
 
 import shared.definitions.HexType;
 import shared.definitions.PortType;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.model.card.ResourceCard;
+import shared.model.card.ResourceCardBank;
 import shared.model.manager.interfaces.GMBoardMapInterface;
 import shared.model.map.luts.EdgesAdjacentToVertex;
 import shared.model.map.luts.EdgesAdjacentToVertexResult;
@@ -45,6 +48,37 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		this.cities = new HashMap<VertexLocation, City> ();
 		this.settlements = new HashMap<VertexLocation, Settlement> ();
 		this.ports = new HashMap<EdgeLocation, Port> ();
+	}
+	
+	public ArrayList<ResourceCardBank> getRollResult(int number){
+		ArrayList<ResourceCardBank> results = new ArrayList<ResourceCardBank>();
+		
+		for(int i = 0; i < 4; i++){
+			results.add(new ResourceCardBank());
+		}
+		
+		for(HexInterface hex : this.hexes.values()){
+			if(hex.getNumber() == number){
+				for(VertexDirection direction : VertexDirection.values()){
+					VertexLocation location = new VertexLocation(hex.getLocation(), direction);
+
+					for(City city : this.cities.values()){
+						if(city.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())){
+							results.get(city.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+							results.get(city.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+						}
+					}
+					for(Settlement settlement : this.settlements.values()){
+						if(settlement.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())){
+							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+						}
+					}
+				}
+			}
+		}
+		
+		return results;
 	}
 	
 	private Set<HexLocation> getAllowedLandHexLocations(){
