@@ -35,6 +35,15 @@ public class Players {
 	public void setPlayerList(List<Player> playerList) {
 		this.playerList = playerList;
 	}
+	
+	public boolean containsPlayer(int player_id){
+		for(Player player : playerList){
+			if(player.getId() == player_id){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public int hashCode() {
