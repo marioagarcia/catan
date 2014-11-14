@@ -14,6 +14,7 @@ public class SaveGame extends CatanCommand {
 	 */
 	public SaveGame(SaveGameParameters parameters){
 		
+		this.gameId = parameters.getId();
 	}
 	
 	/**
@@ -21,7 +22,8 @@ public class SaveGame extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
+		success = facadeInstance.saveGame(gameId);
 		
 	}
 }
