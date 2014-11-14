@@ -82,7 +82,7 @@ public interface ServerModelFacadeInterface {
 	 * The game_name is the same as the original game name.
 	 * @return true if the game was correctly loaded
 	 */
-	public boolean loadGame(String game_name);
+	public GameData loadGame(String game_name);
 	
 	/**
 	 * Retrieves the game model associated with a game id
