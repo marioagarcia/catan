@@ -22,6 +22,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	private static ServerModelFacade facadeInstance = null;
 	private Map<Integer, ServerGameManager> gamesList;
+	private static int currentGameId = 1;
 	private UserManager userList = null;
 	
 	protected ServerModelFacade()
@@ -77,7 +78,13 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean createNewGame(String gameName, boolean randTiles,
 			boolean randNumbers, boolean randPorts) {
-		// TODO Auto-generated method stub
+		
+		if (!gamesList.containsKey(gameName)){
+			gamesList.put(currentGameId, new ServerGameManager());
+			currentGameId++;
+			return true;
+		}
+		
 		return false;
 	}
 

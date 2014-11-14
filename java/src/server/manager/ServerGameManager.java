@@ -1,27 +1,49 @@
 package server.manager;
 
-import java.util.Observer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.GameInfo;
+import shared.model.GameModel;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
-import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
 public class ServerGameManager implements ServerGameManagerInterface {
-
-	@Override
-	public void addObserver(Observer observer) {
-		// TODO Auto-generated method stub
+	
+	private String title = null;
+	private int gameId;
+	GameModel gameModel = null;
+	
+	public ServerGameManager(String gameName, boolean randTitles, boolean randNumbers, boolean randPorts) {
+		
+	}
+	
+	public String getGameTitle() {
+		return title;
+	}
+	
+	public int getGameId() {
+		return gameId;
 	}
 
 	@Override
 	public boolean canJoinGame(int playerId, CatanColor color, GameInfo game) {
-		return false;
+		
+//		for (GameInfo game_info : gameList.getGameList()) {
+//			if(game.getId() == game_info.getId()) {
+//				game = game_info;
+//				break;
+//			}
+//		}
+		
+		return game.playerCanJoin(gameModel.getLocalPlayer());
+	}
+	
+	public boolean containsPlayerId(int player_id) {
+		return true;
 	}
 
 	@Override
@@ -164,7 +186,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	}
 
 	@Override
-	public boolean offerTrade(int player_index, GMDomesticTradeInterface trade,
+	public boolean offerTrade(int player_index, TradeInterface trade,
 			int otherPlayerIndex) {
 		// TODO Auto-generated method stub
 		return false;

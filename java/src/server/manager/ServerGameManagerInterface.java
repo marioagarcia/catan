@@ -1,7 +1,5 @@
 package server.manager;
 
-import java.util.Observer;
-
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -11,11 +9,8 @@ import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
-import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
 public interface ServerGameManagerInterface {
-
-	public void addObserver(Observer observer);
 
 	/**
 	 * Checks that the player has a valid catan.user cookie set, the player
@@ -80,7 +75,7 @@ public interface ServerGameManagerInterface {
 	public String[] listAIPlayers();
 
 	/**
-	 * There are no preconditions so just checks for a valid palyer and game cookie
+	 * There are no preconditions so just checks for a valid player and game cookie
 	 * @return true if the user is in the game
 	 */
 	public boolean canSendChat(int player_index);
@@ -155,7 +150,7 @@ public interface ServerGameManagerInterface {
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
 	public boolean canOfferTrade(int player_index, TradeInterface trade);
-	public boolean offerTrade(int player_index, GMDomesticTradeInterface trade, int otherPlayerIndex);
+	public boolean offerTrade(int player_index, TradeInterface trade, int otherPlayerIndex);
 
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 
