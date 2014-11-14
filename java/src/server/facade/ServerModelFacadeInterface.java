@@ -71,7 +71,6 @@ public interface ServerModelFacadeInterface {
 	 */
 	public boolean joinGame(int game_id, int player_id, CatanColor color);
 	
-
 	/**
 	 * Saves the current game
 	 * @return true if the server was able to save the game
