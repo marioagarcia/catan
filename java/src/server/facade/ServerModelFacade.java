@@ -1,5 +1,6 @@
 package server.facade;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observer;
@@ -17,6 +18,9 @@ import shared.model.card.TradeInterface;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
+import shared.model.player.Player;
+import shared.model.player.PlayerInfo;
+import shared.model.player.Players;
 
 public class ServerModelFacade implements ServerModelFacadeInterface {
 
@@ -79,8 +83,18 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean createNewGame(String gameName, boolean randTiles,
 			boolean randNumbers, boolean randPorts) {
 		
-		if (!gamesList.containsKey(gameName)){
-			gamesList.put(currentGameId, new ServerGameManager());
+		boolean exists = false;
+		
+		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
+			
+			if (game.getValue().getGameTitle().equals(gameName)){
+				exists = true;
+			}
+			
+		}
+		
+		if (!exists){
+			gamesList.put(currentGameId, new ServerGameManager(gameName, randTiles, randNumbers, randPorts));
 			currentGameId++;
 			return true;
 		}
@@ -107,9 +121,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean loadGame(String game_name) {
+	public GameData loadGame(String game_name) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -350,7 +364,30 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public GameList getGameList() {
-		// TODO Auto-generated method stub
+		
+		GameList current_list = new GameList();
+		ArrayList<GameInfo> new_list = new ArrayList<GameInfo>();
+		
+		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
+			
+			GameInfo new_info = new GameInfo();
+			Players players = game.getValue().getPlayers();
+			
+			ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
+			
+			for (Player player : players.getPlayerList()){
+				
+				PlayerInfo new_player_info = new PlayerInfo();
+				new_player_info.setPlayerInfo(player.getColor(), player.getName(), player.getId());
+				
+				player_info.add(new_player_info);
+			}
+			
+			new_info.setGameInfo(game.getValue().getGameTitle(), game.getValue().getGameId(), player_info);
+			new_list.add(new_info);
+		}
+		
+		current_list.setGameList(new_list);
 		return null;
 	}
 
