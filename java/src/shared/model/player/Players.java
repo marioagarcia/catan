@@ -38,18 +38,24 @@ public class Players {
 		this.playerList = playerList;
 	}
 	
+	public boolean containsPlayer(int player_id){
+		for(Player player : playerList){
+			if(player.getId() == player_id){
+				return true;
+			}
+		}		
+		return false;
+	}
 	public int size(){
 		return playerList.size();
 	}
 	
 	public boolean isColorUsed(CatanColor color){
-		
 		for (Player p : playerList){
 			if (p.getColor() == color){
 				return true;
 			}
 		}
-		
 		return false;
 	}
 
