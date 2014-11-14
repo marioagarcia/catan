@@ -244,7 +244,7 @@ public class MapTest {
 	@Test
 	public void testCanMaritimeTrade() {
 		GameData game = getGameData();
-		BoardMap map = game.getBoardMap();
+//		BoardMap map = game.getBoardMap();
 		TurnTracker tt = game.getTurnTracker();
 		Player player = new Player();
 		player = game.getPlayerList().get(1);
@@ -252,9 +252,9 @@ public class MapTest {
 		// AssertTrue when the player has the 'input resources' (the resources
 		// being given), it is the
 		// player's turn, and the game status is 'Playing'
-		int playerIndex = player.getId();
-		VertexLocation location = new VertexLocation(new HexLocation(-2, 1),
-				VertexDirection.SouthWest);
+//		int playerIndex = player.getId();
+//		VertexLocation location = new VertexLocation(new HexLocation(-2, 1),
+//				VertexDirection.SouthWest);
 		tt.setStatus(Status.PLAYING);
 		tt.setCurrentTurn(1);
 		MaritimeTrade trade = new MaritimeTrade();
