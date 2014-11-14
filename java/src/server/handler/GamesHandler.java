@@ -76,7 +76,7 @@ public class GamesHandler implements HttpHandler{
 			successful = facade.joinGame(params, cookieParser.getPlayerID());
 			if(successful){
 				//If join game was successful, set the gameId
-				gameId = cookieParser.getGameID();
+				gameId = params.getId();
 				response = "Success";
 				responseCode = 200;
 			}else{
@@ -109,7 +109,7 @@ public class GamesHandler implements HttpHandler{
 			String cookie = CookieParser.generateJoinCookie(gameId);
 			ArrayList<String> cookieList = new ArrayList<String>();
 			cookieList.add(cookie);
-			
+		
 			//Put the cookie in the response headers and send the response headers with the response and response code
 			exchange.getResponseHeaders().put("Set-Cookie", cookieList);
 		}
