@@ -12,7 +12,6 @@ import shared.locations.VertexLocation;
 import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
-import shared.model.card.TradeInterface;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.model.player.Player;

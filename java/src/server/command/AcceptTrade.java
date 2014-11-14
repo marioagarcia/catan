@@ -1,6 +1,5 @@
 package server.command;
 
-import shared.model.card.DomesticTrade;
 import shared.serialization.parameters.AcceptTradeParameters;
 
 /**
@@ -9,7 +8,6 @@ import shared.serialization.parameters.AcceptTradeParameters;
  */
 public class AcceptTrade extends CatanCommand {
 
-	private DomesticTrade trade = null;
 	private boolean accept = false;
 	/**
 	 * Initializes the AcceptTrade object with all the information it needs to apply changes to the model
