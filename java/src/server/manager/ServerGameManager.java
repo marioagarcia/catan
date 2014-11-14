@@ -10,6 +10,7 @@ import shared.model.GameModel;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.player.Players;
 
 public class ServerGameManager implements ServerGameManagerInterface {
 	
@@ -27,6 +28,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	
 	public int getGameId() {
 		return gameId;
+	}
+	
+	public Players getPlayers() {
+		return null;
 	}
 
 	@Override
