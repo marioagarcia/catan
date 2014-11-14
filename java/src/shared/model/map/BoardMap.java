@@ -1,11 +1,15 @@
 package shared.model.map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
+import shared.definitions.HexType;
+import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -29,6 +33,9 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	private Map<VertexLocation, Settlement> settlements;
 	private Map<EdgeLocation, Port> ports;
 	
+	private final int numberOfPorts = 9;
+	private final int DEFAULT_RADIUS = -1; //TODO we need to determine what this should be
+	
 	private int radius;
 	private HexLocation robberLocation;
 	
@@ -40,6 +47,241 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		this.ports = new HashMap<EdgeLocation, Port> ();
 	}
 	
+	private Set<HexLocation> getAllowedLandHexLocations(){
+		Set<HexLocation> hexes = new HashSet<HexLocation>();
+		
+		int[] x_values = {-2,-1,0,1,2};
+		int[] start = {0,-1,-2,-2,-2};
+		int[] end = {2,2,2,1,0};
+		
+		for(int i = 0; i < x_values.length; i++)
+			for(int y = start[i]; y <= end[i]; y++)
+				hexes.add(new HexLocation(x_values[i],y));
+		return hexes;
+	}
+	
+	private Set<HexLocation> getAllowedWaterHexLocations(){
+		Set<HexLocation> hexes = new HashSet<HexLocation>();
+		
+		for(int i = 0; i < 3; i++){
+			hexes.add(new HexLocation(-3,i));
+			hexes.add(new HexLocation(-i,3));
+			hexes.add(new HexLocation(i,-3));
+			hexes.add(new HexLocation(3,-i));
+		}
+		
+		hexes.add(new HexLocation(-2,-1));
+		hexes.add(new HexLocation(-1,-2));
+		hexes.add(new HexLocation(1,2));
+		hexes.add(new HexLocation(2,1));
+		hexes.add(new HexLocation(-3,0));
+		hexes.add(new HexLocation(3,-3));
+		
+		return hexes;
+	}
+	
+	private Set<EdgeLocation> generatePotentialPortLocations(){
+		Set<HexLocation> water = this.getAllowedWaterHexLocations();
+		Set<HexLocation> land = this.getAllowedLandHexLocations();
+		Set<EdgeLocation> potentialPortLocations = new HashSet<EdgeLocation>();
+		
+		for(HexLocation hex : water){
+			for(EdgeDirection direction : EdgeDirection.values()){
+				if(land.contains(hex.getNeighborLoc(direction))){
+					potentialPortLocations.add(new EdgeLocation(hex,direction));
+				}	
+			}
+		}
+		
+		return potentialPortLocations;
+	}
+	
+	private Map<EdgeLocation, Port> generatePorts(boolean random, int number_of_ports){
+		Random random_generator = new Random(System.currentTimeMillis());
+		Map<EdgeLocation, Port> ports = new HashMap<EdgeLocation, Port>();
+		if(random){
+			EdgeLocation[] potential_locations = this.generatePotentialPortLocations().toArray(new EdgeLocation[0]);
+			ArrayList<PortType> port_types = new ArrayList<PortType>(Arrays.asList(PortType.values()));
+			for(int i = 0; i < 4; i++){
+				port_types.add(PortType.THREE);
+			}
+			//create 3:1 ports
+			for(PortType type : port_types){
+				int index;
+				do{
+					index = random_generator.nextInt() % potential_locations.length;
+				} while(ports.keySet().contains(potential_locations[index]));
+				if(type == PortType.THREE){
+					ports.put(potential_locations[index], new Port(type, potential_locations[index], 3));
+				}
+				else{
+					ports.put(potential_locations[index], new Port(type, potential_locations[index], 2));
+				}
+			}
+		}
+		else {
+			ports.put(new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 
+					new Port(PortType.ORE,   new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 2));
+			ports.put(new  EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthEast), 
+					new Port(PortType.THREE, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest), 3));
+			ports.put(new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 
+					new Port(PortType.THREE, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 3));
+			ports.put(new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast), 
+					new Port(PortType.BRICK, new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast), 2));
+			ports.put(new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South), 
+					new Port(PortType.WHEAT, new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South), 2));
+			ports.put(new EdgeLocation(new HexLocation(0,3), EdgeDirection.North),
+					new Port(PortType.THREE, new EdgeLocation(new HexLocation(0,3), EdgeDirection.North), 3));
+			ports.put(new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast),
+					new Port(PortType.WOOD, new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast), 2));
+			ports.put(new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest), 
+					new Port(PortType.THREE, new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest), 3));
+			ports.put(new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest),
+					new Port(PortType.SHEEP, new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest), 2));
+		}
+		return ports;
+	}
+	
+	private Map<HexLocation, HexInterface> generateHexes(boolean random_hexes, boolean random_chits) {
+		Random random = new Random(System.currentTimeMillis());
+		Map<HexLocation, HexInterface> hexes = new HashMap<HexLocation, HexInterface>();
+		
+		for(HexLocation location : this.getAllowedWaterHexLocations()){
+			hexes.put(location, new Hex(location, HexType.WATER, -1));
+		}
+		
+		ArrayList<HexLocation> land_hexes = new ArrayList<HexLocation>();
+		
+		for(HexLocation location : this.getAllowedLandHexLocations()){
+			land_hexes.add(location);
+		}
+		
+		if(random_hexes){
+			//distribute resources randomly on the Hexes
+			Map<HexType, Integer> number_of_each_hex_type = new HashMap<HexType, Integer>();
+			number_of_each_hex_type.put(HexType.BRICK, 3);
+			number_of_each_hex_type.put(HexType.DESERT, 1);
+			number_of_each_hex_type.put(HexType.ORE, 3);
+			number_of_each_hex_type.put(HexType.SHEEP, 4);
+			number_of_each_hex_type.put(HexType.WHEAT, 4);
+			number_of_each_hex_type.put(HexType.WOOD, 4);
+			
+			for(HexType type : number_of_each_hex_type.keySet()){
+				for(int i = 0; i < number_of_each_hex_type.get(type); i++){
+					int index  = random.nextInt() % land_hexes.size();
+					
+					HexLocation location = land_hexes.get(index);
+					land_hexes.remove(index);
+					hexes.put(location, new Hex(location, type, -1));
+				}
+			}
+			Integer[] chits_array = {2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12};
+			if(random_chits){
+				//add numbers randomly to the hexes
+				ArrayList<Integer> chits = new ArrayList<Integer>(Arrays.asList(chits_array));
+				for(HexLocation location : hexes.keySet()){
+					if(hexes.get(location).getType() == HexType.DESERT || hexes.get(location).getType() == HexType.WATER){
+						continue;
+					}
+					int index = random.nextInt() % chits.size();
+					
+					int chit = chits.get(index);
+					chits.remove(index);
+					
+					HexInterface hex = hexes.get(location);
+					hex.setNumber(chit);
+					hexes.put(location, hex);
+				}
+			}
+			else{
+				for(int i = 0; i < chits_array.length * 31; i++){
+					int first_location = random.nextInt() % chits_array.length;
+					int second_location = random.nextInt() % chits_array.length;
+					
+					int temp = chits_array[first_location];
+					chits_array[first_location] = chits_array[second_location];
+					chits_array[second_location] = temp;
+				}
+				
+				int index = 0;
+				for(HexLocation location : hexes.keySet()){
+					if(hexes.get(location).getType() == HexType.WATER || hexes.get(location).getType() == HexType.DESERT){
+						continue;
+					}
+					
+					HexInterface hex = hexes.get(location);
+					hex.setNumber(chits_array[index++]);
+					hexes.put(location, hex);
+				}
+			}
+			
+		}
+		else {
+			hexes.put(new HexLocation(-2,0), new Hex(new HexLocation(-2,0), HexType.ORE, 5));
+			hexes.put(new HexLocation(1,-1), new Hex(new HexLocation(1,-1), HexType.ORE, 9));
+			hexes.put(new HexLocation(-1,2), new Hex(new HexLocation(-1,2), HexType.ORE, 3));
+			
+			hexes.put(new HexLocation(-1,-1), new Hex(new HexLocation(-1,-1), HexType.BRICK, 8));
+			hexes.put(new HexLocation(1,-2), new Hex(new HexLocation(1,-2), HexType.BRICK, 4));
+			hexes.put(new HexLocation(1,0), new Hex(new HexLocation(1,0), HexType.BRICK, 5));
+			
+			hexes.put(new HexLocation(-2,2), new Hex(new HexLocation(-2,2), HexType.WOOD, 6));
+			hexes.put(new HexLocation(0,1), new Hex(new HexLocation(0,1), HexType.WOOD, 4));
+			hexes.put(new HexLocation(0,-1), new Hex(new HexLocation(0,-1), HexType.WOOD, 3));
+			hexes.put(new HexLocation(2,-2), new Hex(new HexLocation(2,-2), HexType.WOOD, 11));
+			
+			hexes.put(new HexLocation(-1,0), new Hex(new HexLocation(-1,0), HexType.SHEEP, 10));
+			hexes.put(new HexLocation(-1,1), new Hex(new HexLocation(-1,1), HexType.SHEEP, 9));
+			hexes.put(new HexLocation(1,1), new Hex(new HexLocation(1,1), HexType.SHEEP, 10));
+			hexes.put(new HexLocation(2,-1), new Hex(new HexLocation(2,-1), HexType.SHEEP, 12));
+			
+			hexes.put(new HexLocation(-2,1), new Hex(new HexLocation(-2,1), HexType.WHEAT, 2));
+			hexes.put(new HexLocation(0,0), new Hex(new HexLocation(0,0), HexType.WHEAT, 11));
+			hexes.put(new HexLocation(0,2), new Hex(new HexLocation(0,2), HexType.WHEAT, 8));
+			hexes.put(new HexLocation(2,0), new Hex(new HexLocation(2,0), HexType.WHEAT, 6));
+			
+			hexes.put(new HexLocation(0,-2), new Hex(new HexLocation(0,-2), HexType.DESERT, -1));
+		}
+		
+		return hexes;
+	}
+	
+	/**
+	 * create a new board map
+	 * @param random_chits boolean whether or not to place the chits randomly
+	 * @param random_hexes boolean whether or not to place the hex types randomly
+	 * @param random_ports boolean whether or not to place the ports randomly
+	 * @return BoardMap the newly created map
+	 */
+	public BoardMap(boolean random_chits, boolean random_hexes, boolean random_ports) {
+		
+		this.hexes = this.generateHexes(random_hexes, random_chits);
+		this.ports = this.generatePorts(random_ports, numberOfPorts);
+		this.roads = new HashMap<EdgeLocation, Road>();
+		this.cities = new HashMap<VertexLocation, City>();
+		this.settlements = new HashMap<VertexLocation, Settlement>();
+		this.radius = this.DEFAULT_RADIUS;
+		
+		for(HexLocation location : this.hexes.keySet()){
+			if(this.hexes.get(location).getType() == HexType.DESERT){
+				this.robberLocation = location;
+				break;
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BoardMap [hexes=" + hexes + ", roads=" + roads + ", cities="
+				+ cities + ", settlements=" + settlements + ", ports=" + ports
+				+ ", numberOfPorts=" + numberOfPorts + ", DEFAULT_RADIUS="
+				+ DEFAULT_RADIUS + ", radius=" + radius + ", robberLocation="
+				+ robberLocation + "]";
+	}
+
 	public void setHexes(Map<HexLocation, HexInterface> hexes) {
 		this.hexes = hexes;
 	}
