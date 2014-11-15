@@ -1,60 +1,43 @@
 package server.manager;
 
-import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.GameInfo;
-import shared.model.GameModel;
+import shared.model.card.DevCardBank;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
+import shared.model.map.BoardMap;
 import shared.model.player.Players;
+import shared.model.turntracker.TurnTracker;
 
 public class ServerGameManager implements ServerGameManagerInterface {
 	
 	private String title = null;
 	private int gameId;
-	GameModel gameModel = null;
+	BoardMap boardMap = null;	
+	TurnTracker turnTracker = null;	
+	Players players = null;
+	DevCardBank devCardBank = null;
 	
-	public ServerGameManager(String gameName, boolean randTitles, boolean randNumbers, boolean randPorts) {
+	
+	public ServerGameManager(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts) {
 		
-	}
-	
-	public String getGameTitle() {
-		return title;
-	}
-	
-	public int getGameId() {
-		return gameId;
-	}
-	
-	public Players getPlayers() {
-		return null;
-	}
-
-	@Override
-	public boolean canJoinGame(int playerId, CatanColor color, GameInfo game) {
+		title = gameName;
 		
-//		for (GameInfo game_info : gameList.getGameList()) {
-//			if(game.getId() == game_info.getId()) {
-//				game = game_info;
-//				break;
-//			}
-//		}
+		boardMap = new BoardMap(randNumbers, randTiles, randPorts);
 		
-		return game.playerCanJoin(gameModel.getLocalPlayer());
+		turnTracker = new TurnTracker();
+		
+		players = new Players();
+		
+		devCardBank = DevCardBank.createBankForNewGame();		
+		
 	}
 	
 	public boolean containsPlayerId(int player_id) {
-		return true;
-	}
-
-	@Override
-	public boolean joinGame(int game_id, CatanColor color, GameInfo game) {
-		// TODO Auto-generated method stub
-		return false;
+		return false; //TODO Players.containsPlayer(player_id);
 	}
 
 	@Override
@@ -71,18 +54,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean updateGameModel() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean getGameCommands() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean postGameCommands() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -112,14 +83,13 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	}
 
 	@Override
-	public boolean canAcceptTrade(int player_index, TradeInterface trade) {
+	public boolean canAcceptTrade(int player_index) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean acceptTrade(int player_index, TradeInterface trade,
-			boolean accept) {
+	public boolean acceptTrade(int player_index, boolean accept) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -185,14 +155,13 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	}
 
 	@Override
-	public boolean canOfferTrade(int player_index, TradeInterface trade) {
+	public boolean canOfferTrade(int player_index, ResourceList resources) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean offerTrade(int player_index, TradeInterface trade,
-			int otherPlayerIndex) {
+	public boolean offerTrade(int player_index, ResourceList resources,	int otherPlayerIndex) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -300,6 +269,17 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	public String getGameTitle() {
+		return title;
+	}
+	
+	public int getGameId() {
+		return gameId;
+	}
+	
+	public Players getPlayers() {
+		return null;
+	}
 
 }
