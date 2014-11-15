@@ -660,7 +660,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public void addRollResources(ResourceList resource_list) {
-		/* TODO
-		* this list contains the resources gained from a roll*/
+        for(ResourceType resource : ResourceType.values()){
+            this.resourceList.setResourceByType(resource, this.resourceList.getResourceByType(resource) + resource_list.getResourceByType(resource));
+        }
 	}
 }
