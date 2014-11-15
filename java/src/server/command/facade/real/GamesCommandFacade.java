@@ -18,11 +18,13 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameList getGamesList() {
+System.out.println("\t\tGames Command Facade: Get Games List");
 		return ServerModelFacade.getInstance().getGameList();
 	}
 
 	@Override
 	public GameInfo createGame(CreateGameRequestParameters params) {
+System.out.println("\t\tGames Command Facade: Create Game");
 		CreateGame command = new CreateGame(params);
 		command.execute();
 		if(command.wasSuccessful()){
@@ -34,6 +36,7 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public Boolean joinGame(JoinGameParameters params, int playerId) {
+System.out.println("\t\tGames Command Facade: Join Game");
 		JoinGame command = new JoinGame(params, playerId);
 		command.execute();
 		return command.wasSuccessful();
@@ -41,6 +44,7 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public Boolean saveGame(SaveGameParameters params) {
+System.out.println("\t\tGames Command Facade: Save Game");
 		SaveGame command = new SaveGame(params);
 		command.execute();
 		return command.wasSuccessful();
@@ -48,6 +52,7 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameData loadGame(LoadGameRequestParameters params) {
+System.out.println("\t\tGames Command Facade: Load Game");
 		LoadGame command = new LoadGame(params);
 		command.execute();
 		return command.getGameData();

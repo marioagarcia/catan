@@ -16,11 +16,10 @@ public class JoinGame extends CatanCommand {
 	 * Initializes the JoinGame object with the data needed to put a player into a given game
 	 * @param parameters an object containing the ID of the game to be joined, and the color the player will use
 	 */
-	public JoinGame(JoinGameParameters parameters, int player_id){
-		
+	public JoinGame(JoinGameParameters parameters, int player_id){	
 		this.gameId = parameters.getId();
 		this.playerId = player_id;
-		this.color = CatanColor.valueOf(parameters.getColor());
+		this.color = CatanColor.valueOf(parameters.getColor().toUpperCase());
 	}
 	
 	/**
@@ -30,9 +29,8 @@ public class JoinGame extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		
+					
 		if (facadeInstance.canJoinGame(gameId, playerId, color)){
-			
 			success = facadeInstance.joinGame(gameId, playerId, color);
 		}
 		

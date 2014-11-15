@@ -41,6 +41,7 @@ public class GamesHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
+System.out.println("Entering Games handler");
 		String response;
 		int responseCode;
 		Boolean successful;
@@ -51,68 +52,89 @@ public class GamesHandler implements HttpHandler{
 		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/games/list")){
+System.out.println("\tGamesList URI");
 			GameList gameList = facade.getGamesList();
 			if(gameList != null){
+System.out.println("\tGamesList success");
 				response = serializer.serializeGamesList(gameList.getGameList());
 				responseCode = 200;
 			}else{
+System.out.println("\tGamesList failure");
 				response = "Failed to get the game list.";
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/create")){
+System.out.println("\tCreate Game URI");
 			CreateGameRequestParameters params = serializer.deserializeCreateGameRequest(jsonString);
 			GameInfo gameInfo = facade.createGame(params);
 			if(gameInfo != null){
+System.out.println("\tCreate Game success");
 				response = serializer.serializeGameInfo(gameInfo);
 				responseCode = 200;
 			}else{
+System.out.println("\tCreate Game failure");
 				response = "Failed to create game.";
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/join")){
+System.out.println("\tJoin Game URI");
 			//Get the cookie from the request
 			String cookie = (String)exchange.getRequestHeaders().values().toArray()[0].toString();
 
 			CookieParser cookieParser = new CookieParser(cookie);		
+System.out.println("\tJoin Game deserialization");
 			//Deserialize the json string into a JoinGameParameters object
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
 			successful = facade.joinGame(params, cookieParser.getPlayerID());
 			if(successful){
+System.out.println("\tJoin Game success");
 				//If join game was successful, set the gameId
 				gameId = params.getId();
 				response = "Success";
 				responseCode = 200;
 			}else{
+System.out.println("\tJoin Game failure");				
 				response = "Failed to join game.";
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/save")){
+System.out.println("\tSave Game URI");
+System.out.println("\tSave Game deserialization");
 			SaveGameParameters params = serializer.deserializeSaveGameRequest(jsonString);
 			successful = facade.saveGame(params);
 			if(successful){
+System.out.println("\tSave Game success");
 				response = "Success";
 				responseCode = 200;
 			}else{
+System.out.println("\tSave Game failure");
 				response = "Failed to save game.";
 				responseCode = 400;
 			}
 		}else if(uri.equals("/games/load")){
+System.out.println("\tLoad Game URI");
+System.out.println("\tLoad Game deserialization");
 			LoadGameRequestParameters params = serializer.deserializeLoadGameRequest(jsonString);
 			GameData gameData = facade.loadGame(params);
 			if(gameData != null){
+System.out.println("\tLoad Game success");
+System.out.println("\tLoad Game serialization");
 				response = serializer.serializeGameModel(gameData);
 				responseCode = 200;
 			}else{
+System.out.println("\tLoad Game failure");
 				response = "Failed to load game.";
 				responseCode = 400;
 			}
 		}else{
+System.out.println("\tUnrecognized URI");
 			response = "Games URI not recognized.";
 			responseCode = 400;
 		}
 		
 		if(gameId != -1){
 			//If gameID is not -1 then it was a join game request
+System.out.println("\tJoin Game cookie generation");
 			//Set the cookie based on the id of the game that was joined
 			String cookie = CookieParser.generateJoinCookie(gameId);
 
@@ -127,6 +149,7 @@ public class GamesHandler implements HttpHandler{
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();
+System.out.println("Exiting Games handler");
 	}
 	
 	private String getJsonString(InputStream inputStream) throws IOException{

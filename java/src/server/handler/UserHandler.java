@@ -43,6 +43,7 @@ public class UserHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
+System.out.println("Entering User handler");
 		StringBuilder request = new StringBuilder();
 		//Read the request into a buffered reader
 		BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
@@ -54,33 +55,38 @@ public class UserHandler implements HttpHandler{
 		}
 		//Put the stringbuilder into a string
 		String jsonString = request.toString();
-
+System.out.println("User handler deserialization");
 		//Send the json to the deserializer and get the credentials back
 		CredentialsParameters credentials = serializer.deserializeCredentials(jsonString);
 
 		String uri = exchange.getRequestURI().toString();
 		Boolean successful = false;
 		if(uri.equals("/user/login")){
+System.out.println("\tLogin URI");
 			successful = facade.login(credentials);
 		}else if(uri.equals("/user/register")){
+System.out.println("\tRegister URI");
 			successful = facade.register(credentials);
 		}else{
-			System.out.println("URI not recognized.");
+			System.out.println("\tUser URI not recognized.");
 		}
 		
 		String response;
 		int responseCode;
 
 		if(successful){
+System.out.println("UserHandler success");
 			response = "Success";
 			responseCode = 200;
 		}else{
+System.out.println("Userhandler failure");
 			response = "Failed to login - bad username or password.";
 			responseCode = 400;	
 		}
 
 		//Get the id of the player who registered/logged in
 		int id = ServerModelFacade.getInstance().getPlayerId(credentials.getUsername());
+System.out.println("Userhandler cookie generation");
 		//Create a cookie with the user's name, password, and id
 		String cookie = CookieParser.generateLoginCookie(credentials.getUsername(), credentials.getPassword(), id);
 		ArrayList<String> cookieList = new ArrayList<String>();
@@ -92,5 +98,6 @@ public class UserHandler implements HttpHandler{
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();
+System.out.println("Exiting user handler\n");
 	}
 }

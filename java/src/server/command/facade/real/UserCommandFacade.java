@@ -9,6 +9,7 @@ public class UserCommandFacade implements UserCommandFacadeInterface{
 
 	@Override
 	public Boolean login(CredentialsParameters params) {
+System.out.println("\t\tUser Command Facade: Login");
 		//Create the login command object and call execute on it
 		Login login = new Login(params);
 		login.execute();
@@ -18,6 +19,7 @@ public class UserCommandFacade implements UserCommandFacadeInterface{
 
 	@Override
 	public Boolean register(CredentialsParameters params) {
+System.out.println("\t\tUser Command Facade: Register");
 		//Create the register command object and call execute on it
 		Register register = new Register(params);
 		register.execute();

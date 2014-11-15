@@ -12,17 +12,17 @@ public class GameCommandFacade implements GameCommandFacadeInterface{
 	
 	@Override
 	public GameData getModel(int gameId) {
-		// TODO Auto-generated method stub
-		return null;
+System.out.println("\t\tGame Command Facade: Get model");
+		return ServerModelFacade.getInstance().getGameModel(gameId);
 	}
 
 	@Override
 	public GameData reset(int gameId) {
+System.out.println("\t\tGame Command Facade: Reset");
 		ResetGame command = new ResetGame();
 		command.execute();
 		if(command.wasSuccessful()){
-			// @ TODO get a game model and return it
-			return null;
+			return ServerModelFacade.getInstance().getGameModel(gameId);
 		}else{
 			return null;
 		}

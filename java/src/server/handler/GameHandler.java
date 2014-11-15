@@ -35,27 +35,46 @@ public class GameHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
+System.out.println("Entering Game handler");
 		String response;
 		int responseCode;
 		
+		//Get the cookie from the request headers
+		String cookie = (String)exchange.getRequestHeaders().values().toArray()[0].toString();
+
+		//Parse the cookie
+		CookieParser cookieParser = new CookieParser(cookie);
+
+		//Validate the user
+		if(!cookieParser.isValidCookie()){
+System.out.println("Invalid Game cookie");
+			//If the user is not valid, send an invalid user response
+			sendInvalidUserResponse(exchange);
+			return;
+		}
+		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/game/model")){
-			// @ TODO Must retrieve the game model
-			//	But in the meantime...
-			GameData gameData = facade.getModel(0);
+System.out.println("\tGame Model URI");
+			GameData gameData = facade.getModel(cookieParser.getGameID());
 			if(gameData != null){
+System.out.println("\tGame Model success");
 				response = serializer.serializeGameModel(gameData);
 				responseCode = 200;
 			}else{
+System.out.println("\tGame Model failure");
 				response = "Failed to get game model.";
 				responseCode = 400;
 			}
 		}else if(uri.equals("/game/reset")){
+System.out.println("\tReset URI");
 			 GameData gameData = facade.reset(0);
 			 if(gameData != null){
+System.out.println("\tReset success");
 				 response = serializer.serializeGameModel(gameData);
 				 responseCode = 200;
 			 }else{
+System.out.println("\tReset failure");
 				 response = "Failed to reset game.";
 				 responseCode = 400;
 			 }			 
@@ -84,7 +103,7 @@ public class GameHandler implements HttpHandler{
 				responseCode = 400;
 			}
 		}else{
-			System.out.println("URI not recognized");
+			System.out.println("Game URI not recognized");
 			response = "Game URI not recognized.";
 			responseCode = 400;
 		}
@@ -93,7 +112,7 @@ public class GameHandler implements HttpHandler{
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();
-		
+System.out.println("Exiting Game Handler");
 	}
 	
 	private String getJsonString(BufferedReader reader) throws IOException{
@@ -105,5 +124,13 @@ public class GameHandler implements HttpHandler{
 		}
 		//The StringBuilder is now the json from the exchange, so return it's string
 		return request.toString();
+	}
+	
+	private void sendInvalidUserResponse(HttpExchange exchange) throws IOException{
+		String response = "Invalid Game Handler Cookie.";
+		exchange.sendResponseHeaders(400, response.length());
+		OutputStream os = exchange.getResponseBody();
+		os.write(response.getBytes());
+		os.close();
 	}
 }
