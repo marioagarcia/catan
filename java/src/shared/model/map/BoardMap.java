@@ -143,7 +143,10 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			for(PortType type : port_types){
 				int index;
 				do{
-					index = random_generator.nextInt() % potential_locations.length;
+                    do {
+                        index = random_generator.nextInt() % potential_locations.length;
+                    } while(index < 0);
+                    
 				} while(ports.keySet().contains(potential_locations[index]));
 				if(type == PortType.THREE){
 					ports.put(potential_locations[index], new Port(type, potential_locations[index], 3));
@@ -180,9 +183,9 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		Random random = new Random(System.currentTimeMillis());
 		Map<HexLocation, HexInterface> hexes = new HashMap<HexLocation, HexInterface>();
 		
-		for(HexLocation location : this.getAllowedWaterHexLocations()){
-			hexes.put(location, new Hex(location, HexType.WATER, -1));
-		}
+//		for(HexLocation location : this.getAllowedWaterHexLocations()){
+//			hexes.put(location, new Hex(location, HexType.WATER, -1));
+//		}
 		
 		ArrayList<HexLocation> land_hexes = new ArrayList<HexLocation>();
 		
@@ -202,7 +205,10 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			
 			for(HexType type : number_of_each_hex_type.keySet()){
 				for(int i = 0; i < number_of_each_hex_type.get(type); i++){
-					int index  = random.nextInt() % land_hexes.size();
+					int index;
+                    do {
+                        index = random.nextInt() % land_hexes.size();
+                    } while(index < 0);
 					
 					HexLocation location = land_hexes.get(index);
 					land_hexes.remove(index);
@@ -217,7 +223,10 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 					if(hexes.get(location).getType() == HexType.DESERT || hexes.get(location).getType() == HexType.WATER){
 						continue;
 					}
-					int index = random.nextInt() % chits.size();
+					int index;
+                    do{
+                        index = random.nextInt() % chits.size();
+                    } while( index < 0);
 					
 					int chit = chits.get(index);
 					chits.remove(index);
