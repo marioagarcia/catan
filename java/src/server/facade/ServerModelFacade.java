@@ -1,8 +1,14 @@
 package server.facade;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gson.Gson;
+
 import server.manager.ServerGameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -41,6 +47,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		joinGame(0, 1, CatanColor.BLUE);
 		joinGame(0, 2, CatanColor.RED);
 		joinGame(0, 3, CatanColor.GREEN);
+		
+		saveGame(0);
 	}
 	
 	public static ServerModelFacade getInstance(){
@@ -72,7 +80,14 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean verifyGame(int player_id, int game_id) {
 		if (gamesList.containsKey(game_id)){
-			return gamesList.get(game_id).containsPlayerId(player_id);
+			
+			System.out.println("ID found");
+			
+			boolean result = gamesList.get(game_id).containsPlayerId(player_id);
+			
+			System.out.println("conatins player: " + result);
+			
+			return  result;
 		}
 		else{
 			return false;
@@ -148,7 +163,29 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean saveGame(int game_id) {
-		// TODO Auto-generated method stub
+		
+		if (gamesList.containsKey(game_id)){
+			File test = new File(ServerModelFacade.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+			String game_name = gamesList.get(game_id).getGameTitle();
+			
+			try {
+				System.out.println("Canonical File path: " + test.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator);
+				String path = test.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator + game_name;
+				
+				FileWriter writer = new FileWriter(new File(path));
+				
+				Gson serializer = new Gson();
+				writer.write(serializer.toJson(gamesList.get(game_id)));
+				writer.close();
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		
 		return false;
 	}
 
