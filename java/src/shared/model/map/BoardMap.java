@@ -29,6 +29,7 @@ import shared.model.piece.Settlement;
 import shared.model.player.Player;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import shared.serialization.interfaces.SerializerMapInterface;
+import shared.shared.utils.CatanUtils;
 
 public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
 	private Map<HexLocation, HexInterface> hexes;
@@ -65,14 +66,13 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 					for(City city : this.cities.values()){
 						if(city.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())){
-//							results.get(city.getPlayerIndex()).incrementResourceByType();.addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
-//							results.get(city.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+							results.get(city.getPlayerIndex()).incrementResourceByType(CatanUtils.toResourceType(hex.getType()));
+							results.get(city.getPlayerIndex()).incrementResourceByType(CatanUtils.toResourceType(hex.getType()));
 						}
 					}
 					for(Settlement settlement : this.settlements.values()){
 						if(settlement.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())){
-//							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
-//							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+							results.get(settlement.getPlayerIndex()).incrementResourceByType(CatanUtils.toResourceType(hex.getType()));
 						}
 					}
 				}

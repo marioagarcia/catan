@@ -30,9 +30,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	Trade trade = null;
 	
 	
-	public ServerGameManager(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts) {
+	public ServerGameManager(String gameName, int id, boolean randTiles, boolean randNumbers, boolean randPorts) {
 		
 		title = gameName;
+
+		gameId = id;
 		
 		boardMap = new BoardMap(randNumbers, randTiles, randPorts);
 		
