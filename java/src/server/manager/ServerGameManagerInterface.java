@@ -1,31 +1,14 @@
 package server.manager;
 
-import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.card.TradeInterface;
 
 public interface ServerGameManagerInterface {
-
-	/**
-	 * Checks that the player has a valid catan.user cookie set, the player
-	 * is already in the game or there is an available spot in the game,
-	 * and the color submitted is a valid color
-	 * 
-	 * @param game The game the player wants to join
-	 * @param color The color the player submitted
-	 * @return true if the player has a valid user cookie set, is already in
-	 * the game or there is an available spot in the game, and the color
-	 * is valid, false otherwise
-	 */
-	public boolean canJoinGame(int playerId, CatanColor color, GameInfo game);
-	
-	public boolean joinGame(int game_id, CatanColor color, GameInfo game);
 
 	/**
 	 * Saves the current game
@@ -45,22 +28,6 @@ public interface ServerGameManagerInterface {
 	 * @return true if all model classes were correctly updated
 	 */
 	public boolean updateGameModel();
-
-	/**
-	 * Checks that the player has a valid user id and a valid game id
-	 * 
-	 * @return true if the player has a valid user id and a valid game id, 
-	 * false otherwise  
-	 */
-	public boolean getGameCommands();
-
-	/**
-	 * Checks that the player has a valid user id and a valid game id
-	 * 
-	 * @return true if the player has a valid user id and a valid game id, 
-	 * false otherwise  
-	 */
-	public boolean postGameCommands();
 
 	/**
 	 * Adds an AI to the game
@@ -88,8 +55,8 @@ public interface ServerGameManagerInterface {
 	 * @param trade representing the conditions of a trade. Resources, etc.
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
-	public boolean canAcceptTrade(int player_index, TradeInterface trade);
-	public boolean acceptTrade(int player_index, TradeInterface trade, boolean accept);
+	public boolean canAcceptTrade(int player_index);
+	public boolean acceptTrade(int player_index, boolean accept);
 
 	/**
 	 * Checks that a player has over 7 cards and that the player has the cards
@@ -149,8 +116,8 @@ public interface ServerGameManagerInterface {
 	 * @param trade the resource cards in question
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
-	public boolean canOfferTrade(int player_index, TradeInterface trade);
-	public boolean offerTrade(int player_index, TradeInterface trade, int otherPlayerIndex);
+	public boolean canOfferTrade(int player_index, ResourceList resources);
+	public boolean offerTrade(int player_index, ResourceList resources, int otherPlayerIndex);
 
 	/**
 	 * Checks that the player has a city or a settlement at the location and has either 

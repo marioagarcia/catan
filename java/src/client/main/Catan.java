@@ -13,7 +13,7 @@ import client.base.*;
 /**
  * Main entry point for the Catan program
  */
-@SuppressWarnings("serial")
+//@SuppressWarnings("serial")
 public class Catan extends JFrame {
 
 	private CatanPanel catanPanel;

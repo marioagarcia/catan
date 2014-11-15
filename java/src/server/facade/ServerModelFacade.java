@@ -12,7 +12,6 @@ import shared.locations.VertexLocation;
 import shared.model.GameInfo;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
-import shared.model.card.TradeInterface;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
 import shared.model.player.Player;
@@ -148,226 +147,217 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public GameData getGameModel(int game_id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean resetGame(int game_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean canSendChat(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return true;
 	}
 
 	@Override
 	public boolean sendChat(int game_id, int player_index, String chatMessage) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).sendChat(player_index, chatMessage);
 	}
 
 	@Override
-	public boolean canAcceptTrade(int game_id, int player_index,
-			TradeInterface trade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canAcceptTrade(int game_id, int player_index) {
+		
+		return gamesList.get(game_id).canAcceptTrade(player_index);
 	}
 
 	@Override
-	public boolean acceptTrade(int game_id, int player_index,
-			TradeInterface trade, boolean accept) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean acceptTrade(int game_id, int player_index, boolean accept) {
+		
+		return gamesList.get(game_id).acceptTrade(player_index, accept);
 	}
 
 	@Override
 	public boolean canDiscardCards(int game_id, int player_index,
 			ResourceList list) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canDiscardCards(player_index, list);
 	}
 
 	@Override
 	public boolean discardCards(int game_id, int player_index, ResourceList list) {
-		// TODO Auto-generated method stub
-		return false;
+
+		return gamesList.get(game_id).discardCards(player_index, list);
 	}
 
 	@Override
 	public boolean canRoll(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canRoll(player_index);
 	}
 
 	@Override
 	public boolean roll(int game_id, int player_index, int number) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).roll(player_index, number);
 	}
 
 	@Override
 	public boolean canBuildRoad(int game_id, int player_index,
 			EdgeLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+
+		return gamesList.get(game_id).canBuildRoad(player_index, location);
 	}
 
 	@Override
 	public boolean buildRoad(int game_id, int player_index,
 			EdgeLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).buildRoad(player_index, location);
 	}
 
 	@Override
 	public boolean canBuildSettlement(int game_id, int player_index,
 			VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canBuildSettlement(player_index, location);
 	}
 
 	@Override
 	public boolean buildSettlement(int game_id, int player_index,
 			VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).buildSettlement(player_index, location);
 	}
 
 	@Override
 	public boolean canBuildCity(int game_id, int player_index,
 			VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canBuildCity(player_index, location);
 	}
 
 	@Override
 	public boolean buildCity(int game_id, int player_index,
 			VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).buildCity(player_index, location);
 	}
 
 	@Override
 	public boolean canOfferTrade(int game_id, int player_index,
 			ResourceList resources) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canOfferTrade(player_index, resources);
 	}
 
 	@Override
 	public boolean offerTrade(int game_id, int player_index,
 			ResourceList resources, int otherPlayerIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).offerTrade(player_index, resources, otherPlayerIndex);
 	}
 
 	@Override
 	public boolean canMaritimeTrade(int game_id, int player_index,
 			EdgeLocation location, MaritimeTrade trade) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canMaritimeTrade(player_index, location, trade);
 	}
 
 	@Override
 	public boolean maritimeTrade(int game_id, int player_index,
 			EdgeLocation location, MaritimeTrade trade) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).maritimeTrade(player_index, location, trade);
 	}
 
 	@Override
 	public boolean canFinishTurn(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canFinishTurn(player_index);
 	}
 
 	@Override
 	public boolean finishTurn(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).finishTurn(player_index);
 	}
 
 	@Override
 	public boolean canBuyDevCard(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canBuyDevCard(player_index);
 	}
 
 	@Override
 	public boolean buyDevCard(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).buyDevCard(player_index);
 	}
 
 	@Override
 	public boolean canPlayYearOfPlenty(int game_id, int player_index,
 			ResourceType type1, ResourceType type2) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canPlayYearOfPlenty(player_index, type1, type2);
 	}
 
 	@Override
 	public boolean playYearOfPlenty(int game_id, int player_index,
 			ResourceType type1, ResourceType type2) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).playYearOfPlenty(player_index, type1, type2);
 	}
 
 	@Override
 	public boolean canPlayRoadBuilding(int game_id, int player_index,
 			EdgeLocation location1, EdgeLocation location2) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canPlayRoadBuilding(player_index, location1, location2);
 	}
 
 	@Override
 	public boolean playRoadBuilding(int game_id, int player_index,
 			EdgeLocation location1, EdgeLocation location2) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).playRoadBuilding(player_index, location1, location2);
 	}
 
 	@Override
 	public boolean canPlaySoldier(int game_id, int player_index,
 			HexLocation oldLocation, HexLocation newLocation, int victimIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canPlaySoldier(player_index, oldLocation, newLocation, victimIndex);
 	}
 
 	@Override
 	public boolean playSoldier(int game_id, int player_index,
 			HexLocation newLocation, int victimIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).playSoldier(player_index, newLocation, victimIndex);
 	}
 
 	@Override
 	public boolean canPlayMonopoly(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canPlayMonopoly(player_index);
 	}
 
 	@Override
 	public boolean playMonopoly(int game_id, int player_index,
 			ResourceType resourceType) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).playMonopoly(player_index, resourceType);
 	}
 
 	@Override
 	public boolean canPlayMonument(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).canPlayMonument(player_index);
 	}
 
 	@Override
 	public boolean playMonument(int game_id, int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return gamesList.get(game_id).playMonument(player_index);
 	}
 
 	@Override
@@ -378,20 +368,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
 			
-			GameInfo new_info = new GameInfo();
-			Players players = game.getValue().getPlayers();
-			
-			ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
-			
-			for (Player player : players.getPlayerList()){
-				
-				PlayerInfo new_player_info = new PlayerInfo();
-				new_player_info.setPlayerInfo(player.getColor(), player.getName(), player.getId());
-				
-				player_info.add(new_player_info);
-			}
-			
-			new_info.setGameInfo(game.getValue().getGameTitle(), game.getValue().getGameId(), player_info);
+			GameInfo new_info = generateGameInfo(game.getValue());
 			new_list.add(new_info);
 		}
 		
@@ -401,20 +378,48 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public AIManager getAIList() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AIManager();
+	}
+	
+	private GameInfo generateGameInfo(ServerGameManager game){
+		
+		GameInfo new_info = new GameInfo();
+		Players players = game.getPlayers();
+		
+		ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
+		
+		for (Player player : players.getPlayerList()){
+			
+			PlayerInfo new_player_info = new PlayerInfo();
+			new_player_info.setPlayerInfo(player.getColor(), player.getName(), player.getId());
+			
+			player_info.add(new_player_info);
+		}
+		
+		new_info.setGameInfo(game.getGameTitle(), game.getGameId(), player_info);
+		
+		return new_info;
+		
 	}
 
 	@Override
 	public GameInfo getGameInfo(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
+			if (game.getValue().getGameTitle().equals(title)){
+				
+				GameInfo new_info = generateGameInfo(game.getValue());
+				return new_info;
+			}
+		}
+		
+		return null;	
 	}
 
 	@Override
 	public boolean robPlayer(int player_index, int game_id, int victim_index,
 			HexLocation location) {
-		
+		//TODO
 		return true;
 	}
 
