@@ -22,7 +22,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	private static ServerModelFacade facadeInstance = null;
 	private Map<Integer, ServerGameManager> gamesList;
-	private static int currentGameId = 1;
+	private static int currentGameId = 0;
 	private UserManager userList = null;
 	
 	protected ServerModelFacade()
@@ -380,7 +380,7 @@ System.out.println("*******************" + game_id + "*********************");
 		
 		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
 			
-			GameInfo new_info = generateGameInfo(game.getValue());
+			GameInfo new_info = generateGameInfo(game.getValue(), game.getKey());
 			new_list.add(new_info);
 		}
 		
@@ -393,7 +393,7 @@ System.out.println("*******************" + game_id + "*********************");
 		return new AIManager();
 	}
 	
-	private GameInfo generateGameInfo(ServerGameManager game){
+	private GameInfo generateGameInfo(ServerGameManager game, int id){
 		
 		GameInfo new_info = new GameInfo();
 		Players players = game.getPlayers();
@@ -408,7 +408,7 @@ System.out.println("*******************" + game_id + "*********************");
 			player_info.add(new_player_info);
 		}
 		
-		new_info.setGameInfo(game.getGameTitle(), game.getGameId(), player_info);
+		new_info.setGameInfo(game.getGameTitle(), id, player_info);
 		
 		return new_info;
 		
@@ -420,7 +420,7 @@ System.out.println("*******************" + game_id + "*********************");
 		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
 			if (game.getValue().getGameTitle().equals(title)){
 				
-				GameInfo new_info = generateGameInfo(game.getValue());
+				GameInfo new_info = generateGameInfo(game.getValue(), game.getKey());
 				return new_info;
 			}
 		}
