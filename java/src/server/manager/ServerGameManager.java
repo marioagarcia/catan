@@ -7,19 +7,27 @@ import shared.locations.VertexLocation;
 import shared.model.card.DevCardBank;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
-import shared.model.card.TradeInterface;
+import shared.model.card.Trade;
+import shared.model.logging.GameLog;
+import shared.model.logging.chat.GameChat;
+import shared.model.logging.chat.Message;
+import shared.model.logging.history.HistoryLog;
 import shared.model.map.BoardMap;
+import shared.model.player.Player;
 import shared.model.player.Players;
 import shared.model.turntracker.TurnTracker;
+import shared.model.turntracker.TurntrackerInterface.Status;
 
 public class ServerGameManager implements ServerGameManagerInterface {
 	
 	private String title = null;
 	private int gameId;
-	BoardMap boardMap = null;	
-	TurnTracker turnTracker = null;	
+	BoardMap boardMap = null;
+	TurnTracker turnTracker = null;
 	Players players = null;
 	DevCardBank devCardBank = null;
+	GameLog gameLog = null;
+	Trade trade = null;
 	
 	
 	public ServerGameManager(String gameName, boolean randTiles, boolean randNumbers, boolean randPorts) {
@@ -32,24 +40,15 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		
 		players = new Players();
 		
-		devCardBank = DevCardBank.createBankForNewGame();		
+		devCardBank = DevCardBank.createBankForNewGame();
+		
+		gameLog = new GameLog(new HistoryLog(), new GameChat());
 		
 	}
 	
 	public boolean containsPlayerId(int player_id) {
-		return false; //TODO Players.containsPlayer(player_id);
-	}
-
-	@Override
-	public boolean saveGame() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean loadGame() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return players.containsPlayer(player_id);
 	}
 
 	@Override
@@ -72,50 +71,78 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean canSendChat(int player_index) {
-		// TODO Auto-generated method stub
+		
+		for(Player player : players.getPlayerList()) {
+		
+			if(player.getPlayerIndex() == player_index)
+			
+				return true;
+		}
+		
 		return false;
 	}
 
 	@Override
 	public boolean sendChat(int player_index, String chatMessage) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		Message message = new Message(chatMessage, players.getPlayer(player_index).getName());
+		
+		gameLog.getGameChat().addMessage(message);
+		
+		return true;
 	}
 
 	@Override
 	public boolean canAcceptTrade(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean player_condition_met = players.getPlayer(player_index).canAcceptTrade(trade);
+		boolean status_met = (turnTracker.getStatus() == Status.PLAYING);
+		boolean turn_condition_met = (turnTracker.getCurrentTurn() != player_index);
+
+		return (player_condition_met && status_met && turn_condition_met);
 	}
 
 	@Override
 	public boolean acceptTrade(int player_index, boolean accept) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		if(accept) {
+			
+			players.getPlayer(player_index).acceptTrade(trade);
+		}
+		else {
+			
+			//TODO what do we do here?
+		}
+		
+		return true;
 	}
 
 	@Override
 	public boolean canDiscardCards(int player_index, ResourceList list) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return (players.getPlayer(player_index).canDiscardCards(list) && 
+				(turnTracker.getStatus() == Status.PLAYING ||
+				turnTracker.getStatus() == Status.DISCARDING));
 	}
 
 	@Override
 	public boolean discardCards(int player_index, ResourceList list) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		players.getPlayer(player_index).discardCards(list);
+		
+		return true;
 	}
 
 	@Override
 	public boolean canRoll(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		return turnTracker.canRoll(player_index);
 	}
 
 	@Override
 	public boolean roll(int player_index, int number) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return false;//TODO
 	}
 
 	@Override
@@ -279,7 +306,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	}
 	
 	public Players getPlayers() {
-		return null;
+		return players;
 	}
 
 }

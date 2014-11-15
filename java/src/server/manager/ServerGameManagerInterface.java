@@ -6,22 +6,8 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
-import shared.model.card.TradeInterface;
 
 public interface ServerGameManagerInterface {
-
-	/**
-	 * Saves the current game
-	 * @return true if the server was able to save the game
-	 */
-	public boolean saveGame();
-
-	/**
-	 * Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) 
-	 * The id is the same as the original game id.
-	 * @return true if the game was correctly loaded
-	 */
-	public boolean loadGame();
 
 	/**
 	 * This gets the current game model from the server and updates all the model classes

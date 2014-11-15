@@ -20,6 +20,11 @@ public class ResourceList implements SerializerResourceListInterface {
 		wood = wo;
 	}
 	
+	public ResourceList() {
+
+		brick = ore = sheep = wheat = wood = 0;
+	}
+
 	public int getResourceByType(String type){
 		switch (type){
 			case "brick": 
@@ -70,6 +75,28 @@ public class ResourceList implements SerializerResourceListInterface {
 			return;
 		case WOOD:
 			this.wood = amount;
+			return;
+		default:
+			return;
+		}
+	}
+	
+	public void incrementResourceByType(ResourceType type){
+		switch(type){
+		case BRICK:
+			this.brick++;
+			return;
+		case ORE:
+			this.ore++;
+			return;
+		case SHEEP:
+			this.sheep++;
+			return;
+		case WHEAT:
+			this.wheat++;
+			return;
+		case WOOD:
+			this.wood++;
 			return;
 		default:
 			return;

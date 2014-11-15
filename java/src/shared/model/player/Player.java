@@ -12,6 +12,7 @@ import shared.model.manager.interfaces.GMPlayerInterface;
 import shared.serialization.interfaces.SerializerPlayerInterface;
 
 public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
+	
 	int cities;
 	CatanColor color;
 	int monuments;

@@ -18,6 +18,7 @@ import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.card.ResourceCard;
 import shared.model.card.ResourceCardBank;
+import shared.model.card.ResourceList;
 import shared.model.manager.interfaces.GMBoardMapInterface;
 import shared.model.map.luts.EdgesAdjacentToVertex;
 import shared.model.map.luts.EdgesAdjacentToVertexResult;
@@ -50,11 +51,11 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		this.ports = new HashMap<EdgeLocation, Port> ();
 	}
 	
-	public ArrayList<ResourceCardBank> getRollResult(int number){
-		ArrayList<ResourceCardBank> results = new ArrayList<ResourceCardBank>();
+	public ArrayList<ResourceList> getRollResult(int number){
+		ArrayList<ResourceList> results = new ArrayList<ResourceList>();
 		
 		for(int i = 0; i < 4; i++){
-			results.add(new ResourceCardBank());
+			results.add(new ResourceList());
 		}
 		
 		for(HexInterface hex : this.hexes.values()){
@@ -64,14 +65,14 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 					for(City city : this.cities.values()){
 						if(city.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())){
-							results.get(city.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
-							results.get(city.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+//							results.get(city.getPlayerIndex()).incrementResourceByType();.addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+//							results.get(city.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
 						}
 					}
 					for(Settlement settlement : this.settlements.values()){
 						if(settlement.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())){
-							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
-							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+//							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
+//							results.get(settlement.getPlayerIndex()).addCard(new ResourceCard(ResourceType.valueOf(hex.getType().toString())));
 						}
 					}
 				}
