@@ -1,8 +1,12 @@
 package server.facade;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +65,11 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public int getPlayerId(String name){
 		return userList.getPlayerId(name);
 	}
+	
+	private int loadSavedIDs(){
+		
+		return -1;
+	}
 
 	@Override
 	public boolean loginPlayer(String username, String password) {
@@ -87,7 +96,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			System.out.println("conatins player: " + result);
 			
-			return  result;
+			return result;
 		}
 		else{
 			return false;
@@ -151,6 +160,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				Player p = new Player();
 				p.setColor(color);
 				p.setName(userList.getPlayerName(player_id));
+				p.setPlayerId(player_id);
 				
 				gamesList.get(game_id).getPlayers().addPlayer(p);
 				return true;
@@ -169,8 +179,14 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			String game_name = gamesList.get(game_id).getGameTitle();
 			
 			try {
-				System.out.println("Canonical File path: " + test.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator);
-				String path = test.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator + game_name;
+				String folder = test.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
+				File data_folder = new File(folder);
+				
+				if (data_folder.exists()){
+					data_folder.mkdir();
+				}
+				
+				String path = folder + game_name;
 				
 				FileWriter writer = new FileWriter(new File(path));
 				
@@ -178,9 +194,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				writer.write(serializer.toJson(gamesList.get(game_id)));
 				writer.close();
 				
+				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("myfile.txt", true)));
+				out.println(game_id);
 				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			return true;
