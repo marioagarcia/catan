@@ -71,7 +71,8 @@ public class GamesHandler implements HttpHandler{
 			}
 		}else if(uri.equals("/games/join")){
 			//Get the cookie from the request
-			String cookie = (String)exchange.getRequestHeaders().values().toArray()[0];
+			String cookie = (String)exchange.getRequestHeaders().values().toArray()[0].toString();
+
 			CookieParser cookieParser = new CookieParser(cookie);		
 			//Deserialize the json string into a JoinGameParameters object
 			JoinGameParameters params = serializer.deserializeJoinGameRequest(jsonString);
@@ -114,7 +115,7 @@ public class GamesHandler implements HttpHandler{
 			//If gameID is not -1 then it was a join game request
 			//Set the cookie based on the id of the game that was joined
 			String cookie = CookieParser.generateJoinCookie(gameId);
-System.out.println(cookie);
+
 			ArrayList<String> cookieList = new ArrayList<String>();
 			cookieList.add(cookie);
 		
