@@ -53,7 +53,7 @@ public class MovesHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
-
+System.out.println("Entering Moves Handler");
 		//Get the cookie from the request headers
 		String cookie = (String)exchange.getRequestHeaders().values().toArray()[0].toString();
 
@@ -62,6 +62,7 @@ public class MovesHandler implements HttpHandler{
 
 		//Validate the user
 		if(!cookieParser.isValidCookie()){
+System.out.println("Invalid Moves Cookie");
 			//If the user is not valid, send an invalid user response
 			sendInvalidUserResponse(exchange);
 			return;
@@ -83,54 +84,71 @@ public class MovesHandler implements HttpHandler{
 		Gson gson = new Gson();
 		switch(uri){
 			case "/moves/sendChat":
+				System.out.println("\tSend Chat URI");
 				successful = facade.sendChat(gson.fromJson(jsonString, SendChatParameters.class), gameId);
 				break;
 			case "/moves/acceptTrade":
+				System.out.println("\tAccept Trade URI");
 				successful = facade.acceptTrade(gson.fromJson(jsonString, AcceptTradeParameters.class), gameId);
 				break;
 			case "/moves/discardCards":
+				System.out.println("\tDiscard Cards URI");
 				successful = facade.discardCards(gson.fromJson(jsonString, DiscardCardsParameters.class), gameId);
 				break;
 			case "/moves/rollNumber":
+				System.out.println("\tRoll Number URI");
 				successful = facade.rollNumber(gson.fromJson(jsonString, RollNumberParameters.class), gameId);
 				break;
 			case "/moves/buildRoad":
+				System.out.println("\tBuild Road URI");
 				successful = facade.buildRoad(gson.fromJson(jsonString, BuildRoadParameters.class), gameId);
 				break;
 			case "/moves/buildSettlement":
+				System.out.println("\tBuild Settlement URI");
 				successful = facade.buildSettlement(gson.fromJson(jsonString, BuildSettlementParameters.class), gameId);
 				break;
 			case "/moves/buildCity":
+				System.out.println("\tBuild City URI");
 				successful = facade.buildCity(gson.fromJson(jsonString, BuildCityParameters.class), gameId);
 				break;
 			case "/moves/offerTrade":
+				System.out.println("\tOffer Trade URI");
 				successful = facade.offerTrade(gson.fromJson(jsonString, OfferTradeParameters.class), gameId);
 				break;
 			case "/moves/maritimeTrade":
+				System.out.println("\tMaritime Trade URI");
 				successful = facade.maritimeTrade(gson.fromJson(jsonString, MaritimeTradeParameters.class), gameId);
 				break;
 			case "/moves/finishTurn":
+				System.out.println("\tFinish Turn URI");
 				successful = facade.finishTurn(gson.fromJson(jsonString, FinishTurnParameters.class), gameId);
 				break;
 			case "/moves/buyDevCard":
+				System.out.println("\tBuy Dev Card URI");
 				successful = facade.buyDevCard(gson.fromJson(jsonString, BuyDevCardParameters.class), gameId);
 				break;
 			case "/moves/Year_of_Plenty":
+				System.out.println("\tYear Of Plenty URI");
 				successful = facade.playYearOfPlenty(gson.fromJson(jsonString, YearOfPlentyParameters.class), gameId);
 				break;
 			case "/moves/Road_Building":
+				System.out.println("\tRoad Building URI");
 				successful = facade.playRoadBuilding(gson.fromJson(jsonString, RoadBuildingParameters.class), gameId);
 				break;
 			case "/moves/Soldier":
+				System.out.println("\tSoldier URI");
 				successful = facade.playSoldier(gson.fromJson(jsonString, SoldierParameters.class), gameId);
 				break;
 			case "/moves/Monopoly":
+				System.out.println("\tMonopoly URI");
 				successful = facade.playMonopoly(gson.fromJson(jsonString, MonopolyParameters.class), gameId);
 				break;
 			case "/moves/Monument":
+				System.out.println("\tMonument URI");
 				successful = facade.playMonument(gson.fromJson(jsonString, MonumentParameters.class), gameId);
 				break;
 			case "/moves/robPlayer":
+				System.out.println("\tRob Player URI");
 				successful = facade.robPlayer(gson.fromJson(jsonString, RobPlayerParameters.class), gameId);
 				break;
 		}
@@ -138,11 +156,14 @@ public class MovesHandler implements HttpHandler{
 		String response;
 		int responseCode;
 		if(successful){
+System.out.println("Move successful");			
 			//If the move was successful, get the updated game model
 			GameData gameData = ServerModelFacade.getInstance().getGameModel(gameId);
+System.out.println("Move serialization");
 			response = serializer.serializeGameModel(gameData);
 			responseCode = 200;
 		}else{
+System.out.println("Move unsuccessful");
 			response = "Failed to perform move.";
 			responseCode = 400;
 		}
@@ -151,6 +172,7 @@ public class MovesHandler implements HttpHandler{
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();
+System.out.println("Exiting Moves Handler");
 	}
 	
 	private String getJsonString(InputStream inputStream) throws IOException{

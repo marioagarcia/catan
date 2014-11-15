@@ -22,7 +22,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	private static ServerModelFacade facadeInstance = null;
 	private Map<Integer, ServerGameManager> gamesList;
-	private static int currentGameId = 1;
+	private static int currentGameId = 0;
 	private UserManager userList = null;
 	
 	protected ServerModelFacade()
@@ -125,7 +125,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean joinGame(int game_id, int player_id, CatanColor color) {
-		
+		System.out.println("*************" + game_id + "***************");
 		if (gamesList.containsKey(game_id)){
 			
 			if (gamesList.get(game_id).containsPlayerId(player_id)){
@@ -381,7 +381,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
 			
-			GameInfo new_info = generateGameInfo(game.getValue());
+			GameInfo new_info = generateGameInfo(game.getValue(), game.getKey());
 			new_list.add(new_info);
 		}
 		
@@ -394,7 +394,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		return new AIManager();
 	}
 	
-	private GameInfo generateGameInfo(ServerGameManager game){
+	private GameInfo generateGameInfo(ServerGameManager game, int id){
 		
 		GameInfo new_info = new GameInfo();
 		Players players = game.getPlayers();
@@ -409,7 +409,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			player_info.add(new_player_info);
 		}
 		
-		new_info.setGameInfo(game.getGameTitle(), game.getGameId(), player_info);
+		new_info.setGameInfo(game.getGameTitle(), id, player_info);
 		
 		return new_info;
 		
@@ -421,7 +421,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
 			if (game.getValue().getGameTitle().equals(title)){
 				
-				GameInfo new_info = generateGameInfo(game.getValue());
+				GameInfo new_info = generateGameInfo(game.getValue(), game.getKey());
 				return new_info;
 			}
 		}

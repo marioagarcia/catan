@@ -40,102 +40,119 @@ public class MovesCommandFacade implements MovesCommandFacadeInterface{
 
 	@Override
 	public boolean sendChat(SendChatParameters params, int gameId) {
+System.out.println("\t\tMoves Command Facade: Send Chat");
 		SendChat command = new SendChat(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean rollNumber(RollNumberParameters params, int gameId) {
+System.out.println("\t\tMoves Command Facade: Roll Number");
 		RollNumber command = new RollNumber(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean robPlayer(RobPlayerParameters params, int gameId) {
+System.out.println("\t\tMoves Command Facade: Rob Player");
 		RobPlayer command = new RobPlayer(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean finishTurn(FinishTurnParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Finish Turn");
 		FinishTurn command = new FinishTurn(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean buyDevCard(BuyDevCardParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: But Dev Card");
 		BuyDevCard command = new BuyDevCard(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean playYearOfPlenty(YearOfPlentyParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Play Year Of Plenty");
 		PlayYearOfPlenty command = new PlayYearOfPlenty(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean playRoadBuilding(RoadBuildingParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Play Road Building");
 		PlayRoadBuilding command = new PlayRoadBuilding(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean playSoldier(SoldierParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Play Soldier");
 		PlaySoldier command = new PlaySoldier(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean playMonopoly(MonopolyParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Play Monopoly");
 		PlayMonopoly command = new PlayMonopoly(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean playMonument(MonumentParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Play Monument");
 		PlayMonument command = new PlayMonument(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean buildRoad(BuildRoadParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Build Road");
 		BuildRoad command = new BuildRoad(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean buildSettlement(BuildSettlementParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Build Settlement");
 		BuildSettlement command = new BuildSettlement(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean buildCity(BuildCityParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Build City");
 		BuildCity command = new BuildCity(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean offerTrade(OfferTradeParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Offer Trade");
 		OfferTrade command = new OfferTrade(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean acceptTrade(AcceptTradeParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Accept Trade");
 		AcceptTrade command = new AcceptTrade(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean maritimeTrade(MaritimeTradeParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Maritime Trade");
 		MaritimeTrade command = new MaritimeTrade(params, gameId);
 		return command.wasSuccessful();
 	}
 
 	@Override
 	public boolean discardCards(DiscardCardsParameters params, int gameId) {
+		System.out.println("\t\tMoves Command Facade: Discard Cards");
 		DiscardCards command = new DiscardCards(params, gameId);
 		return command.wasSuccessful();
 	}
