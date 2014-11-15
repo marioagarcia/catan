@@ -10,6 +10,10 @@ public class Trade implements TradeInterface {
 		resourceList = new ResourceList(brick, ore, sheep, wheat, wood);
 	}
 
+    public Trade(ResourceList resourceList){
+        this.resourceList = resourceList;
+    }
+
 	@Override
 	public void setTradeCard(ResourceType type, int count) {
 		switch (type) {
