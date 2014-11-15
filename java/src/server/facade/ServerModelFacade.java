@@ -419,7 +419,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean robPlayer(int player_index, int game_id, int victim_index,
 			HexLocation location) {
-		
+		//TODO
 		return true;
 	}
 
