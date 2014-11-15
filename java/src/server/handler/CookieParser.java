@@ -21,8 +21,8 @@ public class CookieParser {
 	private boolean containsId = false;
 	
 	public CookieParser(String cookie){
-		//cookie = cookie.replace("[", "");
-		//cookie = cookie.replace("]", "");
+		cookie = cookie.replace("[", "");
+		cookie = cookie.replace("]", "");
 		parseCookie(cookie);
 		valid = verifyInfo();
 	}

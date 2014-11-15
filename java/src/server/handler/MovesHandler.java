@@ -55,11 +55,11 @@ public class MovesHandler implements HttpHandler{
 	public void handle(HttpExchange exchange) throws IOException {
 
 		//Get the cookie from the request headers
-		String cookie = (String)exchange.getRequestHeaders().values().toArray()[0];
-System.out.println(cookie);
+		String cookie = (String)exchange.getRequestHeaders().values().toArray()[0].toString();
+
 		//Parse the cookie
 		CookieParser cookieParser = new CookieParser(cookie);
-System.out.println("Got to this point2");
+
 		//Validate the user
 		if(!cookieParser.isValidCookie()){
 			//If the user is not valid, send an invalid user response
