@@ -6,7 +6,7 @@ import java.util.Map;
 public class UserManager {
 	
 	private Map<String, User> userList = null;
-	private static int currentID = 1;
+	private static int currentID = 0;
 	
 	public UserManager(){
 		
@@ -53,6 +53,18 @@ public class UserManager {
 		else{
 			return -1;
 		}
+	}
+	
+	public String getPlayerName(int id){
+		
+		for (Map.Entry<String, User> user : userList.entrySet()){
+			
+			if (user.getValue().getID() == id){
+				return user.getValue().getUsername();
+			}
+		}
+		
+		return null;
 	}
 	
 	

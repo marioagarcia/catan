@@ -29,6 +29,18 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	{
 		gamesList = new HashMap<Integer, ServerGameManager>();
 		userList = new UserManager();
+		
+		this.createNewGame("Default", true, true, true);
+		
+		registerPlayer("Sam", "sam");
+		registerPlayer("Brooke", "brooke");
+		registerPlayer("Bob", "bob");
+		registerPlayer("Joe", "joe");
+		
+		joinGame(0, 0, CatanColor.ORANGE);
+		joinGame(0, 1, CatanColor.BLUE);
+		joinGame(0, 2, CatanColor.RED);
+		joinGame(0, 3, CatanColor.GREEN);
 	}
 	
 	public static ServerModelFacade getInstance(){
@@ -123,6 +135,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				
 				Player p = new Player();
 				p.setColor(color);
+				p.setName(userList.getPlayerName(player_id));
 				
 				gamesList.get(game_id).getPlayers().addPlayer(p);
 				return true;
