@@ -1,8 +1,18 @@
 package server.facade;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gson.Gson;
+
 import server.manager.ServerGameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -41,6 +51,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		joinGame(0, 1, CatanColor.BLUE);
 		joinGame(0, 2, CatanColor.RED);
 		joinGame(0, 3, CatanColor.GREEN);
+		
+		saveGame(0);
 	}
 	
 	public static ServerModelFacade getInstance(){
@@ -52,6 +64,11 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	
 	public int getPlayerId(String name){
 		return userList.getPlayerId(name);
+	}
+	
+	private int loadSavedIDs(){
+		
+		return -1;
 	}
 
 	@Override
@@ -72,7 +89,14 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean verifyGame(int player_id, int game_id) {
 		if (gamesList.containsKey(game_id)){
-			return gamesList.get(game_id).containsPlayerId(player_id);
+			
+			System.out.println("ID found");
+			
+			boolean result = gamesList.get(game_id).containsPlayerId(player_id);
+			
+			System.out.println("conatins player: " + result);
+			
+			return result;
 		}
 		else{
 			return false;
@@ -125,7 +149,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean joinGame(int game_id, int player_id, CatanColor color) {
-		System.out.println("*************" + game_id + "***************");
+		
 		if (gamesList.containsKey(game_id)){
 			
 			if (gamesList.get(game_id).containsPlayerId(player_id)){
@@ -136,6 +160,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				Player p = new Player();
 				p.setColor(color);
 				p.setName(userList.getPlayerName(player_id));
+				p.setPlayerId(player_id);
 				
 				gamesList.get(game_id).getPlayers().addPlayer(p);
 				return true;
@@ -148,7 +173,38 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean saveGame(int game_id) {
-		// TODO Auto-generated method stub
+		
+		if (gamesList.containsKey(game_id)){
+			File test = new File(ServerModelFacade.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+			String game_name = gamesList.get(game_id).getGameTitle();
+			
+			try {
+				String folder = test.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
+				File data_folder = new File(folder);
+				
+				if (data_folder.exists()){
+					data_folder.mkdir();
+				}
+				
+				String path = folder + game_name;
+				
+				FileWriter writer = new FileWriter(new File(path));
+				
+				Gson serializer = new Gson();
+				writer.write(serializer.toJson(gamesList.get(game_id)));
+				writer.close();
+				
+				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("myfile.txt", true)));
+				out.println(game_id);
+				
+				
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+		
 		return false;
 	}
 
