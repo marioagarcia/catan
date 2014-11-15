@@ -125,7 +125,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean joinGame(int game_id, int player_id, CatanColor color) {
-		System.out.println("*************" + game_id + "***************");
+		
 		if (gamesList.containsKey(game_id)){
 			
 			if (gamesList.get(game_id).containsPlayerId(player_id)){
