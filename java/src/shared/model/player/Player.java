@@ -28,14 +28,14 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	int victoryPoints;
 	boolean discarded;
 	boolean playedDevCard;
-	boolean placedFreeSettlemnet;
+	boolean placedFreeSettlement;
 	boolean placedFreeRoad;
 	
 	public Player(){
 		newDevCards = new DevCardList();
 		playerId = -1;
 		playerIndex = -1;
-		placedFreeSettlemnet = false;
+		placedFreeSettlement = false;
 		placedFreeRoad = false;
 		resourceList = new ResourceList(0,0,0,0,0);
 	}
@@ -398,11 +398,11 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	}
 
 	public boolean hasPlacedFreeSettlement() {
-		return placedFreeSettlemnet;
+		return placedFreeSettlement;
 	}
 
 	public void setPlacedFreeSettlement(boolean placedFreeSettlement) {
-		this.placedFreeSettlemnet = placedFreeSettlement;
+		this.placedFreeSettlement = placedFreeSettlement;
 	}
 
 	public boolean hasPlacedFreeRoad() {
@@ -623,7 +623,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		assert(this.canBuildSettlement());
 		
 		if(free){
-			this.placedFreeSettlemnet = true;
+			this.placedFreeSettlement = true;
 		}
 		else {
 			this.resourceList.setBrick(this.resourceList.getBrick() - 1);
@@ -656,5 +656,12 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		int resource = (int)Math.random() % potential_types.size();
 		this.resourceList.setResourceByType(potential_types.get(resource), this.resourceList.getResourceByType(potential_types.get(resource)));
 		return potential_types.get(resource);
+	}
+
+	@Override
+	public void addRollResources(ResourceList resource_list) {
+        for(ResourceType resource : ResourceType.values()){
+            this.resourceList.setResourceByType(resource, this.resourceList.getResourceByType(resource) + resource_list.getResourceByType(resource));
+        }
 	}
 }

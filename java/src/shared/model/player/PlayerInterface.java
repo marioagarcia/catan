@@ -204,5 +204,10 @@ public interface PlayerInterface
 	 * @return ResourceType the type of resource stolen
 	 */
 	public ResourceType rob();
-	
+
+	/**
+	 * incorporates the resources gained from a roll
+	 * @param resource_list the resources gained from the roll
+	 */
+	public void addRollResources(ResourceList resource_list);
 }

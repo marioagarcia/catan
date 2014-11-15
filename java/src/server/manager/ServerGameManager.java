@@ -18,6 +18,8 @@ import shared.model.player.Players;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 
+import java.util.ArrayList;
+
 public class ServerGameManager implements ServerGameManagerInterface {
 	
 	private String title = null;
@@ -143,6 +145,15 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean roll(int player_index, int number) {
+
+		ArrayList<ResourceList> resources = boardMap.getRollResult(number);
+
+		int temp_index = 0;
+		for(ResourceList resource_list : resources) {
+			players.getPlayer(temp_index++).addRollResources(resource_list);
+		}
+
+
 		
 		return false;//TODO
 	}
