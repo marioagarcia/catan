@@ -8,12 +8,25 @@ import shared.serialization.interfaces.SerializerBankInterface;
 public class ResourceCardBank implements ResourceCardBankInterface, SerializerBankInterface {
 	
 	private Map<ResourceType, Integer> cards;
+    private static final int totalCardsPerType = 19;
 	
 	public ResourceCardBank()
 	{
 		this.cards = new HashMap<ResourceType, Integer>();
 	}
-	
+
+    public static ResourceCardBank createResourceCardBankForNewGame(){
+        ResourceCardBank bank = new ResourceCardBank();
+
+        Map<ResourceType, Integer> cards = new HashMap<ResourceType, Integer>();
+        for(ResourceType resource : ResourceType.values()){
+            cards.put(resource, ResourceCardBank.totalCardsPerType);
+        }
+
+        bank.setCards(cards);
+        return bank;
+    }
+
 	public Map<ResourceType, Integer> getCards() {
 		return cards;
 	}
