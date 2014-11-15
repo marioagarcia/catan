@@ -53,10 +53,13 @@ public class MovesHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
+
 		//Get the cookie from the request headers
-		String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
+		String cookie = (String)exchange.getRequestHeaders().values().toArray()[0];
+System.out.println(cookie);
 		//Parse the cookie
 		CookieParser cookieParser = new CookieParser(cookie);
+System.out.println("Got to this point2");
 		//Validate the user
 		if(!cookieParser.isValidCookie()){
 			//If the user is not valid, send an invalid user response
@@ -131,7 +134,6 @@ public class MovesHandler implements HttpHandler{
 				successful = facade.robPlayer(gson.fromJson(jsonString, RobPlayerParameters.class), gameId);
 				break;
 		}
-		
 		
 		String response;
 		int responseCode;

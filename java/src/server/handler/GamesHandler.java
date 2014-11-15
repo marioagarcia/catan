@@ -114,6 +114,7 @@ public class GamesHandler implements HttpHandler{
 			//If gameID is not -1 then it was a join game request
 			//Set the cookie based on the id of the game that was joined
 			String cookie = CookieParser.generateJoinCookie(gameId);
+System.out.println(cookie);
 			ArrayList<String> cookieList = new ArrayList<String>();
 			cookieList.add(cookie);
 		
