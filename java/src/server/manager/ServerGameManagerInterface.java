@@ -6,14 +6,15 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
+import shared.model.manager.GameData;
 
 public interface ServerGameManagerInterface {
 
 	/**
-	 * This gets the current game model from the server and updates all the model classes
-	 * @return true if all model classes were correctly updated
+	 * Game Data is the model classes that are needed in the game
+	 * @return the game data
 	 */
-	public boolean updateGameModel();
+	public GameData getGameData();
 
 	/**
 	 * Adds an AI to the game
@@ -38,7 +39,7 @@ public interface ServerGameManagerInterface {
 	 * Checks that the player being offered the trade has the resources that the person whose
 	 * turn it is wants
 	 *
-	 * @param trade representing the conditions of a trade. Resources, etc.
+	 * @param player_index representing the player who the trade is offered to
 	 * @return true if the player has the resources for a trade, false otherwise
 	 */
 	public boolean canAcceptTrade(int player_index);
@@ -62,7 +63,7 @@ public interface ServerGameManagerInterface {
 	 * false otherwise
 	 */
 	public boolean canRoll(int player_index);
-	public boolean roll(int player_index, int number);
+	public boolean roll(int player_index, int number_rolled);
 
 	/**
 	 * Checks that the road location is open, the road location is connected to 
@@ -175,6 +176,15 @@ public interface ServerGameManagerInterface {
 	 */
 	public boolean canPlaySoldier(int player_index, HexLocation oldLocation, HexLocation newLocation, int victimIndex);
 	public boolean playSoldier(int player_index, HexLocation newLocation, int victimIndex);
+
+	/**
+	 *
+	 * @param player_index
+	 * @param victim_player_index
+	 * @param location
+	 * @return
+	 */
+	public boolean robPlayer(int player_index, int victim_player_index, HexLocation location);
 
 	/**
 	 * Checks that the it is the player's turn and that the player has the monopoly dev card

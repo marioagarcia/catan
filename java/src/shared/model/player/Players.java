@@ -10,7 +10,7 @@ public class Players {
 	private List<Player> playerList;
 	
 	public Players() {
-		playerList = new ArrayList<Player>();
+		playerList = new ArrayList<>();
 	}
 	
 	public void addPlayer(Player new_player) {
