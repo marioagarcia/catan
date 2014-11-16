@@ -424,8 +424,6 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 			players[index++] = convertPlayerToPlayerParameters(player);
 		}
 		
-System.out.println(gameData.getGameLog());
-System.out.println(gameData.getGameLog().getGameHistoryLog());
 		//Get the number of log lines and create a serializable array of log lines based on that number
 		int numLogLines = gameData.getGameLog().getGameHistoryLog().getSize();
 		MessageParameters[] logLines = new MessageParameters[numLogLines];

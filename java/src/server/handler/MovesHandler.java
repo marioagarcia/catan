@@ -151,6 +151,10 @@ System.out.println("Invalid Moves Cookie");
 				System.out.println("\tRob Player URI");
 				successful = facade.robPlayer(gson.fromJson(jsonString, RobPlayerParameters.class), gameId);
 				break;
+			default: 
+				System.out.println("\tMoves URI not recognized: " + uri);
+				successful = false;
+				break;
 		}
 		
 		String response;

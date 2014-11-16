@@ -68,7 +68,7 @@ System.out.println("\tLogin URI");
 System.out.println("\tRegister URI");
 			successful = facade.register(credentials);
 		}else{
-			System.out.println("\tUser URI not recognized.");
+			System.out.println("\tUser URI not recognized: " + uri);
 		}
 		
 		String response;

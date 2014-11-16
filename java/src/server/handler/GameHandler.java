@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import server.command.facade.GameCommandFacadeInterface;
+import server.facade.ServerModelFacade;
 import server.serialization.ServerModelSerializer;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.AIRequestParameters;
@@ -40,14 +41,16 @@ System.out.println("Entering Game handler");
 		int responseCode;
 		
 		//Get the cookie from the request headers
-		String cookie = (String)exchange.getRequestHeaders().values().toArray()[0].toString();
+		String cookie = exchange.getRequestHeaders().values().toArray()[0].toString();
 
 		//Parse the cookie
 		CookieParser cookieParser = new CookieParser(cookie);
 
 		//Validate the user
 		if(!cookieParser.isValidCookie()){
+			
 System.out.println("Failure: Invalid Game cookie");
+
 			//If the user is not valid, send an invalid user response
 			sendInvalidUserResponse(exchange);
 			return;
@@ -55,40 +58,64 @@ System.out.println("Failure: Invalid Game cookie");
 		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/game/model")){
+			
 System.out.println("\tGame Model URI");
+
 			GameData gameData = facade.getModel(cookieParser.getGameID());
 			if(gameData != null){
+				
 System.out.println("\tGame Model success");
 System.out.println("\tSerializing model");
-			try{
+
 				response = serializer.serializeGameModel(gameData);
-			}catch(Exception e){
-				response = null;
-				e.printStackTrace();
-			}
-System.out.println("\tFinished serializing model");
 				responseCode = 200;
+			
+System.out.println("\tFinished serializing model");
+
 			}else{
+				
 System.out.println("\tGame Model failure");
+
 				response = "Failed to get game model.";
 				responseCode = 400;
 			}
+		}else if(uri.contains("/game/model")){
+			
+System.out.println("\tGame Model with version number");
+
+			//Pull the version number out of the uri (everything to the right of "=" in the uri)
+			int versionNumber = Integer.parseInt((uri.split("="))[1]);
+			if(ServerModelFacade.getInstance().isCurrentVersion(cookieParser.getGameID(), versionNumber)){
+				//The version number was current, send true
+				response = "true";
+			}else{
+				//The version number was outdated, get and serialize the game model
+				response = serializer.serializeGameModel(facade.getModel(cookieParser.getGameID()));
+			}
+			
+			responseCode = 200;
 		}else if(uri.equals("/game/reset")){
+			
 System.out.println("\tReset URI");
+
 			 GameData gameData = facade.reset(0);
 			 if(gameData != null){
+				 
 System.out.println("\tReset success");
+
 				 response = serializer.serializeGameModel(gameData);
 				 responseCode = 200;
 			 }else{
+				 
 System.out.println("\tReset failure");
+
 				 response = "Failed to reset game.";
 				 responseCode = 400;
 			 }			 
 		}else if(uri.equals("/game/commands")){
 			response = "";
 			responseCode = -1000;
-		}else if(uri.equals("game/listAI")){
+		}else if(uri.equals("/game/listAI")){
 			String[] aiList = facade.getListAI();
 			if(aiList != null){
 				response = serializer.serializeGetListAI(aiList);
@@ -97,7 +124,7 @@ System.out.println("\tReset failure");
 				response = "Failed to get AI list.";
 				responseCode = 400;
 			}
-		}else if(uri.equals("game/addAI")){
+		}else if(uri.equals("/game/addAI")){
 			BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 			String jsonString = getJsonString(reader);
 			AIRequestParameters params = serializer.deserializeAIRequest(jsonString);
@@ -110,7 +137,7 @@ System.out.println("\tReset failure");
 				responseCode = 400;
 			}
 		}else{
-			System.out.println("Game URI not recognized");
+			System.out.println("Game URI not recognized: " + uri);
 			response = "Game URI not recognized.";
 			responseCode = 400;
 		}

@@ -2,6 +2,7 @@ package server.facade;
 
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -318,6 +319,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public GameData getGameModel(int game_id) {
 		return gamesList.get(game_id).getGameData();
+	}
+	
+	@Override
+	public Boolean isCurrentVersion(int game_id, int verion_number) {
+		// @ TODO implement this
+		return false;
 	}
 
 	@Override

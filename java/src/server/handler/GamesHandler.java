@@ -127,7 +127,7 @@ System.out.println("\tLoad Game failure");
 				responseCode = 400;
 			}
 		}else{
-System.out.println("\tUnrecognized URI");
+System.out.println("\tGames URI not recognized: " + uri);
 			response = "Games URI not recognized.";
 			responseCode = 400;
 		}
