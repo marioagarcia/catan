@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 import com.google.gson.Gson;
 
@@ -311,7 +310,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			ServerGameManager game = serializer.fromJson(content, ServerGameManager.class);
 			gamesList.put(game.getGameId(), game);
 			
-			//return game.
+			//TODO
+			//return game.getGameData()
 			return null;		
 		} 
 		catch (IOException e) {
@@ -324,6 +324,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public GameData getGameModel(int game_id) {
+		//TODO
+		//return gamesList.get(game_id).getGameData();
 		return null;
 	}
 
@@ -597,9 +599,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean robPlayer(int player_index, int game_id, int victim_index,
 			HexLocation location) {
 		//TODO
+		//return gamesList.get(game_id).robPlayer();
 		return true;
-	}
-
-	
-	
+	}	
 }
