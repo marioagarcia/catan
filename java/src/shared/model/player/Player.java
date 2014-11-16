@@ -43,7 +43,11 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	public boolean getPlayedDevCard() {
 		return playedDevCard;
 	}
-	
+
+    public void addResourceCard(ResourceType type){
+        
+    }
+
 	public int getCities() {
 		return cities;
 	}
