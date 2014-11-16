@@ -78,6 +78,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		gameData.setTurnTracker(turnTracker);
 		gameData.setWinner(getWinner()); //TODO
 		gameData.setVersion(getVersion());
+		gameData.setGameLog(gameLog);
 
 		return gameData;
 	}
@@ -388,14 +389,34 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean canFinishTurn(int player_index) {
-		// TODO Auto-generated method stub
+
+		if(turnTracker.getCurrentTurn() == player_index) {
+
+			if(turnTracker.getStatus() == Status.FIRST_ROUND ||
+					turnTracker.getStatus() == Status.SECOND_ROUND) {
+
+				int num_roads = boardMap.getNumberOfRoadsByPlayerIndex(player_index);
+				int num_settlements = boardMap.getNumberOfSettlementsByPlayerIndex(player_index);
+
+				return !(turnTracker.getStatus() == Status.FIRST_ROUND && (num_roads < 1 || num_settlements < 1)) &&
+						!(turnTracker.getStatus() == Status.SECOND_ROUND && (num_roads < 2 || num_settlements < 2));
+
+			}
+			else {
+				return turnTracker.getStatus() == Status.PLAYING;
+			}
+
+		}
+
 		return false;
 	}
 
 	@Override
 	public boolean finishTurn(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+
+
+		return true;
 	}
 
 	@Override
@@ -486,17 +507,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		return false;
 	}
 	
-	public String getGameTitle() {
-		return title;
-	}
+	public String getGameTitle() { return title; }
 	
-	public int getGameId() {
-		return gameId;
-	}
+	public int getGameId() { return gameId; }
 	
-	public Players getPlayers() {
-		return players;
-	}
+	public Players getPlayers() { return players; }
 
 	public int getVersion() {
 		return version;
