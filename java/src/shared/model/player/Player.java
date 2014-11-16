@@ -45,7 +45,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	}
 
     public void addResourceCard(ResourceType type){
-        
+        this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) + 1);
     }
 
 	public int getCities() {
