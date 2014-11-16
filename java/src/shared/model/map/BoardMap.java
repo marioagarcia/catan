@@ -239,8 +239,15 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			}
 			else{
 				for(int i = 0; i < chits_array.length * 31; i++){
-					int first_location = random.nextInt() % chits_array.length;
-					int second_location = random.nextInt() % chits_array.length;
+					int first_location;
+                    int second_location;
+                    do{
+                        first_location= random.nextInt() % chits_array.length;
+                    } while(first_location < 0);
+
+					do {
+                         second_location = random.nextInt() % chits_array.length;
+                    } while(second_location < 0);
 					
 					int temp = chits_array[first_location];
 					chits_array[first_location] = chits_array[second_location];

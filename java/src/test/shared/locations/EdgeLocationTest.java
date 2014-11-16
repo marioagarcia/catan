@@ -17,8 +17,8 @@ public class EdgeLocationTest {
 
 		//0,0 NorthEast
 		EdgeLocation edgeLocation = new EdgeLocation(hexLocation, EdgeDirection.NorthEast);
-        BoardMap map = new BoardMap(true, true, true);
-
+        BoardMap map = new BoardMap(false, true, true);
+        System.out.println(map);
 		EdgeLocation[] result1 = edgeLocation.getAdjacent(true, true, map);
 
         assertEquals(4, result1.length);
