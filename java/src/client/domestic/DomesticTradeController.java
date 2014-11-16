@@ -62,7 +62,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					return;
 				}
 				
-				if(trade_offer != null && trade_offer.getReceiver() == gameModel.getLocalPlayer().getPlayerIndex()){
+				if(trade_offer.getReceiver() == gameModel.getLocalPlayer().getPlayerIndex()){
 					for(ResourceType resource : ResourceType.values()){
 						if(trade_offer.getResourceList().getResourceByType(resource) > 0){
 							getAcceptOverlay().addGetResource(resource, trade_offer.getResourceList().getResourceByType(resource));
@@ -77,18 +77,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					getAcceptOverlay().setPlayerName(gameModel.getPlayers().getPlayer(trade_offer.getSender()).getName());
 					getAcceptOverlay().showModal();
 				}
-			
-				
-				Players players = gameModel.getPlayers();
-				
-				ArrayList<PlayerInfo> player_info = new ArrayList<PlayerInfo>();
-				
-				for(Player player : players.getPlayerList()){
-					if(player.getPlayerIndex() != gameModel.getLocalPlayer().getPlayerIndex());
-				}
-				
-				
-				getTradeOverlay().setPlayers(player_info.toArray(new PlayerInfo[0]));
+
+				getTradeOverlay().setPlayers(new PlayerInfo[0]);
 				getTradeOverlay().reset();
 			}
 		}
@@ -114,7 +104,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setAcceptOverlay(acceptOverlay);
 		this.trade = new DomesticTrade();
 		this.trade.setResourceList(new ResourceList(0,0,0,0,0));
-//		this.trade.setSender(ClientModelFacade.getInstance(null).getManager().get);
+
 		this.send = new HashMap<ResourceType, Boolean>();
 		
 		for(ResourceType type : ResourceType.values()){
@@ -262,7 +252,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		boolean can_go_up = !sending || this.trade.getResourceList().getResourceByType(resource) < gameModel.getLocalPlayer().getResourceList().getResourceByType(resource);
 	
 		getTradeOverlay().setResourceAmountChangeEnabled(resource, can_go_up, can_go_down);
-		//getTradeOverlay().setTradeEnabled(this.trade.getReceiver() != -1 && this.trade.getSender() != -1 && ClientModelFacade.getInstance(null).canOfferTrade(this.trade));
 	}
 
 }
