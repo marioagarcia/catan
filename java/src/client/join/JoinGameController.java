@@ -147,8 +147,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getNewGameView().closeModal();
 		}
 		
+		
 		//Create the new game
-		facade.createNewGame(gameName, randTiles, randNumbers, randPorts);
+		if(!facade.createNewGame(gameName, randTiles, randNumbers, randPorts)){
+			JOptionPane.showMessageDialog(new Frame(), "That game name is already being used.", "Create Game Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 		//Get an updated list of games so this new game will be added to the list and update the view with it
 		populateGamesList();
 	}

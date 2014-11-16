@@ -38,6 +38,10 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		placedFreeSettlement = false;
 		placedFreeRoad = false;
 		resourceList = new ResourceList(0,0,0,0,0);
+		newDevCards = new DevCardList();
+		newDevCards.setDevCardList(0, 0, 0, 0, 0);
+		oldDevCards = new DevCardList();
+		oldDevCards.setDevCardList(0, 0, 0, 0, 0);
 	}
 
 	public boolean getPlayedDevCard() {

@@ -47,7 +47,7 @@ System.out.println("Entering Game handler");
 
 		//Validate the user
 		if(!cookieParser.isValidCookie()){
-System.out.println("Invalid Game cookie");
+System.out.println("Failure: Invalid Game cookie");
 			//If the user is not valid, send an invalid user response
 			sendInvalidUserResponse(exchange);
 			return;
@@ -59,7 +59,14 @@ System.out.println("\tGame Model URI");
 			GameData gameData = facade.getModel(cookieParser.getGameID());
 			if(gameData != null){
 System.out.println("\tGame Model success");
+System.out.println("\tSerializing model");
+			try{
 				response = serializer.serializeGameModel(gameData);
+			}catch(Exception e){
+				response = null;
+				e.printStackTrace();
+			}
+System.out.println("\tFinished serializing model");
 				responseCode = 200;
 			}else{
 System.out.println("\tGame Model failure");

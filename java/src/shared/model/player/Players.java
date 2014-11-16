@@ -14,6 +14,7 @@ public class Players {
 	}
 	
 	public void addPlayer(Player new_player) {
+		new_player.setPlayerIndex(playerList.size());
 		playerList.add(new_player);
 	}
 	
