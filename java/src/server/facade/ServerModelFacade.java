@@ -170,13 +170,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	
 	@Override
 	public boolean verifyGame(int player_id, int game_id) {
-		if (gamesList.containsKey(game_id)){
-			
-			return gamesList.get(game_id).containsPlayerId(player_id);
-		}
-		else{
-			return false;
-		}
+
+		return (gamesList.containsKey(game_id) && gamesList.get(game_id).containsPlayerId(player_id));
 	}
 
 
@@ -309,10 +304,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			ServerGameManager game = serializer.fromJson(content, ServerGameManager.class);
 			gamesList.put(game.getGameId(), game);
-			
-			//TODO
-			//return game.getGameData()
-			return null;		
+
+			return game.getGameData();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -324,9 +317,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public GameData getGameModel(int game_id) {
-		//TODO
-		//return gamesList.get(game_id).getGameData();
-		return null;
+		return gamesList.get(game_id).getGameData();
 	}
 
 	@Override
@@ -587,8 +578,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
 			if (game.getValue().getGameTitle().equals(title)){
 				
-				GameInfo new_info = generateGameInfo(game.getValue());
-				return new_info;
+				return generateGameInfo(game.getValue());
 			}
 		}
 		
