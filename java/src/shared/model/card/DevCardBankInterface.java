@@ -25,4 +25,10 @@ public interface DevCardBankInterface {
 	 * @throws NoSuchCardException if the card is not there
 	 */
 	public abstract DevCardType removeCard(DevCardType type) throws NoSuchCardException;
+
+	/**
+	 * returns a random card from the list of cards
+	 * @return the type of the random card
+	 */
+	DevCardType buyDevCard();
 }

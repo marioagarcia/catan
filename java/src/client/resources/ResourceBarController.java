@@ -84,7 +84,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 						getView().setElementEnabled(ResourceBarElement.SETTLEMENT, localPlayer.canBuildSettlement());
 						getView().setElementEnabled(ResourceBarElement.CITY, localPlayer.canBuildCity());
 						getView().setElementEnabled(ResourceBarElement.BUY_CARD, localPlayer.canBuyDevCard());
-						getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.isPlayedDevCard());
+						getView().setElementEnabled(ResourceBarElement.PLAY_CARD, !localPlayer.hasPlayedDevCard());
 						break;
 					default:
 						getView().setElementEnabled(ResourceBarElement.ROAD, false);

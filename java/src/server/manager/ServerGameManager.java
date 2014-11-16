@@ -1,5 +1,6 @@
 package server.manager;
 
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -19,7 +20,8 @@ import shared.model.turntracker.TurntrackerInterface.Status;
 import java.util.ArrayList;
 
 public class ServerGameManager implements ServerGameManagerInterface {
-	
+
+	public final int TOTAL_PLAYERS = 4;
 	private String title = null;
 	private int gameId;
 	BoardMap boardMap = null;
@@ -219,56 +221,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).buildRoad(isFree);
 
-		//turnTracker update
-		if(turnTracker.getStatus() == Status.FIRST_ROUND) {
-
-			if(doneWithFirstRound()) {
-
-				turnTracker.setStatus(Status.SECOND_ROUND);
-			}
-		}
-		else if(turnTracker.getStatus() == Status.SECOND_ROUND) {
-
-			if(doneWithSecondRound()) {
-
-				int first_player = 0;
-
-				turnTracker.setStatus(Status.SECOND_ROUND);
-				turnTracker.setCurrentTurn(first_player);
-			}
-		}
-
 		return true;
-	}
-
-	private boolean doneWithFirstRound() {
-
-		boolean done = true;
-
-		for(Player player : players.getPlayerList()) {
-
-			if(player.getRoads() != 1) {
-
-				done = false;
-			}
-		}
-
-		return done;
-	}
-
-	private boolean doneWithSecondRound() {
-
-		boolean done = true;
-
-		for(Player player : players.getPlayerList()) {
-
-			if(player.getRoads() != 2) {
-
-				done = false;
-			}
-		}
-
-		return done;
 	}
 
 	@Override
@@ -414,27 +367,103 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean finishTurn(int player_index) {
 
+		if(turnTracker.getStatus() == Status.FIRST_ROUND) {
 
+			if(doneWithFirstRound()) {
+
+				turnTracker.setStatus(Status.SECOND_ROUND);
+			}
+			else {
+
+				nextPlayerTurn(player_index);
+			}
+		}
+		else if(turnTracker.getStatus() == Status.SECOND_ROUND) {
+
+			if(doneWithSecondRound()) {
+
+				turnTracker.setStatus(Status.PLAYING);
+			}
+			else {
+
+				prevPlayerTurn(player_index);
+			}
+		}
+		else {
+
+			nextPlayerTurn(player_index);
+		}
+
+		return true;
+	}
+
+	private void nextPlayerTurn(int player_index) {
+
+		turnTracker.setCurrentTurn((player_index + 1) % TOTAL_PLAYERS);
+	}
+
+	private void prevPlayerTurn(int player_index) {
+
+		if (player_index == 0) throw new AssertionError();
+
+		turnTracker.setCurrentTurn(player_index - 1);
+	}
+
+	private boolean doneWithFirstRound() {
+
+		boolean done = true;
+
+		for(Player player : players.getPlayerList()) {
+
+			if(player.getRoads() != 1) {
+
+				done = false;
+			}
+		}
+
+		return done;
+	}
+
+	private boolean doneWithSecondRound() {
+
+		boolean done = true;
+
+		for(Player player : players.getPlayerList()) {
+
+			if(player.getRoads() != 2) {
+
+				done = false;
+			}
+		}
+
+		return done;
+	}
+
+	@Override
+	public boolean canBuyDevCard(int player_index) {
+
+		boolean player_condition_met = players.getPlayer(player_index).canBuyDevCard();
+
+		boolean turn_tracker_condition_met = turnTracker.getStatus() == Status.PLAYING;
+
+		boolean deck_condition_met = devCardBank.containsAnyCard();
+
+		return (player_condition_met && turn_tracker_condition_met && deck_condition_met);
+	}
+
+	@Override
+	public boolean buyDevCard(int player_index) {
+
+		DevCardType card_type = devCardBank.buyDevCard();
+
+		players.getPlayer(player_index).buyDevCard(card_type);
 
 		return true;
 	}
 
 	@Override
-	public boolean canBuyDevCard(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean canPlayYearOfPlenty(int player_index, ResourceType type1, ResourceType type2) {
 
-	@Override
-	public boolean buyDevCard(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canPlayYearOfPlenty(int player_index, ResourceType type1,
-			ResourceType type2) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

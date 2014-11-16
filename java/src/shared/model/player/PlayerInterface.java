@@ -1,6 +1,7 @@
 package shared.model.player;
 
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
@@ -103,14 +104,14 @@ public interface PlayerInterface
 	/**
 	 * buy a dev card
 	 */
-	public void buyDevCard();
+	public void buyDevCard(DevCardType type);
 	
 	/**
 	 * determines whether or not the Player can buy a year of plenty card
 	 * @return boolean whether or not the Player can play a year of plenty card
 	 */
 	public boolean canPlayYearOfPlenty();
-	
+
 	/**
 	 * play a year of plenty card
 	 * @param type1 ResourceType the first resource that we should receive
@@ -136,7 +137,7 @@ public interface PlayerInterface
 	
 	/**
 	 * play a soldier card
-	 * @param stolenResource ResourceType the type of resource (if any) which was stolen). Null if nothing was stolen
+	 * @param stolen_resource ResourceType the type of resource (if any) which was stolen). Null if nothing was stolen
 	 */
 	public void playSoldier(ResourceType stolen_resource);
 	

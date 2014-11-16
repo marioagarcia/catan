@@ -3,6 +3,7 @@ package shared.model.player;
 import java.util.ArrayList;
 
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.model.card.DevCardList;
 import shared.model.card.MaritimeTrade;
@@ -116,7 +117,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		this.playerIndex = playerIndex;
 	}
 
-	public boolean isPlayedDevCard() {
+	public boolean hasPlayedDevCard() {
 		return playedDevCard;
 	}
 
@@ -422,6 +423,166 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	}
 
 	@Override
+	public void acceptTrade(TradeInterface trade) {
+		assert(this.canAcceptTrade(trade));
+
+		for(ResourceType type : ResourceType.values()){
+			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) + trade.getTradeCard(type));
+		}
+	}
+
+	@Override
+	public void discardCards(ResourceList list) {
+		assert(this.canDiscardCards(list));
+
+		for(ResourceType type : ResourceType.values()){
+			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) - list.getResourceByType(type));
+		}
+		return;
+	}
+
+	@Override
+	public void makeMaritimeTrade(MaritimeTrade trade) {
+		assert(this.canMaritimeTrade(trade));
+
+		this.resourceList.setResourceByType(trade.getResourceIn(), this.resourceList.getResourceByType(trade.getResourceIn()) - trade.getRatio());
+		this.resourceList.setResourceByType(trade.getResourceOut(), this.resourceList.getResourceByType(trade.getResourceOut()) - 1);
+	}
+
+	@Override
+	public void buyDevCard(DevCardType dev_card_type) {
+		assert(this.canBuyDevCard());
+
+		ResourceList price = new ResourceList(0,1,1,1,0);
+
+		for(ResourceType type : ResourceType.values()){
+			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) - price.getResourceByType(type));
+		}
+
+		addNewDevCard(dev_card_type);
+	}
+
+	private void addNewDevCard(DevCardType type) {
+
+		//TODO switch on the type and add the new card to newDevCards
+	}
+
+	@Override
+	public void playYearOfPlenty(ResourceType type1, ResourceType type2) {
+		assert(this.canPlayYearOfPlenty());
+
+		this.oldDevCards.setYearOfPlenty(this.oldDevCards.getYearOfPlenty() - 1);
+
+		this.resourceList.setResourceByType(type1, this.resourceList.getResourceByType(type1) + 1);
+		this.resourceList.setResourceByType(type2, this.resourceList.getResourceByType(type2) + 1);
+	}
+
+	@Override
+	public void playRoadBuilding() {
+		assert(this.canPlayRoadBuilding());
+
+		this.oldDevCards.setRoadBuild(this.oldDevCards.getRoadBuild() - 1);
+
+		this.roads -= 2;
+	}
+
+	@Override
+	public void playSoldier(ResourceType stolen_resource) {
+		assert(this.canPlaySoldier());
+
+		this.oldDevCards.setSoldier(this.oldDevCards.getSoldier() - 1);
+
+		if(stolen_resource != null){
+			this.resourceList.setResourceByType(stolen_resource, this.resourceList.getResourceByType(stolen_resource) + 1);
+		}
+	}
+
+	@Override
+	public void playMonument() {
+		assert(this.canPlayMonument());
+
+		if(this.oldDevCards.getMonument() > 0){
+			this.oldDevCards.setMonument(this.oldDevCards.getMonument() - 1);
+		}
+		else {
+			this.newDevCards.setMonument(this.newDevCards.getMonument() - 1);
+		}
+
+		this.victoryPoints++;
+	}
+
+	@Override
+	public void playMonopoly(ResourceType type, int number_of_resource_taken) {
+		assert(this.canPlayMonopoly());
+
+		this.oldDevCards.setMonopoly(this.oldDevCards.getMonopoly() - 1);
+
+		this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type));
+	}
+
+	@Override
+	public void buildRoad(boolean free) {
+		assert(this.canBuildRoad());
+
+		if(free){
+			this.placedFreeRoad = true;
+		}
+		else {
+			this.resourceList.setBrick(this.resourceList.getBrick() - 1);
+			this.resourceList.setWood(this.resourceList.getWood() - 1);
+		}
+
+		this.roads--;
+	}
+
+	@Override
+	public void buildSettlement(boolean free) {
+		assert(this.canBuildSettlement());
+
+		if(free){
+			this.placedFreeSettlement = true;
+		}
+		else {
+			this.resourceList.setBrick(this.resourceList.getBrick() - 1);
+			this.resourceList.setWood(this.resourceList.getWood() - 1);
+			this.resourceList.setWheat(this.resourceList.getWheat() - 1);
+			this.resourceList.setSheep(this.resourceList.getSheep() - 1);
+		}
+
+		this.settlements--;
+	}
+
+	@Override
+	public void buildCity() {
+		assert(this.canBuildCity());
+
+		this.resourceList.setWheat(this.resourceList.getWheat() - 2);
+		this.resourceList.setOre(this.resourceList.getOre() - 3);
+		this.cities--;
+	}
+
+	public ResourceType rob() {
+		ArrayList<ResourceType> potential_types = new ArrayList<ResourceType>();
+
+		for(ResourceType type : ResourceType.values()){
+			if(this.resourceList.getResourceByType(type) > 0){
+				potential_types.add(type);
+			}
+		}
+
+		int resource = (int)Math.random() % potential_types.size();
+		this.resourceList.setResourceByType(potential_types.get(resource), this.resourceList.getResourceByType(potential_types.get(resource)));
+		return potential_types.get(resource);
+	}
+
+	@Override
+	public void addRollResources(ResourceList resource_list) {
+        for(ResourceType resource : ResourceType.values()){
+            this.resourceList.setResourceByType(resource, this.resourceList.getResourceByType(resource) + resource_list.getResourceByType(resource));
+        }
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -499,177 +660,24 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		String playerString = "";
 		playerString += "Name: " + name + "\n" +
-						"PlayerIndex: " + playerIndex + "\n" +
-						"Player ID: " + playerId + "\n" +
-						"Color: " + color + "\n" +
-						"Roads: " + roads + "\n" +
-						"Cities: " + cities + "\n" +
-						"Settlements: " + settlements + "\n" + 
-						"Monuments: " + monuments + "\n" +
-						"Soldiers: " + soldiers + "\n" +
-						"Victory Points: " + victoryPoints + "\n" +
-						"Discarded: " + discarded + "\n" + 
-						"Played Dev Card: " + playedDevCard + "\n" +
-						"ResourceList: " + "\n" + resourceList + "\n";
-		
+				"PlayerIndex: " + playerIndex + "\n" +
+				"Player ID: " + playerId + "\n" +
+				"Color: " + color + "\n" +
+				"Roads: " + roads + "\n" +
+				"Cities: " + cities + "\n" +
+				"Settlements: " + settlements + "\n" +
+				"Monuments: " + monuments + "\n" +
+				"Soldiers: " + soldiers + "\n" +
+				"Victory Points: " + victoryPoints + "\n" +
+				"Discarded: " + discarded + "\n" +
+				"Played Dev Card: " + playedDevCard + "\n" +
+				"ResourceList: " + "\n" + resourceList + "\n";
+
 		return playerString;
-	}
-
-	@Override
-	public void acceptTrade(TradeInterface trade) {
-		assert(this.canAcceptTrade(trade));
-		
-		for(ResourceType type : ResourceType.values()){
-			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) + trade.getTradeCard(type));
-		}
-	}
-
-	@Override
-	public void discardCards(ResourceList list) {
-		assert(this.canDiscardCards(list));
-		
-		for(ResourceType type : ResourceType.values()){
-			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) - list.getResourceByType(type));
-		}
-		return;
-	}
-
-	@Override
-	public void makeMaritimeTrade(MaritimeTrade trade) {
-		assert(this.canMaritimeTrade(trade));
-		
-		this.resourceList.setResourceByType(trade.getResourceIn(), this.resourceList.getResourceByType(trade.getResourceIn()) - trade.getRatio());
-		this.resourceList.setResourceByType(trade.getResourceOut(), this.resourceList.getResourceByType(trade.getResourceOut()) - 1);
-	}
-
-	@Override
-	public void buyDevCard() {
-		assert(this.canBuyDevCard());
-		
-		ResourceList price = new ResourceList(0,1,1,1,0);
-		
-		for(ResourceType type : ResourceType.values()){
-			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) - price.getResourceByType(type));
-		}
-		return;
-	}
-
-	@Override
-	public void playYearOfPlenty(ResourceType type1, ResourceType type2) {
-		assert(this.canPlayYearOfPlenty());
-		
-		this.oldDevCards.setYearOfPlenty(this.oldDevCards.getYearOfPlenty() - 1);
-		
-		this.resourceList.setResourceByType(type1, this.resourceList.getResourceByType(type1) + 1);
-		this.resourceList.setResourceByType(type2, this.resourceList.getResourceByType(type2) + 1);
-	}
-
-	@Override
-	public void playRoadBuilding() {
-		assert(this.canPlayRoadBuilding());
-		
-		this.oldDevCards.setRoadBuild(this.oldDevCards.getRoadBuild() - 1);
-		
-		this.roads -= 2;
-	}
-
-	@Override
-	public void playSoldier(ResourceType stolen_resource) {
-		assert(this.canPlaySoldier());
-		
-		this.oldDevCards.setSoldier(this.oldDevCards.getSoldier() - 1);
-		
-		if(stolen_resource != null){
-			this.resourceList.setResourceByType(stolen_resource, this.resourceList.getResourceByType(stolen_resource) + 1);
-		}
-	}
-
-	@Override
-	public void playMonument() {
-		assert(this.canPlayMonument());
-		
-		if(this.oldDevCards.getMonument() > 0){
-			this.oldDevCards.setMonument(this.oldDevCards.getMonument() - 1);
-		} 
-		else {
-			this.newDevCards.setMonument(this.newDevCards.getMonument() - 1);
-		}
-		
-		this.victoryPoints++;
-	}
-
-	@Override
-	public void playMonopoly(ResourceType type, int number_of_resource_taken) {
-		assert(this.canPlayMonopoly());
-		
-		this.oldDevCards.setMonopoly(this.oldDevCards.getMonopoly() - 1);
-		
-		this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type));
-	}
-
-	@Override
-	public void buildRoad(boolean free) {
-		assert(this.canBuildRoad());
-		
-		if(free){
-			this.placedFreeRoad = true;
-		}
-		else {
-			this.resourceList.setBrick(this.resourceList.getBrick() - 1);
-			this.resourceList.setWood(this.resourceList.getWood() - 1);
-		}
-		
-		this.roads--;
-	}
-
-	@Override
-	public void buildSettlement(boolean free) {
-		assert(this.canBuildSettlement());
-		
-		if(free){
-			this.placedFreeSettlement = true;
-		}
-		else {
-			this.resourceList.setBrick(this.resourceList.getBrick() - 1);
-			this.resourceList.setWood(this.resourceList.getWood() - 1);
-			this.resourceList.setWheat(this.resourceList.getWheat() - 1);
-			this.resourceList.setSheep(this.resourceList.getSheep() - 1);
-		}
-		
-		this.settlements--;
-	}
-
-	@Override
-	public void buildCity() {
-		assert(this.canBuildCity());
-		
-		this.resourceList.setWheat(this.resourceList.getWheat() - 2);
-		this.resourceList.setOre(this.resourceList.getOre() - 3);
-		this.cities--;
-	}
-	
-	public ResourceType rob() {
-		ArrayList<ResourceType> potential_types = new ArrayList<ResourceType>();
-		
-		for(ResourceType type : ResourceType.values()){
-			if(this.resourceList.getResourceByType(type) > 0){
-				potential_types.add(type);
-			}
-		}
-		
-		int resource = (int)Math.random() % potential_types.size();
-		this.resourceList.setResourceByType(potential_types.get(resource), this.resourceList.getResourceByType(potential_types.get(resource)));
-		return potential_types.get(resource);
-	}
-
-	@Override
-	public void addRollResources(ResourceList resource_list) {
-        for(ResourceType resource : ResourceType.values()){
-            this.resourceList.setResourceByType(resource, this.resourceList.getResourceByType(resource) + resource_list.getResourceByType(resource));
-        }
 	}
 }
