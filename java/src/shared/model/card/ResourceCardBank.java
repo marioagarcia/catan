@@ -44,6 +44,17 @@ public class ResourceCardBank implements ResourceCardBankInterface, SerializerBa
 		}
 	}
 
+    public boolean canMakeMaritimeTrade(MaritimeTrade trade){
+        return this.cards.get(trade.getResourceOut()) > 0;
+    }
+
+    public void makeMaritimeTrade(MaritimeTrade trade){
+        assert(this.canMakeMaritimeTrade(trade));
+
+        this.cards.put(trade.getResourceIn(), this.cards.get(trade.getResourceIn()) + trade.getRatio());
+        this.cards.put(trade.getResourceOut(), this.cards.get(trade.getResourceOut()) - 1);
+    }
+
 	@Override
 	public void addCard(ResourceCardInterface card) {
 		if(this.cards.containsKey(card.getResourceCardType()))
