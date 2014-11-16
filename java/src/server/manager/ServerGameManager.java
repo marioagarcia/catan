@@ -30,7 +30,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	ResourceCardBank resourceCardBank = null;
 	DevCardBank devCardBank = null;
 	GameLog gameLog = null;
-	DomesticTrade trade = null;
+	DomesticTrade domesticTrade = null;
 	private int version;
 	private int winner;
 
@@ -75,7 +75,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		gameData.setBoardMap(boardMap);
 		gameData.setDevCardBank(devCardBank);
 		gameData.setResourceCardBank(resourceCardBank);
-		gameData.setDomesticTrade(trade);
+		gameData.setDomesticTrade(domesticTrade);
 		gameData.setPlayers(players);
 		gameData.setTurnTracker(turnTracker);
 		gameData.setWinner(getWinner()); //TODO
@@ -123,7 +123,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean canAcceptTrade(int player_index) {
 		
-		boolean player_condition_met = players.getPlayer(player_index).canAcceptTrade(trade);
+		boolean player_condition_met = players.getPlayer(player_index).canAcceptTrade(domesticTrade);
 		boolean status_met = (turnTracker.getStatus() == Status.PLAYING);
 		boolean turn_condition_met = (turnTracker.getCurrentTurn() != player_index);
 
@@ -135,12 +135,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		
 		if(accept) {
 			
-			players.getPlayer(player_index).acceptTrade(trade);
+			players.getPlayer(player_index).acceptTrade(domesticTrade);
 		}
-		else {
-			
-			//TODO what do we do here?
-		}
+
+		domesticTrade = null;
 		
 		return true;
 	}
@@ -291,7 +289,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean canOfferTrade(int player_index, ResourceList resources) {
 
-		boolean player_can_trade = players.getPlayer(player_index).canOfferTrade(trade);
+		boolean player_can_trade = players.getPlayer(player_index).canOfferTrade(domesticTrade);
 
 		boolean correct_status = turnTracker.getStatus() == Status.PLAYING;
 
@@ -303,7 +301,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean offerTrade(int player_index, ResourceList resources,	int otherPlayerIndex) {
 
-		trade = new DomesticTrade(player_index, otherPlayerIndex, resources);
+		domesticTrade = new DomesticTrade(player_index, otherPlayerIndex, resources);
 
 		return true;
 	}
