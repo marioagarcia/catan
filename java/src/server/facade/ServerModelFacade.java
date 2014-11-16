@@ -1,5 +1,7 @@
 package server.facade;
 
+import static java.nio.file.Files.readAllBytes;
+import static java.nio.file.Paths.get;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,6 +14,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.google.gson.Gson;
 
@@ -137,7 +140,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 					}
 				}
 				
-				System.out.println("New Starting ID: " + starting_id);
 				return starting_id;
 			}
 		} 
@@ -171,13 +173,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean verifyGame(int player_id, int game_id) {
 		if (gamesList.containsKey(game_id)){
 			
-			System.out.println("ID found");
-			
-			boolean result = gamesList.get(game_id).containsPlayerId(player_id);
-			
-			System.out.println("conatins player: " + result);
-			
-			return result;
+			return gamesList.get(game_id).containsPlayerId(player_id);
 		}
 		else{
 			return false;
@@ -262,7 +258,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
 				File data_folder = new File(folder);
 				
-				if (data_folder.exists()){
+				if (!data_folder.exists()){
 					data_folder.mkdir();
 				}
 				
@@ -292,8 +288,38 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public GameData loadGame(String game_name) {
-		// TODO Auto-generated method stub
+		
+		try {
+			String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
+			File data_folder = new File(folder);
+			
+			if (!data_folder.exists()){
+				return null;
+			}
+			
+			String path = folder + game_name;
+			File load_file = new File(path);
+			
+			if (!load_file.exists()){
+				return null;
+			}
+			
+			String content = new String(readAllBytes(get(path)));
+			
+			Gson serializer = new Gson();
+			
+			ServerGameManager game = serializer.fromJson(content, ServerGameManager.class);
+			gamesList.put(game.getGameId(), game);
+			
+			//return game.
+			return null;		
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
+		
 	}
 
 	@Override
