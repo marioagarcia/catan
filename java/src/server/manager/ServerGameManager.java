@@ -177,6 +177,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		if(number_rolled == 7) {
 			turnTracker.setStatus(Status.ROBBING);
+		}else{
+			turnTracker.setStatus(Status.PLAYING);
 		}
 		
 		return true;
@@ -219,10 +221,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).buildRoad(isFree);
 		boardMap.buildRoad(location, player_index, turnTracker.getStatus());
-		
-		if(turnTracker.getStatus() == TurnTracker.Status.FIRST_ROUND && player_index == 3){
-			
-		}
 		
 		return true;
 	}
@@ -385,8 +383,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		else if(turnTracker.getStatus() == Status.SECOND_ROUND) {
 
 			if(doneWithSecondRound()) {
-
-				turnTracker.setStatus(Status.PLAYING);
+				turnTracker.setStatus(Status.ROLLING);
 			}
 			else {
 
@@ -394,7 +391,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			}
 		}
 		else {
-
+			turnTracker.setStatus(Status.ROLLING);
 			nextPlayerTurn(player_index);
 		}
 
@@ -419,7 +416,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		for(Player player : players.getPlayerList()) {
 
-			if(player.getRoads() != 13) {
+			if(player.getRoads() != 14) {
 
 				done = false;
 			}
@@ -434,7 +431,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		for(Player player : players.getPlayerList()) {
 
-			if(player.getRoads() != 12) {
+			if(player.getRoads() != 13) {
 
 				done = false;
 			}
