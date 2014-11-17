@@ -445,7 +445,6 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		for(ResourceType type : ResourceType.values()){
 			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) - list.getResourceByType(type));
 		}
-		return;
 	}
 
 	@Override
@@ -481,8 +480,25 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	}
 
 	private void addNewDevCard(DevCardType type) {
-
-		//TODO switch on the type and add the new card to newDevCards
+        switch(type){
+            case SOLDIER:
+                this.newDevCards.setSoldier(this.newDevCards.getSoldier() + 1);
+                break;
+            case YEAR_OF_PLENTY:
+                this.newDevCards.setYearOfPlenty(this.newDevCards.getYearOfPlenty() + 1);
+                break;
+            case MONOPOLY:
+                this.newDevCards.setMonopoly(this.newDevCards.getMonopoly() + 1);
+                break;
+            case MONUMENT:
+                this.newDevCards.setMonument(this.newDevCards.getMonument() + 1);
+                break;
+            case ROAD_BUILD:
+                this.newDevCards.setRoadBuild(this.newDevCards.getRoadBuild() + 1);
+                break;
+            default:
+                //this should never happen
+        }
 	}
 
 	@Override
