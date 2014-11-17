@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class ServerGameManager implements ServerGameManagerInterface {
 
+	private static final int MAX_POINTS = 10;
 	public final int TOTAL_PLAYERS = 4;
 	private String title = null;
 	private int gameId;
@@ -40,6 +41,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		title = gameName;
 
 		gameId = id;
+
+		version = 0;
 		
 		boardMap = new BoardMap(randNumbers, randTiles, randPorts);
 		
@@ -78,7 +81,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		gameData.setDomesticTrade(domesticTrade);
 		gameData.setPlayers(players);
 		gameData.setTurnTracker(turnTracker);
-		gameData.setWinner(getWinner()); //TODO
+		gameData.setWinner(getWinner());
 		gameData.setVersion(getVersion());
 		gameData.setGameLog(gameLog);
 
@@ -579,27 +582,46 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean canPlayMonument(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		boolean player_condition_met = players.getPlayer(player_index).canPlayMonument();
+
+		boolean status_condition_met = turnTracker.getStatus() == Status.PLAYING;
+
+		boolean turn_condition_met = turnTracker.getCurrentTurn() == player_index;
+
+		return (player_condition_met && status_condition_met && turn_condition_met);
 	}
 
 	@Override
 	public boolean playMonument(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		players.getPlayer(player_index).playMonument();
+
+		return true;
 	}
-	
-	public String getGameTitle() { return title; }
-	
-	public int getGameId() { return gameId; }
-	
-	public Players getPlayers() { return players; }
 
 	public int getVersion() {
+
+
+
 		return version;
 	}
 
 	public int getWinner() {
+
+		for(Player player : players.getPlayerList()) {
+
+			if( player.getPoints() == MAX_POINTS ) {
+				winner = player.getPlayerIndex();
+			}
+		}
+
 		return winner;
 	}
+
+	public String getGameTitle() { return title; }
+
+	public int getGameId() { return gameId; }
+
+	public Players getPlayers() { return players; }
 }
