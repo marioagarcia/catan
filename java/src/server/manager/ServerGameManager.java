@@ -220,6 +220,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		players.getPlayer(player_index).buildRoad(isFree);
 		boardMap.buildRoad(location, player_index, turnTracker.getStatus());
 		
+		if(turnTracker.getStatus() == TurnTracker.Status.FIRST_ROUND && player_index == 3){
+			
+		}
+		
 		return true;
 	}
 
@@ -371,7 +375,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		if(turnTracker.getStatus() == Status.FIRST_ROUND) {
 
 			if(doneWithFirstRound()) {
-
 				turnTracker.setStatus(Status.SECOND_ROUND);
 			}
 			else {
@@ -416,7 +419,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		for(Player player : players.getPlayerList()) {
 
-			if(player.getRoads() != 1) {
+			if(player.getRoads() != 13) {
 
 				done = false;
 			}
@@ -431,7 +434,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		for(Player player : players.getPlayerList()) {
 
-			if(player.getRoads() != 2) {
+			if(player.getRoads() != 12) {
 
 				done = false;
 			}
