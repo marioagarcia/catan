@@ -455,6 +455,17 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		this.resourceList.setResourceByType(trade.getResourceIn(), this.resourceList.getResourceByType(trade.getResourceIn()) - trade.getRatio());
 		this.resourceList.setResourceByType(trade.getResourceOut(), this.resourceList.getResourceByType(trade.getResourceOut()) - 1);
 	}
+	
+	@Override
+	public void makeDomesticTrade(TradeInterface trade) {
+		assert(this.canOfferTrade(trade));
+
+		for(ResourceType type : ResourceType.values()){
+			
+			this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) - trade.getTradeCard(type));
+			
+		}
+	}
 
 	@Override
 	public void buyDevCard(DevCardType dev_card_type) {

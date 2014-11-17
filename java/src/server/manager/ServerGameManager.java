@@ -134,8 +134,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean acceptTrade(int player_index, boolean accept) {
 		
 		if(accept) {
-			
+			//Adjust the resources of the player who accepted the trade
 			players.getPlayer(player_index).acceptTrade(domesticTrade);
+			//Adjust the resources of the player who offered the trade
+			players.getPlayer(domesticTrade.getSender()).makeDomesticTrade(domesticTrade);
 		}
 
 		domesticTrade = null;
@@ -175,11 +177,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			players.getPlayer(temp_index++).addRollResources(resource_list);
 		}
 
-		if(number_rolled == 7) {
-			turnTracker.setStatus(Status.ROBBING);
-		}else{
+		//if(number_rolled == 7) {
+			//turnTracker.setStatus(Status.ROBBING);
+		//}else{
 			turnTracker.setStatus(Status.PLAYING);
-		}
+		//}
 		
 		return true;
 	}
@@ -293,8 +295,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean canOfferTrade(int player_index, ResourceList resources) {
-
-		boolean player_can_trade = players.getPlayer(player_index).canOfferTrade(domesticTrade);
+		
+		boolean player_can_trade = players.getPlayer(player_index).canOfferTrade(new DomesticTrade(player_index, 0, resources));
 
 		boolean correct_status = turnTracker.getStatus() == Status.PLAYING;
 

@@ -96,6 +96,14 @@ public interface PlayerInterface
 	public boolean canOfferTrade(TradeInterface trade);
 	
 	/**
+	 * Performs the trade: adds and removes the resources specified in the trade
+	 * 
+	 * @param trade The object that contains the index of the player offering the trade, the index of the player
+	 * receiving the trade, and the resources that will be exchanged
+	 */
+	public void makeDomesticTrade(TradeInterface trade);
+	
+	/**
 	 * determines whether or not the Player may buy a dev card
 	 * @return boolean, whether or not the Player may purchase a dev card
 	 */

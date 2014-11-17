@@ -146,7 +146,11 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean offerTrade(OfferTradeParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Offer Trade");
 		OfferTrade command = new OfferTrade(params, gameId);
+		try{
 		command.execute();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return command.wasSuccessful();
 	}
 
