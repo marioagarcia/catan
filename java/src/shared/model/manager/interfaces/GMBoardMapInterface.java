@@ -91,9 +91,8 @@ public interface GMBoardMapInterface {
 	
 	/**
 	 * play a soldier card
-	 * @param oldLocation HexLocation the location where the robber is currently located
-	 * @param newLocation HexLocation the new robber location
+	 * @param new_location HexLocation the new robber location
 	 * @param player_index int the index of the player playing the card
 	 */
-	public void playSoldier(HexLocation oldLocation, HexLocation newLocation, int player_index);
+	public void playSoldier(HexLocation new_location, int player_index);
 }

@@ -603,6 +603,12 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 	}
 
 	@Override
+	public int giveUpCards(ResourceType resource_type) {
+		//TODO see javadoc in interface
+		return 0;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

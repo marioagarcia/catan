@@ -9,9 +9,9 @@ public interface ResourceCardBankInterface
 {
 	/**
 	 * Adds a card to the CardBank 
-	 * @param card. The card being added
+	 * @param card The card being added
 	 */
-	public abstract void addCard(ResourceCardInterface card);
+	public void addCard(ResourceType card);
 	
 	/**
 	 * checks if the bank contains a card of the specified type
@@ -25,9 +25,13 @@ public interface ResourceCardBankInterface
 	 * Removes a card from the Player's CardInventory
 	 * The Player must have at least one of the given Card objects when this method is called. 
 	 * @param type The Card type to be removed
-	 * @return the card that was removed
-	 * @throws NoSuchCardException if the card is not there
 	 */
-	public abstract ResourceCardInterface removeCard(ResourceType type) throws NoSuchCardException;
-	
+	public abstract void removeCard(ResourceType type);
+
+	/**
+	 * subtracts the two resource cards that were given to the player
+	 * @param type1 first resource card
+	 * @param type2 second resource card
+	 */
+	void yearOfPlentyPlayed(ResourceType type1, ResourceType type2);
 }

@@ -219,4 +219,11 @@ public interface PlayerInterface
 	 * @param resource_list the resources gained from the roll
 	 */
 	public void addRollResources(ResourceList resource_list);
+
+	/**
+	 * gets called when the monopoly card is played by another player
+	 * @param resource_type the type of resource cards to be given up
+	 * @return the number of cards that were given up
+	 */
+	int giveUpCards(ResourceType resource_type);
 }
