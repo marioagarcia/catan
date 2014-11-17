@@ -1,5 +1,6 @@
 package server.manager;
 
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -19,7 +20,8 @@ import shared.model.turntracker.TurntrackerInterface.Status;
 import java.util.ArrayList;
 
 public class ServerGameManager implements ServerGameManagerInterface {
-	
+
+	public final int TOTAL_PLAYERS = 4;
 	private String title = null;
 	private int gameId;
 	BoardMap boardMap = null;
@@ -28,7 +30,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	ResourceCardBank resourceCardBank = null;
 	DevCardBank devCardBank = null;
 	GameLog gameLog = null;
-	DomesticTrade trade = null;
+	DomesticTrade domesticTrade = null;
 	private int version;
 	private int winner;
 
@@ -73,11 +75,12 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		gameData.setBoardMap(boardMap);
 		gameData.setDevCardBank(devCardBank);
 		gameData.setResourceCardBank(resourceCardBank);
-		gameData.setDomesticTrade(trade);
+		gameData.setDomesticTrade(domesticTrade);
 		gameData.setPlayers(players);
 		gameData.setTurnTracker(turnTracker);
 		gameData.setWinner(getWinner()); //TODO
 		gameData.setVersion(getVersion());
+		gameData.setGameLog(gameLog);
 
 		return gameData;
 	}
@@ -120,7 +123,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean canAcceptTrade(int player_index) {
 		
-		boolean player_condition_met = players.getPlayer(player_index).canAcceptTrade(trade);
+		boolean player_condition_met = players.getPlayer(player_index).canAcceptTrade(domesticTrade);
 		boolean status_met = (turnTracker.getStatus() == Status.PLAYING);
 		boolean turn_condition_met = (turnTracker.getCurrentTurn() != player_index);
 
@@ -131,13 +134,13 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean acceptTrade(int player_index, boolean accept) {
 		
 		if(accept) {
-			
-			players.getPlayer(player_index).acceptTrade(trade);
+			//Adjust the resources of the player who accepted the trade
+			players.getPlayer(player_index).acceptTrade(domesticTrade);
+			//Adjust the resources of the player who offered the trade
+			players.getPlayer(domesticTrade.getSender()).makeDomesticTrade(domesticTrade);
 		}
-		else {
-			
-			//TODO what do we do here?
-		}
+
+		domesticTrade = null;
 		
 		return true;
 	}
@@ -176,6 +179,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		if(number_rolled == 7) {
 			turnTracker.setStatus(Status.ROBBING);
+		}else{
+			turnTracker.setStatus(Status.PLAYING);
 		}
 		
 		return true;
@@ -217,57 +222,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
 		players.getPlayer(player_index).buildRoad(isFree);
-
-		//turnTracker update
-		if(turnTracker.getStatus() == Status.FIRST_ROUND) {
-
-			if(doneWithFirstRound()) {
-
-				turnTracker.setStatus(Status.SECOND_ROUND);
-			}
-		}
-		else if(turnTracker.getStatus() == Status.SECOND_ROUND) {
-
-			if(doneWithSecondRound()) {
-
-				int first_player = 0;
-
-				turnTracker.setStatus(Status.SECOND_ROUND);
-				turnTracker.setCurrentTurn(first_player);
-			}
-		}
-
+		boardMap.buildRoad(location, player_index, turnTracker.getStatus());
+		
 		return true;
-	}
-
-	private boolean doneWithFirstRound() {
-
-		boolean done = true;
-
-		for(Player player : players.getPlayerList()) {
-
-			if(player.getRoads() != 1) {
-
-				done = false;
-			}
-		}
-
-		return done;
-	}
-
-	private boolean doneWithSecondRound() {
-
-		boolean done = true;
-
-		for(Player player : players.getPlayerList()) {
-
-			if(player.getRoads() != 2) {
-
-				done = false;
-			}
-		}
-
-		return done;
 	}
 
 	@Override
@@ -305,6 +262,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
+		players.getPlayer(player_index).buildSettlement(isFree);
 		boardMap.buildSettlement(location, player_index, isFree);
 
 		return true;
@@ -330,14 +288,15 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean buildCity(int player_index, VertexLocation location) {
 
 		players.getPlayer(player_index).buildCity();
-
+		boardMap.buildCity(location, player_index);
+		
 		return true;
 	}
 
 	@Override
 	public boolean canOfferTrade(int player_index, ResourceList resources) {
-
-		boolean player_can_trade = players.getPlayer(player_index).canOfferTrade(trade);
+		
+		boolean player_can_trade = players.getPlayer(player_index).canOfferTrade(new DomesticTrade(player_index, 0, resources));
 
 		boolean correct_status = turnTracker.getStatus() == Status.PLAYING;
 
@@ -349,7 +308,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean offerTrade(int player_index, ResourceList resources,	int otherPlayerIndex) {
 
-		trade = new DomesticTrade(player_index, otherPlayerIndex, resources);
+		domesticTrade = new DomesticTrade(player_index, otherPlayerIndex, resources);
 
 		return true;
 	}
@@ -388,32 +347,126 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean canFinishTurn(int player_index) {
-		// TODO Auto-generated method stub
+
+		if(turnTracker.getCurrentTurn() == player_index) {
+
+			if(turnTracker.getStatus() == Status.FIRST_ROUND ||
+					turnTracker.getStatus() == Status.SECOND_ROUND) {
+
+				int num_roads = boardMap.getNumberOfRoadsByPlayerIndex(player_index);
+				int num_settlements = boardMap.getNumberOfSettlementsByPlayerIndex(player_index);
+
+				return !(turnTracker.getStatus() == Status.FIRST_ROUND && (num_roads < 1 || num_settlements < 1)) ||
+						!(turnTracker.getStatus() == Status.SECOND_ROUND && (num_roads < 2 || num_settlements < 2));
+
+			}
+			else {
+				return turnTracker.getStatus() == Status.PLAYING;
+			}
+
+		}
+
 		return false;
 	}
 
 	@Override
 	public boolean finishTurn(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		if(turnTracker.getStatus() == Status.FIRST_ROUND) {
+
+			if(doneWithFirstRound()) {
+				turnTracker.setStatus(Status.SECOND_ROUND);
+			}
+			else {
+
+				nextPlayerTurn(player_index);
+			}
+		}
+		else if(turnTracker.getStatus() == Status.SECOND_ROUND) {
+
+			if(doneWithSecondRound()) {
+				turnTracker.setStatus(Status.ROLLING);
+			}
+			else {
+
+				prevPlayerTurn(player_index);
+			}
+		}
+		else {
+			turnTracker.setStatus(Status.ROLLING);
+			nextPlayerTurn(player_index);
+		}
+
+		return true;
+	}
+
+	private void nextPlayerTurn(int player_index) {
+
+		turnTracker.setCurrentTurn((player_index + 1) % TOTAL_PLAYERS);
+	}
+
+	private void prevPlayerTurn(int player_index) {
+
+		if (player_index == 0) throw new AssertionError();
+
+		turnTracker.setCurrentTurn(player_index - 1);
+	}
+
+	private boolean doneWithFirstRound() {
+
+		boolean done = true;
+
+		for(Player player : players.getPlayerList()) {
+
+			if(player.getRoads() != 14) {
+
+				done = false;
+			}
+		}
+
+		return done;
+	}
+
+	private boolean doneWithSecondRound() {
+
+		boolean done = true;
+
+		for(Player player : players.getPlayerList()) {
+
+			if(player.getRoads() != 13) {
+
+				done = false;
+			}
+		}
+
+		return done;
 	}
 
 	@Override
 	public boolean canBuyDevCard(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		boolean player_condition_met = players.getPlayer(player_index).canBuyDevCard();
+
+		boolean turn_tracker_condition_met = turnTracker.getStatus() == Status.PLAYING;
+
+		boolean deck_condition_met = devCardBank.containsAnyCard();
+
+		return (player_condition_met && turn_tracker_condition_met && deck_condition_met);
 	}
 
 	@Override
 	public boolean buyDevCard(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		DevCardType card_type = devCardBank.buyDevCard();
+
+		players.getPlayer(player_index).buyDevCard(card_type);
+
+		return true;
 	}
 
 	@Override
-	public boolean canPlayYearOfPlenty(int player_index, ResourceType type1,
-			ResourceType type2) {
-		// TODO Auto-generated method stub
+	public boolean canPlayYearOfPlenty(int player_index, ResourceType type1, ResourceType type2) {
+
 		return false;
 	}
 
@@ -486,17 +539,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		return false;
 	}
 	
-	public String getGameTitle() {
-		return title;
-	}
+	public String getGameTitle() { return title; }
 	
-	public int getGameId() {
-		return gameId;
-	}
+	public int getGameId() { return gameId; }
 	
-	public Players getPlayers() {
-		return players;
-	}
+	public Players getPlayers() { return players; }
 
 	public int getVersion() {
 		return version;

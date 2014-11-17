@@ -112,7 +112,7 @@ public class CookieParser {
 	
 	private boolean verifyInfo(){
 		if (user != null && password != null && playerId != -1 && ServerModelFacade.getInstance().verifyUser(user, password, playerId)){
-				
+			
 				if (containsId){
 					return ServerModelFacade.getInstance().verifyGame(playerId, gameId);
 				}

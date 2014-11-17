@@ -82,6 +82,15 @@ public interface ServerModelFacadeInterface {
 	public GameData getGameModel(int game_id);
 	
 	/**
+	 * Checks to see if the given version number is the current version number for the game corresponding to the given game id
+	 * 
+	 * @param game_id The game id of the game whose version number we are checking
+	 * @param verion_number The version number we are checking with the game's current version number
+	 * @return True if the version number being passed in is the game's current version, false otherwise
+	 */
+	public Boolean isCurrentVersion(int game_id, int verion_number);
+	
+	/**
 	 * There are no preconditions so just checks for a valid palyer and game cookie
 	 * @return true if the user is in the game
 	 */

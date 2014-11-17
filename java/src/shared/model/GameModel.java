@@ -81,7 +81,7 @@ public class GameModel extends Observable{
 		localPlayer.setNewDevCards(p.getNewDevCards());
 		localPlayer.setOldDevCards(p.getOldDevCards());
 		localPlayer.setDiscarded(p.isDiscarded());
-		localPlayer.setPlayedDevCard(p.isPlayedDevCard());
+		localPlayer.setPlayedDevCard(p.hasPlayedDevCard());
 		localPlayer.setResourceList(p.getResourceList());
 		localPlayer.setRoads(p.getRoads());
 		localPlayer.setSettlements(p.getSettlements());

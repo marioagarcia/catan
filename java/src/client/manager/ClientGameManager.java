@@ -137,9 +137,11 @@ public class ClientGameManager implements ClientGameManagerInterface {
 
 		String json_string = modelSerializer.serializeCreateGameRequest(param);
 
-		serverProxy.createGame(json_string);
-
-		return (currentGame != null);
+		if(!serverProxy.createGame(json_string).equals("400")){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	@Override

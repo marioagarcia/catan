@@ -9,6 +9,8 @@ import shared.serialization.interfaces.SerializerDeckInterface;
 
 public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface {
 
+	private final int CARD_TYPES = 5;
+
 	private Map<DevCardType, Integer> cards;
 	
 	public DevCardBank()
@@ -52,6 +54,23 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
 		cards.put(type, cards.get(type) - 1);
 		
 		return DevCardType.valueOf(type.toString());
+	}
+
+	@Override
+	public DevCardType buyDevCard() {
+
+		if (!containsAnyCard()) throw new AssertionError();
+
+		for(int i = 0; i < CARD_TYPES; i++) {
+
+			DevCardType card_type = DevCardType.getRandomType();
+
+			if(containsCard(card_type)) {
+				return card_type;
+			}
+		}
+
+		return null;
 	}
 
 	public boolean containsCard(DevCardType type) {

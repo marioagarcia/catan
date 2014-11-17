@@ -42,6 +42,7 @@ public class MovesCommandFacade implements MovesCommandFacadeInterface{
 	public boolean sendChat(SendChatParameters params, int gameId) {
 System.out.println("\t\tMoves Command Facade: Send Chat");
 		SendChat command = new SendChat(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -49,6 +50,7 @@ System.out.println("\t\tMoves Command Facade: Send Chat");
 	public boolean rollNumber(RollNumberParameters params, int gameId) {
 System.out.println("\t\tMoves Command Facade: Roll Number");
 		RollNumber command = new RollNumber(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -56,6 +58,7 @@ System.out.println("\t\tMoves Command Facade: Roll Number");
 	public boolean robPlayer(RobPlayerParameters params, int gameId) {
 System.out.println("\t\tMoves Command Facade: Rob Player");
 		RobPlayer command = new RobPlayer(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -63,6 +66,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean finishTurn(FinishTurnParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Finish Turn");
 		FinishTurn command = new FinishTurn(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -70,6 +74,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean buyDevCard(BuyDevCardParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: But Dev Card");
 		BuyDevCard command = new BuyDevCard(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -77,6 +82,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean playYearOfPlenty(YearOfPlentyParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Play Year Of Plenty");
 		PlayYearOfPlenty command = new PlayYearOfPlenty(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -84,6 +90,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean playRoadBuilding(RoadBuildingParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Play Road Building");
 		PlayRoadBuilding command = new PlayRoadBuilding(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -91,6 +98,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean playSoldier(SoldierParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Play Soldier");
 		PlaySoldier command = new PlaySoldier(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -98,6 +106,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean playMonopoly(MonopolyParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Play Monopoly");
 		PlayMonopoly command = new PlayMonopoly(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -105,6 +114,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean playMonument(MonumentParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Play Monument");
 		PlayMonument command = new PlayMonument(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -112,6 +122,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean buildRoad(BuildRoadParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Build Road");
 		BuildRoad command = new BuildRoad(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -119,6 +130,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean buildSettlement(BuildSettlementParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Build Settlement");
 		BuildSettlement command = new BuildSettlement(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -126,6 +138,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean buildCity(BuildCityParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Build City");
 		BuildCity command = new BuildCity(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -133,6 +146,11 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean offerTrade(OfferTradeParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Offer Trade");
 		OfferTrade command = new OfferTrade(params, gameId);
+		try{
+		command.execute();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return command.wasSuccessful();
 	}
 
@@ -140,6 +158,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean acceptTrade(AcceptTradeParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Accept Trade");
 		AcceptTrade command = new AcceptTrade(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -147,6 +166,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean maritimeTrade(MaritimeTradeParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Maritime Trade");
 		MaritimeTrade command = new MaritimeTrade(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 
@@ -154,6 +174,7 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	public boolean discardCards(DiscardCardsParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Discard Cards");
 		DiscardCards command = new DiscardCards(params, gameId);
+		command.execute();
 		return command.wasSuccessful();
 	}
 

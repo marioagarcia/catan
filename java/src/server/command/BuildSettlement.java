@@ -18,18 +18,20 @@ public class BuildSettlement extends CatanCommand {
 	 * @param parameters An object containing the index of the player building the settlement, the location of the new settlement, and whether it is free
 	 * @param game_id The integer ID of the game the operation is to be performed on. Must be an ID for an existing game
 	 */
-	public BuildSettlement(BuildSettlementParameters parameters, int game_id){
+	public BuildSettlement(BuildSettlementParameters parameters, int game_id){	
 		
 		this.playerIndex = parameters.getPlayerIndex();
-		this.gameId = game_id;
+		this.gameId = game_id;	
 		
 		int x = parameters.getVertexLocation().getX();
 		int y = parameters.getVertexLocation().getY();
-		
+
 		HexLocation hex_loc = new HexLocation(x, y);
-		VertexDirection direction = VertexDirection.valueOf(parameters.getVertexLocation().getDirection());
+
+		VertexDirection direction = VertexDirection.convertShorthandDirection(parameters.getVertexLocation().getDirection());
 		
 		this.location = new VertexLocation(hex_loc, direction);
+
 	}
 	
 	/**
@@ -40,8 +42,9 @@ public class BuildSettlement extends CatanCommand {
 	public void execute() {
 
 		if (facadeInstance.canBuildSettlement(gameId, playerIndex, location)){
-			
+		
 			success = facadeInstance.buildSettlement(gameId, playerIndex, location);
+
 		}
 		
 	}

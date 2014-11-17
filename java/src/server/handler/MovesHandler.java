@@ -52,7 +52,7 @@ public class MovesHandler implements HttpHandler{
 	 * calls the method on the MovesHandlerFacadeInterface that corresponds to the 
 	 * re-route and passes the parameters object into that method
 	 */
-	public void handle(HttpExchange exchange) throws IOException {
+	public void handle(HttpExchange exchange){
 System.out.println("Entering Moves Handler");
 		//Get the cookie from the request headers
 		String cookie = (String)exchange.getRequestHeaders().values().toArray()[0].toString();
@@ -64,7 +64,12 @@ System.out.println("Entering Moves Handler");
 		if(!cookieParser.isValidCookie()){
 System.out.println("Invalid Moves Cookie");
 			//If the user is not valid, send an invalid user response
-			sendInvalidUserResponse(exchange);
+			try {
+				sendInvalidUserResponse(exchange);
+			} catch (IOException e) {
+				System.out.println("Moves Handler: sendInvalidUserResponse");
+				e.printStackTrace();
+			}
 			return;
 		}
 		
@@ -74,7 +79,13 @@ System.out.println("Invalid Moves Cookie");
 		boolean successful = false;
 		
 		//Get the request and put it in a string
-		String jsonString = getJsonString(exchange.getRequestBody());
+		String jsonString = "";
+		try {
+			jsonString = getJsonString(exchange.getRequestBody());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//Get the URI from the request
 		String uri = exchange.getRequestURI().toString();
@@ -105,7 +116,11 @@ System.out.println("Invalid Moves Cookie");
 				break;
 			case "/moves/buildSettlement":
 				System.out.println("\tBuild Settlement URI");
+				try{
 				successful = facade.buildSettlement(gson.fromJson(jsonString, BuildSettlementParameters.class), gameId);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				break;
 			case "/moves/buildCity":
 				System.out.println("\tBuild City URI");
@@ -151,6 +166,10 @@ System.out.println("Invalid Moves Cookie");
 				System.out.println("\tRob Player URI");
 				successful = facade.robPlayer(gson.fromJson(jsonString, RobPlayerParameters.class), gameId);
 				break;
+			default: 
+				System.out.println("\tMoves URI not recognized: " + uri);
+				successful = false;
+				break;
 		}
 		
 		String response;
@@ -168,10 +187,16 @@ System.out.println("Move unsuccessful");
 			responseCode = 400;
 		}
 		
-		exchange.sendResponseHeaders(responseCode, response.length());
-		OutputStream os = exchange.getResponseBody();
-		os.write(response.getBytes());
-		os.close();
+		try {
+			exchange.sendResponseHeaders(responseCode, response.length());
+
+			OutputStream os = exchange.getResponseBody();
+			os.write(response.getBytes());
+			os.close();
+		} catch (IOException e) {
+			System.out.println("Moves Handler: sendResponseHeaders");
+			e.printStackTrace();
+		}
 System.out.println("Exiting Moves Handler");
 	}
 	
