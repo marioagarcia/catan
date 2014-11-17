@@ -27,7 +27,7 @@ public class BuildRoad extends CatanCommand {
 		int y = parameters.getRoadLocation().getY();
 		
 		HexLocation hex_loc = new HexLocation(x, y);
-		EdgeDirection direction = EdgeDirection.valueOf(parameters.getRoadLocation().getDirection());
+		EdgeDirection direction = EdgeDirection.convertShorthandDirection(parameters.getRoadLocation().getDirection());
 		
 		location = new EdgeLocation(hex_loc, direction);
 		

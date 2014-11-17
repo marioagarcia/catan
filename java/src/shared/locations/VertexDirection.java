@@ -21,6 +21,31 @@ public enum VertexDirection
 		return opposite;
 	}
 	
+	public static VertexDirection convertShorthandDirection(String shorthandDirection){
+		VertexDirection direction = null;
+		switch(shorthandDirection){
+			case "W":
+				direction = West;
+				break;
+			case "NW":
+				direction = NorthWest;
+				break;
+			case "NE":
+				direction = NorthEast;
+				break;
+			case "E":
+				direction = East;
+				break;
+			case "SE":
+				direction = SouthEast;
+				break;
+			case "SW":
+				direction = SouthWest;
+				break;
+		}
+		return direction;
+	}
+	
 	public static VertexDirection[] getAdjacent(EdgeDirection edgeDirection){
 		VertexDirection[] vertexDirections = new VertexDirection[6];
 		vertexDirections[0] = NorthEast;

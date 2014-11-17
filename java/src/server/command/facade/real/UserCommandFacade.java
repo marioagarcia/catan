@@ -11,20 +11,20 @@ public class UserCommandFacade implements UserCommandFacadeInterface{
 	public Boolean login(CredentialsParameters params) {
 System.out.println("\t\tUser Command Facade: Login");
 		//Create the login command object and call execute on it
-		Login login = new Login(params);
-		login.execute();
+		Login command = new Login(params);
+		command.execute();
 		
-		return login.wasSuccessful();
+		return command.wasSuccessful();
 	}
 
 	@Override
 	public Boolean register(CredentialsParameters params) {
 System.out.println("\t\tUser Command Facade: Register");
 		//Create the register command object and call execute on it
-		Register register = new Register(params);
-		register.execute();
+		Register command = new Register(params);
+		command.execute();
 		
-		return register.wasSuccessful();
+		return command.wasSuccessful();
 	}
 
 }

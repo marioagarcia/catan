@@ -24,6 +24,32 @@ public enum EdgeDirection
 		return opposite;
 	}
 	
+	public static EdgeDirection convertShorthandDirection(String shorthandDirection){
+		EdgeDirection direction = null;
+		
+		switch(shorthandDirection){
+			case "NW":
+				direction = NorthWest;
+				break;
+			case "N":
+				direction = North;
+				break;
+			case "NE":
+				direction = NorthEast;
+				break;
+			case "SE":
+				direction = SouthEast;
+				break;
+			case "S":
+				direction = South;
+				break;
+			case "SW":
+				direction = SouthWest;
+				break;
+		}
+		return direction;
+	}
+	
 	public EdgeDirection[] getAdjacent(boolean allowClockwisePreceeding, boolean allowClockwiseSucceeding){
 		EdgeDirection[] result = new EdgeDirection[2];
 		

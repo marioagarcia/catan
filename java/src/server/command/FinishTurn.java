@@ -30,6 +30,7 @@ public class FinishTurn extends CatanCommand {
 		if (facadeInstance.canFinishTurn(gameId, playerIndex)){
 			
 			success = facadeInstance.finishTurn(gameId, playerIndex);
+			
 		}
 		
 	}

@@ -38,6 +38,12 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		playerIndex = -1;
 		placedFreeSettlement = false;
 		placedFreeRoad = false;
+		monuments = 0;
+		roads = 15;
+		settlements = 5;
+		cities = 4;
+		soldiers = 0;
+		victoryPoints = 0;
 		resourceList = new ResourceList(0,0,0,0,0);
 		newDevCards = new DevCardList();
 		newDevCards.setDevCardList(0, 0, 0, 0, 0);
@@ -211,6 +217,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public boolean canBuildSettlement(){
+		
 		boolean canBuildSettlement = false;
 		
 		if(resourceList.getWood() >= 1 && resourceList.getBrick() >= 1 &&
@@ -550,6 +557,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		}
 
 		this.settlements--;
+		this.victoryPoints++;
 	}
 
 	@Override
@@ -559,6 +567,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 		this.resourceList.setWheat(this.resourceList.getWheat() - 2);
 		this.resourceList.setOre(this.resourceList.getOre() - 3);
 		this.cities--;
+		this.victoryPoints++;
 	}
 
 	public ResourceType rob() {

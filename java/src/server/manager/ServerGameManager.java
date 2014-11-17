@@ -349,7 +349,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 				int num_roads = boardMap.getNumberOfRoadsByPlayerIndex(player_index);
 				int num_settlements = boardMap.getNumberOfSettlementsByPlayerIndex(player_index);
 
-				return !(turnTracker.getStatus() == Status.FIRST_ROUND && (num_roads < 1 || num_settlements < 1)) &&
+				return !(turnTracker.getStatus() == Status.FIRST_ROUND && (num_roads < 1 || num_settlements < 1)) ||
 						!(turnTracker.getStatus() == Status.SECOND_ROUND && (num_roads < 2 || num_settlements < 2));
 
 			}
