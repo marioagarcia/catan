@@ -28,7 +28,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	private JButton btnPurple;
 	private JButton btnPuce;
 	private JButton btnWhite;
-	private JButton btnBrown;
+	private JButton btnBronze;
 	private JButton joinButton;
 	private JButton cancelButton;
 
@@ -102,12 +102,12 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		btnWhite.setContentAreaFilled(false);
 		btnWhite.setOpaque(true);
 
-		btnBrown = new JButton("Brown");
-		btnBrown.addActionListener(actionListener);
-		btnBrown.setBackground(CatanColor.BROWN.getJavaColor());
-		btnBrown.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
-		btnBrown.setContentAreaFilled(false);
-		btnBrown.setOpaque(true);
+		btnBronze = new JButton("Bronze");
+		btnBronze.addActionListener(actionListener);
+		btnBronze.setBackground(CatanColor.BRONZE.getJavaColor());
+		btnBronze.setFont(new java.awt.Font(fontName, 1, COLOR_BUTTON_TEXT_SIZE));
+		btnBronze.setContentAreaFilled(false);
+		btnBronze.setOpaque(true);
 
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(actionListener);
@@ -141,7 +141,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		addColorButton(colorsPanel, btnPurple, 2, 1);
 		addColorButton(colorsPanel, btnPuce, 0, 2);
 		addColorButton(colorsPanel, btnWhite, 1, 2);
-		addColorButton(colorsPanel, btnBrown, 2, 2);
+		addColorButton(colorsPanel, btnBronze, 2, 2);
 		
 		rootPanel.add(colorsPanel, BorderLayout.CENTER);
 		
@@ -248,14 +248,14 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 				btnWhite.setBackground(Color.LIGHT_GRAY);
 				btnWhite.setEnabled(false);
 				enableJoinButton();
-			} else if (e.getSource() == btnBrown) {
+			} else if (e.getSource() == btnBronze) {
 				if (selButton != 0) {
 					resetButton(selButton);
 				}
 				selButton = 8;
-				btnBrown.setForeground(Color.white);
-				btnBrown.setBackground(Color.LIGHT_GRAY);
-				btnBrown.setEnabled(false);
+				btnBronze.setForeground(Color.white);
+				btnBronze.setBackground(Color.LIGHT_GRAY);
+				btnBronze.setEnabled(false);
 				enableJoinButton();
 			} else if (e.getSource() == btnPuce) {
 				if (selButton != 0) {
@@ -310,9 +310,9 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 			btnWhite.setForeground(Color.black);
 			break;
 		case 8:
-			btnBrown.setEnabled(true);
-			btnBrown.setBackground(CatanColor.BROWN.getJavaColor());
-			btnBrown.setForeground(Color.black);
+			btnBronze.setEnabled(true);
+			btnBronze.setBackground(CatanColor.BRONZE.getJavaColor());
+			btnBronze.setForeground(Color.black);
 			break;
 		case 9:
 			btnPuce.setEnabled(true);
@@ -354,7 +354,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	
 	public void disableAllColors(){
 		setColorEnabled(CatanColor.BLUE, false);
-		setColorEnabled(CatanColor.BROWN, false);
+		setColorEnabled(CatanColor.BRONZE, false);
 		setColorEnabled(CatanColor.GREEN, false);
 		setColorEnabled(CatanColor.ORANGE, false);
 		setColorEnabled(CatanColor.PUCE, false);
@@ -366,7 +366,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	
 	public void enableAllColors(){
 		setColorEnabled(CatanColor.BLUE, true);
-		setColorEnabled(CatanColor.BROWN, true);
+		setColorEnabled(CatanColor.BRONZE, true);
 		setColorEnabled(CatanColor.GREEN, true);
 		setColorEnabled(CatanColor.ORANGE, true);
 		setColorEnabled(CatanColor.PUCE, true);
@@ -381,8 +381,8 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		switch (color) {
 		case BLUE:
 			return btnBlue;
-		case BROWN:
-			return btnBrown;
+		case BRONZE:
+			return btnBronze;
 		case GREEN:
 			return btnGreen;
 		case ORANGE:
@@ -423,7 +423,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		case 7:
 			return CatanColor.WHITE;
 		case 8:
-			return CatanColor.BROWN;
+			return CatanColor.BRONZE;
 		case 9:
 			return CatanColor.PUCE;
 		default:

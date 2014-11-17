@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public enum CatanColor
 {
-	RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+	RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BRONZE;
 	
 	private Color color;
 	
@@ -18,7 +18,7 @@ public enum CatanColor
 		PURPLE.color = new Color(157, 140, 212);
 		PUCE.color = new Color(204, 136, 153);
 		WHITE.color = new Color(223, 223, 223);
-		BROWN.color = new Color(161, 143, 112);
+		BRONZE.color = new Color(215, 163, 91);
 	}
 	
 	public Color getJavaColor()

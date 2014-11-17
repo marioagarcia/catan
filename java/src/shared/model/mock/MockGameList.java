@@ -22,7 +22,7 @@ public class MockGameList extends GameList{
 		PlayerInfo player4 = new PlayerInfo();
 		
 		player1.setPlayerInfo(CatanColor.BLUE, "Butthole", 17);
-		player2.setPlayerInfo(CatanColor.BROWN, "Butthead", 93);
+		player2.setPlayerInfo(CatanColor.BRONZE, "Butthead", 93);
 		player3.setPlayerInfo(CatanColor.GREEN, "Buttface", 111);
 		player4.setPlayerInfo(CatanColor.ORANGE, "Buttwipe", 26);
 		

@@ -538,7 +538,7 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		PlayerInfo player2 = new PlayerInfo();
 		player2.setPlayerInfo(CatanColor.RED, "ButtFace", 7);
 		PlayerInfo player3 = new PlayerInfo();
-		player3.setPlayerInfo(CatanColor.BROWN, "ButtHead", 13);
+		player3.setPlayerInfo(CatanColor.BRONZE, "ButtHead", 13);
 		
 		ArrayList<PlayerInfo> playerList = new ArrayList<PlayerInfo>();
 		playerList.add(player1); playerList.add(player2); playerList.add(player3);

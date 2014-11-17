@@ -49,8 +49,8 @@
 //		
 //		g.setGameInfo("TestGame", 0, playerList);
 //		
-//		//Player with color Brown already exists in game
-//		assertFalse(facade.canJoinGame(CatanColor.BROWN, g));
+//		//Player with color Bronze already exists in game
+//		assertFalse(facade.canJoinGame(CatanColor.BRONZE, g));
 //		
 //		//Color Puce is available
 //		assertTrue(facade.canJoinGame(CatanColor.PUCE, g));
@@ -295,7 +295,7 @@
 //		
 //		ArrayList<CatanColor> colorList = new ArrayList<CatanColor>();
 //		colorList.add(CatanColor.BLUE);
-//		colorList.add(CatanColor.BROWN);
+//		colorList.add(CatanColor.BRONZE);
 //		colorList.add(CatanColor.GREEN);
 //		colorList.add(CatanColor.ORANGE);
 //		

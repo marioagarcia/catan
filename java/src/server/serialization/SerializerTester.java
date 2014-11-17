@@ -2,12 +2,6 @@ package server.serialization;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,7 +27,6 @@ import shared.model.manager.GameData;
 import shared.model.map.BoardMap;
 import shared.model.map.Hex;
 import shared.model.map.Port;
-import shared.model.mock.MockGameModel;
 import shared.model.piece.City;
 import shared.model.piece.Road;
 import shared.model.piece.Settlement;
@@ -357,8 +350,8 @@ public class SerializerTester {
 			case "white":
 				playerColor = CatanColor.WHITE;
 				break;
-			case "brown":
-				playerColor = CatanColor.BROWN;
+			case "bronze":
+				playerColor = CatanColor.BRONZE;
 				break;
 		}
 		

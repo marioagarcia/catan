@@ -648,8 +648,8 @@ public class ClientModelSerializer implements ClientModelSerializerInterface {
 			case "white":
 				playerColor = CatanColor.WHITE;
 				break;
-			case "brown":
-				playerColor = CatanColor.BROWN;
+			case "bronze":
+				playerColor = CatanColor.BRONZE;
 				break;
 		}
 		
