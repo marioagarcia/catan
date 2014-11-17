@@ -620,8 +620,9 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
 	@Override
 	public int giveUpCards(ResourceType resource_type) {
-		//TODO see javadoc in interface
-		return 0;
+        int number_of_card = this.resourceList.getResourceByType(resource_type);
+        this.resourceList.setResourceByType(resource_type, 0);
+        return number_of_card;
 	}
 
 	@Override
