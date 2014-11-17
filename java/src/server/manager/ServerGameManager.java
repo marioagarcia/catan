@@ -177,11 +177,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			players.getPlayer(temp_index++).addRollResources(resource_list);
 		}
 
-		//if(number_rolled == 7) {
-			//turnTracker.setStatus(Status.ROBBING);
-		//}else{
+		if(number_rolled == 7) {
+			turnTracker.setStatus(Status.ROBBING);
+		}else{
 			turnTracker.setStatus(Status.PLAYING);
-		//}
+		}
 		
 		return true;
 	}
