@@ -23,10 +23,13 @@ import shared.model.map.BoardMap;
 import shared.model.player.Player;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
+import shared.model.piece.Road;
+
+import java.util.*;
 
 public class MapTest {
-
-	ClientModelSerializer ms;
+/*
+    ClientModelSerializer ms;
 
 	public GameData getGameData() {
 		ms = new ClientModelSerializer();
@@ -440,4 +443,70 @@ public class MapTest {
 				   tt.getCurrentTurn() == player.getPlayerId());
 		assertFalse(tt.getStatus() == Status.PLAYING);
 	}
+*/
+
+    private void addRoadToMap(BoardMap map, int x, int y, EdgeDirection direction, int player) {
+        HexLocation hex_location = new HexLocation(x, y);
+        EdgeLocation edge_location = new EdgeLocation(hex_location, direction).getNormalizedLocation();
+        Road road = new Road(player, edge_location);
+        Map<EdgeLocation, Road> roads = map.getRoads();
+        roads.put(edge_location, road);
+    }
+
+    @Test
+    public void testLongestRoad() {
+        BoardMap map = new BoardMap(false, false, false);
+
+        //test road default value
+        assert (map.getLongestRoadIndex() == -1);
+
+        //award the longest road
+        addRoadToMap(map, 0, 0, EdgeDirection.North, 1);
+        assert (map.getLongestRoadIndex() == -1);
+
+        addRoadToMap(map, 0, 0, EdgeDirection.NorthWest, 1);
+        assert (map.getLongestRoadIndex() == -1);
+
+        addRoadToMap(map, 0, 0, EdgeDirection.SouthWest, 1);
+        assert (map.getLongestRoadIndex() == -1);
+
+        addRoadToMap(map, 0, 0, EdgeDirection.South, 1);
+        assert (map.getLongestRoadIndex() == -1);
+
+        addRoadToMap(map, 0, 0, EdgeDirection.SouthEast, 1);
+        assert (map.getLongestRoadIndex() == 1);
+
+        //transfer the longest road to another player
+        addRoadToMap(map, 0, 2, EdgeDirection.South, 2);
+        assert (map.getLongestRoadIndex() == 1);
+        addRoadToMap(map, 0, 2, EdgeDirection.SouthEast, 2);
+        assert (map.getLongestRoadIndex() == 1);
+        addRoadToMap(map, 0, 2, EdgeDirection.NorthEast, 2);
+        assert (map.getLongestRoadIndex() == 1);
+        addRoadToMap(map, 0, 2, EdgeDirection.North, 2);
+        assert (map.getLongestRoadIndex() == 1);
+        addRoadToMap(map, 0, 2, EdgeDirection.NorthWest, 2);
+        assert (map.getLongestRoadIndex() == 1);
+        addRoadToMap(map, 0, 2, EdgeDirection.SouthWest, 2);
+        assert (map.getLongestRoadIndex() == 2);
+
+
+        //add a random road to make sure that this doesn't break anything
+        addRoadToMap(map, 0, -2, EdgeDirection.South, 3);
+        assert (map.getLongestRoadIndex() == 2);
+
+        //give the player a full ring around a hex, and make sure that the algorithm doesn't break
+        addRoadToMap(map, 0, 0, EdgeDirection.NorthEast, 1);
+        assert (map.getLongestRoadIndex() == 2);
+
+        //make sure that a road belonging to a different player won't be added to the end of the player's road
+        addRoadToMap(map, 1, 0, EdgeDirection.North, 3);
+        assert(map.getLongestRoadIndex() == 2);
+
+        //give longest road back to player one
+        //this adds a road on a hex adjacent to the current one
+        addRoadToMap(map, 1, 0, EdgeDirection.North, 1);
+        assert (map.getLongestRoadIndex() == 1);
+    }
+
 }

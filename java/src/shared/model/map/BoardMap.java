@@ -38,12 +38,39 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	private Map<VertexLocation, Settlement> settlements;
 	private Map<EdgeLocation, Port> ports;
     private int player_with_longest_road = -1;
+    private int longest_road_length = -1;
+    private static final int MIN_NUMBER_ROADS_FOR_LONGEST = 5;
 	
 	private final int numberOfPorts = 9;
 	private final int DEFAULT_RADIUS = -1; //TODO we need to determine what this should be
 	
 	private int radius;
 	private HexLocation robberLocation;
+
+    private class LongestRoadParams{
+        public Map<EdgeLocation, Road> roads;
+        public int road_player_index;
+        public EdgeLocation current_location;
+        public int length;
+
+        public LongestRoadParams(Map<EdgeLocation, Road> roads, int length, int index, EdgeLocation current_location){
+            this.roads = roads;
+            this.length = length;
+            this.road_player_index = index;
+            this.current_location = current_location;
+        }
+
+    }
+
+    private Map<EdgeLocation, Road> deep_copy_road_map(Map<EdgeLocation, Road> roads_in){
+        Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
+
+        for(EdgeLocation location : roads_in.keySet()){
+            Road new_road = new Road(roads_in.get(location).getPlayerIndex(), roads_in.get(location).getLocation());
+            roads.put(location, new_road);
+        }
+        return roads;
+    }
 	
 	public BoardMap(){
 		this.hexes = new HashMap<HexLocation, HexInterface>();
@@ -401,18 +428,46 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
      * @return index of player with longest road
      */
     public int getLongestRoadIndex(){
-        int[] player_roads = new int[4];
+        for(EdgeLocation location : this.roads.keySet()){
+            Map<EdgeLocation, Road> roads = this.deep_copy_road_map(this.roads);
 
-        for(Road road : this.roads.values()){
-            player_roads[road.getPlayerIndex()]++;
-        }
+            roads.remove(location);
 
-        for(int i = 0; i < player_roads.length; i++){
-            if(player_roads[i] > this.player_with_longest_road && player_roads[i] > 3){
-                this.player_with_longest_road = player_roads[i];
+            LongestRoadParams params = new LongestRoadParams(roads, 1, this.roads.get(location).getPlayerIndex(), location);
+
+            int length = this.recGetLongestRoadIndex(params);
+            if(length >=MIN_NUMBER_ROADS_FOR_LONGEST && length > this.longest_road_length){
+                this.longest_road_length = length;
+                this.player_with_longest_road = this.roads.get(location).getPlayerIndex();
             }
         }
+
         return this.player_with_longest_road;
+    }
+
+    /**
+     * this should be called on each road in the game
+     * @param params LongestRoadParams object
+     * @return  int longest road length thus far
+     */
+    private int recGetLongestRoadIndex(LongestRoadParams params){
+        EdgeLocation[] potential_adjacent = params.current_location.getAdjacent(true, true, this);
+        int longest = params.length;
+
+        for(EdgeLocation location : potential_adjacent){
+            if(params.roads.containsKey(location.getNormalizedLocation()) && params.roads.get(location.getNormalizedLocation()).getPlayerIndex() == params.road_player_index){
+                Map<EdgeLocation, Road> roads = this.deep_copy_road_map((params.roads));
+                roads.remove(location);
+
+                LongestRoadParams child_params = new LongestRoadParams(roads, params.length + 1, params.road_player_index, location);
+                int result = recGetLongestRoadIndex(child_params);
+                if(result > longest){
+                    longest =  result;
+                }
+            }
+        }
+
+        return longest;
     }
 
 	@Override
