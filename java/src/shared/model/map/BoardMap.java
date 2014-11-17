@@ -37,6 +37,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	private Map<VertexLocation, City> cities;
 	private Map<VertexLocation, Settlement> settlements;
 	private Map<EdgeLocation, Port> ports;
+    private int player_with_longest_road = -1;
 	
 	private final int numberOfPorts = 9;
 	private final int DEFAULT_RADIUS = -1; //TODO we need to determine what this should be
@@ -296,7 +297,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		
 		return hexes;
 	}
-	
+
 	/**
 	 * create a new board map
 	 * @param random_chits boolean whether or not to place the chits randomly
@@ -393,6 +394,26 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		}
 		return false;
 	}
+
+    /**
+     * this method will return the index of the player with the longest road
+     * TODO implement extra credit
+     * @return index of player with longest road
+     */
+    public int getLongestRoadIndex(){
+        int[] player_roads = new int[4];
+
+        for(Road road : this.roads.values()){
+            player_roads[road.getPlayerIndex()]++;
+        }
+
+        for(int i = 0; i < player_roads.length; i++){
+            if(player_roads[i] > this.player_with_longest_road && player_roads[i] > 3){
+                this.player_with_longest_road = player_roads[i];
+            }
+        }
+        return this.player_with_longest_road;
+    }
 
 	@Override
 	public HexInterface getHex(HexLocation location) throws HexNotFoundException {
