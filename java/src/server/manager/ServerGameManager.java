@@ -218,7 +218,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
 		players.getPlayer(player_index).buildRoad(isFree);
-
+		boardMap.buildRoad(location, player_index, turnTracker.getStatus());
+		
 		return true;
 	}
 
@@ -257,6 +258,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
+		players.getPlayer(player_index).buildSettlement(isFree);
 		boardMap.buildSettlement(location, player_index, isFree);
 
 		return true;
@@ -282,7 +284,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean buildCity(int player_index, VertexLocation location) {
 
 		players.getPlayer(player_index).buildCity();
-
+		boardMap.buildCity(location, player_index);
+		
 		return true;
 	}
 
