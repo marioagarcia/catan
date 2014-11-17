@@ -56,23 +56,30 @@ public class ResourceCardBank implements ResourceCardBankInterface, SerializerBa
     }
 
 	@Override
-	public void addCard(ResourceCardInterface card) {
-		if(this.cards.containsKey(card.getResourceCardType()))
-			cards.put(card.getResourceCardType(), cards.get(card.getResourceCardType()) + 1);
+	public void addCard(ResourceType card) {
+		if(this.cards.containsKey(card))
+			cards.put(card, cards.get(card) + 1);
 		else {
-			cards.put(card.getResourceCardType(), 1);
+			cards.put(card, 1);
 		}
-		return;
 	}
 
 	@Override
-	public ResourceCardInterface removeCard(ResourceType type) throws NoSuchCardException {
-		if(!this.cards.containsKey(type)){
-			throw new NoSuchCardException();
+	public void removeCard(ResourceType card) {
+
+		if(this.cards.containsKey(card))
+			cards.put(card, cards.get(card) - 1);
+		else {
+			//throw and exception?
 		}
-		cards.put(type, cards.get(type) - 1);
-		
-		return new ResourceCard(type);
+	}
+
+	@Override
+	public void yearOfPlentyPlayed(ResourceType type1, ResourceType type2) {
+
+		removeCard(type1);
+		removeCard(type2);
+
 	}
 
 	@Override

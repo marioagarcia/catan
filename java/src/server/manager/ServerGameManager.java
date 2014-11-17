@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class ServerGameManager implements ServerGameManagerInterface {
 
+	private static final int MAX_POINTS = 10;
 	public final int TOTAL_PLAYERS = 4;
 	private String title = null;
 	private int gameId;
@@ -40,6 +41,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		title = gameName;
 
 		gameId = id;
+
+		version = 0;
 		
 		boardMap = new BoardMap(randNumbers, randTiles, randPorts);
 		
@@ -78,7 +81,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		gameData.setDomesticTrade(domesticTrade);
 		gameData.setPlayers(players);
 		gameData.setTurnTracker(turnTracker);
-		gameData.setWinner(getWinner()); //TODO
+		gameData.setWinner(getWinner());
 		gameData.setVersion(getVersion());
 		gameData.setGameLog(gameLog);
 
@@ -467,42 +470,75 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean canPlayYearOfPlenty(int player_index, ResourceType type1, ResourceType type2) {
 
-		return false;
+		boolean player_condition_met = players.getPlayer(player_index).canPlayYearOfPlenty();
+
+		boolean resource_bank_condition_met = (resourceCardBank.containsCards(type1, type2));
+
+		boolean turn_condition_met = turnTracker.canPlayDevCard(player_index);
+
+		return (player_condition_met && turn_condition_met && resource_bank_condition_met);
 	}
 
 	@Override
-	public boolean playYearOfPlenty(int player_index, ResourceType type1,
-			ResourceType type2) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean playYearOfPlenty(int player_index, ResourceType type1, ResourceType type2) {
+
+		players.getPlayer(player_index).playYearOfPlenty(type1, type2);
+
+		devCardBank.addCard(DevCardType.YEAR_OF_PLENTY);
+
+		resourceCardBank.yearOfPlentyPlayed(type1, type2);
+
+		return true;
 	}
 
 	@Override
-	public boolean canPlayRoadBuilding(int player_index,
-			EdgeLocation location1, EdgeLocation location2) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canPlayRoadBuilding(int player_index, EdgeLocation location1, EdgeLocation location2) {
+
+		boolean map_condition_met = boardMap.canPlayRoadBuilding(location1, location2, player_index);
+
+		boolean player_condition_met = players.getPlayer(player_index).canPlayRoadBuilding();
+
+		boolean turn_condition_met = turnTracker.getCurrentTurn() == player_index;
+
+		boolean status_condition_met = turnTracker.getStatus() == Status.PLAYING;
+
+		return (map_condition_met && player_condition_met && turn_condition_met && status_condition_met);
 	}
 
 	@Override
-	public boolean playRoadBuilding(int player_index, EdgeLocation location1,
-			EdgeLocation location2) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean playRoadBuilding(int player_index, EdgeLocation location1, EdgeLocation location2) {
+
+		players.getPlayer(player_index).playRoadBuilding();
+
+		boardMap.playRoadBuilding(location1, location2, player_index);
+
+		return true;
 	}
 
 	@Override
-	public boolean canPlaySoldier(int player_index, HexLocation oldLocation,
-			HexLocation newLocation, int victimIndex) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canPlaySoldier(int player_index, HexLocation old_loc, HexLocation new_loc, int victim_index) {
+
+		boolean map_condition_met = boardMap.canPlaySoldier(old_loc, new_loc, player_index);
+
+		boolean player_condition_met = players.getPlayer(player_index).canPlaySoldier();
+
+		boolean turn_condition_met = turnTracker.getCurrentTurn() == player_index;
+
+		boolean status_condition_met = turnTracker.getStatus() == Status.PLAYING;
+
+		return (map_condition_met && player_condition_met && turn_condition_met && status_condition_met);
 	}
 
 	@Override
-	public boolean playSoldier(int player_index, HexLocation newLocation,
-			int victimIndex) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean playSoldier(int player_index, HexLocation new_location, int victim_index) {
+
+		boardMap.playSoldier(new_location, player_index);
+
+		ResourceType resource = players.getPlayer(victim_index).rob();
+
+		players.getPlayer(player_index).playSoldier(resource);
+
+		return true;
 	}
 
 	@Override
@@ -517,39 +553,75 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean canPlayMonopoly(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		boolean player_condition_met = players.getPlayer(player_index).canPlayMonopoly();
+
+		boolean turn_condition_met = turnTracker.getCurrentTurn() == player_index;
+
+		boolean status_condition_met = turnTracker.getStatus() == Status.PLAYING;
+
+		return (player_condition_met && turn_condition_met && status_condition_met);
 	}
 
 	@Override
-	public boolean playMonopoly(int player_index, ResourceType resourceType) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean playMonopoly(int player_index, ResourceType resource_type) {
+
+		int count = 0;
+
+		for(Player player : players.getPlayerList()) {
+
+			if(player.getPlayerIndex() != player_index) {
+				count += player.giveUpCards(resource_type);
+			}
+		}
+
+		players.getPlayer(player_index).playMonopoly(resource_type, count);
+
+		return true;
 	}
 
 	@Override
 	public boolean canPlayMonument(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		boolean player_condition_met = players.getPlayer(player_index).canPlayMonument();
+
+		boolean status_condition_met = turnTracker.getStatus() == Status.PLAYING;
+
+		boolean turn_condition_met = turnTracker.getCurrentTurn() == player_index;
+
+		return (player_condition_met && status_condition_met && turn_condition_met);
 	}
 
 	@Override
 	public boolean playMonument(int player_index) {
-		// TODO Auto-generated method stub
-		return false;
+
+		players.getPlayer(player_index).playMonument();
+
+		return true;
 	}
-	
-	public String getGameTitle() { return title; }
-	
-	public int getGameId() { return gameId; }
-	
-	public Players getPlayers() { return players; }
 
 	public int getVersion() {
+
+
+
 		return version;
 	}
 
 	public int getWinner() {
+
+		for(Player player : players.getPlayerList()) {
+
+			if( player.getPoints() == MAX_POINTS ) {
+				winner = player.getPlayerIndex();
+			}
+		}
+
 		return winner;
 	}
+
+	public String getGameTitle() { return title; }
+
+	public int getGameId() { return gameId; }
+
+	public Players getPlayers() { return players; }
 }

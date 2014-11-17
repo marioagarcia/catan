@@ -952,9 +952,9 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	
 	@Override
-	public void playSoldier(HexLocation oldLocation, HexLocation newLocation, int player_index) {
-		assert(this.canPlaySoldier(oldLocation, newLocation, player_index));
+	public void playSoldier(HexLocation new_location, int player_index) {
+		assert this.canPlaySoldier(getRobberLocation(), new_location, player_index);
 		
-		this.robberLocation = newLocation;
+		this.robberLocation = new_location;
 	}
 }

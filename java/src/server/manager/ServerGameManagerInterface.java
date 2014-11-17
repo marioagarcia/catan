@@ -175,7 +175,7 @@ public interface ServerGameManagerInterface {
 	 * @return true if successful 
 	 */
 	public boolean canPlaySoldier(int player_index, HexLocation oldLocation, HexLocation newLocation, int victimIndex);
-	public boolean playSoldier(int player_index, HexLocation newLocation, int victimIndex);
+	public boolean playSoldier(int player_index, HexLocation new_location, int victim_index);
 
 	/**
 	 *
@@ -191,7 +191,7 @@ public interface ServerGameManagerInterface {
 	 * @return true
 	 */
 	public boolean canPlayMonopoly(int player_index);
-	public boolean playMonopoly(int player_index, ResourceType resourceType);
+	public boolean playMonopoly(int player_index, ResourceType resource_type);
 
 	/**
 	 * Checks that the it is the player's turn and that the player has the monument dev card
