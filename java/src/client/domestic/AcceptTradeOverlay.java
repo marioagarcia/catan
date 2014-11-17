@@ -134,7 +134,6 @@ public class AcceptTradeOverlay extends OverlayView implements IAcceptTradeOverl
 	@Override
 	public void addGetResource(ResourceType resource, int amount) {
 		//Instantiate component on the first addition
-		System.out.println("Adding " + resource.toString());
 		if(offering_component == null){
 			offering_component = new JPanel();
 			offering_component.setBackground(new Color(255,255,255,255));
@@ -145,7 +144,6 @@ public class AcceptTradeOverlay extends OverlayView implements IAcceptTradeOverl
 			contentPanel.add(offering_component,offering_component_gbc);
 		}
 		//The Image
-		System.out.println("Image file: " + "images/resources/"+resource.toString().toLowerCase()+".png");
 		Image i = ImageUtils.loadImage("images/resources/"+resource+".png");
 		ImageIcon ii = new ImageIcon(i.getScaledInstance(50, 50, 0));
 
