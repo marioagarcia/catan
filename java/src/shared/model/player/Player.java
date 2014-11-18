@@ -521,7 +521,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         int resource;
         do {
             resource = ((int) Math.random() * 31) % potential_types.size();
-        } while(resource >= 0);
+        } while(resource < 0);
 
         this.resourceList.setResourceByType(potential_types.get(resource), this.resourceList.getResourceByType(potential_types.get(resource)));
         return potential_types.get(resource);
