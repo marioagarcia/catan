@@ -1,6 +1,6 @@
 package server.command;
 
-import shared.locations.EdgeLocation;
+import shared.definitions.ResourceType;
 import shared.serialization.parameters.MaritimeTradeParameters;
 
 /**
@@ -9,7 +9,11 @@ import shared.serialization.parameters.MaritimeTradeParameters;
  */
 public class MaritimeTrade extends CatanCommand {
 
-	private EdgeLocation location = null;
+	private MaritimeTradeParameters params = null;
+	
+	ResourceType in = null;
+	ResourceType out = null;
+	
 	/**
 	 * Initializes the MaritimeTrade object with data necessary for updating the game model
 	 * @param parameters An object containing the player index of the person trading, the ratio of the trade, and the resources to be given/received
@@ -19,7 +23,10 @@ public class MaritimeTrade extends CatanCommand {
 		
 		this.gameId = game_id;
 		this.playerIndex = parameters.getPlayerIndex();
+		this.params = parameters;
 		
+		this.in = ResourceType.valueOf(parameters.getInputResource().toUpperCase());
+		this.out = ResourceType.valueOf(parameters.getOutputResource().toUpperCase());
 	}
 	
 	/**
@@ -30,9 +37,9 @@ public class MaritimeTrade extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canMaritimeTrade(gameId, playerIndex, location, null)){
+		if (facadeInstance.canMaritimeTrade(gameId, playerIndex, params.getRatio(), in, out)){
 			
-			success = facadeInstance.maritimeTrade(gameId, playerIndex, location, null);
+			success = facadeInstance.maritimeTrade(gameId, playerIndex, params.getRatio(), in, out);
 		}
 		
 	}
