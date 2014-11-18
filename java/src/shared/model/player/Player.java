@@ -216,10 +216,14 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
     }
 
     public void endTurn(){
-        this.discarded = false;
         this.playedDevCard = false;
         this.placedFreeSettlement = false;
         this.placedFreeRoad = false;
+
+        for(DevCardType type : DevCardType.values()){
+            this.oldDevCards.setCardsByType(type, this.newDevCards.getCardsByType(type) + this.oldDevCards.getCardsByType(type));
+            this.newDevCards.setCardsByType(type, 0);
+        }
     }
 
     @Override
