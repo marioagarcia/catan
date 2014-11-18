@@ -424,7 +424,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
     /**
      * this method will return the index of the player with the longest road
-     * TODO implement extra credit
      * @return index of player with longest road
      */
     public int getLongestRoadIndex(){
