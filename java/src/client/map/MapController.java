@@ -266,6 +266,8 @@ public class MapController extends Controller implements IMapController {
 						roadBuildingLocationOne = null;
 						roadBuildingLocationTwo = null;
 						roadBuilding = false;
+						roadBuildingOne = false;
+						roadBuildingTwo = false;
 					}
 				}
 			}
