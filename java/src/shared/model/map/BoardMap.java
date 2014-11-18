@@ -16,8 +16,6 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import shared.model.card.ResourceCard;
-import shared.model.card.ResourceCardBank;
 import shared.model.card.ResourceList;
 import shared.model.manager.interfaces.GMBoardMapInterface;
 import shared.model.map.luts.EdgesAdjacentToVertex;
@@ -41,8 +39,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
     private int player_with_longest_road = -1;
     private int longest_road_length = -1;
     private static final int MIN_NUMBER_ROADS_FOR_LONGEST = 5;
-	
-	private final int numberOfPorts = 9;
+
 	private final int DEFAULT_RADIUS = -1; //TODO we need to determine what this should be
 	
 	private int radius;
@@ -123,45 +120,8 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 				hexes.add(new HexLocation(x_values[i],y));
 		return hexes;
 	}
-	
-	private Set<HexLocation> getAllowedWaterHexLocations(){
-		Set<HexLocation> hexes = new HashSet<HexLocation>();
-		
-		for(int i = 0; i < 3; i++){
-			hexes.add(new HexLocation(-3,i));
-			hexes.add(new HexLocation(-i,3));
-			hexes.add(new HexLocation(i,-3));
-			hexes.add(new HexLocation(3,-i));
-		}
-		
-		hexes.add(new HexLocation(-2,-1));
-		hexes.add(new HexLocation(-1,-2));
-		hexes.add(new HexLocation(1,2));
-		hexes.add(new HexLocation(2,1));
-		hexes.add(new HexLocation(-3,0));
-		hexes.add(new HexLocation(3,-3));
-		
-		return hexes;
-	}
-	
-	private Set<EdgeLocation> generatePotentialPortLocations(){
-		Set<HexLocation> water = this.getAllowedWaterHexLocations();
-		Set<HexLocation> land = this.getAllowedLandHexLocations();
-		Set<EdgeLocation> potentialPortLocations = new HashSet<EdgeLocation>();
-		
-		for(HexLocation hex : water){
-			for(EdgeDirection direction : EdgeDirection.values()){
-				if(land.contains(hex.getNeighborLoc(direction))){
-					potentialPortLocations.add(new EdgeLocation(hex,direction));
-				}	
-			}
-		}
-		
-		return potentialPortLocations;
-	}
-	
-	private Map<EdgeLocation, Port> generatePorts(boolean random, int number_of_ports){
-		Random random_generator = new Random(System.currentTimeMillis());
+
+	private Map<EdgeLocation, Port> generatePorts(boolean random){
 		Map<EdgeLocation, Port> ports = new HashMap<EdgeLocation, Port>();
 
         ports.put(new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South),
@@ -187,7 +147,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
             for(EdgeLocation location : ports.keySet()){
                 int index;
                 do{
-                    index = ((int)Math.random() * 31) % PortType.values().length;
+                    index = (int)(Math.random() * 31) % PortType.values().length;
                 } while(index > 0);
 
                 ports.get(location).setResource(PortType.values()[index]);
@@ -324,16 +284,15 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	 * @param random_chits boolean whether or not to place the chits randomly
 	 * @param random_hexes boolean whether or not to place the hex types randomly
 	 * @param random_ports boolean whether or not to place the ports randomly
-	 * @return BoardMap the newly created map
 	 */
 	public BoardMap(boolean random_chits, boolean random_hexes, boolean random_ports) {
 		
 		this.hexes = this.generateHexes(random_hexes, random_chits);
-		this.ports = this.generatePorts(random_ports, numberOfPorts);
+		this.ports = this.generatePorts(random_ports);
 		this.roads = new HashMap<EdgeLocation, Road>();
 		this.cities = new HashMap<VertexLocation, City>();
 		this.settlements = new HashMap<VertexLocation, Settlement>();
-		this.radius = this.DEFAULT_RADIUS;
+		this.setRadius(this.DEFAULT_RADIUS);
 		
 		for(HexLocation location : this.hexes.keySet()){
 			if(this.hexes.get(location).getType() == HexType.DESERT){
@@ -350,9 +309,8 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	public String toString() {
 		return "BoardMap [hexes=" + hexes + ", roads=" + roads + ", cities="
 				+ cities + ", settlements=" + settlements + ", ports=" + ports
-				+ ", numberOfPorts=" + numberOfPorts + ", DEFAULT_RADIUS="
-				+ DEFAULT_RADIUS + ", radius=" + radius + ", robberLocation="
-				+ robberLocation + "]";
+				+  ", DEFAULT_RADIUS=" + DEFAULT_RADIUS + ", radius=" + radius
+                + ", robberLocation=" + robberLocation + "]";
 	}
 
 	public void setHexes(Map<HexLocation, HexInterface> hexes) {
