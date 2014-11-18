@@ -253,74 +253,17 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
     @Override
     public boolean canMaritimeTrade(MaritimeTrade trade) {
-        boolean result = false;
-        int resourceAmount = 0;
-
-        switch (trade.getResourceIn()) {
-            case BRICK:
-                resourceAmount = resourceList.getBrick();
-                break;
-            case ORE:
-                resourceAmount = resourceList.getOre();
-                break;
-            case SHEEP:
-                resourceAmount = resourceList.getSheep();
-                break;
-            case WHEAT:
-                resourceAmount = resourceList.getWheat();
-                break;
-            case WOOD:
-                resourceAmount = resourceList.getWood();
-                break;
-        }
-        if (trade.getRatio() <= resourceAmount) {
-            result = true;
-        }
-        return result;
+        return this.resourceList.getResourceByType(trade.getResourceIn()) <= trade.getRatio();
     }
 
     @Override
     public boolean canOfferTrade(TradeInterface trade) {
-
-        int brick = trade.getTradeCard(ResourceType.BRICK);
-        int wheat = trade.getTradeCard(ResourceType.WHEAT);
-        int wood = trade.getTradeCard(ResourceType.WOOD);
-        int sheep = trade.getTradeCard(ResourceType.SHEEP);
-        int ore = trade.getTradeCard(ResourceType.ORE);
-
-        boolean can_offer = true;
-
-        if (brick > 0) {
-            if (resourceList.getBrick() < brick) {
-                can_offer = false;
+        for(ResourceType type : ResourceType.values()){
+            if (trade.getTradeCard(type) > resourceList.getResourceByType(type)) {
+                return false;
             }
         }
-
-        if (wheat > 0) {
-            if (resourceList.getWheat() < wheat) {
-                can_offer = false;
-            }
-        }
-
-        if (wood > 0) {
-            if (resourceList.getWood() < wood) {
-                can_offer = false;
-            }
-        }
-
-        if (sheep > 0) {
-            if (resourceList.getSheep() < sheep) {
-                can_offer = false;
-            }
-        }
-
-        if (ore > 0) {
-            if (resourceList.getOre() < ore) {
-                can_offer = false;
-            }
-        }
-
-        return can_offer;
+        return true;
     }
 
     @Override
@@ -465,25 +408,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
     }
 
     private void addNewDevCard(DevCardType type) {
-        switch (type) {
-            case SOLDIER:
-                this.newDevCards.setSoldier(this.newDevCards.getSoldier() + 1);
-                break;
-            case YEAR_OF_PLENTY:
-                this.newDevCards.setYearOfPlenty(this.newDevCards.getYearOfPlenty() + 1);
-                break;
-            case MONOPOLY:
-                this.newDevCards.setMonopoly(this.newDevCards.getMonopoly() + 1);
-                break;
-            case MONUMENT:
-                this.newDevCards.setMonument(this.newDevCards.getMonument() + 1);
-                break;
-            case ROAD_BUILD:
-                this.newDevCards.setRoadBuild(this.newDevCards.getRoadBuild() + 1);
-                break;
-            default:
-                //this should never happen
-        }
+        this.newDevCards.setCardsByType(type, this.newDevCards.getCardsByType(type) + 1);
     }
 
     @Override
