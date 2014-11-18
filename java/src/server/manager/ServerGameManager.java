@@ -62,7 +62,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	private void setupGame() {
 
-//		turnTracker.setStatus(Status.FIRST_ROUND);
+		turnTracker.setStatus(Status.FIRST_ROUND);
 	}
 
 	public boolean containsPlayerId(int player_id) {
@@ -171,8 +171,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			}
 		}
 
-		if(all_discarded)
+		if(all_discarded) {
+
 			turnTracker.setStatus(Status.ROBBING);
+		}
 		
 		return true;
 	}
