@@ -187,7 +187,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			turnTracker.setStatus(Status.ROBBING);
 
 			for(Player player : players.getPlayerList()) {
-				player.endTurn();
+				player.setDiscarded(true);
 			}
 		}
 
@@ -217,6 +217,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		if(number_rolled == 7) {
 
 			turnTracker.setStatus(Status.DISCARDING);
+
+			for(Player player : players.getPlayerList()) {
+				player.setDiscarded(false);
+			}
 		}
 		else {
 
@@ -264,8 +268,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean buildRoad(int player_index, EdgeLocation location) {
 
-		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
-				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+		boolean isFree = (Status.FIRST_ROUND == turnTracker.getStatus() ||
+						  Status.SECOND_ROUND == turnTracker.getStatus());
 
 		players.getPlayer(player_index).buildRoad(isFree);
 
@@ -284,7 +288,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean canBuildSettlement(int player_index, VertexLocation location) {
 
-		boolean in_setup_phase = (turnTracker.getStatus() == Status.FIRST_ROUND || turnTracker.getStatus() == Status.SECOND_ROUND);
+		boolean in_setup_phase = (turnTracker.getStatus() == Status.FIRST_ROUND ||
+								  turnTracker.getStatus() == Status.SECOND_ROUND);
 
 		int num_settlements = boardMap.getNumberOfSettlementsByPlayerIndex(player_index);
 
@@ -313,12 +318,19 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean buildSettlement(int player_index, VertexLocation location) {
 
-		boolean isFree = (TurnTracker.Status.FIRST_ROUND == turnTracker.getStatus() ||
-				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
+		boolean isFree = (Status.FIRST_ROUND == turnTracker.getStatus() ||
+				          Status.SECOND_ROUND == turnTracker.getStatus());
 
 		players.getPlayer(player_index).buildSettlement(isFree);
 
 		boardMap.buildSettlement(location, player_index, isFree);
+
+		if(turnTracker.getStatus() == Status.SECOND_ROUND) {
+
+			ResourceList resources = boardMap.getResourcesByVertexLocation(location);
+
+			players.getPlayer(player_index).addRollResources(resources);
+		}
 
 		//add history log
 
@@ -389,12 +401,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		if(player_condition_met && turn_tracker_condition_met && player_turn_condition_met) {
 
-			if(trade.getRatio() == 4) {
-				return true;
-			}
-			else {
-				return boardMap.canMaritimeTrade(location, player_index);
-			}
+			return trade.getRatio() == 4 || boardMap.canMaritimeTrade(location, player_index);
 		}
 
 		return false;
@@ -442,6 +449,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		if(turnTracker.getStatus() == Status.FIRST_ROUND) {
 
 			if(doneWithFirstRound()) {
+
 				turnTracker.setStatus(Status.SECOND_ROUND);
 			}
 			else {
@@ -452,6 +460,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		else if(turnTracker.getStatus() == Status.SECOND_ROUND) {
 
 			if(doneWithSecondRound()) {
+
 				turnTracker.setStatus(Status.ROLLING);
 			}
 			else {
@@ -460,9 +469,13 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			}
 		}
 		else {
+
 			turnTracker.setStatus(Status.ROLLING);
+
 			nextPlayerTurn(player_index);
 		}
+
+		players.getPlayer(player_index).endTurn();
 
 		modelChanged = true;
 
@@ -582,6 +595,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		boardMap.playRoadBuilding(location1, location2, player_index);
 
+		devCardBank.addCard(DevCardType.ROAD_BUILD);
+
+
 		modelChanged = true;
 
 		return true;
@@ -609,6 +625,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		ResourceType resource = players.getPlayer(victim_index).rob();
 
 		players.getPlayer(player_index).playSoldier(resource);
+
+		devCardBank.addCard(DevCardType.SOLDIER);
+
 
 		modelChanged = true;
 
@@ -657,6 +676,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).playMonopoly(resource_type, count);
 
+		devCardBank.addCard(DevCardType.MONOPOLY);
+
+
 		modelChanged = true;
 
 		return true;
@@ -678,6 +700,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean playMonument(int player_index) {
 
 		players.getPlayer(player_index).playMonument();
+
+		devCardBank.addCard(DevCardType.MONUMENT);
 
 		modelChanged = true;
 
