@@ -697,24 +697,11 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	public Set<Port> getPortsByPlayer(Player player){
-		Set<Port> ports = new HashSet<Port>();
-		
-		for(EdgeLocation location : this.ports.keySet()){
-			Set<VertexLocation> vertexes = VertexesAdjacentToEdge.get(this.ports.get(location).getLocation()).asSet();
-			for(VertexLocation vertex : vertexes){
-				if(this.settlements.containsKey(vertex) && this.settlements.get(vertex).getPlayerIndex() == player.getPlayerIndex() ||
-						this.cities.containsKey(vertex) && this.cities.get(vertex).getPlayerIndex() == player.getPlayerIndex()){
-					
-						ports.add(this.ports.get(location));
-						break;
-				}
-			}
-		}
-		
-		return ports;
+		return this.getPortsByPlayer(player.getPlayerIndex());
 	}
 
     private Set<Port> getPortsByPlayer(int player_index){
+        System.out.println("this " + this);
         Set<Port> ports = new HashSet<Port>();
 
         for(EdgeLocation location : this.ports.keySet()){

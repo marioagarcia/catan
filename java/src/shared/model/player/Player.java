@@ -253,7 +253,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
     @Override
     public boolean canMaritimeTrade(MaritimeTrade trade) {
-        return this.resourceList.getResourceByType(trade.getResourceIn()) <= trade.getRatio();
+        return this.resourceList.getResourceByType(trade.getResourceIn()) >= trade.getRatio();
     }
 
     @Override
@@ -316,7 +316,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
                 return false;
             }
         }
-        
+
         return (!discarded && resourceList.totalNumberCards() > 7 && (resourceList.totalNumberCards() / 2) == list.totalNumberCards()) ||
                 (list.totalNumberCards() == 0 && this.resourceList.totalNumberCards() <= 7);
     }
