@@ -357,6 +357,12 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
     @Override
     public boolean canDiscardCards(ResourceList list) {
+        for(ResourceType type : ResourceType.values()){
+            if(this.resourceList.getResourceByType(type) <  list.getResourceByType(type)){
+                return false;
+            }
+        }
+        
         return (!discarded && resourceList.totalNumberCards() > 7);
     }
 
