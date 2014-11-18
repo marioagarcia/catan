@@ -701,7 +701,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
     private Set<Port> getPortsByPlayer(int player_index){
-        System.out.println("this " + this);
         Set<Port> ports = new HashSet<Port>();
 
         for(EdgeLocation location : this.ports.keySet()){
