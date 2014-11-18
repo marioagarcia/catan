@@ -10,6 +10,7 @@ import shared.model.logging.GameLog;
 import shared.model.logging.chat.GameChat;
 import shared.model.logging.chat.Message;
 import shared.model.logging.history.HistoryLog;
+import shared.model.logging.history.LogLine;
 import shared.model.manager.GameData;
 import shared.model.map.BoardMap;
 import shared.model.player.Player;
@@ -142,6 +143,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean acceptTrade(int player_index, boolean accept) {
+
+		String name = players.getPlayer(player_index).getName();
 		
 		if(accept) {
 
@@ -150,6 +153,13 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 			//Adjust the resources of the player who offered the trade
 			players.getPlayer(domesticTrade.getSender()).makeDomesticTrade(domesticTrade);
+
+			//add to the history log
+			gameLog.getGameHistoryLog().addLogLine(new LogLine(name, "The trade was accepted"));
+		}
+		else {
+			//add to the history log
+			gameLog.getGameHistoryLog().addLogLine(new LogLine(name, "The trade was not accepted"));
 		}
 
 		domesticTrade = null;
@@ -205,15 +215,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean roll(int player_index, int number_rolled) {
 
-		ArrayList<ResourceList> resources = boardMap.getRollResult(number_rolled);
-
-		int temp_index = 0;
-
-		for(ResourceList resource_list : resources) {
-
-			players.getPlayer(temp_index++).addRollResources(resource_list);
-		}
-
 		if(number_rolled == 7) {
 
 			turnTracker.setStatus(Status.DISCARDING);
@@ -224,11 +225,20 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		}
 		else {
 
+			ArrayList<ResourceList> resources = boardMap.getRollResult(number_rolled);
+
+			int temp_index = 0;
+
+			for(ResourceList resource_list : resources) {
+
+				players.getPlayer(temp_index++).addRollResources(resource_list);
+			}
+
 			turnTracker.setStatus(Status.PLAYING);
 		}
 
 		//add to history log
-
+		log(("Rolled a " + number_rolled), player_index);
 
 
 		modelChanged = true;
@@ -278,7 +288,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		turnTracker.setPlayerWithLongestRoad(boardMap.getLongestRoadIndex());
 
 		//add to history log
-
+		log("built a road", player_index);
 
 		modelChanged = true;
 		
@@ -332,7 +342,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			players.getPlayer(player_index).addRollResources(resources);
 		}
 
-		//add history log
+		//add to history log
+		log("built a settlement", player_index);
 
 		modelChanged = true;
 
@@ -362,8 +373,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		boardMap.buildCity(location, player_index);
 
-		//add history log
-
+		//add to history log
+		log("upgraded to a city", player_index);
 
 		modelChanged = true;
 		
@@ -391,9 +402,16 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	}
 
 	@Override
-	public boolean canMaritimeTrade(int player_index, EdgeLocation location, MaritimeTrade trade) {
+	public boolean canMaritimeTrade(int player_index, int ratio, ResourceType resource_in, ResourceType resource_out) {
 
-		boolean player_condition_met = players.getPlayer(player_index).canMaritimeTrade(trade);
+		MaritimeTrade maritime_trade = new MaritimeTrade();
+		maritime_trade.setRatio(ratio);
+		maritime_trade.setResourceIn(resource_in);
+		maritime_trade.setResourceOut(resource_out);
+
+		EdgeLocation location = boardMap.getLocationOnMaritimeTrade(maritime_trade, player_index);
+
+		boolean player_condition_met = players.getPlayer(player_index).canMaritimeTrade(maritime_trade);
 
 		boolean turn_tracker_condition_met = turnTracker.getStatus() == Status.PLAYING;
 
@@ -401,18 +419,23 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		if(player_condition_met && turn_tracker_condition_met && player_turn_condition_met) {
 
-			return trade.getRatio() == 4 || boardMap.canMaritimeTrade(location, player_index);
+			return maritime_trade.getRatio() == 4 || boardMap.canMaritimeTrade(location, player_index);
 		}
 
 		return false;
 	}
 
 	@Override
-	public boolean maritimeTrade(int player_index, EdgeLocation location, MaritimeTrade trade) {
+	public boolean maritimeTrade(int player_index, int ratio, ResourceType resource_in, ResourceType resource_out) {
 
-		players.getPlayer(player_index).makeMaritimeTrade(trade);
+		MaritimeTrade maritime_trade = new MaritimeTrade();
+		maritime_trade.setRatio(ratio);
+		maritime_trade.setResourceIn(resource_in);
+		maritime_trade.setResourceOut(resource_out);
 
-		resourceCardBank.makeMaritimeTrade(trade);
+		players.getPlayer(player_index).makeMaritimeTrade(maritime_trade);
+
+		resourceCardBank.makeMaritimeTrade(maritime_trade);
 
 		modelChanged = true;
 
@@ -437,7 +460,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			else {
 				return turnTracker.getStatus() == Status.PLAYING;
 			}
-
 		}
 
 		return false;
@@ -476,6 +498,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		}
 
 		players.getPlayer(player_index).endTurn();
+
+		//add to history log
+		String name = players.getPlayer(player_index).getName();
+		gameLog.getGameHistoryLog().addLogLine(new LogLine(name, (name + "'s turn just ended")));
 
 		modelChanged = true;
 
@@ -543,6 +569,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).buyDevCard(card_type);
 
+		//add to history log
+		log("bought a development card", player_index);
+
 		modelChanged = true;
 
 		return true;
@@ -568,6 +597,14 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		devCardBank.addCard(DevCardType.YEAR_OF_PLENTY);
 
 		resourceCardBank.yearOfPlentyPlayed(type1, type2);
+
+		//add to history log
+		String resource1_name = type1.name().toLowerCase();
+		String resource2_name = type2.name().toLowerCase();
+
+		String message = "used Year of Plenty and got a " + resource1_name + " and a " + resource2_name;
+
+		log(message, player_index);
 
 		modelChanged = true;
 
@@ -597,6 +634,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		devCardBank.addCard(DevCardType.ROAD_BUILD);
 
+		//add to history log
+		log("built two roads", player_index);
 
 		modelChanged = true;
 
@@ -628,6 +667,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		devCardBank.addCard(DevCardType.SOLDIER);
 
+		//add to history log
+		log("used a soldier", player_index);
 
 		modelChanged = true;
 
@@ -641,9 +682,14 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		
 		players.getPlayer(player_index).addResourceCard(resource_type);
 
-		boardMap.playSoldier(location, player_index);
+		boardMap.setRobberLocation(location);
 		
 		turnTracker.setStatus(Status.PLAYING);
+
+		//add to history log
+		String victim_name = players.getPlayer(player_index).getName();
+
+		log(("moved the robber and robbed " + victim_name), player_index);
 
 		modelChanged = true;
 		
@@ -678,6 +724,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		devCardBank.addCard(DevCardType.MONOPOLY);
 
+		//add to history log
+		log(("stole everyone's " + resource_type.name().toLowerCase()), player_index);
 
 		modelChanged = true;
 
@@ -703,6 +751,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		devCardBank.addCard(DevCardType.MONUMENT);
 
+		//add to history log
+		log("built a monument and gained a victory point", player_index);
+
 		modelChanged = true;
 
 		return true;
@@ -721,7 +772,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		for(Player player : players.getPlayerList()) {
 
 			if( player.getPoints() == MAX_POINTS ) {
+
 				winner = player.getPlayerIndex();
+
+				//add to history log
+				log("wins the game!!!", winner);
 			}
 		}
 
@@ -733,4 +788,12 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public int getGameId() { return gameId; }
 
 	public Players getPlayers() { return players; }
+
+	private void log(String log_message, int player_index) {
+
+		String name = players.getPlayer(player_index).getName();
+
+		gameLog.getGameHistoryLog().addLogLine(new LogLine(name, (name + " " + log_message)));
+
+	}
 }

@@ -100,7 +100,7 @@ public interface ServerGameManagerInterface {
 	/**
 	 * Checks that the player has the resources that he is offering in the trade
 	 * 
-	 * @param trade the resource cards in question
+	 * @param resources the resource cards in question
 	 * @return true if the player has the resources to offer a trade, false otherwise
 	 */
 	public boolean canOfferTrade(int player_index, ResourceList resources);
@@ -116,8 +116,8 @@ public interface ServerGameManagerInterface {
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
-	public boolean canMaritimeTrade(int player_index, EdgeLocation location, MaritimeTrade trade);
-	public boolean maritimeTrade(int player_index, EdgeLocation location, MaritimeTrade trade);
+	public boolean canMaritimeTrade(int player_index, int ratio, ResourceType resource_in, ResourceType resource_out);
+	public boolean maritimeTrade(int player_index, int ratio, ResourceType resource_in, ResourceType resource_out);
 
 	/**
 	 * Checks the turn tracker to make sure that the client model status is "playing"
