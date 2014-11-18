@@ -30,6 +30,7 @@ import shared.model.player.Player;
 import shared.model.turntracker.TurntrackerInterface.Status;
 import shared.serialization.interfaces.SerializerMapInterface;
 import shared.shared.utils.CatanUtils;
+import shared.model.card.MaritimeTrade;
 
 public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
 	private Map<HexLocation, HexInterface> hexes;
@@ -741,7 +742,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		}
 		return true;
 	}
-	
+
 	public Set<Port> getPortsByPlayer(Player player){
 		Set<Port> ports = new HashSet<Port>();
 		
@@ -760,6 +761,37 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		return ports;
 	}
 
+    private Set<Port> getPortsByPlayer(int player_index){
+        Set<Port> ports = new HashSet<Port>();
+
+        for(EdgeLocation location : this.ports.keySet()){
+            Set<VertexLocation> vertexes = VertexesAdjacentToEdge.get(this.ports.get(location).getLocation()).asSet();
+            for(VertexLocation vertex : vertexes){
+                if(this.settlements.containsKey(vertex) && this.settlements.get(vertex).getPlayerIndex() == player_index ||
+                        this.cities.containsKey(vertex) && this.cities.get(vertex).getPlayerIndex() == player_index){
+
+                    ports.add(this.ports.get(location));
+                    break;
+                }
+            }
+        }
+
+        return ports;
+    }
+
+
+
+    public void setLocationOnMaritimeTrade(MaritimeTrade trade, int player_index){
+//        Set<Port> ports = this.getPortsByPlayer(player_index);
+//
+//        for(Port port : ports){
+//            if(trade.getRatio() != port.getRatio()){
+//                continue;
+//            }
+//
+//
+//        }
+    }
 
 	@Override
 	public void setMap(ArrayList<Hex> hexList, ArrayList<Road> roadList, ArrayList<City> cityList, 
