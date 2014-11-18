@@ -455,6 +455,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
             this.newDevCards.setMonument(this.newDevCards.getMonument() - 1);
         }
 
+        this.playedDevCard = true;
         this.victoryPoints++;
     }
 
@@ -465,7 +466,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         this.oldDevCards.setMonopoly(this.oldDevCards.getMonopoly() - 1);
         this.playedDevCard = true;
 
-        this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type));
+        this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) + number_of_resource_taken);
     }
 
     @Override

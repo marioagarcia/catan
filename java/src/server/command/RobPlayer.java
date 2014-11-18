@@ -28,7 +28,7 @@ public class RobPlayer extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-System.out.println("*************************" + playerIndex + " : " + gameId + " : " + victimIndex + "*******************************");	
+		
 		success = facadeInstance.robPlayer(playerIndex, gameId, victimIndex, location);
 	}
 }
