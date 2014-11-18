@@ -32,6 +32,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	DevCardBank devCardBank = null;
 	GameLog gameLog = null;
 	DomesticTrade domesticTrade = null;
+	private boolean modelChanged;
 	private int version;
 	private int winner;
 
@@ -41,8 +42,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		title = gameName;
 
 		gameId = id;
-
-		version = 0;
 		
 		boardMap = new BoardMap(randNumbers, randTiles, randPorts);
 		
@@ -62,7 +61,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	private void setupGame() {
 
+		version = 0;
+
 		turnTracker.setStatus(Status.FIRST_ROUND);
+
+		modelChanged = false;
 	}
 
 	public boolean containsPlayerId(int player_id) {
@@ -119,6 +122,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		Message message = new Message(chatMessage, players.getPlayer(player_index).getName());
 		
 		gameLog.getGameChat().addMessage(message);
+
+		modelChanged = true;
 		
 		return true;
 	}
@@ -127,7 +132,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean canAcceptTrade(int player_index) {
 		
 		boolean player_condition_met = players.getPlayer(player_index).canAcceptTrade(domesticTrade);
+
 		boolean status_met = (turnTracker.getStatus() == Status.PLAYING);
+
 		boolean turn_condition_met = (turnTracker.getCurrentTurn() != player_index);
 
 		return (player_condition_met && status_met && turn_condition_met);
@@ -137,13 +144,17 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean acceptTrade(int player_index, boolean accept) {
 		
 		if(accept) {
+
 			//Adjust the resources of the player who accepted the trade
 			players.getPlayer(player_index).acceptTrade(domesticTrade);
+
 			//Adjust the resources of the player who offered the trade
 			players.getPlayer(domesticTrade.getSender()).makeDomesticTrade(domesticTrade);
 		}
 
 		domesticTrade = null;
+
+		modelChanged = true;
 		
 		return true;
 	}
@@ -174,7 +185,13 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		if(all_discarded) {
 
 			turnTracker.setStatus(Status.ROBBING);
+
+			for(Player player : players.getPlayerList()) {
+				player.endTurn();
+			}
 		}
+
+		modelChanged = true;
 		
 		return true;
 	}
@@ -207,6 +224,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		}
 
 		//add to history log
+
+
+
+		modelChanged = true;
 		
 		return true;
 	}
@@ -253,6 +274,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		turnTracker.setPlayerWithLongestRoad(boardMap.getLongestRoadIndex());
 
 		//add to history log
+
+
+		modelChanged = true;
 		
 		return true;
 	}
@@ -293,9 +317,12 @@ public class ServerGameManager implements ServerGameManagerInterface {
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
 		players.getPlayer(player_index).buildSettlement(isFree);
+
 		boardMap.buildSettlement(location, player_index, isFree);
 
 		//add history log
+
+		modelChanged = true;
 
 		return true;
 	}
@@ -324,6 +351,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		boardMap.buildCity(location, player_index);
 
 		//add history log
+
+
+		modelChanged = true;
 		
 		return true;
 	}
@@ -376,6 +406,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		players.getPlayer(player_index).makeMaritimeTrade(trade);
 
 		resourceCardBank.makeMaritimeTrade(trade);
+
+		modelChanged = true;
 
 		return false;
 	}
@@ -431,6 +463,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			turnTracker.setStatus(Status.ROLLING);
 			nextPlayerTurn(player_index);
 		}
+
+		modelChanged = true;
 
 		return true;
 	}
@@ -496,6 +530,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).buyDevCard(card_type);
 
+		modelChanged = true;
+
 		return true;
 	}
 
@@ -520,6 +556,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		resourceCardBank.yearOfPlentyPlayed(type1, type2);
 
+		modelChanged = true;
+
 		return true;
 	}
 
@@ -543,6 +581,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		players.getPlayer(player_index).playRoadBuilding();
 
 		boardMap.playRoadBuilding(location1, location2, player_index);
+
+		modelChanged = true;
 
 		return true;
 	}
@@ -570,6 +610,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).playSoldier(resource);
 
+		modelChanged = true;
+
 		return true;
 	}
 
@@ -583,6 +625,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		boardMap.playSoldier(location, player_index);
 		
 		turnTracker.setStatus(Status.PLAYING);
+
+		modelChanged = true;
 		
 		return true;
 	}
@@ -613,6 +657,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).playMonopoly(resource_type, count);
 
+		modelChanged = true;
+
 		return true;
 	}
 
@@ -633,12 +679,15 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		players.getPlayer(player_index).playMonument();
 
+		modelChanged = true;
+
 		return true;
 	}
 
 	public int getVersion() {
 
-
+		if(modelChanged)
+			version++;
 
 		return version;
 	}
