@@ -347,45 +347,12 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
     @Override
     public boolean canAcceptTrade(TradeInterface trade) {
-        int brick = trade.getTradeCard(ResourceType.BRICK);
-        int wheat = trade.getTradeCard(ResourceType.WHEAT);
-        int wood = trade.getTradeCard(ResourceType.WOOD);
-        int sheep = trade.getTradeCard(ResourceType.SHEEP);
-        int ore = trade.getTradeCard(ResourceType.ORE);
-
-        boolean can_accept = true;
-
-        if (brick < 0) {
-            if (resourceList.getBrick() < (-1 * brick)) {
-                can_accept = false;
+        for(ResourceType type : ResourceType.values()){
+            if(trade.getTradeCard(type) > (-1 * resourceList.getResourceByType(type))){
+                return false;
             }
         }
-
-        if (wheat < 0) {
-            if (resourceList.getWheat() < (-1 * wheat)) {
-                can_accept = false;
-            }
-        }
-
-        if (wood < 0) {
-            if (resourceList.getWood() < (-1 * wood)) {
-                can_accept = false;
-            }
-        }
-
-        if (sheep < 0) {
-            if (resourceList.getSheep() < (-1 * sheep)) {
-                can_accept = false;
-            }
-        }
-
-        if (ore < 0) {
-            if (resourceList.getOre() < (-1 * ore)) {
-                can_accept = false;
-            }
-        }
-
-        return can_accept;
+        return true;
     }
 
     @Override
