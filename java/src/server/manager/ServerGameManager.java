@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class ServerGameManager implements ServerGameManagerInterface {
 
 	private static final int MAX_POINTS = 10;
-	public final int TOTAL_PLAYERS = 4;
+	public static final int TOTAL_PLAYERS = 4;
 	private String title = null;
 	private int gameId;
 	BoardMap boardMap = null;
@@ -62,7 +62,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	private void setupGame() {
 
-		turnTracker.setStatus(Status.FIRST_ROUND);
+//		turnTracker.setStatus(Status.FIRST_ROUND);
 	}
 
 	public boolean containsPlayerId(int player_id) {
@@ -176,15 +176,20 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		ArrayList<ResourceList> resources = boardMap.getRollResult(number_rolled);
 
 		int temp_index = 0;
+
 		for(ResourceList resource_list : resources) {
-			players.getPlayer(temp_index++).addRollResources(resource_list);
+
+				players.getPlayer(temp_index++).addRollResources(resource_list);
 		}
 
 		if(number_rolled == 7) {
 			turnTracker.setStatus(Status.ROBBING);
-		}else{
+		}
+		else {
 			turnTracker.setStatus(Status.PLAYING);
 		}
+
+		//add to history log
 		
 		return true;
 	}
@@ -225,7 +230,12 @@ public class ServerGameManager implements ServerGameManagerInterface {
 				TurnTracker.Status.SECOND_ROUND == turnTracker.getStatus());
 
 		players.getPlayer(player_index).buildRoad(isFree);
+
 		boardMap.buildRoad(location, player_index, turnTracker.getStatus());
+
+		turnTracker.setPlayerWithLongestRoad(boardMap.getLongestRoadIndex());
+
+		//add to history log
 		
 		return true;
 	}
@@ -268,6 +278,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		players.getPlayer(player_index).buildSettlement(isFree);
 		boardMap.buildSettlement(location, player_index, isFree);
 
+		//add history log
+
 		return true;
 	}
 
@@ -291,7 +303,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean buildCity(int player_index, VertexLocation location) {
 
 		players.getPlayer(player_index).buildCity();
+
 		boardMap.buildCity(location, player_index);
+
+		//add history log
 		
 		return true;
 	}
@@ -547,6 +562,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		ResourceType resource_type = players.getPlayer(victim_player_index).rob();
 		
 		players.getPlayer(player_index).addResourceCard(resource_type);
+
+		boardMap.playSoldier(location, player_index);
 		
 		turnTracker.setStatus(Status.PLAYING);
 		
