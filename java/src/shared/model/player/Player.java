@@ -317,7 +317,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
             }
         }
         
-        return (!discarded && resourceList.totalNumberCards() > 7);
+        return (!discarded && resourceList.totalNumberCards() > 7 && (resourceList.totalNumberCards() / 2) == list.totalNumberCards()) ||
+                (list.totalNumberCards() == 0 && this.resourceList.totalNumberCards() <= 7);
     }
 
     @Override
