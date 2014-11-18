@@ -521,9 +521,11 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 		
 		VertexDirection[] adjacentVertexes = VertexDirection.getAdjacent(location.getDir());
+        ArrayList<VertexLocation> adjacent_vertex_locations = new ArrayList<VertexLocation>();
 		
 		for(VertexDirection vertex_direction : adjacentVertexes){
 			VertexLocation vertex_location = new VertexLocation(location.getHexLoc(), vertex_direction).getNormalizedLocation();
+            adjacent_vertex_locations.add(vertex_location);
 			
 			if(this.cities.containsKey(vertex_location) && this.cities.get(vertex_location).getPlayerIndex() == playerIndex ||
 			   this.settlements.containsKey(vertex_location) && this.settlements.get(vertex_location).getPlayerIndex() == playerIndex){
@@ -535,14 +537,14 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		boolean canBuildClockwiseNext = true;
 
 		//check if other players have cities/settlements which interrupt your road
-		if(this.cities.containsKey(adjacentVertexes[0]) && this.cities.get(adjacentVertexes[0]).getPlayerIndex() != playerIndex)
+		if(this.cities.containsKey(adjacent_vertex_locations.get(0)) && this.cities.get(adjacent_vertex_locations.get(0)).getPlayerIndex() != playerIndex)
 			canBuildClockwisePrevious = false;
-		else if(this.settlements.containsKey(adjacentVertexes[0]) && this.settlements.get(adjacentVertexes[0]).getPlayerIndex() != playerIndex)
+		else if(this.settlements.containsKey(adjacent_vertex_locations.get(0)) && this.settlements.get(adjacent_vertex_locations.get(0)).getPlayerIndex() != playerIndex)
 			canBuildClockwisePrevious = false;
 		
-		if(this.cities.containsKey(adjacentVertexes[1]) && this.cities.get(adjacentVertexes[1]).getPlayerIndex() != playerIndex)
+		if(this.cities.containsKey(adjacent_vertex_locations.get(1)) && this.cities.get(adjacent_vertex_locations.get(1)).getPlayerIndex() != playerIndex)
 			canBuildClockwiseNext = false;
-		else if(this.settlements.containsKey(adjacentVertexes[1]) && this.settlements.get(adjacentVertexes[1]).getPlayerIndex() != playerIndex)
+		else if(this.settlements.containsKey(adjacent_vertex_locations.get(1)) && this.settlements.get(adjacent_vertex_locations.get(1)).getPlayerIndex() != playerIndex)
 			canBuildClockwiseNext = false;
 		
 		EdgeLocation[] adjacentLocations = location.getAdjacent(canBuildClockwisePrevious, canBuildClockwiseNext, this);
