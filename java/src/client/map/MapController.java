@@ -81,7 +81,7 @@ public class MapController extends Controller implements IMapController {
 		waterHexes.add(new HexLocation(-3, 2));
 		
 		map = new BoardMap();
-		tracker = new TurnTracker();
+		tracker = new TurnTracker(Status.FIRST_ROUND, -1, -1, -1);
 		setRobView(robView);
 	}
 	
@@ -100,8 +100,17 @@ public class MapController extends Controller implements IMapController {
 			
 			localPlayer = latest_model.getLocalPlayer();
 			localPlayerColor = localPlayer.getColor();
+			
+			System.out.println("Turn: Old: " + tracker.getCurrentTurn()+ " New: " + latest_model.getTurnTracker().getCurrentTurn());
+			
+			System.out.println("Army: Old: " + tracker.getLargestArmy()+ " New: " + latest_model.getTurnTracker().getLargestArmy());
+			
+			System.out.println("Road: Old: " + tracker.getPlayerWithLongestRoad()+ " New: " + latest_model.getTurnTracker().getPlayerWithLongestRoad());
+			
+			System.out.println("Status: Old: " + tracker.getStatus() + " New: " + latest_model.getTurnTracker().getStatus());
 		
 			if (!tracker.equals(latest_model.getTurnTracker())){
+				System.out.println("New tracker received");
 				tracker = latest_model.getTurnTracker();
 			
 				if (tracker.isLocalPlayerTurn()){
