@@ -685,17 +685,19 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			players.getPlayer(player_index).addResourceCard(resource_type);
 
 			//add to history log
-			String victim_name = players.getPlayer(player_index).getName();
+			String victim_name = players.getPlayer(victim_player_index).getName();
 
 			log(("moved the robber and robbed " + victim_name), player_index);
 		}
+		else {
+
+			//add to history log
+			log("moved the robber and robbed no one", player_index);
+		}
 
 		boardMap.setRobberLocation(location);
-		
-		turnTracker.setStatus(Status.PLAYING);
 
-		//add to history log
-		log("moved the robber and robbed no one", player_index);
+		turnTracker.setStatus(Status.PLAYING);
 
 		modelChanged = true;
 		
