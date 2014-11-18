@@ -233,7 +233,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
     public boolean canBuildCity() {
         boolean canBuildCity = false;
         //the player has 2 wheat, 3 ore, 1 city
-        if (resourceList.getWheat() >= 3 && resourceList.getOre() >= 2 && cities >= 1) {
+        if (resourceList.getWheat() >= 2 && resourceList.getOre() >= 3 && cities >= 1) {
             canBuildCity = true;
         }
 
