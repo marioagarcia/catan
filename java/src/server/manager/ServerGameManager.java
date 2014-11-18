@@ -685,7 +685,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			players.getPlayer(player_index).addResourceCard(resource_type);
 
 			//add to history log
-			String victim_name = players.getPlayer(player_index).getName();
+			String victim_name = players.getPlayer(victim_player_index).getName();
 
 			log(("moved the robber and robbed " + victim_name), player_index);
 		}
