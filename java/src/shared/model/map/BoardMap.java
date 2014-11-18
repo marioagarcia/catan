@@ -640,12 +640,8 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		for(EdgeLocation individualPertinentEdge : edges.asSet())
 			if(this.roads.containsKey(individualPertinentEdge) && this.roads.get(individualPertinentEdge).getPlayerIndex() == playerIndex )
 				existsAdjacentRoad = true;
-		
-		if(!existsAdjacentRoad){
-			return false;
-		}
-		
-		return this.settlements.containsKey(location) && this.settlements.get(location).getPlayerIndex() == playerIndex;
+
+		return existsAdjacentRoad && this.settlements.containsKey(location) && this.settlements.get(location).getPlayerIndex() == playerIndex;
 	}
 
 	@Override
@@ -697,10 +693,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 	@Override
 	public boolean canPlaySoldier(HexLocation oldLocation, HexLocation newLocation, int targetPlayerIndex) {
-		if(oldLocation.equals(newLocation)){
-			return false;
-		}
-		return true;
+        return !oldLocation.equals(newLocation);
 	}
 
 	public Set<Port> getPortsByPlayer(Player player){
