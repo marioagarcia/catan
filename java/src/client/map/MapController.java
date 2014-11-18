@@ -81,7 +81,7 @@ public class MapController extends Controller implements IMapController {
 		waterHexes.add(new HexLocation(-3, 2));
 		
 		map = new BoardMap();
-		tracker = new TurnTracker();
+		tracker = new TurnTracker(Status.FIRST_ROUND, -1, -1, -1);
 		setRobView(robView);
 	}
 	
