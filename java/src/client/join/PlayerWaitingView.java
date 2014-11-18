@@ -84,7 +84,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		addAiButton = new JButton("Add a computer player");
 		addAiButton.addActionListener(actionListener);
 		FontUtils.setFont(addAiButton, BUTTON_TEXT_SIZE);
-		//aiButtonPanel.add(addAiButton);
+		aiButtonPanel.add(addAiButton);
 		
 		aiButtonPanel.add(Box.createHorizontalGlue());
 		

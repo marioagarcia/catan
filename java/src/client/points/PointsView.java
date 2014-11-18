@@ -45,8 +45,11 @@ public class PointsView extends ComponentView implements IPointsView
 	public void setPoints(int points)
 	{
 		
-		if(0 <= points && points <= MAX_POINTS)
+		if(0 <= points)
 		{
+			if (points > 10){
+				points = 10;
+			}
 			this.points = points;
 			this.repaint();
 		}
