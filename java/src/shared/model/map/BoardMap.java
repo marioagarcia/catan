@@ -781,16 +781,16 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 
 
 
-    public void setLocationOnMaritimeTrade(MaritimeTrade trade, int player_index){
-//        Set<Port> ports = this.getPortsByPlayer(player_index);
-//
-//        for(Port port : ports){
-//            if(trade.getRatio() != port.getRatio()){
-//                continue;
-//            }
-//
-//
-//        }
+    public EdgeLocation getLocationOnMaritimeTrade(MaritimeTrade trade, int player_index){
+        Set<Port> ports = this.getPortsByPlayer(player_index);
+
+        for(Port port : ports){
+            if(trade.getRatio() != port.getRatio()){
+                continue;
+            }
+
+
+        }
     }
 
 	@Override
