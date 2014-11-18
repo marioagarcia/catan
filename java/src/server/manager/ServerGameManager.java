@@ -689,13 +689,15 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 			log(("moved the robber and robbed " + victim_name), player_index);
 		}
+		else {
+
+			//add to history log
+			log("moved the robber and robbed no one", player_index);
+		}
 
 		boardMap.setRobberLocation(location);
-		
-		turnTracker.setStatus(Status.PLAYING);
 
-		//add to history log
-		log("moved the robber and robbed no one", player_index);
+		turnTracker.setStatus(Status.PLAYING);
 
 		modelChanged = true;
 		
