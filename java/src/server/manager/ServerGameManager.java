@@ -545,10 +545,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean robPlayer(int player_index, int victim_player_index, HexLocation location) {
 
 		ResourceType resource_type = players.getPlayer(victim_player_index).rob();
-
+		
 		players.getPlayer(player_index).addResourceCard(resource_type);
 		
 		turnTracker.setStatus(Status.PLAYING);
+		
 		return true;
 	}
 
