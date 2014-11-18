@@ -6,7 +6,6 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.GameInfo;
-import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
@@ -243,7 +242,7 @@ public interface ServerModelFacadeInterface {
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
-	public boolean canMaritimeTrade(int game_id, int player_index, EdgeLocation location, MaritimeTrade trade);
+	public boolean canMaritimeTrade(int game_id, int player_index, int ratio, ResourceType in, ResourceType out);
 	
 	/**
 	 * sets a trade with the cardBank and the specific player
@@ -253,7 +252,7 @@ public interface ServerModelFacadeInterface {
 	 * @param trade the cards to be traded
 	 * @return true if the cards were traded correctly
 	 */
-	public boolean maritimeTrade(int game_id, int player_index, EdgeLocation location, MaritimeTrade trade);
+	public boolean maritimeTrade(int game_id, int player_index, int ratio, ResourceType in, ResourceType out);
 	
 	/**
 	 * Checks the turn tracker to make sure that the client model status is "playing"
