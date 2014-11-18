@@ -425,6 +425,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         for (ResourceType type : ResourceType.values()) {
             this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type) - list.getResourceByType(type));
         }
+        this.discarded = true;
     }
 
     @Override
