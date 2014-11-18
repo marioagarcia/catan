@@ -75,7 +75,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         this.color = color;
     }
 
-    public boolean isDiscarded() {
+    public boolean hasDiscarded() {
         return discarded;
     }
 

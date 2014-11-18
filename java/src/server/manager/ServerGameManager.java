@@ -158,8 +158,21 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	@Override
 	public boolean discardCards(int player_index, ResourceList list) {
+
+		boolean all_discarded = true;
 		
 		players.getPlayer(player_index).discardCards(list);
+
+		for (Player player : players.getPlayerList()) {
+
+			if(!player.hasDiscarded()) {
+
+				all_discarded = false;
+			}
+		}
+
+		if(all_discarded)
+			turnTracker.setStatus(Status.ROBBING);
 		
 		return true;
 	}
@@ -179,13 +192,15 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		for(ResourceList resource_list : resources) {
 
-				players.getPlayer(temp_index++).addRollResources(resource_list);
+			players.getPlayer(temp_index++).addRollResources(resource_list);
 		}
 
 		if(number_rolled == 7) {
-			turnTracker.setStatus(Status.ROBBING);
+
+			turnTracker.setStatus(Status.DISCARDING);
 		}
 		else {
+
 			turnTracker.setStatus(Status.PLAYING);
 		}
 

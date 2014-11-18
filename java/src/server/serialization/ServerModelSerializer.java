@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
@@ -525,7 +524,7 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		
 		return new PlayerParameters(resources, oldDevCards, newDevCards, player.getRoads(), player.getCities(),
 									player.getSettlements(), player.getSoldiers(), player.getVictoryPoints(),
-									player.getMonuments(), player.getPlayedDevCard(), player.isDiscarded(),
+									player.getMonuments(), player.getPlayedDevCard(), player.hasDiscarded(),
 									player.getPlayerId(), player.getPlayerIndex(), player.getName(), 
 									player.getColor().toString().toLowerCase()); 
 	}
