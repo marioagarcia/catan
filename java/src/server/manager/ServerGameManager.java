@@ -409,7 +409,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		maritime_trade.setResourceIn(resource_in);
 		maritime_trade.setResourceOut(resource_out);
 
-		EdgeLocation location = boardMap.getLocationOnMaritimeTrade(maritime_trade, player_index);
+		EdgeLocation location = boardMap.getLocationForMaritimeTrade(maritime_trade, player_index);
 
 		boolean player_condition_met = players.getPlayer(player_index).canMaritimeTrade(maritime_trade);
 
