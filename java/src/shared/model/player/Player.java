@@ -215,6 +215,10 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         return canBuildRoad;
     }
 
+    public void endTurn(){
+        //TODO implement this method
+    }
+
     @Override
     public boolean canBuildSettlement() {
 
