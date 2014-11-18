@@ -434,16 +434,16 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean canMaritimeTrade(int game_id, int player_index,
-			EdgeLocation location, MaritimeTrade trade) {
+			int ratio, ResourceType in, ResourceType out) {
 		
-		return gamesList.get(game_id).canMaritimeTrade(player_index, location, trade);
+		return gamesList.get(game_id).canMaritimeTrade(player_index, ratio, in, out);
 	}
 
 	@Override
 	public boolean maritimeTrade(int game_id, int player_index,
-			EdgeLocation location, MaritimeTrade trade) {
+			int ratio, ResourceType in, ResourceType out) {
 		
-		return gamesList.get(game_id).maritimeTrade(player_index, location, trade);
+		return gamesList.get(game_id).maritimeTrade(player_index, ratio, in, out);
 	}
 
 	@Override
