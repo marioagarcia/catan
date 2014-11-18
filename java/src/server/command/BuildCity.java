@@ -37,7 +37,7 @@ public class BuildCity extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		
+System.out.println("************************" + facadeInstance.canBuildCity(gameId, playerIndex, location) + "**************************");		
 		if (facadeInstance.canBuildCity(gameId, playerIndex, location)){
 			
 			success = facadeInstance.buildCity(gameId, playerIndex, location);

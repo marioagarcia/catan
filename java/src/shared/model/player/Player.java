@@ -302,7 +302,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
     @Override
     public boolean canAcceptTrade(TradeInterface trade) {
         for(ResourceType type : ResourceType.values()){
-            if(trade.getTradeCard(type) > (-1 * resourceList.getResourceByType(type))){
+            if(-1 * trade.getTradeCard(type) > (resourceList.getResourceByType(type))){
                 return false;
             }
         }

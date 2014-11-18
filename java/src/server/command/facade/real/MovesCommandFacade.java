@@ -81,8 +81,13 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	@Override
 	public boolean playYearOfPlenty(YearOfPlentyParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Play Year Of Plenty");
-		PlayYearOfPlenty command = new PlayYearOfPlenty(params, gameId);
+		PlayYearOfPlenty command = null;
+		try{
+		command = new PlayYearOfPlenty(params, gameId);
 		command.execute();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return command.wasSuccessful();
 	}
 

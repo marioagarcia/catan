@@ -27,8 +27,7 @@ public class AcceptTrade extends CatanCommand {
 	 * If the move is valid, a call is then made to {@link server.facade.ServerModelFacade#acceptTrade(int, int, shared.model.card.TradeInterface, boolean) AcceptTrade}
 	 */
 	@Override
-	public void execute() {
-		
+	public void execute() {	
 		if (facadeInstance.canAcceptTrade(gameId, playerIndex)){
 			
 			success = facadeInstance.acceptTrade(gameId, playerIndex, accept);

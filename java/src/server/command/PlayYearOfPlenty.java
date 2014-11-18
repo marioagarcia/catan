@@ -32,10 +32,10 @@ public class PlayYearOfPlenty extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		
-		if (facadeInstance.canPlayYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1), ResourceType.valueOf(resourceString2))){
+
+		if (facadeInstance.canPlayYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1.toUpperCase()), ResourceType.valueOf(resourceString2.toUpperCase()))){
 			
-			success = facadeInstance.playYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1), ResourceType.valueOf(resourceString2));
+			success = facadeInstance.playYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1.toUpperCase()), ResourceType.valueOf(resourceString2.toUpperCase()));
 		}
 		
 	}

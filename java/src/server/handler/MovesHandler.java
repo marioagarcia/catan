@@ -132,7 +132,11 @@ System.out.println("Invalid Moves Cookie");
 				break;
 			case "/moves/maritimeTrade":
 				System.out.println("\tMaritime Trade URI");
+				try{
 				successful = facade.maritimeTrade(gson.fromJson(jsonString, MaritimeTradeParameters.class), gameId);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				break;
 			case "/moves/finishTurn":
 				System.out.println("\tFinish Turn URI");

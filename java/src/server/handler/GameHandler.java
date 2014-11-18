@@ -69,7 +69,7 @@ System.out.println("\tSerializing model");
 				
 				response = serializer.serializeGameModel(gameData);
 				responseCode = 200;
-System.out.println(response);		
+		
 System.out.println("\tFinished serializing model");
 
 			}else{
