@@ -420,6 +420,9 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
         vertex = vertex.getNormalizedLocation();
 
         for(HexInterface hex : this.hexes.values()){
+            if(hex.getType() == HexType.DESERT){
+                continue;
+            }
             for(VertexDirection direction : VertexDirection.values()){
                 VertexLocation potential_location = new VertexLocation(hex.getLocation(), direction).getNormalizedLocation();
 
