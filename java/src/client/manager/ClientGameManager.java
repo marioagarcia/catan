@@ -742,7 +742,7 @@ public class ClientGameManager implements ClientGameManagerInterface {
 
 		String json_string = modelSerializer.serializeMaritimeTrade(param);
 
-		String json_model = serverProxy.offerTrade(json_string);
+		String json_model = serverProxy.maritimeTrade(json_string);
 
 		if(resetFromGameModel(json_model))
 			return true;
