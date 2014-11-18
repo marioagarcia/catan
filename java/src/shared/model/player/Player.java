@@ -216,7 +216,10 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
     }
 
     public void endTurn(){
-        //TODO implement this method
+        this.discarded = false;
+        this.playedDevCard = false;
+        this.placedFreeSettlement = false;
+        this.placedFreeRoad = false;
     }
 
     @Override
