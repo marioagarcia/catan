@@ -162,48 +162,41 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	private Map<EdgeLocation, Port> generatePorts(boolean random, int number_of_ports){
 		Random random_generator = new Random(System.currentTimeMillis());
 		Map<EdgeLocation, Port> ports = new HashMap<EdgeLocation, Port>();
+
+        ports.put(new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South),
+                new Port(PortType.ORE,   new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 2));
+        ports.put(new  EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthEast),
+                new Port(PortType.THREE, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest), 3));
+        ports.put(new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast),
+                new Port(PortType.THREE, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 3));
+        ports.put(new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast),
+                new Port(PortType.BRICK, new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast), 2));
+        ports.put(new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South),
+                new Port(PortType.WHEAT, new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South), 2));
+        ports.put(new EdgeLocation(new HexLocation(0,3), EdgeDirection.North),
+                new Port(PortType.THREE, new EdgeLocation(new HexLocation(0,3), EdgeDirection.North), 3));
+        ports.put(new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast),
+                new Port(PortType.WOOD, new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast), 2));
+        ports.put(new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest),
+                new Port(PortType.THREE, new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest), 3));
+        ports.put(new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest),
+                new Port(PortType.SHEEP, new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest), 2));
+
 		if(random){
-			EdgeLocation[] potential_locations = this.generatePotentialPortLocations().toArray(new EdgeLocation[0]);
-			ArrayList<PortType> port_types = new ArrayList<PortType>(Arrays.asList(PortType.values()));
-			for(int i = 0; i < 4; i++){
-				port_types.add(PortType.THREE);
+            for(EdgeLocation location : ports.keySet()){
+                int index;
+                do{
+                    index = ((int)Math.random() * 31) % PortType.values().length;
+                } while(index > 0);
+
+                ports.get(location).setResource(PortType.values()[index]);
+                if(ports.get(location).getResource() == PortType.THREE){
+                    ports.get(location).setRatio(3);
+                }
+                else{
+                    ports.get(location).setRatio(2);
+                }
 			}
-			//create 3:1 ports
-			for(PortType type : port_types){
-				int index;
-				do{
-                    do {
-                        index = random_generator.nextInt() % potential_locations.length;
-                    } while(index < 0);
-                    
-				} while(ports.keySet().contains(potential_locations[index]));
-				if(type == PortType.THREE){
-					ports.put(potential_locations[index], new Port(type, potential_locations[index], 3));
-				}
-				else{
-					ports.put(potential_locations[index], new Port(type, potential_locations[index], 2));
-				}
-			}
-		}
-		else {
-			ports.put(new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 
-					new Port(PortType.ORE,   new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South), 2));
-			ports.put(new  EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthEast), 
-					new Port(PortType.THREE, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest), 3));
-			ports.put(new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 
-					new Port(PortType.THREE, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast), 3));
-			ports.put(new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast), 
-					new Port(PortType.BRICK, new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast), 2));
-			ports.put(new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South), 
-					new Port(PortType.WHEAT, new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South), 2));
-			ports.put(new EdgeLocation(new HexLocation(0,3), EdgeDirection.North),
-					new Port(PortType.THREE, new EdgeLocation(new HexLocation(0,3), EdgeDirection.North), 3));
-			ports.put(new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast),
-					new Port(PortType.WOOD, new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast), 2));
-			ports.put(new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest), 
-					new Port(PortType.THREE, new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest), 3));
-			ports.put(new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest),
-					new Port(PortType.SHEEP, new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest), 2));
 		}
 		return ports;
 	}
@@ -421,6 +414,24 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		}
 		return false;
 	}
+
+    public ResourceList getResourcesByVertexLocation(VertexLocation vertex){
+        ResourceList resources = new ResourceList();
+        vertex = vertex.getNormalizedLocation();
+
+        for(HexInterface hex : this.hexes.values()){
+            for(VertexDirection direction : VertexDirection.values()){
+                VertexLocation potential_location = new VertexLocation(hex.getLocation(), direction).getNormalizedLocation();
+
+                if(potential_location.equals(vertex)){
+                    ResourceType resource_type = ResourceType.valueOf(hex.getType().toString());
+                    resources.setResourceByType(resource_type, resources.getResourceByType(resource_type) + 1);
+                    break;
+                }
+            }
+        }
+        return resources;
+    }
 
     /**
      * this method will return the index of the player with the longest road
