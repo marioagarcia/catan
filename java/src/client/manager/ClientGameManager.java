@@ -590,7 +590,7 @@ public class ClientGameManager implements ClientGameManagerInterface {
 		if(gameModel.getTurnTracker().getStatus() == Status.SECOND_ROUND && num_settlements > 1) {
 			return false;
 		}
-
+		
 		return (gameModel.getBoardMap().canBuildSettlement(location, player_index, in_setup_phase) &&
 				(gameModel.getLocalPlayer().canBuildSettlement() || in_setup_phase) &&
 				gameModel.getTurnTracker().getCurrentTurn() == gameModel.getLocalPlayer().getPlayerIndex() &&

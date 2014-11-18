@@ -23,6 +23,7 @@ import server.handler.GamesHandler;
 import server.handler.MovesHandler;
 import server.handler.UserHandler;
 import server.handler.UtilHandler;
+import client.main.Catan;
 
 import com.sun.net.httpserver.*;
 
@@ -78,11 +79,6 @@ public class Server {
 		gameHandler.setGameCommandFacadeInterface(new GameCommandFacade());
 		movesHandler.setMovesCommandFacadeInterface(new MovesCommandFacade());
 		utilHandler.setUtilCommandHandler(new UtilCommandFacade());
-		//userCommandFacade = new UserCommandFacade();
-		//gamesCommandFacade = new GamesCommandFacade();
-		//gameCommandFacade = new GameCommandFacade();
-		//movesCommandFacade = new MovesCommandFacade();
-		//utilCommandFacade = new UtilCommandFacade();
 	}
 	
 	public static void main(String[] args) {
@@ -97,5 +93,4 @@ public class Server {
 			System.out.println("The only valid argument is \"mock\".");
 		}
 	}
-
 }

@@ -20,13 +20,13 @@ public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface
 	
 	public TurnTracker() {
 
-		this.status = Status.FIRST_ROUND;
+		//this.status = Status.FIRST_ROUND;
 
-		this.setCurrentTurn(0);
+		//this.setCurrentTurn(0);
 
-		this.setPlayerWithLargestArmy(-1);
+		//this.setPlayerWithLargestArmy(-1);
 
-		this.setPlayerWithLongestRoad(-1);
+		//this.setPlayerWithLongestRoad(-1);
 		
 	}
 

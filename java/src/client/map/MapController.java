@@ -100,12 +100,12 @@ public class MapController extends Controller implements IMapController {
 			
 			localPlayer = latest_model.getLocalPlayer();
 			localPlayerColor = localPlayer.getColor();
-			
+		
 			if (!tracker.equals(latest_model.getTurnTracker())){
 				tracker = latest_model.getTurnTracker();
-				
+			
 				if (tracker.isLocalPlayerTurn()){
-					
+
 					switch (tracker.getStatus()){
 						case SECOND_ROUND:
 						case FIRST_ROUND:
