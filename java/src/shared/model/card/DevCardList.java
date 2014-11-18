@@ -1,6 +1,7 @@
 package shared.model.card;
 
 import shared.serialization.interfaces.SerializerDevCardListInterface;
+import shared.definitions.DevCardType;
 
 public class DevCardList implements SerializerDevCardListInterface {
 	private int yearOfPlenty;
@@ -52,6 +53,46 @@ public class DevCardList implements SerializerDevCardListInterface {
 	public void setYearOfPlenty(int yearOfPlenty) {
 		this.yearOfPlenty = yearOfPlenty;
 	}
+
+    public void setCardsByType(DevCardType type, int value){
+        switch(type){
+            case SOLDIER:
+                this.setSoldier(value);
+                return;
+            case YEAR_OF_PLENTY:
+                this.setYearOfPlenty(value);
+                return;
+            case MONOPOLY:
+                this.setMonopoly(value);
+                return;
+            case ROAD_BUILD:
+                this.setRoadBuild(value);
+                return;
+            case MONUMENT:
+                this.setMonument(value);
+                return;
+            default:
+                System.out.println("Illegal value of " + type + " passed to setCardsByType()");
+        }
+    }
+
+    public int getCardsByType(DevCardType type){
+        switch(type){
+            case SOLDIER:
+                return this.getSoldier();
+            case YEAR_OF_PLENTY:
+                return this.getYearOfPlenty();
+            case MONOPOLY:
+                return this.getMonopoly();
+            case ROAD_BUILD:
+                return this.getRoadBuild();
+            case MONUMENT:
+                return this.getMonopoly();
+            default:
+                System.out.println("Illegal value of " + type + " passed to setCardsByType()");
+                return -1;
+        }
+    }
 
 	@Override
 	public void setDevCardList(int yearOfPlenty, int monopoly, int soldier,

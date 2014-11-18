@@ -216,10 +216,14 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
     }
 
     public void endTurn(){
-        this.discarded = false;
         this.playedDevCard = false;
         this.placedFreeSettlement = false;
         this.placedFreeRoad = false;
+
+        for(DevCardType type : DevCardType.values()){
+            this.oldDevCards.setCardsByType(type, this.newDevCards.getCardsByType(type) + this.oldDevCards.getCardsByType(type));
+            this.newDevCards.setCardsByType(type, 0);
+        }
     }
 
     @Override
@@ -487,6 +491,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         assert (this.canPlayYearOfPlenty());
 
         this.oldDevCards.setYearOfPlenty(this.oldDevCards.getYearOfPlenty() - 1);
+        this.playedDevCard = true;
 
         this.resourceList.setResourceByType(type1, this.resourceList.getResourceByType(type1) + 1);
         this.resourceList.setResourceByType(type2, this.resourceList.getResourceByType(type2) + 1);
@@ -497,6 +502,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         assert (this.canPlayRoadBuilding());
 
         this.oldDevCards.setRoadBuild(this.oldDevCards.getRoadBuild() - 1);
+        this.playedDevCard = true;
 
         this.roads -= 2;
     }
@@ -506,6 +512,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         assert (this.canPlaySoldier());
 
         this.oldDevCards.setSoldier(this.oldDevCards.getSoldier() - 1);
+        this.playedDevCard = true;
 
         if (stolen_resource != null) {
             this.resourceList.setResourceByType(stolen_resource, this.resourceList.getResourceByType(stolen_resource) + 1);
@@ -530,6 +537,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         assert (this.canPlayMonopoly());
 
         this.oldDevCards.setMonopoly(this.oldDevCards.getMonopoly() - 1);
+        this.playedDevCard = true;
 
         this.resourceList.setResourceByType(type, this.resourceList.getResourceByType(type));
     }
