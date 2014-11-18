@@ -422,6 +422,24 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		return false;
 	}
 
+    public ResourceList getResourcesByVertexLocation(VertexLocation vertex){
+        ResourceList resources = new ResourceList();
+        vertex = vertex.getNormalizedLocation();
+
+        for(HexInterface hex : this.hexes.values()){
+            for(VertexDirection direction : VertexDirection.values()){
+                VertexLocation potential_location = new VertexLocation(hex.getLocation(), direction).getNormalizedLocation();
+
+                if(potential_location.equals(vertex)){
+                    ResourceType resource_type = ResourceType.valueOf(hex.getType().toString());
+                    resources.setResourceByType(resource_type, resources.getResourceByType(resource_type) + 1);
+                    break;
+                }
+            }
+        }
+        return resources;
+    }
+
     /**
      * this method will return the index of the player with the longest road
      * @return index of player with longest road
