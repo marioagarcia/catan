@@ -18,7 +18,7 @@ public class PlaySoldier extends CatanCommand {
 	 * @param game_id The ID of the game this action will be applied to
 	 */
 	public PlaySoldier(SoldierParameters parameters, int game_id){
-		
+try{		
 		this.gameId = game_id;
 		this.playerIndex = parameters.getPlayerIndex();
 		
@@ -31,6 +31,10 @@ public class PlaySoldier extends CatanCommand {
 		newLocation = new HexLocation(x1, y1);
 		
 		victimIndex = parameters.getVictimIndex();
+}catch(Exception e){
+	System.out.println("First Try/Catch Statement");
+	e.printStackTrace();
+}
 	}
 	
 	/**
@@ -42,9 +46,13 @@ public class PlaySoldier extends CatanCommand {
 	public void execute() {
 		
 		if (facadeInstance.canPlaySoldier(gameId, playerIndex, newLocation, victimIndex)){
-			
+try{		
 			success = facadeInstance.playSoldier(gameId, playerIndex, newLocation, victimIndex);
-		}
 		
+}catch(Exception e){
+	System.out.println("Second Try/Catch Statement");
+	e.printStackTrace();
+}
+	}
 	}
 }
