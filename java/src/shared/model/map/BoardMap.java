@@ -166,10 +166,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		Random random = new Random(System.currentTimeMillis());
 		Map<HexLocation, HexInterface> hexes = new HashMap<HexLocation, HexInterface>();
 		
-//		for(HexLocation location : this.getAllowedWaterHexLocations()){
-//			hexes.put(location, new Hex(location, HexType.WATER, -1));
-//		}
-		
 		ArrayList<HexLocation> land_hexes = new ArrayList<HexLocation>();
 		
 		for(HexLocation location : this.getAllowedLandHexLocations()){
