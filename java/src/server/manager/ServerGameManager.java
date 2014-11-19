@@ -285,7 +285,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		boardMap.buildRoad(location, player_index, turnTracker.getStatus());
 
-		turnTracker.setPlayerWithLongestRoad(boardMap.getLongestRoadIndex());
+		 updateLongestRoadPoints();
 
 		//add to history log
 		log("built a road", player_index);
@@ -293,6 +293,23 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		modelChanged = true;
 		
 		return true;
+	}
+	
+	private void updateLongestRoadPoints(){
+		
+		int current_longest_index = turnTracker.getPlayerWithLongestRoad();
+		int new_longest_index = boardMap.getLongestRoadIndex();
+		
+		if (current_longest_index != -1)
+		{
+			players.getPlayer(current_longest_index).setVictoryPoints(players.getPlayer(current_longest_index).getVictoryPoints() - 2);
+		}
+		if (new_longest_index != -1)
+		{
+			players.getPlayer(new_longest_index).setVictoryPoints(players.getPlayer(new_longest_index).getVictoryPoints() + 2);
+		}
+			
+		turnTracker.setPlayerWithLongestRoad(new_longest_index);
 	}
 
 	@Override
@@ -631,6 +648,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		players.getPlayer(player_index).playRoadBuilding();
 
 		boardMap.playRoadBuilding(location1, location2, player_index);
+		
+		updateLongestRoadPoints();
 
 		devCardBank.addCard(DevCardType.ROAD_BUILD);
 

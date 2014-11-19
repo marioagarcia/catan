@@ -22,7 +22,6 @@ public class RobPlayer extends CatanCommand {
 		this.location = parameters.getLocation();
 	}
 	
-	//We will need to add functionality to our server facade to do these things
 	/**
 	 * Updates the location of the robber, and steals one resource from the victim and gives it to the player who moved the robber
 	 */
