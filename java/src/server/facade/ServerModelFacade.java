@@ -165,7 +165,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				gamesList.get(game_id).setTimeStamp(time);
 				
 				Gson serializer = new Gson();
-				writer.write(serializer.toJson(gamesList.get(game_id)));
+				writer.write(serializer.toJson(gamesList.get(game_id), ServerGameManager.class));
 				writer.close();
 				
 				//if (!isSaved(game_id)){

@@ -21,10 +21,15 @@ System.out.println("\t\tUser Command Facade: Login");
 	public Boolean register(CredentialsParameters params) {
 System.out.println("\t\tUser Command Facade: Register");
 		//Create the register command object and call execute on it
+		try{
 		Register command = new Register(params);
 		command.execute();
 		
 		return command.wasSuccessful();
+		}
+		catch(Exception e){
+			e.printStackTrace();return false;
+		}
 	}
 
 }
