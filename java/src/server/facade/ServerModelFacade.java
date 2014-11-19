@@ -495,8 +495,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean canPlaySoldier(int game_id, int player_index,
-			HexLocation oldLocation, HexLocation newLocation, int victimIndex) {
+	public boolean canPlaySoldier(int game_id, int player_index, HexLocation newLocation, int victimIndex) {
 		
 		return gamesList.get(game_id).canPlaySoldier(player_index, newLocation, victimIndex);
 	}

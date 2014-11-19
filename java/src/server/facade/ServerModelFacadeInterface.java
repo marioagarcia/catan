@@ -336,12 +336,11 @@ public interface ServerModelFacadeInterface {
 	 * Checks that the robber isn't being kept in the same place and that the 
 	 * player to rob has cards
 	 * 
-	 * @param oldLocation The location the robber is coming from
 	 * @param newLocation The location the robber is going to
 	 * @param victimIndex The player being robbed
 	 * @return true if successful 
 	 */
-	public boolean canPlaySoldier(int game_id, int player_index, HexLocation oldLocation, HexLocation newLocation, int victimIndex);
+	public boolean canPlaySoldier(int game_id, int player_index, HexLocation newLocation, int victimIndex);
 	
 	/**
 	 * Plays the soldier development card and allows the player to move the robber

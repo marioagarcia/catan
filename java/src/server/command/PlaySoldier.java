@@ -42,7 +42,7 @@ public class PlaySoldier extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canPlaySoldier(gameId, playerIndex, oldLocation, newLocation, victimIndex)){
+		if (facadeInstance.canPlaySoldier(gameId, playerIndex, newLocation, victimIndex)){
 			
 			success = facadeInstance.playSoldier(gameId, playerIndex, newLocation, victimIndex);
 		}
