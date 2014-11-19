@@ -29,7 +29,7 @@ public class PlayRoadBuilding extends CatanCommand {
 		int y1 = parameters.getSpot1().getY();
 		
 		HexLocation hex_loc1 = new HexLocation(x1, y1);
-		EdgeDirection direction1 = EdgeDirection.valueOf(parameters.getSpot1().getDirection());
+		EdgeDirection direction1 = EdgeDirection.convertShorthandDirection(parameters.getSpot1().getDirection());
 		
 		location1 = new EdgeLocation(hex_loc1, direction1);
 		
@@ -37,7 +37,7 @@ public class PlayRoadBuilding extends CatanCommand {
 		int y2 = parameters.getSpot2().getY();
 		
 		HexLocation hex_loc2 = new HexLocation(x2, y2);
-		EdgeDirection direction2 = EdgeDirection.valueOf(parameters.getSpot2().getDirection());
+		EdgeDirection direction2 = EdgeDirection.convertShorthandDirection(parameters.getSpot2().getDirection());
 		
 		location2 = new EdgeLocation(hex_loc2, direction2);
 	}
@@ -49,11 +49,13 @@ public class PlayRoadBuilding extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		
+try{		
 		if (facadeInstance.canPlayRoadBuilding(gameId, playerIndex, location1, location2)){
 			
 			success = facadeInstance.playRoadBuilding(gameId, playerIndex, location1, location2);
 		}
-		
+}catch(Exception e){
+	e.printStackTrace();
+}	
 	}
 }
