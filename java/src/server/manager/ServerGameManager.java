@@ -678,16 +678,20 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	@Override
 	public boolean robPlayer(int player_index, int victim_player_index, HexLocation location) {
 
+		System.out.println("Robbing index: " + player_index);
+		System.out.println("Victim robbing index: " + victim_player_index);
+		System.out.println("New robber location: " + location.getY() + ", " + location.getY());
 		if(victim_player_index != -1) {
 
 			ResourceType resource_type = players.getPlayer(victim_player_index).rob();
-
+			System.out.println("Stole resource");
 			players.getPlayer(player_index).addResourceCard(resource_type);
-
+			System.out.println("Added resource");
 			//add to history log
 			String victim_name = players.getPlayer(victim_player_index).getName();
-
+			System.out.println("Victim name: " + victim_name);
 			log(("moved the robber and robbed " + victim_name), player_index);
+			System.out.println("Logging");
 		}
 		else {
 
@@ -695,8 +699,11 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			log("moved the robber and robbed no one", player_index);
 		}
 
+		System.out.println("Moving Robber");
+		System.out.println("Old location: " + boardMap.getRobberLocation().getX() + ", " + boardMap.getRobberLocation().getY());
 		boardMap.setRobberLocation(location);
-
+		System.out.println("New location: " + boardMap.getRobberLocation().getX() + ", " + boardMap.getRobberLocation().getY());
+		
 		turnTracker.setStatus(Status.PLAYING);
 
 		modelChanged = true;

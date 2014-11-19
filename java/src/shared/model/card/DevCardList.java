@@ -87,7 +87,7 @@ public class DevCardList implements SerializerDevCardListInterface {
             case ROAD_BUILD:
                 return this.getRoadBuild();
             case MONUMENT:
-                return this.getMonopoly();
+                return this.getMonument();
             default:
                 System.out.println("Illegal value of " + type + " passed to setCardsByType()");
                 return -1;
