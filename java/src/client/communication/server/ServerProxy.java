@@ -381,13 +381,13 @@ public class ServerProxy implements ServerProxyInterface{
 
 	@Override
 	public String LoadGame(String JSONString) {
-		methodUrl = "/util/load";
+		methodUrl = "/games/load";
 		return doGet(methodUrl, JSONString, true);
 	}
 
 	@Override
 	public String SaveGame(String JSONString) {
-		methodUrl = "/util/save";
+		methodUrl = "/games/save";
 		return doGet(methodUrl, JSONString, true);
 	}
 }

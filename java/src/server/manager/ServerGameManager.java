@@ -706,7 +706,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 			int num_soldiers = player.getSoldiers();
 			
-			if (current_largest_army_index != player.getPlayerIndex() && num_soldiers > 3 && num_soldiers > current_largest_army){
+			if (current_largest_army_index != player.getPlayerIndex() && num_soldiers >= 3 && num_soldiers > current_largest_army){
 				new_largest_army_index = player.getPlayerIndex();
 			}
 		}
