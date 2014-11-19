@@ -35,7 +35,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	DomesticTrade domesticTrade = null;
 	private boolean modelChanged;
 	private int version;
-	private int winner;
+	private int winner = -1;
 
 
 	public ServerGameManager(String gameName, int id, boolean randTiles, boolean randNumbers, boolean randPorts) {
@@ -784,14 +784,16 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	public int getWinner() {
 
-		for(Player player : players.getPlayerList()) {
-
-			if( player.getPoints() == MAX_POINTS ) {
-
-				winner = player.getPlayerIndex();
-
-				//add to history log
-				log("wins the game!!!", winner);
+		if (winner == -1){
+			for(Player player : players.getPlayerList()) {
+	
+				if( player.getPoints() >= MAX_POINTS ) {
+	
+					winner = player.getPlayerIndex();
+	
+					//add to history log
+					log("wins the game!!!", winner);
+				}
 			}
 		}
 
