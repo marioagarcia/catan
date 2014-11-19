@@ -473,11 +473,11 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
     @Override
     public void buildRoad(boolean free) {
-        assert (this.canBuildRoad());
 
         if (free) {
             this.placedFreeRoad = true;
         } else {
+        	assert (this.canBuildRoad());
             this.resourceList.setBrick(this.resourceList.getBrick() - 1);
             this.resourceList.setWood(this.resourceList.getWood() - 1);
         }
@@ -487,11 +487,11 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
     @Override
     public void buildSettlement(boolean free) {
-        assert (this.canBuildSettlement());
 
         if (free) {
             this.placedFreeSettlement = true;
         } else {
+        	assert (this.canBuildSettlement());
             this.resourceList.setBrick(this.resourceList.getBrick() - 1);
             this.resourceList.setWood(this.resourceList.getWood() - 1);
             this.resourceList.setWheat(this.resourceList.getWheat() - 1);
