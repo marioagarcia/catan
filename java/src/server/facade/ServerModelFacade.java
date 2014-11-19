@@ -2,7 +2,6 @@ package server.facade;
 
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,9 +14,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.google.gson.Gson;
-
 import server.manager.ServerGameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -25,7 +22,6 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.GameInfo;
-import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.manager.GameData;
 import shared.model.manager.GameList;
@@ -58,7 +54,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		joinGame(0, 2, CatanColor.RED);
 		joinGame(0, 3, CatanColor.GREEN);
 		
-		saveGame(0);
+		saveGame(0, "Initial game");
 		
 		currentGameId = loadSavedIDs();
 	}
@@ -244,10 +240,10 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean saveGame(int game_id) {
+	public boolean saveGame(int game_id, String file_name) {
 		
 		if (gamesList.containsKey(game_id)){
-			String game_name = gamesList.get(game_id).getGameTitle();
+			String game_name = file_name;
 			
 			try {
 				String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
