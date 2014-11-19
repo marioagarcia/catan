@@ -9,7 +9,6 @@ import shared.serialization.parameters.SoldierParameters;
  */
 public class PlaySoldier extends CatanCommand {
 
-	private HexLocation oldLocation = null;
 	private HexLocation newLocation = null;
 	private int victimIndex = -1;
 	
