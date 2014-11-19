@@ -36,7 +36,7 @@ public class GameHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
-System.out.println("Entering Game handler");
+//System.out.println("Entering Game handler");
 		String response;
 		int responseCode;
 		
@@ -58,19 +58,12 @@ System.out.println("Failure: Invalid Game cookie");
 		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/game/model")){
-			
-System.out.println("\tGame Model URI");
 
 			GameData gameData = facade.getModel(cookieParser.getGameID());
 			if(gameData != null){
 				
-System.out.println("\tGame Model success");
-System.out.println("\tSerializing model");
-				
 				response = serializer.serializeGameModel(gameData);
 				responseCode = 200;
-		
-System.out.println("\tFinished serializing model");
 
 			}else{
 				
@@ -81,7 +74,7 @@ System.out.println("\tGame Model failure");
 			}
 		}else if(uri.contains("/game/model")){
 			
-System.out.println("\tGame Model with version number");
+//System.out.println("\tGame Model with version number");
 
 			//Pull the version number out of the uri (everything to the right of "=" in the uri)
 			int versionNumber = Integer.parseInt((uri.split("="))[1]);
@@ -146,7 +139,7 @@ System.out.println("\tReset failure");
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();
-System.out.println("Exiting Game Handler");
+//System.out.println("Exiting Game Handler");
 	}
 	
 	private String getJsonString(BufferedReader reader) throws IOException{

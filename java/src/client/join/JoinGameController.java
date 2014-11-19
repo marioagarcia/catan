@@ -250,6 +250,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			}
 			facade.joinGame(color, chosenGame); //Join the game with the chosen color	
 			facade.updateGameModel();
+			getUpdates = false;
 			joinAction.execute();
 		}else{
 			if (getSelectColorView().isModalShowing()){

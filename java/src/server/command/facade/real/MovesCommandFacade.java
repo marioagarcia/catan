@@ -126,9 +126,15 @@ System.out.println("\t\tMoves Command Facade: Rob Player");
 	@Override
 	public boolean buildRoad(BuildRoadParameters params, int gameId) {
 		System.out.println("\t\tMoves Command Facade: Build Road");
+try{
 		BuildRoad command = new BuildRoad(params, gameId);
 		command.execute();
 		return command.wasSuccessful();
+}catch(Exception e)
+{
+	e.printStackTrace();
+	return false;
+}
 	}
 
 	@Override

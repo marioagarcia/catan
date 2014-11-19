@@ -34,7 +34,7 @@ public class PlayMonopoly extends CatanCommand {
 		
 		if (facadeInstance.canPlayMonopoly(gameId, playerIndex)){
 			
-			success = facadeInstance.playMonopoly(gameId, playerIndex, ResourceType.valueOf(resourceString));
+			success = facadeInstance.playMonopoly(gameId, playerIndex, ResourceType.valueOf(resourceString.toUpperCase()));
 		}
 		
 	}
