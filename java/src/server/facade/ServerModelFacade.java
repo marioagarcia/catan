@@ -319,8 +319,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	
 	@Override
 	public Boolean isCurrentVersion(int game_id, int version_number) {
-		return false;
-		//return gamesList.get(game_id).getVersion() == version_number;
+		
+		return gamesList.get(game_id).getVersion() == version_number;
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class BuildCity extends CatanCommand {
 		int y = parameters.getVertexLocation().getY();
 		
 		HexLocation hex_loc = new HexLocation(x, y);
-		VertexDirection direction = VertexDirection.valueOf(parameters.getVertexLocation().getDirection());
+		VertexDirection direction = VertexDirection.convertShorthandDirection(parameters.getVertexLocation().getDirection());
 		
 		this.location = new VertexLocation(hex_loc, direction);
 	}
@@ -37,7 +37,6 @@ public class BuildCity extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-System.out.println("************************" + facadeInstance.canBuildCity(gameId, playerIndex, location) + "**************************");		
 		if (facadeInstance.canBuildCity(gameId, playerIndex, location)){
 			
 			success = facadeInstance.buildCity(gameId, playerIndex, location);
