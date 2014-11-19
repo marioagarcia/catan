@@ -326,7 +326,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean canSendChat(int game_id, int player_index) {
 		
-		return true;
+		return gamesList.get(game_id).canSendChat(player_index);
 	}
 
 	@Override

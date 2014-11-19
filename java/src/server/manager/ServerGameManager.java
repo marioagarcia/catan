@@ -830,12 +830,14 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	public int getWinner() {
 
-		if (winner == -1){
+		if (winner == -1) {
 			for(Player player : players.getPlayerList()) {
 	
 				if( player.getPoints() >= MAX_POINTS ) {
 	
 					winner = player.getPlayerIndex();
+
+					version++;
 	
 					//add to history log
 					log("wins the game!!!", winner);
