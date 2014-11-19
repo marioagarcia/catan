@@ -33,7 +33,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	DevCardBank devCardBank = null;
 	GameLog gameLog = null;
 	DomesticTrade domesticTrade = null;
-	private boolean modelChanged;
 	private int version;
 	private int winner = -1;
 
@@ -65,8 +64,6 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		version = 0;
 
 		turnTracker.setStatus(Status.FIRST_ROUND);
-
-		modelChanged = false;
 	}
 
 	public boolean containsPlayerId(int player_id) {
@@ -124,7 +121,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		
 		gameLog.getGameChat().addMessage(message);
 
-		modelChanged = true;
+		version++;
 		
 		return true;
 	}
@@ -164,7 +161,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		domesticTrade = null;
 
-		modelChanged = true;
+		version++;
 		
 		return true;
 	}
@@ -201,7 +198,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 			}
 		}
 
-		modelChanged = true;
+		version++;
 		
 		return true;
 	}
@@ -241,7 +238,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		log(("Rolled a " + number_rolled), player_index);
 
 
-		modelChanged = true;
+		version++;
 		
 		return true;
 	}
@@ -290,7 +287,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log("built a road", player_index);
 
-		modelChanged = true;
+		version++;
 		
 		return true;
 	}
@@ -362,7 +359,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log("built a settlement", player_index);
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
@@ -393,7 +390,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log("upgraded to a city", player_index);
 
-		modelChanged = true;
+		version++;
 		
 		return true;
 	}
@@ -414,6 +411,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean offerTrade(int player_index, ResourceList resources,	int otherPlayerIndex) {
 
 		domesticTrade = new DomesticTrade(player_index, otherPlayerIndex, resources);
+		
+		version++;
 
 		return true;
 	}
@@ -454,7 +453,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		resourceCardBank.makeMaritimeTrade(maritime_trade);
 
-		modelChanged = true;
+		version++;
 
 		return false;
 	}
@@ -520,7 +519,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		String name = players.getPlayer(player_index).getName();
 		gameLog.getGameHistoryLog().addLogLine(new LogLine(name, (name + "'s turn just ended")));
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
@@ -589,7 +588,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log("bought a development card", player_index);
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
@@ -623,7 +622,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		log(message, player_index);
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
@@ -656,7 +655,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log("built two roads", player_index);
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
@@ -691,7 +690,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log("used a soldier", player_index);
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
@@ -756,7 +755,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		
 		turnTracker.setStatus(Status.PLAYING);
 
-		modelChanged = true;
+		version++;
 		
 		return true;
 	}
@@ -792,7 +791,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log(("stole everyone's " + resource_type.name().toLowerCase()), player_index);
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
@@ -819,17 +818,12 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		//add to history log
 		log("built a monument and gained a victory point", player_index);
 
-		modelChanged = true;
+		version++;
 
 		return true;
 	}
 
 	public int getVersion() {
-
-		if(modelChanged){
-			version++;
-			modelChanged = false;
-		}
 
 		return version;
 	}
