@@ -54,6 +54,8 @@ public class MapController extends Controller implements IMapController {
 	private boolean currentlyRobbing = false;
 	private boolean robbedPlayer = false;
 	
+	private HexLocation currentRobberPosition = null;
+	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
@@ -287,6 +289,7 @@ public class MapController extends Controller implements IMapController {
 	public void placeRobber(HexLocation hexLoc) {
 		
 		map.setRobberLocation(hexLoc);
+		currentRobberPosition = hexLoc;
 		getView().placeRobber(hexLoc);
 		
 		RobPlayerInfo[] rob_list = ClientModelFacade.getInstance(null).getRobbablePlayers(hexLoc);
@@ -362,12 +365,12 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {	
 		
 		if (playingSoldier){
-			currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
+			currentState.playSoldier(currentRobberPosition, victim.getPlayerIndex());
 			playingSoldier = false;
 			robbedPlayer = true;
 		}
 		else{
-			currentState.robPlayer(victim, map.getRobberLocation());
+			currentState.robPlayer(victim, currentRobberPosition);
 		}
 	}
 	
