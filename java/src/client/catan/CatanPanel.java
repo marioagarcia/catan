@@ -114,18 +114,14 @@ public class CatanPanel extends JPanel
 				}
 			}
 		});
-		//this.add(testButton, BorderLayout.SOUTH);
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SaveView config_window = new SaveView(null);
-                config_window.reset();
+
                 config_window.setLocationRelativeTo(null);
                 config_window.setVisible(true);
-
-                String port = config_window.getPort();
-                String host = config_window.getHost();
             }
         });
         this.add(saveButton, BorderLayout.SOUTH);
