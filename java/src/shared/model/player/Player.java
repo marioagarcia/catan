@@ -521,7 +521,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
         int resource;
         do {
-            resource = ((int) Math.random() * 31) % potential_types.size();
+            resource = (int) ((Math.random() * 31)) % potential_types.size();
         } while(resource < 0);
 
         this.resourceList.setResourceByType(potential_types.get(resource), this.resourceList.getResourceByType(potential_types.get(resource)) - 1);
@@ -610,15 +610,11 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
                 return false;
         } else if (!resourceList.equals(other.resourceList))
             return false;
-        if (roads != other.roads)
-            return false;
-        if (settlements != other.settlements)
-            return false;
-        if (soldiers != other.soldiers)
-            return false;
-        if (victoryPoints != other.victoryPoints)
-            return false;
-        return true;
+
+        return roads == other.roads
+                && settlements == other.settlements
+                && soldiers == other.soldiers
+                && victoryPoints == other.victoryPoints;
     }
 
     @Override
