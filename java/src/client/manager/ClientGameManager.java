@@ -182,14 +182,10 @@ public class ClientGameManager implements ClientGameManagerInterface {
 
 	@Override
 	public boolean saveGame() {
-		//int player_index = localPlayer.getPlayerIndex();
-
-		//SaveGameRequestParameters param = new SaveGameRequestParameters(player_index, currentGame.getTitle());
-
-		//String json_string = modelSerializer.serializeSaveGameRequest(param);
-
-		// serverProxy.saveGame(json_string);
-
+		SaveGameParameters param = new SaveGameParameters(currentGame.getId(), currentGame.getTitle());
+		String json_string = modelSerializer.serializeSaveGameRequest(param);
+        
+		serverProxy.SaveGame(json_string);
 		return true;
 	}
 
