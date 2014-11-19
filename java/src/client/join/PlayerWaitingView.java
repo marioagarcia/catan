@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import shared.model.player.PlayerInfo;
 import client.base.*;
+import client.facade.ClientModelFacade;
 import client.utils.*;
 
 

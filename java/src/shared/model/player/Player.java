@@ -323,7 +323,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
 
     @Override
     public boolean canPlayMonument() {
-        return (!playedDevCard && oldDevCards.getMonument() >= 1);
+        return (!playedDevCard && (oldDevCards.getMonument() >= 1 || newDevCards.getMonument() >= 1));
     }
 
     @Override

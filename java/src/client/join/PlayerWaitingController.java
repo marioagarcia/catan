@@ -49,13 +49,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		
 		getView().setAIChoices(listAI); //Set AIList
 		getView().setPlayers(players); //Set player list
+		((PlayerWaitingView)getView()).revalidate();
 		if (!getView().isModalShowing()){
 			getView().showModal();
 		}
 		
-		if(((PlayerWaitingView)getView()).isReady() && getView().isModalShowing()){ //If there are 4 players
-			getView().closeModal();
+		if(((PlayerWaitingView)getView()).isReady()){ //If there are 4 players
 			facade.stopListPoller();
+			if(getView().isModalShowing()){
+				getView().closeModal();
+			}
 		}
 	}
 	

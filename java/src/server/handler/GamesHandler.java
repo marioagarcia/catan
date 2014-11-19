@@ -52,10 +52,8 @@ System.out.println("Entering Games handler");
 		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/games/list")){
-System.out.println("\tGamesList URI");
 			GameList gameList = facade.getGamesList();
 			if(gameList != null){
-System.out.println("\tGamesList success");
 				response = serializer.serializeGamesList(gameList.getGameList());
 				responseCode = 200;
 			}else{
