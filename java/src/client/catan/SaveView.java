@@ -11,8 +11,6 @@ import java.awt.event.ActionListener;
 @SuppressWarnings("serial")
 public class SaveView extends JDialog {
 
-    private JTextField filenameTextField;
-
     public SaveView(JFrame frame) {
         super(frame, true);
 
@@ -20,24 +18,20 @@ public class SaveView extends JDialog {
         this.setResizable(false);
 
         // filename panel
-        JLabel filenameLabel = new JLabel("Filename (No extension)");
+        JLabel filenameLabel = new JLabel("Are you sure that you want to save the current game?");
         Font defaultFont = filenameLabel.getFont();
         defaultFont = new Font(defaultFont.getName(), defaultFont.getStyle(), 14);
         filenameLabel.setFont(defaultFont);
-
-        filenameTextField = new JTextField();
-        filenameTextField.setPreferredSize(new Dimension(100, 20));
 
         JPanel portPanel = new JPanel();
         portPanel.setLayout(new BoxLayout(portPanel, BoxLayout.Y_AXIS));
 
         portPanel.add(filenameLabel);
         portPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        portPanel.add(filenameTextField);
 
 
         // Button panel
-        JButton okButton = new JButton("OK");
+        JButton okButton = new JButton("Save");
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,7 +71,7 @@ public class SaveView extends JDialog {
     }
 
     private void save() {
-        ClientModelFacade.getInstance(null).saveGame(this.filenameTextField.getText());
+        ClientModelFacade.getInstance(null).saveGame();
         this.setVisible(false);
     }
 }
