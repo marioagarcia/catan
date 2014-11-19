@@ -455,7 +455,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		version++;
 
-		return false;
+		return true;
 	}
 
 	@Override
