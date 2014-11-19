@@ -685,6 +685,8 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		players.getPlayer(player_index).playSoldier(resource);
 
 		devCardBank.addCard(DevCardType.SOLDIER);
+		
+		updateLargestArmyPoints();
 
 		//add to history log
 		log("used a soldier", player_index);
@@ -692,6 +694,35 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		modelChanged = true;
 
 		return true;
+	}
+	
+	private void updateLargestArmyPoints(){
+		
+		int current_largest_army_index = turnTracker.getPlayerWithLargestArmy();
+		int current_largest_army = current_largest_army_index != -1 ? players.getPlayer(current_largest_army_index).getSoldiers() : 0;
+		
+		int new_largest_army_index = -1;	
+		
+		for(Player player : players.getPlayerList()) {
+
+			int num_soldiers = player.getSoldiers();
+			
+			if (num_soldiers > 3 && num_soldiers > current_largest_army){
+				new_largest_army_index = player.getPlayerIndex();
+			}
+		}
+		
+		if (current_largest_army_index != -1)
+		{
+			players.getPlayer(current_largest_army_index).setVictoryPoints(players.getPlayer(current_largest_army_index).getVictoryPoints() - 2);
+		}
+		if (new_largest_army_index != -1)
+		{
+			players.getPlayer(new_largest_army_index).setVictoryPoints(players.getPlayer(new_largest_army_index).getVictoryPoints() + 2);
+		}
+		
+		turnTracker.setPlayerWithLargestArmy(new_largest_army_index);
+		
 	}
 
 	@Override

@@ -443,6 +443,8 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         if (stolen_resource != null) {
             this.resourceList.setResourceByType(stolen_resource, this.resourceList.getResourceByType(stolen_resource) + 1);
         }
+        
+        this.soldiers++;
     }
 
     @Override
