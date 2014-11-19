@@ -9,7 +9,6 @@ import shared.serialization.parameters.SoldierParameters;
  */
 public class PlaySoldier extends CatanCommand {
 
-	private HexLocation oldLocation = null;
 	private HexLocation newLocation = null;
 	private int victimIndex = -1;
 	
@@ -42,7 +41,7 @@ public class PlaySoldier extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canPlaySoldier(gameId, playerIndex, oldLocation, newLocation, victimIndex)){
+		if (facadeInstance.canPlaySoldier(gameId, playerIndex, newLocation, victimIndex)){
 			
 			success = facadeInstance.playSoldier(gameId, playerIndex, newLocation, victimIndex);
 		}
