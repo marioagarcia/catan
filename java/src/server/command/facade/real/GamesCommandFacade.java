@@ -18,7 +18,7 @@ public class GamesCommandFacade implements GamesCommandFacadeInterface{
 
 	@Override
 	public GameList getGamesList() {
-System.out.println("\t\tGames Command Facade: Get Games List");
+//System.out.println("\t\tGames Command Facade: Get Games List");
 		return ServerModelFacade.getInstance().getGameList();
 	}
 
