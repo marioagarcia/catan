@@ -365,12 +365,17 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {	
 		
 		if (playingSoldier){
-			currentState.playSoldier(map.getRobberLocation(), victim.getPlayerIndex());
+			if (victim != null){
+				currentState.playSoldier(currentRobberPosition, victim.getPlayerIndex());
+			}
+			else{
+				currentState.playSoldier(currentRobberPosition, -1);
+			}
 			playingSoldier = false;
 			robbedPlayer = true;
 		}
 		else{
-			currentState.robPlayer(victim, map.getRobberLocation());
+			currentState.robPlayer(victim, currentRobberPosition);
 		}
 	}
 	
