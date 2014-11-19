@@ -66,13 +66,13 @@ public class PointsController extends Controller implements IPointsController {
 			Player player = ((GameModel)o).getLocalPlayer();
 			PointsController.this.updatePoints(player.getPoints());
 			
-			int winner_player_id = game_model.getWinnerPlayerIndex();
+			int winner_player_index = game_model.getWinnerPlayerIndex();
 
-			if(winner_player_id != -1) {
+			if(winner_player_index != -1) {
 
 				int local_player_index = game_model.getLocalPlayer().getPlayerIndex();
 
-				Player winner= game_model.getPlayers().getPlayerByID(winner_player_id);
+				Player winner= game_model.getPlayers().getPlayer(winner_player_index);
 				
 				if(winner != null) {
 					
