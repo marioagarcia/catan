@@ -41,7 +41,7 @@ public class DevCardController extends Controller implements IDevCardController 
 			getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldier_cards);
 			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, year_of_plenty_cards);
 			
-			getPlayCardView().setCardEnabled(DevCardType.MONUMENT, localPlayer.getOldDevCards().getMonument() > 0);
+			getPlayCardView().setCardEnabled(DevCardType.MONUMENT, localPlayer.getOldDevCards().getMonument() > 0 || localPlayer.getNewDevCards().getMonument() > 0);
 			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, localPlayer.getOldDevCards().getMonopoly() > 0);
 			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, localPlayer.getOldDevCards().getRoadBuild() > 0);
 			getPlayCardView().setCardEnabled(DevCardType.SOLDIER, localPlayer.getOldDevCards().getSoldier() > 0);
