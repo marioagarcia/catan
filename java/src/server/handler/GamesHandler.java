@@ -41,7 +41,7 @@ public class GamesHandler implements HttpHandler{
 	 * re-route and passes the parameters object into that method
 	 */
 	public void handle(HttpExchange exchange) throws IOException {
-System.out.println("Entering Games handler");
+//System.out.println("Entering Games handler");
 		String response;
 		int responseCode;
 		Boolean successful;
@@ -147,7 +147,7 @@ System.out.println("\tJoin Game cookie generation");
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();
-System.out.println("Exiting Games handler");
+//System.out.println("Exiting Games handler");
 	}
 	
 	private String getJsonString(InputStream inputStream) throws IOException{
