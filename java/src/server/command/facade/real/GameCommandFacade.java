@@ -12,7 +12,7 @@ public class GameCommandFacade implements GameCommandFacadeInterface{
 	
 	@Override
 	public GameData getModel(int gameId) {
-System.out.println("\t\tGame Command Facade: Get model");
+//System.out.println("\t\tGame Command Facade: Get model");
 		return ServerModelFacade.getInstance().getGameModel(gameId);
 	}
 
