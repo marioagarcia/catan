@@ -43,7 +43,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         settlements = 5;
         cities = 4;
         soldiers = 0;
-        victoryPoints = 7;
+        victoryPoints = 0;
         resourceList = new ResourceList(0, 0, 0, 0, 0);
         newDevCards = new DevCardList();
         newDevCards.setDevCardList(0, 0, 0, 0, 0);
