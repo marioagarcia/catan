@@ -80,7 +80,7 @@ System.out.println("\tGame Model failure");
 			int versionNumber = Integer.parseInt((uri.split("="))[1]);
 			if(ServerModelFacade.getInstance().isCurrentVersion(cookieParser.getGameID(), versionNumber)){
 				//The version number was current, send true
-				response = "true";
+				response = "\"true\"";
 			}else{
 				//The version number was outdated, get and serialize the game model
 				response = serializer.serializeGameModel(facade.getModel(cookieParser.getGameID()));
