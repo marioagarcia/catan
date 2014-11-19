@@ -2,16 +2,11 @@ package server.facade;
 
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
@@ -42,21 +37,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		gamesList = new HashMap<Integer, ServerGameManager>();
 		userList = new UserManager();
 		
-		this.createNewGame("Default", true, true, true);
-		
-		registerPlayer("Sam", "sam");
-		registerPlayer("Brooke", "brooke");
-		registerPlayer("Bob", "bob");
-		registerPlayer("Joe", "joe");
-		
-		joinGame(0, 0, CatanColor.ORANGE);
-		joinGame(0, 1, CatanColor.BLUE);
-		joinGame(0, 2, CatanColor.RED);
-		joinGame(0, 3, CatanColor.GREEN);
-		
-		saveGame(0, "Initial game");
-		
-		currentGameId = loadSavedIDs();
+		loadGames();
 	}
 	
 	public static ServerModelFacade getInstance(){
@@ -70,86 +51,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		return userList.getPlayerId(name);
 	}
 	
-	private boolean isSaved(int id){
-		
-		try {
-			File id_file = new File(relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator + "IDs.txt");
-			
-			if (!id_file.exists()){
-				
-				return false;
-			}
-			else{
-				
-				Charset charset = Charset.forName("US-ASCII");
-				BufferedReader reader = Files.newBufferedReader(id_file.toPath(), charset);
-
-				String line;
-				
-				while ((line = reader.readLine()) != null){
-					
-					int compare = Integer.parseInt(line);
-					
-					if (compare == id){
-						return true;
-					}
-				}
-				
-				return false;
-			}
-		} 
-		catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
-	
-	private int loadSavedIDs(){
-		
-		try {
-			File id_file = new File(relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator + "IDs.txt");
-			
-			if (!id_file.exists()){
-				
-				return 0;
-			}
-			else{
-				
-				Charset charset = Charset.forName("US-ASCII");
-				BufferedReader reader = Files.newBufferedReader(id_file.toPath(), charset);
-				
-				int starting_id = 0;
-				String line;
-				
-				while ((line = reader.readLine()) != null){
-					
-					int compare = Integer.parseInt(line);
-					
-					if (compare >= starting_id){
-						starting_id = compare + 1;
-					}
-				}
-				
-				return starting_id;
-			}
-		} 
-		catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		return -1;
-	}
-
 	@Override
 	public boolean loginPlayer(String username, String password) {
 		return userList.canLogin(username, password);
@@ -240,10 +141,14 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public boolean saveGame(int game_id, String file_name) {
+	public boolean saveGame(int game_id) {
 		
 		if (gamesList.containsKey(game_id)){
-			String game_name = file_name;
+			String game_name = gamesList.get(game_id).getGameTitle();
+			Date now = new Date();
+			long time = now.getTime();
+			
+			String game_file = game_name + "_" + time;
 			
 			try {
 				String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
@@ -253,19 +158,21 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 					data_folder.mkdir();
 				}
 				
-				String path = folder + game_name;
+				String path = folder + game_file;
 				
 				FileWriter writer = new FileWriter(new File(path));
+				
+				gamesList.get(game_id).setTimeStamp(time);
 				
 				Gson serializer = new Gson();
 				writer.write(serializer.toJson(gamesList.get(game_id)));
 				writer.close();
 				
-				if (!isSaved(game_id)){
-					PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(folder + "IDs.txt", true)));
-					out.println(game_id);
-					out.close();
-				}
+				//if (!isSaved(game_id)){
+				//	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(folder + "IDs.txt", true)));
+				//	out.println(game_id);
+				//	out.close();
+				//}
 					
 			} 
 			catch (IOException e) {
@@ -278,38 +185,30 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	}
 
 	@Override
-	public GameData loadGame(String game_name) {
+	public void loadGames() {
 		
 		try {
 			String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
 			File data_folder = new File(folder);
 			
 			if (!data_folder.exists()){
-				return null;
+				return;
 			}
 			
-			String path = folder + game_name;
-			File load_file = new File(path);
-			
-			if (!load_file.exists()){
-				return null;
+			for (File game : data_folder.listFiles()){
+				
+				String content = new String(readAllBytes(get(game.getCanonicalPath())));
+				
+				Gson serializer = new Gson();
+				
+				ServerGameManager new_game = serializer.fromJson(content, ServerGameManager.class);
+				new_game.setGameId(currentGameId++);
+				gamesList.put(new_game.getGameId(), new_game);
 			}
-			
-			String content = new String(readAllBytes(get(path)));
-			
-			Gson serializer = new Gson();
-			
-			ServerGameManager game = serializer.fromJson(content, ServerGameManager.class);
-			gamesList.put(game.getGameId(), game);
-
-			return game.getGameData();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-		return null;
-		
+		}		
 	}
 
 	@Override

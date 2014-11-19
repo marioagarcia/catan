@@ -19,6 +19,7 @@ import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ServerGameManager implements ServerGameManagerInterface {
 
@@ -35,6 +36,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	DomesticTrade domesticTrade = null;
 	private int version;
 	private int winner = -1;
+	private long timeStamp = 0;
 
 
 	public ServerGameManager(String gameName, int id, boolean randTiles, boolean randNumbers, boolean randPorts) {
@@ -57,6 +59,14 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		setupGame();
 		
+	}
+	
+	public void setTimeStamp(long time){
+		timeStamp = time;
+	}
+	
+	public long getTimeStamp(){
+		return timeStamp;
 	}
 
 	private void setupGame() {
@@ -859,9 +869,19 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		return winner;
 	}
 
-	public String getGameTitle() { return title; }
+	public String getGameTitle() {
+		if (timeStamp != 0){
+			Date time = new Date(timeStamp);
+			return title + "_" + time.toString();
+		}
+		else{
+			return title;
+		}
+	}
 
 	public int getGameId() { return gameId; }
+	
+	public void setGameId(int id) { gameId =  id; }
 
 	public Players getPlayers() { return players; }
 
