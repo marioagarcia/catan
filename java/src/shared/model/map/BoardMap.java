@@ -148,7 +148,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
                 int index;
                 do{
                     index = (int)(Math.random() * 31) % PortType.values().length;
-                } while(index > 0);
+                } while(index < 0);
 
                 ports.get(location).setResource(PortType.values()[index]);
                 if(ports.get(location).getResource() == PortType.THREE){
