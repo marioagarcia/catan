@@ -2,12 +2,14 @@ package server.command;
 
 import shared.serialization.parameters.SaveGameParameters;
 
+
 /**
  * A Command object that captures the current state of a game and saves it locally
  * @author Kevin
  */
 public class SaveGame extends CatanCommand {
 
+	private String gameName = null;
 	/**
 	 * Initializes the SaveGame object with the data necessary to save one of the games hosted on the server
 	 * @param parameters An object containing the ID and name of the game to be saved
@@ -15,6 +17,7 @@ public class SaveGame extends CatanCommand {
 	public SaveGame(SaveGameParameters parameters){
 		
 		this.gameId = parameters.getId();
+		this.gameName = parameters.getName();
 	}
 	
 	/**
@@ -23,7 +26,7 @@ public class SaveGame extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		success = facadeInstance.saveGame(gameId);
+		success = facadeInstance.saveGame(gameId, gameName);
 		
 	}
 }
