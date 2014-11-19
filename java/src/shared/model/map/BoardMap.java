@@ -148,7 +148,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
                 int index;
                 do{
                     index = (int)(Math.random() * 31) % PortType.values().length;
-                } while(index > 0);
+                } while(index < 0);
 
                 ports.get(location).setResource(PortType.values()[index]);
                 if(ports.get(location).getResource() == PortType.THREE){
@@ -165,10 +165,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	private Map<HexLocation, HexInterface> generateHexes(boolean random_hexes, boolean random_chits) {
 		Random random = new Random(System.currentTimeMillis());
 		Map<HexLocation, HexInterface> hexes = new HashMap<HexLocation, HexInterface>();
-		
-//		for(HexLocation location : this.getAllowedWaterHexLocations()){
-//			hexes.put(location, new Hex(location, HexType.WATER, -1));
-//		}
 		
 		ArrayList<HexLocation> land_hexes = new ArrayList<HexLocation>();
 		
