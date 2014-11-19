@@ -753,7 +753,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		}
 
 		System.out.println("Old location: " + boardMap.getRobberLocation().getX() + ", " + boardMap.getRobberLocation().getY());
-
+		boardMap.setRobberLocation(location);
 		System.out.println("New location: " + boardMap.getRobberLocation().getX() + ", " + boardMap.getRobberLocation().getY());
 		
 		turnTracker.setStatus(Status.PLAYING);
