@@ -4,7 +4,6 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.card.MaritimeTrade;
 import shared.model.card.ResourceList;
 import shared.model.manager.GameData;
 
@@ -172,9 +171,9 @@ public interface ServerGameManagerInterface {
 	 * @param oldLocation The location the robber is coming from
 	 * @param newLocation The location the robber is going to
 	 * @param victimIndex The player being robbed
-	 * @return true if successful 
+	 * @return true if successful
 	 */
-	public boolean canPlaySoldier(int player_index, HexLocation oldLocation, HexLocation newLocation, int victimIndex);
+	public boolean canPlaySoldier(int player_index, HexLocation newLocation, int victimIndex);
 	public boolean playSoldier(int player_index, HexLocation new_location, int victim_index);
 
 	/**

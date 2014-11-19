@@ -661,9 +661,9 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	}
 
 	@Override
-	public boolean canPlaySoldier(int player_index, HexLocation old_loc, HexLocation new_loc, int victim_index) {
+	public boolean canPlaySoldier(int player_index, HexLocation new_location, int victim_index) {
 
-		boolean map_condition_met = boardMap.canPlaySoldier(old_loc, new_loc, player_index);
+		boolean map_condition_met = boardMap.canPlaySoldier(boardMap.getRobberLocation(), new_location, player_index);
 
 		boolean player_condition_met = players.getPlayer(player_index).canPlaySoldier();
 
@@ -710,12 +710,12 @@ public class ServerGameManager implements ServerGameManagerInterface {
 				new_largest_army_index = player.getPlayerIndex();
 			}
 		}
-		
+
 		if (new_largest_army_index == -1){
 			new_largest_army_index = current_largest_army_index;
 		}
 		else{
-			
+
 			if (current_largest_army_index != -1)
 			{
 				players.getPlayer(current_largest_army_index).setVictoryPoints(players.getPlayer(current_largest_army_index).getVictoryPoints() - 2);
@@ -725,7 +725,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 				players.getPlayer(new_largest_army_index).setVictoryPoints(players.getPlayer(new_largest_army_index).getVictoryPoints() + 2);
 			}
 		}
-		
+
 		turnTracker.setPlayerWithLargestArmy(new_largest_army_index);
 		
 	}
