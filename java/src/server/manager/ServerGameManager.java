@@ -19,6 +19,7 @@ import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ServerGameManager implements ServerGameManagerInterface {
 
@@ -35,6 +36,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	DomesticTrade domesticTrade = null;
 	private int version;
 	private int winner = -1;
+	private long timeStamp = 0;
 
 
 	public ServerGameManager(String gameName, int id, boolean randTiles, boolean randNumbers, boolean randPorts) {
@@ -57,6 +59,14 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 		setupGame();
 		
+	}
+	
+	public void setTimeStamp(long time){
+		timeStamp = time;
+	}
+	
+	public long getTimeStamp(){
+		return timeStamp;
 	}
 
 	private void setupGame() {
@@ -678,16 +688,24 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean playSoldier(int player_index, HexLocation new_location, int victim_index) {
 
 		boardMap.playSoldier(new_location, player_index);
+		String victim_player_name;
 
-		ResourceType resource = players.getPlayer(victim_index).rob();
-
-		players.getPlayer(player_index).playSoldier(resource);
+		if (victim_index != -1){
+			ResourceType resource = players.getPlayer(victim_index).rob();
+	
+			players.getPlayer(player_index).playSoldier(resource);
+			
+			victim_player_name = players.getPlayer(victim_index).getName();
+		}
+		else{
+			players.getPlayer(player_index).playSoldier(null);
+			
+			victim_player_name = "nobody";
+		}
 
 		devCardBank.addCard(DevCardType.SOLDIER);
 		
 		updateLargestArmyPoints();
-
-		String victim_player_name = players.getPlayer(victim_index).getName();
 
 		//add to history log
 		log(("used a soldier and robbed " + victim_player_name), player_index);
@@ -753,7 +771,7 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		}
 
 		System.out.println("Old location: " + boardMap.getRobberLocation().getX() + ", " + boardMap.getRobberLocation().getY());
-
+		boardMap.setRobberLocation(location);
 		System.out.println("New location: " + boardMap.getRobberLocation().getX() + ", " + boardMap.getRobberLocation().getY());
 		
 		turnTracker.setStatus(Status.PLAYING);
@@ -851,9 +869,19 @@ public class ServerGameManager implements ServerGameManagerInterface {
 		return winner;
 	}
 
-	public String getGameTitle() { return title; }
+	public String getGameTitle() {
+		if (timeStamp != 0){
+			Date time = new Date(timeStamp);
+			return title + "_" + time.toString();
+		}
+		else{
+			return title;
+		}
+	}
 
 	public int getGameId() { return gameId; }
+	
+	public void setGameId(int id) { gameId =  id; }
 
 	public Players getPlayers() { return players; }
 
