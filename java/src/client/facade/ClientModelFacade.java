@@ -264,8 +264,8 @@ public class ClientModelFacade implements ClientModelFacadeInterface {
 	}
 
 	@Override
-	public boolean saveGame() {
-		return gameManager.saveGame();
+	public boolean saveGame(String filename) {
+		return gameManager.saveGame(filename);
 	}
 	
 	public String[] getListAI(){

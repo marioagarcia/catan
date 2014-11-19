@@ -181,8 +181,8 @@ public class ClientGameManager implements ClientGameManagerInterface {
 	}
 
 	@Override
-	public boolean saveGame() {
-		SaveGameParameters param = new SaveGameParameters(currentGame.getId(), currentGame.getTitle());
+	public boolean saveGame(String filename) {
+		SaveGameParameters param = new SaveGameParameters(currentGame.getId(), filename);
 		String json_string = modelSerializer.serializeSaveGameRequest(param);
         
 		serverProxy.SaveGame(json_string);

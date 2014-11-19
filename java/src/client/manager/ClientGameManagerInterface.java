@@ -56,12 +56,13 @@ public interface ClientGameManagerInterface
 	 */
 	public boolean canJoinGame(CatanColor color, GameInfo game);
 	public boolean joinGame(CatanColor color, GameInfo game);
-	
-	/**
-	 * Saves the current game
-	 * @return true if the server was able to save the game
-	 */
-	public boolean saveGame();
+
+    /**
+     * Saves the current game
+     * @param filename the name of the file that we wish to save the game to
+     * @return true if the server was able to save the game
+     */
+	public boolean saveGame(String filename);
 	
 	/**
 	 * Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) 
