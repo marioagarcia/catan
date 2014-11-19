@@ -795,8 +795,10 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 	public int getVersion() {
 
-		if(modelChanged)
+		if(modelChanged){
 			version++;
+			modelChanged = false;
+		}
 
 		return version;
 	}
