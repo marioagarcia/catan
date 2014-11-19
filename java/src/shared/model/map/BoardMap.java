@@ -40,7 +40,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
     private int longest_road_length = -1;
     private static final int MIN_NUMBER_ROADS_FOR_LONGEST = 5;
 
-	private final int DEFAULT_RADIUS = -1; //TODO we need to determine what this should be
+	private final int DEFAULT_RADIUS = -1;
 	
 	private int radius;
 	private HexLocation robberLocation;
@@ -736,36 +736,32 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 			ArrayList<Settlement> settlementList, int radius,  ArrayList<Port> portList, HexLocation robberLocation) {
 		
 		//hexes
-		for(int i = 0; i < hexList.size(); i++){
-			this.hexes.put(hexList.get(i).getLocation(), hexList.get(i));
-		}
+        for(HexInterface hex : hexList){
+            this.hexes.put(hex.getLocation(), hex);
+        }
 		
 		//roads
-		for(int i = 0; i < roadList.size(); i++){
-			
-			Road road = roadList.get(i);
-			road = new Road(road.getPlayerIndex(), road.getLocation().getNormalizedLocation());
-
-			this.roads.put(road.getLocation(), road);
-		}
+        for(Road road : roadList){
+            road = new Road(road.getPlayerIndex(), road.getLocation().getNormalizedLocation());
+            this.roads.put(road.getLocation(), road);
+        }
 		
 		//cities
-		for(int i = 0; i < cityList.size(); i++){
-			cityList.get(i).setLocation(cityList.get(i).getLocation().getNormalizedLocation());
-			this.cities.put(cityList.get(i).getLocation(), cityList.get(i));
-		}
+        for(City city : cityList){
+            city.setLocation(city.getLocation().getNormalizedLocation());
+            this.cities.put(city.getLocation(), city);
+        }
 		
 		//settlements
-		for(int i = 0; i < settlementList.size(); i++){
-			settlementList.get(i).setLocation(settlementList.get(i).getLocation().getNormalizedLocation());
-			this.settlements.put(settlementList.get(i).getLocation(), settlementList.get(i));
-		}
+        for(Settlement settlement : settlementList){
+            settlement.setLocation(settlement.getLocation().getNormalizedLocation());
+            this.settlements.put(settlement.getLocation(), settlement);
+        }
 		
 		//ports
-		for(int i = 0; i < portList.size(); i++){
-			this.ports.put(portList.get(i).getLocation(), portList.get(i));
-		}
-		
+        for(Port port : portList){
+            this.ports.put(port.getLocation(), port);
+        }
 		
 		this.radius = radius;
 		this.robberLocation = robberLocation;
