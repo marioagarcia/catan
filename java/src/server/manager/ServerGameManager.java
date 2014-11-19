@@ -678,16 +678,24 @@ public class ServerGameManager implements ServerGameManagerInterface {
 	public boolean playSoldier(int player_index, HexLocation new_location, int victim_index) {
 
 		boardMap.playSoldier(new_location, player_index);
+		String victim_player_name;
 
-		ResourceType resource = players.getPlayer(victim_index).rob();
-
-		players.getPlayer(player_index).playSoldier(resource);
+		if (victim_index != -1){
+			ResourceType resource = players.getPlayer(victim_index).rob();
+	
+			players.getPlayer(player_index).playSoldier(resource);
+			
+			victim_player_name = players.getPlayer(victim_index).getName();
+		}
+		else{
+			players.getPlayer(player_index).playSoldier(null);
+			
+			victim_player_name = "nobody";
+		}
 
 		devCardBank.addCard(DevCardType.SOLDIER);
 		
 		updateLargestArmyPoints();
-
-		String victim_player_name = players.getPlayer(victim_index).getName();
 
 		//add to history log
 		log(("used a soldier and robbed " + victim_player_name), player_index);
