@@ -706,18 +706,24 @@ public class ServerGameManager implements ServerGameManagerInterface {
 
 			int num_soldiers = player.getSoldiers();
 			
-			if (num_soldiers > 3 && num_soldiers > current_largest_army){
+			if (current_largest_army_index != player.getPlayerIndex() && num_soldiers > 3 && num_soldiers > current_largest_army){
 				new_largest_army_index = player.getPlayerIndex();
 			}
 		}
 		
-		if (current_largest_army_index != -1)
-		{
-			players.getPlayer(current_largest_army_index).setVictoryPoints(players.getPlayer(current_largest_army_index).getVictoryPoints() - 2);
+		if (new_largest_army_index == -1){
+			new_largest_army_index = current_largest_army_index;
 		}
-		if (new_largest_army_index != -1)
-		{
-			players.getPlayer(new_largest_army_index).setVictoryPoints(players.getPlayer(new_largest_army_index).getVictoryPoints() + 2);
+		else{
+			
+			if (current_largest_army_index != -1)
+			{
+				players.getPlayer(current_largest_army_index).setVictoryPoints(players.getPlayer(current_largest_army_index).getVictoryPoints() - 2);
+			}
+			if (new_largest_army_index != -1)
+			{
+				players.getPlayer(new_largest_army_index).setVictoryPoints(players.getPlayer(new_largest_army_index).getVictoryPoints() + 2);
+			}
 		}
 		
 		turnTracker.setPlayerWithLargestArmy(new_largest_army_index);
