@@ -381,7 +381,7 @@ public class Player implements PlayerInterface, GMPlayerInterface, SerializerPla
         assert (this.canMaritimeTrade(trade));
 
         this.resourceList.setResourceByType(trade.getResourceIn(), this.resourceList.getResourceByType(trade.getResourceIn()) - trade.getRatio());
-        this.resourceList.setResourceByType(trade.getResourceOut(), this.resourceList.getResourceByType(trade.getResourceOut()) - 1);
+        this.resourceList.setResourceByType(trade.getResourceOut(), this.resourceList.getResourceByType(trade.getResourceOut()) + 1);
     }
 
     @Override
