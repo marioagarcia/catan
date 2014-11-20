@@ -18,6 +18,7 @@ import shared.serialization.parameters.BuyDevCardParameters;
 import shared.serialization.parameters.DiscardCardsParameters;
 import shared.serialization.parameters.FinishTurnParameters;
 import shared.serialization.parameters.MaritimeTradeParameters;
+import shared.serialization.parameters.MessageParameters;
 import shared.serialization.parameters.MonopolyParameters;
 import shared.serialization.parameters.MonumentParameters;
 import shared.serialization.parameters.OfferTradeParameters;
@@ -99,8 +100,12 @@ System.out.println("Invalid Moves Cookie");
 				successful = facade.sendChat(gson.fromJson(jsonString, SendChatParameters.class), gameId);
 				break;
 			case "/moves/acceptTrade":
+try{
 				System.out.println("\tAccept Trade URI");
 				successful = facade.acceptTrade(gson.fromJson(jsonString, AcceptTradeParameters.class), gameId);
+}catch(Exception e){
+	e.printStackTrace();
+}
 				break;
 			case "/moves/discardCards":
 				System.out.println("\tDiscard Cards URI");
