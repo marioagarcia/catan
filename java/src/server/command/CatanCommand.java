@@ -8,7 +8,7 @@ import server.facade.ServerModelFacade;
  */
 public abstract class CatanCommand implements CatanCommandInterface {
 	
-	protected boolean success;
+	protected boolean success = false;
 	protected int playerIndex = -1;
 	protected int gameId = -1;
 	protected ServerModelFacade facadeInstance = ServerModelFacade.getInstance();

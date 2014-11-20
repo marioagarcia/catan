@@ -26,8 +26,6 @@ public class Register extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		
 		success = facadeInstance.registerPlayer(username, password);
-		
 	}
 }
