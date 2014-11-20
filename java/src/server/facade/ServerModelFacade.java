@@ -102,9 +102,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean canJoinGame(int game_id, int player_id, CatanColor color) {
 		
 		if (gamesList.containsKey(game_id)){
-			
 			if (gamesList.get(game_id).containsPlayerId(player_id)){
-				
 				return (gamesList.get(game_id).getPlayers().getPlayerByID(player_id).getColor() == color);
 				
 			}
@@ -114,7 +112,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 		}
 		else{
-			
 			return false;
 		}
 	}

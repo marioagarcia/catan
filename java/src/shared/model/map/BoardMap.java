@@ -89,7 +89,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 		}
 		
 		for(HexInterface hex : this.hexes.values()){
-			if(hex.getNumber() == number){
+			if(hex.getNumber() == number && !hex.getLocation().equals(this.robberLocation)){
 				for(VertexDirection direction : VertexDirection.values()){
 					VertexLocation location = new VertexLocation(hex.getLocation(), direction);
 
