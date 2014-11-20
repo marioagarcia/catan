@@ -1,12 +1,10 @@
 package server.facade;
 
-import static java.nio.file.Files.readAllBytes;
-import static java.nio.file.Paths.get;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -14,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.gson.Gson;
 
 import server.manager.ServerGameManager;
 import shared.definitions.CatanColor;
@@ -171,26 +167,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
 				out.writeObject(gamesList.get(game_id));
 				out.close();
-				fileOut.close();
+				fileOut.close();	
 				
-				
-				
-				
-				
-				/*
-				FileWriter writer = new FileWriter(new File(path));
-				
-				gamesList.get(game_id).setTimeStamp(time);
-				
-				Gson serializer = new Gson();
-				writer.write(serializer.toJson(gamesList.get(game_id), ServerGameManager.class));
-				writer.close();
-				*/
-				//if (!isSaved(game_id)){
-				//	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(folder + "IDs.txt", true)));
-				//	out.println(game_id);
-				//	out.close();
-				//}
+				addLoadGame(path);
 					
 			} 
 			catch (IOException e) {
@@ -200,6 +179,34 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		}
 		
 		return false;
+	}
+	
+	private void addLoadGame(String path)
+	{
+		FileInputStream fileIn;
+		try {
+			fileIn = new FileInputStream(path);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+	        ServerGameManager new_game;
+	        
+	        new_game = (ServerGameManager) in.readObject();
+			new_game.setGameId(currentGameId++);
+			gamesList.put(new_game.getGameId(), new_game);
+			
+			in.close();
+	        fileIn.close();
+		} 
+		catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
+			System.out.println("Could not deserialize");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -213,32 +220,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				return;
 			}
 			
-			for (File game : data_folder.listFiles()){
+			for (File game : data_folder.listFiles()){		
 				
-				String content = new String(readAllBytes(get(game.getCanonicalPath())));
-				
-				
-				 FileInputStream fileIn = new FileInputStream(game.getCanonicalPath());
-		         ObjectInputStream in = new ObjectInputStream(fileIn);
-		         ServerGameManager new_game;
-				try {
-					new_game = (ServerGameManager) in.readObject();
-					new_game.setGameId(currentGameId++);
-					gamesList.put(new_game.getGameId(), new_game);
-				} catch (ClassNotFoundException e) {
-					System.out.println("Could not deserialize");
-					e.printStackTrace();
-				}
-		         in.close();
-		         fileIn.close();
-				
-				
-				
-				
-				//Gson serializer = new Gson();
-				
-				//ServerGameManager new_game = serializer.fromJson(content, ServerGameManager.class);
-				
+				addLoadGame(game.getCanonicalPath());
 			}
 		} 
 		catch (IOException e) {
