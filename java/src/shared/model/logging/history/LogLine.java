@@ -1,6 +1,9 @@
 package shared.model.logging.history;
 
-public class LogLine implements LogLineInterface {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class LogLine implements LogLineInterface, Serializable {
 
 	String playerName;
 	String move;

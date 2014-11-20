@@ -1,8 +1,10 @@
 package shared.model.logging.chat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameChat implements GameChatInterface {
+@SuppressWarnings("serial")
+public class GameChat implements GameChatInterface, Serializable {
 
 	ArrayList<MessageInterface> messageList;
 	

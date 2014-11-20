@@ -1,10 +1,13 @@
 package shared.model.map;
 
+import java.io.Serializable;
+
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
 import shared.serialization.interfaces.SerializerHexInterface;
 
-public class Hex implements HexInterface, SerializerHexInterface {
+@SuppressWarnings("serial")
+public class Hex implements HexInterface, SerializerHexInterface, Serializable {
 	
 	private HexLocation location;
 	private HexType resource;

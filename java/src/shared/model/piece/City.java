@@ -1,10 +1,13 @@
 package shared.model.piece;
 
+import java.io.Serializable;
+
 import shared.definitions.PieceType;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerCityInterface;
 
-public class City implements CityInterface, SerializerCityInterface {
+@SuppressWarnings("serial")
+public class City implements CityInterface, SerializerCityInterface, Serializable {
 	
 	private int playerIndex;
 	private VertexLocation location;

@@ -1,5 +1,6 @@
 package shared.model.map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,7 +31,8 @@ import shared.serialization.interfaces.SerializerMapInterface;
 import shared.shared.utils.CatanUtils;
 import shared.model.card.MaritimeTrade;
 
-public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface {
+@SuppressWarnings("serial")
+public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface, Serializable {
 	private Map<HexLocation, HexInterface> hexes;
 	private Map<EdgeLocation, Road> roads;
 	private Map<VertexLocation, City> cities;

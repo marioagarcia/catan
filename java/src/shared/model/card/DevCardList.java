@@ -1,9 +1,12 @@
 package shared.model.card;
 
+import java.io.Serializable;
+
 import shared.serialization.interfaces.SerializerDevCardListInterface;
 import shared.definitions.DevCardType;
 
-public class DevCardList implements SerializerDevCardListInterface {
+@SuppressWarnings("serial")
+public class DevCardList implements SerializerDevCardListInterface, Serializable {
 	private int yearOfPlenty;
 	private int monopoly;
 	private int soldier;

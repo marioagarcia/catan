@@ -1,11 +1,14 @@
 package shared.model.piece;
 
+import java.io.Serializable;
+
 import shared.definitions.PieceType;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerSettlementInterface;
 
 
-public class Settlement implements SettlementInterface, SerializerSettlementInterface {
+@SuppressWarnings("serial")
+public class Settlement implements SettlementInterface, SerializerSettlementInterface, Serializable {
 	
 	PieceType type;
 	int playerIndex;

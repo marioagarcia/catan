@@ -1,11 +1,14 @@
 package shared.model.logging;
 
+import java.io.Serializable;
+
 import shared.model.logging.chat.GameChat;
 import shared.model.logging.chat.GameChatInterface;
 import shared.model.logging.history.GameHistoryLogInterface;
 import shared.model.logging.history.HistoryLog;
 
-public class GameLog implements GameLogInterface {
+@SuppressWarnings("serial")
+public class GameLog implements GameLogInterface, Serializable {
 
 	private GameHistoryLogInterface gameHistoryLog;
 	private GameChatInterface gameChat;

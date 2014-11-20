@@ -1,5 +1,6 @@
 package shared.model.manager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.model.card.DevCardBank;
@@ -11,7 +12,8 @@ import shared.model.player.Player;
 import shared.model.player.Players;
 import shared.model.turntracker.TurnTracker;
 
-public class GameData {
+@SuppressWarnings("serial")
+public class GameData implements Serializable {
 
 	//Deck - DevCardBank
 	public DevCardBank devCardBank; //Done

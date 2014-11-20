@@ -1,9 +1,12 @@
 package shared.model.card;
 
+import java.io.Serializable;
+
 import shared.definitions.ResourceType;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
-public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface {
+@SuppressWarnings("serial")
+public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface, Serializable {
 
 	private int sender;
 	private int receiver;

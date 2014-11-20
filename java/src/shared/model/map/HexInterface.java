@@ -1,7 +1,6 @@
 package shared.model.map;
 
 import shared.definitions.HexType;
-import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 
 public interface HexInterface {
