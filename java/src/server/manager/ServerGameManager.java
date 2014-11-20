@@ -874,7 +874,8 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 	public String getGameTitle() {
 		if (timeStamp != 0){
 			Date time = new Date(timeStamp);
-			return title + "_" + time.toString();
+			String short_time = time.toString().split("MST")[0];
+			return title + "_" + short_time;
 		}
 		else{
 			return title;

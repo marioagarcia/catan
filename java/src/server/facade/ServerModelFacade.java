@@ -161,6 +161,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 					data_folder.mkdir();
 				}
 				
+				gamesList.get(game_id).setTimeStamp(time);
+				
 				String path = folder + game_file;
 				
 				FileOutputStream fileOut = new FileOutputStream(path);
@@ -170,6 +172,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				fileOut.close();	
 				
 				addLoadGame(path);
+				
+				gamesList.get(game_id).setTimeStamp(0); //Resets original game back to no time stamp
 					
 			} 
 			catch (IOException e) {
