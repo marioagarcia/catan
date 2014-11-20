@@ -160,11 +160,16 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean saveGame(int game_id) {
 		
 		if (gamesList.containsKey(game_id)){
-			String game_name = gamesList.get(game_id).getGameTitle();
+			
+			long original_time = gamesList.get(game_id).getTimeStamp();
+			gamesList.get(game_id).setTimeStamp(0);
+			
+			String original_game_name = gamesList.get(game_id).getGameTitle();
+			
 			Date now = new Date();
 			long time = now.getTime();
 			
-			String game_file = game_name + "_" + time;
+			String game_file = original_game_name + "_" + time;
 			
 			try {
 				String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
@@ -174,7 +179,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 					data_folder.mkdir();
 				}
 				
-				gamesList.get(game_id).setTimeStamp(time);
+				//gamesList.get(game_id).setTimeStamp(time);
+				String short_time = now.toString().split("MST")[0];
+				gamesList.get(game_id).setGameTitle(gamesList.get(game_id).getGameTitle() + "_" + short_time);
 				
 				String path = folder + game_file;
 				
@@ -184,9 +191,10 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				out.close();
 				fileOut.close();	
 				
-				addLoadGame(path);
+				gamesList.get(game_id).setTimeStamp(original_time); //Resets original game back to no time stamp
+				gamesList.get(game_id).setGameTitle(original_game_name);
 				
-				gamesList.get(game_id).setTimeStamp(0); //Resets original game back to no time stamp
+				addLoadGame(path);
 					
 			} 
 			catch (IOException e) {
