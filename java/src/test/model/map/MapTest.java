@@ -507,6 +507,37 @@ public class MapTest {
         //this adds a road on a hex adjacent to the current one
         addRoadToMap(map, 1, 0, EdgeDirection.North, 1);
         assert (map.getLongestRoadIndex() == 1);
+
+        map = new BoardMap(false, false, false);
+        addRoadToMap(map, -1,0, EdgeDirection.North, 0);
+        addRoadToMap(map, -1,0, EdgeDirection.NorthWest, 0);
+        addRoadToMap(map, -2,1, EdgeDirection.North, 0);
+        addRoadToMap(map, -2,1, EdgeDirection.NorthWest, 0);
+        addRoadToMap(map, -2,1, EdgeDirection.SouthWest, 0);
+        addRoadToMap(map, -2,1, EdgeDirection.South, 0);
+        addRoadToMap(map, -2,1, EdgeDirection.SouthEast, 0);
+        addRoadToMap(map, -2,1, EdgeDirection.NorthEast, 0);
+
+        assert(map.getLongestRoadIndex() == 0);
+        addRoadToMap(map, -2,0, EdgeDirection.SouthWest, 0);
+
+
+        addRoadToMap(map, -1,1, EdgeDirection.South, 1);
+        addRoadToMap(map, 0,1, EdgeDirection.South, 1);
+        addRoadToMap(map, 0,1, EdgeDirection.SouthWest, 1);
+        addRoadToMap(map, 1,1, EdgeDirection.SouthWest, 1);
+        addRoadToMap(map, 1,1, EdgeDirection.South, 1);
+        addRoadToMap(map, 1,1, EdgeDirection.SouthEast, 1);
+
+        addRoadToMap(map, 2,0, EdgeDirection.South, 1);
+        addRoadToMap(map, 2,0, EdgeDirection.SouthEast, 1);
+        addRoadToMap(map, 2,0, EdgeDirection.NorthEast, 1);
+        assert(map.getLongestRoadIndex() == 1);
+
+        addRoadToMap(map, -2,2, EdgeDirection.NorthWest, 0);
+        assert(map.getLongestRoadIndex() == 1);
+
+
     }
 
 }
