@@ -194,8 +194,22 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	        ServerGameManager new_game;
 	        
 	        new_game = (ServerGameManager) in.readObject();
-			new_game.setGameId(currentGameId++);
-			gamesList.put(new_game.getGameId(), new_game);
+	        
+	        
+	        boolean exists = false;
+	        
+	        for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
+				
+				if (game.getValue().getGameTitle().equals(new_game.getGameTitle())){
+					exists = true;
+					break;
+				}	
+			}
+	                
+	        if (!exists){
+				new_game.setGameId(currentGameId++);
+				gamesList.put(new_game.getGameId(), new_game);
+	        }
 			
 			in.close();
 	        fileIn.close();
