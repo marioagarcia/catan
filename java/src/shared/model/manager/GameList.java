@@ -20,6 +20,10 @@ public class GameList extends Observable{
 	public ArrayList<GameInfo> getGameList(){
 		return gameList;
 	}
+
+	public int size() {
+		return gameList.size();
+	}
 	
 	public GameInfo[] gameListToArray(){
 		GameInfo[] gamesList = new GameInfo[gameList.size()];
