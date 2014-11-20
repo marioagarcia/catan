@@ -208,11 +208,11 @@ public class MapTest {
 		// the player has 2 wheat, 3 ore, 1 city, it is the player's turn, game status is 'Playing
 		VertexLocation location = new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast);
 		int playerIndex = player.getPlayerId();
-		player.setResourceList(new ResourceList(0, 2, 0, 3, 0));
+		player.setResourceList(new ResourceList(0, 3, 0, 2, 0));
 		player.setCities(1);
 		tt.setCurrentTurn(0);
 		tt.setStatus(Status.PLAYING);
-		assertTrue(map.canBuildCity(location, playerIndex) &&
+		assertTrue(map.canBuildCity(location, playerIndex) && 
 				   player.canBuildCity());
 		
 		// AssertFalse when the city location is not currently occupied by one of the player's settlements
@@ -240,13 +240,15 @@ public class MapTest {
 		player.setCities(5);
 		tt.setCurrentTurn(1);
 		assertFalse(map.canBuildCity(location, playerIndex) &&
-				    player.canBuildCity() && tt.getCurrentTurn() == playerIndex);
+				    player.canBuildCity() && 
+				    tt.getCurrentTurn() == playerIndex);
 		
 		// AssertFalse if the game status isn't 'Playing'
 		tt.setCurrentTurn(0);
 		tt.setStatus(Status.FIRST_ROUND);
 		assertFalse(map.canBuildCity(location, playerIndex) &&
-				    player.canBuildCity() && tt.getStatus() == Status.PLAYING);
+				    player.canBuildCity() && 
+				    tt.getStatus() == Status.PLAYING);
 	}
 
 	@Test
@@ -329,8 +331,8 @@ public class MapTest {
 		// player has 2 roads
 		EdgeLocation tempLocation1 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.South);// = tempLocation2;
 		tempLocation2 = new EdgeLocation(new HexLocation(0, 2), EdgeDirection.SouthWest);
-		assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex));
-		assertTrue(player.canPlayRoadBuilding());
+		assertTrue(map.canPlayRoadBuilding(tempLocation1, tempLocation2, playerIndex) &&
+				   player.canPlayRoadBuilding());
 		
 		// AssertFalse if the first road location is not connected to one of the player's roads or the
 		// second road location
