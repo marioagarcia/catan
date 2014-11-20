@@ -881,6 +881,10 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 			return title;
 		}
 	}
+	
+	public void setGameTitle(String title){
+		this.title = title;
+	}
 
 	public int getGameId() { return gameId; }
 	
