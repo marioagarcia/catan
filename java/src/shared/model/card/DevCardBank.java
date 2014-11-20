@@ -1,5 +1,6 @@
 package shared.model.card;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,8 @@ import shared.definitions.DevCardType;
 import shared.model.manager.interfaces.GMDevCardBankInterface;
 import shared.serialization.interfaces.SerializerDeckInterface;
 
-public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface {
+@SuppressWarnings("serial")
+public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface, Serializable {
 
 	private final int CARD_TYPES = 5;
 

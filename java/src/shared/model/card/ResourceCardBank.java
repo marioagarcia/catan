@@ -1,11 +1,14 @@
 package shared.model.card;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
 import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerBankInterface;
 
-public class ResourceCardBank implements ResourceCardBankInterface, SerializerBankInterface {
+@SuppressWarnings("serial")
+public class ResourceCardBank implements ResourceCardBankInterface, SerializerBankInterface, Serializable {
 	
 	private Map<ResourceType, Integer> cards;
     private static final int totalCardsPerType = 19;

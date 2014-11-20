@@ -2,14 +2,21 @@ package server.facade;
 
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.google.gson.Gson;
+
 import server.manager.ServerGameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -160,6 +167,17 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				
 				String path = folder + game_file;
 				
+				FileOutputStream fileOut = new FileOutputStream(path);
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(gamesList.get(game_id));
+				out.close();
+				fileOut.close();
+				
+				
+				
+				
+				
+				/*
 				FileWriter writer = new FileWriter(new File(path));
 				
 				gamesList.get(game_id).setTimeStamp(time);
@@ -167,7 +185,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				Gson serializer = new Gson();
 				writer.write(serializer.toJson(gamesList.get(game_id), ServerGameManager.class));
 				writer.close();
-				
+				*/
 				//if (!isSaved(game_id)){
 				//	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(folder + "IDs.txt", true)));
 				//	out.println(game_id);
@@ -199,11 +217,28 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				
 				String content = new String(readAllBytes(get(game.getCanonicalPath())));
 				
-				Gson serializer = new Gson();
 				
-				ServerGameManager new_game = serializer.fromJson(content, ServerGameManager.class);
-				new_game.setGameId(currentGameId++);
-				gamesList.put(new_game.getGameId(), new_game);
+				 FileInputStream fileIn = new FileInputStream(game.getCanonicalPath());
+		         ObjectInputStream in = new ObjectInputStream(fileIn);
+		         ServerGameManager new_game;
+				try {
+					new_game = (ServerGameManager) in.readObject();
+					new_game.setGameId(currentGameId++);
+					gamesList.put(new_game.getGameId(), new_game);
+				} catch (ClassNotFoundException e) {
+					System.out.println("Could not deserialize");
+					e.printStackTrace();
+				}
+		         in.close();
+		         fileIn.close();
+				
+				
+				
+				
+				//Gson serializer = new Gson();
+				
+				//ServerGameManager new_game = serializer.fromJson(content, ServerGameManager.class);
+				
 			}
 		} 
 		catch (IOException e) {

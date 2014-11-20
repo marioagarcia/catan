@@ -1,9 +1,12 @@
 package shared.model.card;
 
+import java.io.Serializable;
+
 import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 
-public class ResourceList implements SerializerResourceListInterface {
+@SuppressWarnings("serial")
+public class ResourceList implements SerializerResourceListInterface, Serializable {
 
 
 	private int brick;

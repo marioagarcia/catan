@@ -1,9 +1,11 @@
 package shared.model.logging.history;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class HistoryLog implements GameHistoryLogInterface {
+@SuppressWarnings("serial")
+public class HistoryLog implements GameHistoryLogInterface, Serializable {
 
 	ArrayList<LogLineInterface> logLineList;
 	

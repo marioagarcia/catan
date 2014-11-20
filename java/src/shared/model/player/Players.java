@@ -1,11 +1,13 @@
 package shared.model.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.CatanColor;
 
-public class Players {
+@SuppressWarnings("serial")
+public class Players implements Serializable{
 
 	private List<Player> playerList;
 	

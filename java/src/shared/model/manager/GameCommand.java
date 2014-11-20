@@ -1,8 +1,11 @@
 package shared.model.manager;
 
+import java.io.Serializable;
+
 import shared.serialization.interfaces.SerializerGameCommandInterface;
 
-public class GameCommand implements SerializerGameCommandInterface{
+@SuppressWarnings("serial")
+public class GameCommand implements SerializerGameCommandInterface, Serializable{
 	
 	private String content;
 	private String type;

@@ -1,5 +1,6 @@
 package shared.model.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.definitions.CatanColor;
@@ -12,7 +13,8 @@ import shared.model.card.TradeInterface;
 import shared.model.manager.interfaces.GMPlayerInterface;
 import shared.serialization.interfaces.SerializerPlayerInterface;
 
-public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface {
+@SuppressWarnings("serial")
+public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface, Serializable {
 
     int cities;
     CatanColor color;

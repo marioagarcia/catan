@@ -1,8 +1,11 @@
 package shared.model.logging.chat;
 
+import java.io.Serializable;
+
 import shared.serialization.interfaces.SerializerMessageInterface;
 
-public class Message implements MessageInterface, SerializerMessageInterface {
+@SuppressWarnings("serial")
+public class Message implements MessageInterface, SerializerMessageInterface, Serializable {
 
 		String content;
 		String playerName;

@@ -1,9 +1,12 @@
 package shared.model.turntracker;
 
+import java.io.Serializable;
+
 import shared.model.manager.interfaces.GMTurnTrackerInterface;
 import shared.serialization.interfaces.SerializerTurnTrackerInterface;
 
-public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface {
+@SuppressWarnings("serial")
+public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface, Serializable {
 	
 	private Status status;
 	private int localPlayerIndex;

@@ -1,10 +1,13 @@
 package shared.model.map;
 
+import java.io.Serializable;
+
 import shared.definitions.PortType;
 import shared.locations.EdgeLocation;
 import shared.serialization.interfaces.SerializerPortInterface;
 
-public class Port implements SerializerPortInterface {
+@SuppressWarnings("serial")
+public class Port implements SerializerPortInterface, Serializable {
 
 	private PortType resource; // If omitted, then it's for any resource, Optional
 	private EdgeLocation location;

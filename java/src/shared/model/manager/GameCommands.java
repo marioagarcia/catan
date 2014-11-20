@@ -1,9 +1,11 @@
 package shared.model.manager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class GameCommands {
+@SuppressWarnings("serial")
+public class GameCommands implements Serializable {
 
 	private ArrayList<GameCommand> commandList;
 	

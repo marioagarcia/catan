@@ -1,10 +1,13 @@
 package shared.model.piece;
 
+import java.io.Serializable;
+
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.serialization.interfaces.SerializerRoadInterface;
 
-public class Road implements RoadInterface, SerializerRoadInterface {
+@SuppressWarnings("serial")
+public class Road implements RoadInterface, SerializerRoadInterface, Serializable {
 
 	int playerIndex;
 	EdgeLocation location;

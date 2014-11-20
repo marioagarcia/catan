@@ -18,10 +18,12 @@ import shared.model.player.Players;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ServerGameManager implements ServerGameManagerInterface {
+@SuppressWarnings("serial")
+public class ServerGameManager implements ServerGameManagerInterface, Serializable {
 
 	private static final int MAX_POINTS = 10;
 	public static final int TOTAL_PLAYERS = 4;
