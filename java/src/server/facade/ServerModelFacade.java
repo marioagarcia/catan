@@ -164,9 +164,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			String original_game_name = gamesList.get(game_id).getGameTitle();
 			
 			Date now = new Date();
-			long time = now.getTime();
 			
-			String game_file = original_game_name + "_" + time;
+			String game_file = original_game_name;
+			game_file = game_file.replaceAll(" ", "_");
 			
 			try {
 				String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
@@ -176,7 +176,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 					data_folder.mkdir();
 				}
 				
-				//gamesList.get(game_id).setTimeStamp(time);
 				String short_time = now.toString().split("MST")[0];
 				gamesList.get(game_id).setGameTitle(gamesList.get(game_id).getGameTitle() + "_" + short_time);
 				
