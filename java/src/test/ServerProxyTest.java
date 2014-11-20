@@ -166,7 +166,7 @@ public class ServerProxyTest {
 		loginAndJoinGame();
 		
 		param = "{"
-				  + "\"message\": \"Adding content to model\""
+				  + "\"message\": \"Adding content to model\","
 				  + "\"source\": \"Kevin\""
 				  + "}";
 		proxyTest.sendChat(param);
@@ -189,7 +189,7 @@ public class ServerProxyTest {
 		loginAndJoinGame();
 		
 		param = "{"
-				  + "\"message\": \"Adding content to model\""
+				  + "\"message\": \"Adding content to model\","
 				  + "\"source\": \"Kevin\""
 				  + "}";
 		result = proxyTest.sendChat(param);
@@ -201,7 +201,7 @@ public class ServerProxyTest {
 		loginAndJoinGame();
 		
 		param = "{"
-			  + "\"type\": \"willAccept\","
+			  + "\"type\": \"acceptTrade\","
 			  + "\"playerIndex\": 0,"
 			  + "\"willAccept\": true"
 			  + "}";
@@ -239,7 +239,7 @@ public class ServerProxyTest {
 			  + "\"number\": 7"
 			  + "}";
 		
-		result = proxyTest.discardCards(param);
+		result = proxyTest.rollNumber(param);
 		assertTrue(!result.equals(null));
 	}
 	

@@ -16,6 +16,6 @@ public class ResetGame extends CatanCommand {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		
+		success = true;
 	}
 }

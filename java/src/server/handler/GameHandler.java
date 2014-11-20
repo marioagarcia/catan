@@ -58,7 +58,7 @@ System.out.println("Failure: Invalid Game cookie");
 		
 		String uri = exchange.getRequestURI().toString();
 		if(uri.equals("/game/model")){
-
+try{
 			GameData gameData = facade.getModel(cookieParser.getGameID());
 			if(gameData != null){
 				
@@ -72,6 +72,11 @@ System.out.println("\tGame Model failure");
 				response = "Failed to get game model.";
 				responseCode = 400;
 			}
+}catch(Exception e){
+	e.printStackTrace();
+	response = "Error getting game model.";
+	responseCode = 400;
+}
 		}else if(uri.contains("/game/model")){
 			
 //System.out.println("\tGame Model with version number");

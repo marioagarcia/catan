@@ -36,7 +36,7 @@ public class MaritimeTrade extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-System.out.println("**********" + facadeInstance.canMaritimeTrade(gameId, playerIndex, params.getRatio(), in, out) + "***********");	
+
 		if (facadeInstance.canMaritimeTrade(gameId, playerIndex, params.getRatio(), in, out)){
 			
 			success = facadeInstance.maritimeTrade(gameId, playerIndex, params.getRatio(), in, out);
