@@ -40,6 +40,19 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		gamesList = new HashMap<Integer, ServerGameManager>();
 		userList = new UserManager();
 		
+		this.createNewGame("Default", true, true, true);
+		
+		registerPlayer("Sam", "sam");
+		registerPlayer("Brooke", "brooke");
+		registerPlayer("Bob", "bob");
+		registerPlayer("Joe", "joe");
+		
+		joinGame(0, 0, CatanColor.ORANGE);
+		joinGame(0, 1, CatanColor.BLUE);
+		joinGame(0, 2, CatanColor.RED);
+		joinGame(0, 3, CatanColor.GREEN);
+		
+		
 		loadGames();
 	}
 	
@@ -194,8 +207,22 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	        ServerGameManager new_game;
 	        
 	        new_game = (ServerGameManager) in.readObject();
-			new_game.setGameId(currentGameId++);
-			gamesList.put(new_game.getGameId(), new_game);
+	        
+	        
+	        boolean exists = false;
+	        
+	        for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
+				
+				if (game.getValue().getGameTitle().equals(new_game.getGameTitle())){
+					exists = true;
+					break;
+				}	
+			}
+	                
+	        if (!exists){
+				new_game.setGameId(currentGameId++);
+				gamesList.put(new_game.getGameId(), new_game);
+	        }
 			
 			in.close();
 	        fileIn.close();

@@ -78,7 +78,7 @@ System.out.println("\tGame Model failure");
 				responseCode = 400;
 			}
 		}else if(uri.contains("/game/model")){
-			
+
 //System.out.println("\tGame Model with version number");
 
 			//Pull the version number out of the uri (everything to the right of "=" in the uri)

@@ -28,7 +28,7 @@ import shared.model.piece.Road;
 import java.util.*;
 
 public class MapTest {
-/*
+
     ClientModelSerializer ms;
 
 	public GameData getGameData() {
@@ -443,7 +443,7 @@ public class MapTest {
 				   tt.getCurrentTurn() == player.getPlayerId());
 		assertFalse(tt.getStatus() == Status.PLAYING);
 	}
-*/
+
 
     private void addRoadToMap(BoardMap map, int x, int y, EdgeDirection direction, int player) {
         HexLocation hex_location = new HexLocation(x, y);

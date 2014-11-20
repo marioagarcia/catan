@@ -146,11 +146,6 @@ public class ServerProxyTest {
 	
 	@Test
 	public void testGetGameModel(){
-		// Trying to get a game model while not logged in/in a game should fail. Server should respond
-		// with 400 code, and proxy should not have a latest model version
-		result = proxyTest.getGameModel(true);
-		assertTrue(result.equals("400"));
-		assertTrue(proxyTest.getLatestVersionNumber() == -1);
 		
 		//Successfully login, join game, and get current model
 		loginAndJoinGame();
@@ -173,6 +168,7 @@ public class ServerProxyTest {
 	@Test
 	public void testAcceptTrade(){
 		loginAndJoinGame();
+		testOfferTrade();
 		
 		param = "{"
 			  + "\"type\": \"acceptTrade\","
