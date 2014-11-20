@@ -159,32 +159,6 @@ public class ServerProxyTest {
 	}
 	
 	@Test
-	public void testResetGame(){
-		result = proxyTest.resetGame();
-		assertTrue(result.equals("400"));
-		
-		loginAndJoinGame();
-		
-		param = "{"
-				  + "\"message\": \"Adding content to model\","
-				  + "\"source\": \"Kevin\""
-				  + "}";
-		proxyTest.sendChat(param);
-		
-		String modified_client = proxyTest.getGameModel(true);
-		result = proxyTest.resetGame();
-		
-		JsonParser parser = new JsonParser();
-		JsonElement game_element = parser.parse(result);
-		JsonObject game_object = game_element.getAsJsonObject();
-		
-		int version = game_object.get("version").getAsInt();
-		
-		assertTrue(!result.equals(modified_client));
-		assertTrue(version == 0);
-	}
-	
-	@Test
 	public void testSendChat(){
 		loginAndJoinGame();
 		
