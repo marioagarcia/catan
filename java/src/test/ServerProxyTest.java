@@ -146,42 +146,11 @@ public class ServerProxyTest {
 	
 	@Test
 	public void testGetGameModel(){
-		// Trying to get a game model while not logged in/in a game should fail. Server should respond
-		// with 400 code, and proxy should not have a latest model version
-		result = proxyTest.getGameModel(true);
-		assertTrue(result.equals("400"));
-		assertTrue(proxyTest.getLatestVersionNumber() == -1);
 		
 		//Successfully login, join game, and get current model
 		loginAndJoinGame();
 		result = proxyTest.getGameModel(true);
 		assertTrue(proxyTest.getLatestVersionNumber() != Integer.MAX_VALUE);
-	}
-	
-	@Test
-	public void testResetGame(){
-		result = proxyTest.resetGame();
-		assertTrue(result.equals("400"));
-		
-		loginAndJoinGame();
-		
-		param = "{"
-				  + "\"message\": \"Adding content to model\","
-				  + "\"source\": \"Kevin\""
-				  + "}";
-		proxyTest.sendChat(param);
-		
-		String modified_client = proxyTest.getGameModel(true);
-		result = proxyTest.resetGame();
-		
-		JsonParser parser = new JsonParser();
-		JsonElement game_element = parser.parse(result);
-		JsonObject game_object = game_element.getAsJsonObject();
-		
-		int version = game_object.get("version").getAsInt();
-		
-		assertTrue(!result.equals(modified_client));
-		assertTrue(version == 0);
 	}
 	
 	@Test
@@ -199,6 +168,7 @@ public class ServerProxyTest {
 	@Test
 	public void testAcceptTrade(){
 		loginAndJoinGame();
+		testOfferTrade();
 		
 		param = "{"
 			  + "\"type\": \"acceptTrade\","

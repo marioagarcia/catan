@@ -1,10 +1,14 @@
 package test;
 
 import static org.junit.Assert.*;
+
 import java.util.Date;
+
 import org.junit.Test;
+
 import client.communication.server.ServerMoxy;
 import client.communication.server.ServerPoller;
+import client.communication.server.ServerProxy;
 
 public class ServerPollerTest {
 
@@ -14,7 +18,7 @@ public class ServerPollerTest {
 	public void test(){
 		ServerPoller poller = new ServerPoller();
 		
-		poller.setProxy(new ServerMoxy());
+		poller.setProxy(new ServerProxy("8081", "localhost"));
 		
 		poller.registerModelObserver(observer);
 		
@@ -31,8 +35,8 @@ public class ServerPollerTest {
 		}
 		
 		long time_taken = now.getTime() - before_test.getTime();
-		
-		assertTrue(number_of_polls == 10 && (time_taken / 1000 >= 27 && time_taken / 1000 <= 32));
+	
+		assertTrue(number_of_polls == 1 && (time_taken / 1000 >= 27 && time_taken / 1000 <= 32));
 		
 	}
 	
@@ -41,7 +45,6 @@ public class ServerPollerTest {
 		@Override
 		public void modelChanged(String model_data) {
 			number_of_polls++;
-			System.out.println("Poll complete");
 		}
 	};
 
