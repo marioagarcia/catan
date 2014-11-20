@@ -52,6 +52,7 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
         public int road_player_index;
         public EdgeLocation current_location;
         public int length;
+        public VertexLocation markedVertex;
 
         public LongestRoadParams(Map<EdgeLocation, Road> roads, int length, int index, EdgeLocation current_location){
             this.roads = roads;
@@ -421,22 +422,30 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
      * @return  int longest road length thus far
      */
     private int recGetLongestRoadIndex(LongestRoadParams params){
-        EdgeLocation[] potential_adjacent = params.current_location.getAdjacent(true, true, this);
+        Set<VertexLocation> potential_vertexes = VertexesAdjacentToEdge.get(params.current_location).asSet();
+        if(params.markedVertex != null){
+            potential_vertexes.remove(params.markedVertex);
+        }
+
         int longest = params.length;
+        for(VertexLocation vertex : potential_vertexes){
+            Set<EdgeLocation> potential_adjacent = EdgesAdjacentToVertex.findEdgesAdjacentToVertex(vertex, this).asSet();
+            potential_adjacent.remove(params.current_location);
 
-        for(EdgeLocation location : potential_adjacent){
-            if(params.roads.containsKey(location.getNormalizedLocation()) && params.roads.get(location.getNormalizedLocation()).getPlayerIndex() == params.road_player_index){
-                Map<EdgeLocation, Road> roads = this.deep_copy_road_map((params.roads));
-                roads.remove(location);
+            for(EdgeLocation location : potential_adjacent){
+                if(params.roads.containsKey(location.getNormalizedLocation()) && params.roads.get(location.getNormalizedLocation()).getPlayerIndex() == params.road_player_index){
+                    Map<EdgeLocation, Road> roads = this.deep_copy_road_map((params.roads));
+                    roads.remove(location);
 
-                LongestRoadParams child_params = new LongestRoadParams(roads, params.length + 1, params.road_player_index, location);
-                int result = recGetLongestRoadIndex(child_params);
-                if(result > longest){
-                    longest =  result;
+                    LongestRoadParams child_params = new LongestRoadParams(roads, params.length + 1, params.road_player_index, location);
+                    child_params.markedVertex = vertex;
+                    int result = recGetLongestRoadIndex(child_params);
+                    if(result > longest){
+                        longest =  result;
+                    }
                 }
             }
         }
-
         return longest;
     }
 
