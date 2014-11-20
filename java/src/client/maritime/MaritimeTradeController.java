@@ -143,7 +143,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				return 2;
 			}
 		}
-		System.out.println("resource " + type + " ratio " + ratio);
 		return ratio;
 	}
 	

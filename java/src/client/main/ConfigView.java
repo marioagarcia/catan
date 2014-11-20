@@ -102,12 +102,10 @@ public class ConfigView extends JDialog{
 		host = hostTextField.getText();
 		
 		if (port.equals("")){
-			System.out.println("Using default port");
 			port = "8081";
 		}
 		
 		if (host.equals("")){
-			System.out.println("Using default host");
 			host = "localhost";
 		}
 		

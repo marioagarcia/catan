@@ -336,7 +336,6 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
 	}
 
 	public void setRobberLocation(HexLocation robberLocation) {
-		System.out.println("Setting location: " + robberLocation.getX() + ", " + robberLocation.getY());
 		this.robberLocation = robberLocation;
 	}
 
