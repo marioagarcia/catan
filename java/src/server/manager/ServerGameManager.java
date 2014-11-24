@@ -1,5 +1,6 @@
 package server.manager;
 
+import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -14,6 +15,7 @@ import shared.model.logging.history.LogLine;
 import shared.model.manager.GameData;
 import shared.model.map.BoardMap;
 import shared.model.player.Player;
+import shared.model.player.PlayerInterface;
 import shared.model.player.Players;
 import shared.model.turntracker.TurnTracker;
 import shared.model.turntracker.TurntrackerInterface.Status;
@@ -496,6 +498,9 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 	@Override
 	public boolean finishTurn(int player_index) {
 
+
+		test(players.getPlayer(player_index));
+
 		if(turnTracker.getStatus() == Status.FIRST_ROUND) {
 
 			if(doneWithFirstRound()) {
@@ -603,6 +608,11 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		version++;
 
 		return true;
+	}
+
+	public void test(PlayerInterface player) {
+		CatanColor color = player.getColor();
+		System.out.println(color.toString());
 	}
 
 	@Override
