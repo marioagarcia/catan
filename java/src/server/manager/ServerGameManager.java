@@ -622,8 +622,6 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 
 		players.getPlayer(player_index).playYearOfPlenty(type1, type2);
 
-		devCardBank.addCard(DevCardType.YEAR_OF_PLENTY);
-
 		resourceCardBank.yearOfPlentyPlayed(type1, type2);
 
 		//add to history log
@@ -661,9 +659,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		boardMap.playRoadBuilding(location1, location2, player_index);
 		
 		updateLongestRoadPoints();
-
-		devCardBank.addCard(DevCardType.ROAD_BUILD);
-
+		
 		//add to history log
 		log("built two roads", player_index);
 
@@ -704,8 +700,6 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 			
 			victim_player_name = "nobody";
 		}
-
-		devCardBank.addCard(DevCardType.SOLDIER);
 		
 		updateLargestArmyPoints();
 
@@ -809,8 +803,6 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 
 		players.getPlayer(player_index).playMonopoly(resource_type, count);
 
-		devCardBank.addCard(DevCardType.MONOPOLY);
-
 		//add to history log
 		log(("stole everyone's " + resource_type.name().toLowerCase()), player_index);
 
@@ -835,8 +827,6 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 	public boolean playMonument(int player_index) {
 
 		players.getPlayer(player_index).playMonument();
-
-		devCardBank.addCard(DevCardType.MONUMENT);
 
 		//add to history log
 		log("built a monument and gained a victory point", player_index);

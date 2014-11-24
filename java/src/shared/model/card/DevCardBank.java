@@ -76,7 +76,7 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
 	}
 
 	public boolean containsCard(DevCardType type) {
-		return this.cards.containsKey(type);
+		return this.cards.containsKey(type) && this.cards.get(type) > 0;
 	}
 
 	@Override
