@@ -151,53 +151,157 @@ public class CommandsTest extends TestCase {
         assertEquals(true, this.buildRoad(2, 0, EdgeDirection.North, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
         assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
 
-
+        assertEquals(true, this.buildRoad(2, 0, EdgeDirection.South, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
+        assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
 
 
 
 
 
         assertEquals(true, this.buildSettlement(2, 0, VertexDirection.SouthWest, 3, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.buildRoad(2, 0, EdgeDirection.South, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
-/*
-        assertEquals(true, this.buildSettlement(-2, 0, VertexDirection.SouthWest, 2, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.buildRoad(-2, 0, EdgeDirection.South, true, 2,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(2,serverModelFacade.getGameList().getGameList().get(1).getId()));
-
-        assertEquals(true, this.buildSettlement(-2, 2, VertexDirection.SouthWest, 1, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.buildRoad(-2, 2, EdgeDirection.South, true, 1,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(1,serverModelFacade.getGameList().getGameList().get(1).getId()));
-
-        assertEquals(true, this.buildSettlement(0, 0, VertexDirection.SouthEast, 0, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.buildRoad(0, 0, EdgeDirection.South, true, 0,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(1,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        */
+    }
+    
+    @Test
+    public void testSendChat(){
+    	
+    }
+    
+    @Test
+    public void testAcceptTrade(){
+    	
+    }
+    
+    @Test
+    public void testDiscardCards(){
+    	
+    }
+    
+    @Test
+    public void testRollNumber(){
+    	
+    }
+    
+    @Test
+    public void testBuildRoad(){
+    	
+    }
+    
+    @Test 
+    public void testBuildSettlement(){
+    	
+    }
+    
+    @Test
+    public void testBuildCity(){
+    	
+    }
+    
+    @Test
+    public void testOfferTrade(){
+    	
+    }
+    
+    @Test
+    public void testMaritimeTrade(){
+    	
+    }
+    
+    @Test
+    public void testFinishTurn(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert false when it's the player's turn but the game state is not playing
+    	
+    	//Assert true when it's the player's turn and the game state is playing
+    }
+    
+    @Test
+    public void testBuyDevCard(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert false when it's the player's turn but the player doesn't have 1 sheep, 1 wheat, 1 ore
+    	
+    	//Assert true when it's the player's turn and the player has 1 sheep, 1 wheat, 1 ore
+    	
+    	//Assert true that the bank has 1 less dev card after the player buys a dev card
+    	
+    	//Assert true that the player has one more dev card than before the player bought the dev card
+    }
+    
+    
+    @Test
+    public void testPlayYearOfPlenty(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert false when it's the player's turn but the player doesn't have a year of plenty card
+    	
+    	//Assert true when it's the player's turn and the player has a year of plenty card
+    	
+    	//Assert true that the player has one less year of plenty card after it is played
+    	
+    	//Assert true that the player has one more sheep and one more wheat after playing the card
+    }
+    
+    @Test
+    public void testPlayRoadBuilding(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert false when it's the player's turn but the player doesn't have a road building card
+    	
+    	//Assert true when it's the player's turn and the player has a road building card
+    	
+    	//Assert true that the player has one less road building card after it is played
+    }
+    
+    @Test
+    public void testPlayeSoldier(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert false when it's the player's turn but the player doesn't have a soldier card
+    	
+    	//Assert true when it's the player's turn and the player has a soldier card
+    	
+    	//Assert true that the player has one less soldier card after it is played
+    }
+    
+    @Test
+    public void testPlayMonopoly(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert false when it's the player's turn but the player doesn't have a monopoly card
+    	
+    	//Assert true when it's the player's turn and the player has a monopoly card
+    	
+    	//Assert true that the player has one less monopoly card after it is played
+    	
+    	//Assert true that the all other players have 0 sheep
+    	
+    	//Assert true that the player has his sheep plus all of the other players' sheep
+    }
+    
+    @Test
+    public void testPlayMonument(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert false when it's the player's turn but the player doesn't have a monument card
+    	
+    	//Assert true when it's the player's turn and the player has a monument card
+    	
+    	//Assert true that the player has one less monument card after it is played
+    	
+    	//Assert true that the player has one more victory point after playing the card
+    	
+    }
+    
+    @Test
+    public void testRobPlayer(){
+    	//Assert false when it's not the player's turn
+    	
+    	//Assert true when it is your turn
+    	
+    	//Assert that the player has one more wheat and the robbed player has one less wheat
+ 
     }
 }
 
-//accepttrade
-//buildcity
-//buildRoad         ----------------------------------------------------
-//buildSettlement   ----------------------------------------------------
-//buyDevCard
-//changeLogLevel
-//createGame
-//DiscardCards
-//finishTurn
-//joinGame          ----------------------------------------------------
-//loadGame
-//login             ----------------------------------------------------
-//maritimeTrade
-//offerTrade
-//playMonopoly
-//playMonument
-//playRoadBuilding
-//playSoldier
-//playYearOfPlenty
-//Register          ----------------------------------------------------
-//ResetGame
-//RobPlayer
-//RollNumber
-//SaveGame
-//SendChat
+

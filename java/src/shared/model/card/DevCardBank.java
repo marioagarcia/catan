@@ -9,9 +9,10 @@ import shared.definitions.DevCardType;
 import shared.model.manager.interfaces.GMDevCardBankInterface;
 import shared.serialization.interfaces.SerializerDeckInterface;
 
+@SuppressWarnings("serial")
 public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface, Serializable {
 
-	private static final long serialVersionUID = 8357808337626679460L;
+	private final int CARD_TYPES = 5;
 
 	private Map<DevCardType, Integer> cards;
 	
@@ -60,11 +61,11 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
 
 	@Override
 	public DevCardType buyDevCard() {
-
 		if (!containsAnyCard()) throw new AssertionError();
 
         Random random = new Random();
-        int index = random.nextInt() % this.cards.size();
+        int index = random.nextInt(getSize()) + 1;
+        //int index = random.nextInt() % this.cards.size();
 
         for(DevCardType type : DevCardType.values()){
             if(this.cards.get(type) == 0){
@@ -72,6 +73,7 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
             }
             else if(index <= this.cards.get(type)){
                 this.cards.put(type, this.cards.get(type) - 1);
+System.out.println(type.toString());
                 return type;
             }
             index -= this.cards.get(type);
@@ -135,5 +137,24 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
 			return this.cards.get(type);
 		}
 		return 0;
+	}
+	
+	public int getSize(){
+		int size = 0;
+		
+        for(DevCardType type : DevCardType.values()){
+        	size += numberOfType(type);
+        }
+		
+		return size;
+	}
+	
+	public static void main(String[] s){
+		DevCardBank dvb = new DevCardBank();
+		dvb.setDeck(2, 2, 14, 2, 5);
+		
+		for(int i = 0; i <= 24; i++){
+			dvb.buyDevCard();
+		}
 	}
 }
