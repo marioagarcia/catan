@@ -151,14 +151,14 @@ public class CommandsTest extends TestCase {
         assertEquals(true, this.buildRoad(2, 0, EdgeDirection.North, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
         assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
 
-
+        assertEquals(true, this.buildRoad(2, 0, EdgeDirection.South, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
+        assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
 
 
 
 
 
         assertEquals(true, this.buildSettlement(2, 0, VertexDirection.SouthWest, 3, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-<<<<<<< HEAD
     }
     
     @Test
@@ -300,23 +300,7 @@ public class CommandsTest extends TestCase {
     	//Assert true when it is your turn
     	
     	//Assert that the player has one more wheat and the robbed player has one less wheat
-=======
-        assertEquals(true, this.buildRoad(2, 0, EdgeDirection.South, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
-/*
-        assertEquals(true, this.buildSettlement(-2, 0, VertexDirection.SouthWest, 2, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.buildRoad(-2, 0, EdgeDirection.South, true, 2,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(2,serverModelFacade.getGameList().getGameList().get(1).getId()));
-
-        assertEquals(true, this.buildSettlement(-2, 2, VertexDirection.SouthWest, 1, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.buildRoad(-2, 2, EdgeDirection.South, true, 1,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(1,serverModelFacade.getGameList().getGameList().get(1).getId()));
-
-        assertEquals(true, this.buildSettlement(0, 0, VertexDirection.SouthEast, 0, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.buildRoad(0, 0, EdgeDirection.South, true, 0,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        assertEquals(true, this.finishTurn(1,serverModelFacade.getGameList().getGameList().get(1).getId()));
-        */
->>>>>>> 4157d2b0bd88b9034951b48bcc3d44b3b7710a3c
+ 
     }
 }
 
