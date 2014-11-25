@@ -3,6 +3,7 @@ package shared.model.card;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import shared.definitions.DevCardType;
 import shared.model.manager.interfaces.GMDevCardBankInterface;
@@ -63,20 +64,24 @@ public class DevCardBank implements DevCardBankInterface, SerializerDeckInterfac
 
 		if (!containsAnyCard()) throw new AssertionError();
 
-		for(int i = 0; i < CARD_TYPES; i++) {
+        Random random = new Random();
+        int index = random.nextInt() % this.cards.size();
 
-			DevCardType card_type = DevCardType.getRandomType();
-
-			if(containsCard(card_type)) {
-				return card_type;
-			}
-		}
-
+        for(DevCardType type : DevCardType.values()){
+            if(this.cards.get(type) == 0){
+                continue;
+            }
+            else if(index <= this.cards.get(type)){
+                this.cards.put(type, this.cards.get(type) - 1);
+                return type;
+            }
+            index -= this.cards.get(type);
+        }
 		return null;
 	}
 
 	public boolean containsCard(DevCardType type) {
-		return this.cards.containsKey(type);
+		return this.cards.containsKey(type) && this.cards.get(type) > 0;
 	}
 
 	@Override

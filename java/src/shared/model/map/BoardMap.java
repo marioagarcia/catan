@@ -147,19 +147,36 @@ public class BoardMap implements BoardMapInterface, GMBoardMapInterface, Seriali
                 new Port(PortType.SHEEP, new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest), 2));
 
 		if(random){
-            for(EdgeLocation location : ports.keySet()){
-                int index;
-                do{
-                    index = (int)(Math.random() * 31) % PortType.values().length;
-                } while(index < 0);
-
-                ports.get(location).setResource(PortType.values()[index]);
-                if(ports.get(location).getResource() == PortType.THREE){
-                    ports.get(location).setRatio(3);
+			
+			Set<EdgeLocation> port_locations = ports.keySet();
+			ArrayList<EdgeLocation> port_list = new ArrayList<EdgeLocation>(port_locations);
+			
+			for (int i = 0; i < 100; i++){
+				
+				int position1 = (int)Math.ceil(Math.random() * 100) % port_list.size();
+				int position2 = (int)Math.ceil(Math.random() * 100) % port_list.size();
+				
+				PortType temp = ports.get(port_list.get(position1)).getResource();
+				PortType temp2 = ports.get(port_list.get(position2)).getResource();
+				
+				ports.get(port_list.get(position2)).setResource(temp);
+				
+				if(ports.get(port_list.get(position2)).getResource() == PortType.THREE){
+					ports.get(port_list.get(position2)).setRatio(3);
                 }
                 else{
-                    ports.get(location).setRatio(2);
+                	ports.get(port_list.get(position2)).setRatio(2);
                 }
+				
+				ports.get(port_list.get(position1)).setResource(temp2);
+				
+				if(ports.get(port_list.get(position1)).getResource() == PortType.THREE){
+					ports.get(port_list.get(position1)).setRatio(3);
+                }
+                else{
+                	ports.get(port_list.get(position1)).setRatio(2);
+                }
+				
 			}
 		}
 		return ports;
