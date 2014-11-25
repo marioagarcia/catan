@@ -5,10 +5,11 @@ import java.io.Serializable;
 import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerResourceListInterface;
 
-@SuppressWarnings("serial")
+
 public class ResourceList implements SerializerResourceListInterface, Serializable {
 
-
+	private static final long serialVersionUID = 6339056826267950127L;
+	
 	private int brick;
 	private int wood;
 	private int sheep;

@@ -6,9 +6,10 @@ import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.serialization.interfaces.SerializerRoadInterface;
 
-@SuppressWarnings("serial")
 public class Road implements RoadInterface, SerializerRoadInterface, Serializable {
 
+	private static final long serialVersionUID = -4684811705120389264L;
+	
 	int playerIndex;
 	EdgeLocation location;
 	PieceType type;

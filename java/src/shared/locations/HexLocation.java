@@ -5,9 +5,11 @@ import java.io.Serializable;
 /**
  * Represents the location of a hex on a hex map
  */
-@SuppressWarnings("serial")
+
 public class HexLocation implements Serializable
 {
+	
+	private static final long serialVersionUID = 5857934016269998074L;
 	
 	private int x;
 	private int y;

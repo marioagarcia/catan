@@ -2,9 +2,10 @@ package shared.model.logging.history;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
 public class LogLine implements LogLineInterface, Serializable {
 
+	private static final long serialVersionUID = 6566339212467420825L;
+	
 	String playerName;
 	String move;
 	

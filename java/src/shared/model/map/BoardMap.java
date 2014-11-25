@@ -31,8 +31,9 @@ import shared.serialization.interfaces.SerializerMapInterface;
 import shared.shared.utils.CatanUtils;
 import shared.model.card.MaritimeTrade;
 
-@SuppressWarnings("serial")
 public class BoardMap implements BoardMapInterface, GMBoardMapInterface, SerializerMapInterface, Serializable {
+	
+	private static final long serialVersionUID = -3126832848190132376L;
 	private Map<HexLocation, HexInterface> hexes;
 	private Map<EdgeLocation, Road> roads;
 	private Map<VertexLocation, City> cities;

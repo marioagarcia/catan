@@ -5,9 +5,11 @@ import java.io.Serializable;
 /**
  * Represents the location of a vertex on a hex map
  */
-@SuppressWarnings("serial")
+
 public class VertexLocation implements Serializable
 {
+	
+	private static final long serialVersionUID = -6369140956823147051L;
 	
 	private HexLocation hexLoc;
 	private VertexDirection dir;

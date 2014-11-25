@@ -5,8 +5,9 @@ import java.io.Serializable;
 import shared.model.manager.interfaces.GMTurnTrackerInterface;
 import shared.serialization.interfaces.SerializerTurnTrackerInterface;
 
-@SuppressWarnings("serial")
 public class TurnTracker implements TurntrackerInterface, GMTurnTrackerInterface, SerializerTurnTrackerInterface, Serializable {
+	
+	private static final long serialVersionUID = 3512477815551250686L;
 	
 	private Status status;
 	private int localPlayerIndex;

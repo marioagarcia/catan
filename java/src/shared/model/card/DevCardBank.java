@@ -9,10 +9,9 @@ import shared.definitions.DevCardType;
 import shared.model.manager.interfaces.GMDevCardBankInterface;
 import shared.serialization.interfaces.SerializerDeckInterface;
 
-@SuppressWarnings("serial")
 public class DevCardBank implements DevCardBankInterface, SerializerDeckInterface, GMDevCardBankInterface, Serializable {
 
-	private final int CARD_TYPES = 5;
+	private static final long serialVersionUID = 8357808337626679460L;
 
 	private Map<DevCardType, Integer> cards;
 	

@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 import shared.serialization.interfaces.SerializerMessageInterface;
 
-@SuppressWarnings("serial")
 public class Message implements MessageInterface, SerializerMessageInterface, Serializable {
 
+	private static final long serialVersionUID = 1766723779458474597L;
+	
 		String content;
 		String playerName;
 	

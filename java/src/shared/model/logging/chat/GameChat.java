@@ -3,9 +3,10 @@ package shared.model.logging.chat;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
 public class GameChat implements GameChatInterface, Serializable {
 
+	private static final long serialVersionUID = -7264301618621282302L;
+	
 	ArrayList<MessageInterface> messageList;
 	
 	public GameChat() {

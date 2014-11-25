@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -158,16 +160,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		if (gamesList.containsKey(game_id)){
 			
-			long original_time = gamesList.get(game_id).getTimeStamp();
-			gamesList.get(game_id).setTimeStamp(0);
-			
 			String original_game_name = gamesList.get(game_id).getGameTitle();
 			
+			String new_save_name = original_game_name.split("@")[0];
+			
 			Date now = new Date();
-			
-			String game_file = original_game_name;
-			game_file = game_file.replaceAll(" ", "_");
-			
+				
 			try {
 				String folder = relative_file.getParentFile().getCanonicalPath() + File.separator + "data" + File.separator;
 				File data_folder = new File(folder);
@@ -176,10 +174,16 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 					data_folder.mkdir();
 				}
 				
-				String short_time = now.toString().split("MST")[0];
-				gamesList.get(game_id).setGameTitle(gamesList.get(game_id).getGameTitle() + "_" + short_time);
+				DateFormat formatter = new SimpleDateFormat("MMM_dd_HH_mm_ss");
 				
-				String path = folder + game_file;
+				String short_time = formatter.format(now);
+				
+				String full_save_name = new_save_name + "@" + short_time;
+				full_save_name = full_save_name.replaceAll(" ", "_");
+				
+				gamesList.get(game_id).setGameTitle(full_save_name);
+				
+				String path = folder + full_save_name;
 				
 				FileOutputStream fileOut = new FileOutputStream(path);
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -187,7 +191,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				out.close();
 				fileOut.close();	
 				
-				gamesList.get(game_id).setTimeStamp(original_time); //Resets original game back to no time stamp
 				gamesList.get(game_id).setGameTitle(original_game_name);
 				
 				addLoadGame(path);
@@ -257,6 +260,34 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			for (File game : data_folder.listFiles()){		
 				
+				addLoadGame(game.getCanonicalPath());
+			}
+			
+			System.out.println("Calling test load");
+			loadTestGames();
+			System.out.println("Finished test load");
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public void loadTestGames(){
+		
+		try {
+			//System.out.println("Relative file: " + relative_file.getParentFile().getCanonicalPath() + File.separator + "src" + File.separator + "test" + File.separator + "Saved_Test_Games" + File.separator);
+			
+			String folder = "Saved_Test_Games" + File.separator;
+			File data_folder = new File(folder);
+			
+			if (!data_folder.exists()){
+				System.out.println("Folder not found");
+				return;
+			}
+			
+			for (File game : data_folder.listFiles()){		
+				
+				System.out.println("Loading game");
 				addLoadGame(game.getCanonicalPath());
 			}
 		} 

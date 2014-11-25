@@ -22,11 +22,12 @@ import shared.model.turntracker.TurntrackerInterface.Status;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
-@SuppressWarnings("serial")
+
 public class ServerGameManager implements ServerGameManagerInterface, Serializable {
 
+	private static final long serialVersionUID = -2884084491631487705L;
+	
 	private static final int MAX_POINTS = 10;
 	public static final int TOTAL_PLAYERS = 4;
 	private String title = null;
@@ -40,7 +41,6 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 	DomesticTrade domesticTrade = null;
 	private int version;
 	private int winner = -1;
-	private long timeStamp = 0;
 
 
 	public ServerGameManager(String gameName, int id, boolean randTiles, boolean randNumbers, boolean randPorts) {
@@ -63,14 +63,6 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 
 		setupGame();
 		
-	}
-	
-	public void setTimeStamp(long time){
-		timeStamp = time;
-	}
-	
-	public long getTimeStamp(){
-		return timeStamp;
 	}
 
 	private void setupGame() {
@@ -468,6 +460,8 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		resourceCardBank.makeMaritimeTrade(maritime_trade);
 
 		version++;
+		
+		log("made a " + ratio + ":1 trade", player_index);
 
 		return true;
 	}
@@ -872,14 +866,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 	}
 
 	public String getGameTitle() {
-		if (timeStamp != 0){
-			Date time = new Date(timeStamp);
-			String short_time = time.toString().split("MST")[0];
-			return title + "_" + short_time;
-		}
-		else{
 			return title;
-		}
 	}
 	
 	public void setGameTitle(String title){

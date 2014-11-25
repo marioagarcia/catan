@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@SuppressWarnings("serial")
 public class HistoryLog implements GameHistoryLogInterface, Serializable {
 
+	private static final long serialVersionUID = -911563547081675661L;
+	
 	ArrayList<LogLineInterface> logLineList;
 	
 	public HistoryLog() {
