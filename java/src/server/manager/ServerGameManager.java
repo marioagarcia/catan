@@ -23,9 +23,11 @@ import shared.model.turntracker.TurntrackerInterface.Status;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
+
 public class ServerGameManager implements ServerGameManagerInterface, Serializable {
 
+	private static final long serialVersionUID = -2884084491631487705L;
+	
 	private static final int MAX_POINTS = 10;
 	public static final int TOTAL_PLAYERS = 4;
 	private String title = null;
@@ -458,6 +460,8 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		resourceCardBank.makeMaritimeTrade(maritime_trade);
 
 		version++;
+		
+		log("made a " + ratio + ":1 trade", player_index);
 
 		return true;
 	}

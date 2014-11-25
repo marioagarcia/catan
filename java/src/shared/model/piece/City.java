@@ -6,8 +6,9 @@ import shared.definitions.PieceType;
 import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerCityInterface;
 
-@SuppressWarnings("serial")
 public class City implements CityInterface, SerializerCityInterface, Serializable {
+	
+	private static final long serialVersionUID = 2729310005290454218L;
 	
 	private int playerIndex;
 	private VertexLocation location;

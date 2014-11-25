@@ -7,8 +7,9 @@ import java.util.Map;
 import shared.definitions.ResourceType;
 import shared.serialization.interfaces.SerializerBankInterface;
 
-@SuppressWarnings("serial")
 public class ResourceCardBank implements ResourceCardBankInterface, SerializerBankInterface, Serializable {
+	
+	private static final long serialVersionUID = -7819242949509761942L;
 	
 	private Map<ResourceType, Integer> cards;
     private static final int totalCardsPerType = 19;

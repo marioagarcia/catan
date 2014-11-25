@@ -13,10 +13,11 @@ import shared.model.card.TradeInterface;
 import shared.model.manager.interfaces.GMPlayerInterface;
 import shared.serialization.interfaces.SerializerPlayerInterface;
 
-@SuppressWarnings("serial")
 public class Player implements PlayerInterface, GMPlayerInterface, SerializerPlayerInterface, Serializable {
 
-    int cities;
+	private static final long serialVersionUID = 3784014301679025611L;
+	
+	int cities;
     CatanColor color;
     int monuments;
     String name;

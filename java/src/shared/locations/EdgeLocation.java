@@ -8,9 +8,11 @@ import shared.model.map.BoardMap;
 /**
  * Represents the location of an edge on a hex map
  */
-@SuppressWarnings("serial")
+
 public class EdgeLocation implements Serializable
 {
+	
+	private static final long serialVersionUID = 7912597000389784509L;
 	
 	private HexLocation hexLoc;
 	private EdgeDirection dir;

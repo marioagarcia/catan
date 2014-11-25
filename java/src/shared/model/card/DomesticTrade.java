@@ -5,9 +5,10 @@ import java.io.Serializable;
 import shared.definitions.ResourceType;
 import shared.model.manager.interfaces.GMDomesticTradeInterface;
 
-@SuppressWarnings("serial")
 public class DomesticTrade implements TradeInterface, GMDomesticTradeInterface, Serializable {
 
+	private static final long serialVersionUID = 8480040418382555213L;
+	
 	private int sender;
 	private int receiver;
 	private ResourceList resourceList;

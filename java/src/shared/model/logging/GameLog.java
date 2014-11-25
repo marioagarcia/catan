@@ -7,9 +7,10 @@ import shared.model.logging.chat.GameChatInterface;
 import shared.model.logging.history.GameHistoryLogInterface;
 import shared.model.logging.history.HistoryLog;
 
-@SuppressWarnings("serial")
 public class GameLog implements GameLogInterface, Serializable {
 
+	private static final long serialVersionUID = -9028203083299797495L;
+	
 	private GameHistoryLogInterface gameHistoryLog;
 	private GameChatInterface gameChat;
 	

@@ -6,9 +6,10 @@ import java.util.List;
 
 import shared.definitions.CatanColor;
 
-@SuppressWarnings("serial")
 public class Players implements Serializable{
 
+	private static final long serialVersionUID = 7280553552255757424L;
+	
 	private List<Player> playerList;
 	
 	public Players() {

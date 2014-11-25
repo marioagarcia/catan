@@ -7,8 +7,9 @@ import shared.locations.VertexLocation;
 import shared.serialization.interfaces.SerializerSettlementInterface;
 
 
-@SuppressWarnings("serial")
 public class Settlement implements SettlementInterface, SerializerSettlementInterface, Serializable {
+	
+	private static final long serialVersionUID = 4345073557295866068L;
 	
 	PieceType type;
 	int playerIndex;

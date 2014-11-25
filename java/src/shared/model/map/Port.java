@@ -6,9 +6,10 @@ import shared.definitions.PortType;
 import shared.locations.EdgeLocation;
 import shared.serialization.interfaces.SerializerPortInterface;
 
-@SuppressWarnings("serial")
 public class Port implements SerializerPortInterface, Serializable {
 
+	private static final long serialVersionUID = 8698807117662448035L;
+	
 	private PortType resource; // If omitted, then it's for any resource, Optional
 	private EdgeLocation location;
 	private int ratio;

@@ -5,8 +5,10 @@ import java.io.Serializable;
 import shared.serialization.interfaces.SerializerDevCardListInterface;
 import shared.definitions.DevCardType;
 
-@SuppressWarnings("serial")
 public class DevCardList implements SerializerDevCardListInterface, Serializable {
+
+	private static final long serialVersionUID = 5078749604124520428L;
+	
 	private int yearOfPlenty;
 	private int monopoly;
 	private int soldier;

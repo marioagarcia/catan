@@ -262,6 +262,34 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				
 				addLoadGame(game.getCanonicalPath());
 			}
+			
+			System.out.println("Calling test load");
+			loadTestGames();
+			System.out.println("Finished test load");
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public void loadTestGames(){
+		
+		try {
+			//System.out.println("Relative file: " + relative_file.getParentFile().getCanonicalPath() + File.separator + "src" + File.separator + "test" + File.separator + "Saved_Test_Games" + File.separator);
+			
+			String folder = "Saved_Test_Games" + File.separator;
+			File data_folder = new File(folder);
+			
+			if (!data_folder.exists()){
+				System.out.println("Folder not found");
+				return;
+			}
+			
+			for (File game : data_folder.listFiles()){		
+				
+				System.out.println("Loading game");
+				addLoadGame(game.getCanonicalPath());
+			}
 		} 
 		catch (IOException e) {
 			e.printStackTrace();

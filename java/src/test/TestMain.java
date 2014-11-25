@@ -7,9 +7,10 @@ public class TestMain {
 	{
 		String[] classes = new String[] {
 				//"test.ServerPollerTest",
-				"test.ServerProxyTest",
-				"test.model.map.MapTest",
+				//"test.ServerProxyTest",
+			//	"test.model.map.MapTest",
 				//"test.server.ServerModelFacadeTest"
+				"test.server.CommandsTest2"
 		};
 		
 		JUnitCore.main(classes);
