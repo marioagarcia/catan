@@ -72,7 +72,7 @@ public class ServerModelFacadeTest extends TestCase {
 
     }
 
-    @Test
+  /*  @Test
     public void testSaveGame() throws Exception {
 
     	
@@ -104,7 +104,7 @@ public class ServerModelFacadeTest extends TestCase {
         assertEquals(before_size, after_size);
 
     }
-
+*/
     @Test
     public void testCanJoinGame() throws Exception {
     	

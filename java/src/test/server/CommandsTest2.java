@@ -145,53 +145,52 @@ public class CommandsTest2 {
 	public void testRoads(){
 		
 		//Has resources, but wrong location
-		assertFalse(buildRoadCommand(0, -1, 1, -2, EdgeDirection.SouthEast));
+		assertFalse(buildRoadCommand(0, 1, 1, -2, EdgeDirection.SouthEast));
 		
 		//Has resources. Right location
-		assertTrue(buildRoadCommand(0, -1, 1, -1, EdgeDirection.SouthEast));
+		assertTrue(buildRoadCommand(0, 1, 1, -1, EdgeDirection.SouthEast));
 		
 		//Has resources, location not connected to other roads
-		assertFalse(buildRoadCommand(3, -1, 0, -2, EdgeDirection.North));
+		assertFalse(buildRoadCommand(3, 3, 0, -2, EdgeDirection.North));
 		
-		assertTrue(buildRoadCommand(3, -1, 0, -2, EdgeDirection.NorthEast));
+		assertTrue(buildRoadCommand(3, 3, 0, -2, EdgeDirection.NorthEast));
 		
 		//Finish previous turn
 		FinishTurnParameters p = new FinishTurnParameters(3);
-		FinishTurn turn_command = new FinishTurn(p, -1);
+		FinishTurn turn_command = new FinishTurn(p, 3);
 		
-		//Impossible to roll a 16
-		assertFalse(rollCommand(0, -1, 16));
+		turn_command.execute();
 		
 		//It is not this person's turn to roll
-		assertFalse(rollCommand(2, -1, 5));
+		assertFalse(rollCommand(2, 3, 5));
 		
-		assertTrue(rollCommand(0, -1, 5));
+		assertTrue(rollCommand(0, 3, 5));
 	}
 	
 	@Test
 	public void testSettlements(){
 		
 		//No connecting road
-		assertFalse(buildSettlementCommand(0, -1, -1, -1, VertexDirection.NorthEast));
+		assertFalse(buildSettlementCommand(0, 4, -1, -1, VertexDirection.NorthEast));
 		
 		//Too close to other settlements
-		assertFalse(buildSettlementCommand(0, -1, -1, -1, VertexDirection.East));
+		assertFalse(buildSettlementCommand(0, 4, -1, -1, VertexDirection.East));
 		
 		//Valid
-		assertTrue(buildSettlementCommand(3, -1, 0, -2, VertexDirection.NorthEast));
+		assertTrue(buildSettlementCommand(3, 6, 0, -2, VertexDirection.NorthEast));
 	}
 	
 	@Test
 	public void testCities(){
 		
 		//Valid
-		assertTrue(buildCityCommand(3, -1, 0, -2, VertexDirection.NorthEast));
+		assertTrue(buildCityCommand(3, 7, 0, -2, VertexDirection.NorthEast));
 		
 		//Not their turn
-		assertFalse(buildCityCommand(0, -1, 2, -2, VertexDirection.SouthEast));
+		assertFalse(buildCityCommand(0, 7, 2, -2, VertexDirection.SouthEast));
 		
 		//Not enough resources, valid location
-		assertFalse(buildCityCommand(0, -1, -1, -1, VertexDirection.SouthWest));
+		assertFalse(buildCityCommand(0, 8, -1, -1, VertexDirection.SouthWest));
 	}
 	
 	@Test
@@ -205,32 +204,32 @@ public class CommandsTest2 {
 	public void testTrade(){
 		
 		//Has a wheat port, but not enough wheat to trade
-		assertFalse(maritimeTradeCommand(2, -1, 3, "wheat", "brick"));
+		assertFalse(maritimeTradeCommand(2, 2, 3, "wheat", "brick"));
 		
 		//Doesn't have resource he is trying to send
-		assertFalse(offerTradeCommand(2, -1, 0, new ResourceList(-1, 0, 0, 0, 1)));
+		assertFalse(offerTradeCommand(2, 2, 0, new ResourceList(-1, 0, 0, 0, 1)));
 		
 		//Has proper resources
-		assertTrue(offerTradeCommand(2, -1, 0, new ResourceList(1, 0, 0, 0, -1)));
+		assertTrue(offerTradeCommand(2, 2, 0, new ResourceList(1, 0, 0, 0, -1)));
 		
 		//Now has resources
-		assertTrue(maritimeTradeCommand(2, -1, 3, "wheat", "ore"));
+		assertTrue(maritimeTradeCommand(2, 5, 3, "wheat", "ore"));
 		
 		//Meets all resource requirements
-		assertTrue(acceptTradeCommand(1, -1, true));
+		assertTrue(acceptTradeCommand(1, 10, true));
 	}
 	
 	@Test
 	public void testDiscard(){
 		
 		//Not discarding half of his cards
-		assertFalse(discardCommand(0, -1, new ResourceList(0, 0, 2, 0, 0)));
+		assertFalse(discardCommand(0, 9, new ResourceList(0, 0, 2, 0, 0)));
 		
 		//Valid discard
-		assertTrue(discardCommand(0, -1, new ResourceList(0, 0, 3, 1, 0)));
+		assertTrue(discardCommand(0, 9, new ResourceList(0, 0, 3, 1, 0)));
 		
 		//Not over 7 cards
-		assertFalse(discardCommand(1, -1, new ResourceList(0, 0, 0, 0, 3)));
+		assertFalse(discardCommand(1, 9, new ResourceList(0, 0, 0, 0, 3)));
 	}
 
 }
