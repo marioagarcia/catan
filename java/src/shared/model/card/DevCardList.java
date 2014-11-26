@@ -156,5 +156,9 @@ public class DevCardList implements SerializerDevCardListInterface, Serializable
 			return false;
 		return true;
 	}
+	
+	public int getDevCardListSize(){
+		return monopoly + monument + roadBuild + soldier + yearOfPlenty;
+	}
 
 }

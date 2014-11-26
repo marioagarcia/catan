@@ -44,7 +44,7 @@ try{
 	 */
 	@Override
 	public void execute() {
-		
+System.out.println(facadeInstance.canPlaySoldier(gameId, playerIndex, newLocation, victimIndex));		
 		if (facadeInstance.canPlaySoldier(gameId, playerIndex, newLocation, victimIndex)){
 try{		
 			success = facadeInstance.playSoldier(gameId, playerIndex, newLocation, victimIndex);
