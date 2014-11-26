@@ -165,10 +165,11 @@ public class CommandsTest extends TestCase {
     @Test
     public void testFinishTurn(){
     	//Assert false when it's not the player's turn
-    	//FinishTurn command = new FinishTurn(new FinishTurnParameters(1), 13);
-    	//assertFalse(command.wasSuccessful());
+    	FinishTurn command = new FinishTurn(new FinishTurnParameters(1), 13);
+    	assertFalse(command.wasSuccessful());
     	//Assert true when it's the player's turn and the game state is playing
-    	FinishTurn command = new FinishTurn(new FinishTurnParameters(0), 13);
+    	command = new FinishTurn(new FinishTurnParameters(0), 0);
+    	command.execute();
     	assertTrue(command.wasSuccessful());
     }
     
