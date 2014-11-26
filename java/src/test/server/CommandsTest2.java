@@ -10,8 +10,10 @@ import server.command.BuildCity;
 import server.command.BuildRoad;
 import server.command.BuildSettlement;
 import server.command.DiscardCards;
+import server.command.FinishTurn;
 import server.command.MaritimeTrade;
 import server.command.OfferTrade;
+import server.command.RollNumber;
 import server.command.SendChat;
 import server.facade.ServerModelFacade;
 import shared.locations.EdgeDirection;
@@ -26,8 +28,10 @@ import shared.serialization.parameters.BuildRoadParameters;
 import shared.serialization.parameters.BuildSettlementParameters;
 import shared.serialization.parameters.DiscardCardsParameters;
 import shared.serialization.parameters.EdgeLocationParameters;
+import shared.serialization.parameters.FinishTurnParameters;
 import shared.serialization.parameters.MaritimeTradeParameters;
 import shared.serialization.parameters.OfferTradeParameters;
+import shared.serialization.parameters.RollNumberParameters;
 import shared.serialization.parameters.SendChatParameters;
 import shared.serialization.parameters.VertexLocationParameters;
 
@@ -127,32 +131,67 @@ public class CommandsTest2 {
 		return discard_command.wasSuccessful();
 	}
 	
+	private boolean rollCommand(int player_index, int game_id, int number)
+	{
+		RollNumberParameters p = new RollNumberParameters(player_index, number);
+		RollNumber roll_command = new RollNumber(p, game_id);
+		
+		roll_command.execute();
+		
+		return roll_command.wasSuccessful();
+	}
+	
 	@Test
 	public void testRoads(){
 		
-		assertFalse(buildRoadCommand(0, 1, 1, -2, EdgeDirection.SouthEast));
-		assertTrue(buildRoadCommand(0, 1, 1, -1, EdgeDirection.SouthEast));
-	}
-		/*assertTrue(buildRoadCommand(3, 2, 2, -2, EdgeDirection.South));
-		assertFalse(buildRoadCommand(1, 5, -1, 2, EdgeDirection.North));
+		//Has resources, but wrong location
+		assertFalse(buildRoadCommand(0, -1, 1, -2, EdgeDirection.SouthEast));
+		
+		//Has resources. Right location
+		assertTrue(buildRoadCommand(0, -1, 1, -1, EdgeDirection.SouthEast));
+		
+		//Has resources, location not connected to other roads
+		assertFalse(buildRoadCommand(3, -1, 0, -2, EdgeDirection.North));
+		
+		assertTrue(buildRoadCommand(3, -1, 0, -2, EdgeDirection.NorthEast));
+		
+		//Finish previous turn
+		FinishTurnParameters p = new FinishTurnParameters(3);
+		FinishTurn turn_command = new FinishTurn(p, -1);
+		
+		//Impossible to roll a 16
+		assertFalse(rollCommand(0, -1, 16));
+		
+		//It is not this person's turn to roll
+		assertFalse(rollCommand(2, -1, 5));
+		
+		assertTrue(rollCommand(0, -1, 5));
 	}
 	
 	@Test
 	public void testSettlements(){
 		
-		assertTrue(buildSettlementCommand(3, 3, 2, -2, VertexDirection.SouthEast));
-		assertFalse(buildSettlementCommand(3, 3, 2, -2, VertexDirection.SouthEast));
-		assertFalse(buildSettlementCommand(0, 4, 2, -2, VertexDirection.SouthEast));
+		//No connecting road
+		assertFalse(buildSettlementCommand(0, -1, -1, -1, VertexDirection.NorthEast));
+		
+		//Too close to other settlements
+		assertFalse(buildSettlementCommand(0, -1, -1, -1, VertexDirection.East));
+		
+		//Valid
+		assertTrue(buildSettlementCommand(3, -1, 0, -2, VertexDirection.NorthEast));
 	}
 	
 	@Test
 	public void testCities(){
 		
-		assertTrue(buildCityCommand(3, 10, 2, -2, VertexDirection.SouthEast));
-		assertFalse(buildCityCommand(3, 10, 2, -2, VertexDirection.SouthEast));
+		//Valid
+		assertTrue(buildCityCommand(3, -1, 0, -2, VertexDirection.NorthEast));
 		
-		assertFalse(buildCityCommand(2, 10, 2, -2, VertexDirection.SouthEast));
-		assertFalse(buildCityCommand(2, 10, 0, 0, VertexDirection.SouthEast));
+		//Not their turn
+		assertFalse(buildCityCommand(0, -1, 2, -2, VertexDirection.SouthEast));
+		
+		//Not enough resources, valid location
+		assertFalse(buildCityCommand(0, -1, -1, -1, VertexDirection.SouthWest));
 	}
 	
 	@Test
@@ -165,29 +204,33 @@ public class CommandsTest2 {
 	@Test
 	public void testTrade(){
 		
-		//Has enough resources, is player's turn
-		assertTrue(offerTradeCommand(1, 7, 3, new ResourceList(0, 0, 0, 1, -1)));
-		assertTrue(acceptTradeCommand(3, 7, true));
+		//Has a wheat port, but not enough wheat to trade
+		assertFalse(maritimeTradeCommand(2, -1, 3, "wheat", "brick"));
 		
-		//Doesn't have resources
-		assertFalse(offerTradeCommand(2, 9, 0, new ResourceList(1, 0, 0, -1, 0)));
+		//Doesn't have resource he is trying to send
+		assertFalse(offerTradeCommand(2, -1, 0, new ResourceList(-1, 0, 0, 0, 1)));
 		
-		//Has a wood port
-		assertTrue(maritimeTradeCommand(1, 6, 2, "wood", "wheat"));
+		//Has proper resources
+		assertTrue(offerTradeCommand(2, -1, 0, new ResourceList(1, 0, 0, 0, -1)));
 		
-		//Doesn't have enough to use wood port
-		assertFalse(maritimeTradeCommand(1, 6, 2, "wood", "wheat"));
+		//Now has resources
+		assertTrue(maritimeTradeCommand(2, -1, 3, "wheat", "ore"));
 		
-		//Doesn't have a port or enough resources
-		assertFalse(maritimeTradeCommand(3, 12, 4, "ore", "brick"));
+		//Meets all resource requirements
+		assertTrue(acceptTradeCommand(1, -1, true));
 	}
 	
 	@Test
 	public void testDiscard(){
 		
-		assertTrue(discardCommand(3, 11, new ResourceList(0, 0, 0, 4, 0)));
+		//Not discarding half of his cards
+		assertFalse(discardCommand(0, -1, new ResourceList(0, 0, 2, 0, 0)));
 		
-		assertTrue(discardCommand(2, 11, new ResourceList(0, 0, 0, 0, 4)));
+		//Valid discard
+		assertTrue(discardCommand(0, -1, new ResourceList(0, 0, 3, 1, 0)));
+		
+		//Not over 7 cards
+		assertFalse(discardCommand(1, -1, new ResourceList(0, 0, 0, 0, 3)));
 	}
-*/
+
 }

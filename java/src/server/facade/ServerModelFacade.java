@@ -272,7 +272,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		try {
 			
-			String folder = "Saved_Test_Games" + File.separator;
+			String folder = "Test_Games" + File.separator;
 			File data_folder = new File(folder);
 			
 			if (!data_folder.exists()){

@@ -10,7 +10,8 @@ public class TestMain {
 				//"test.ServerProxyTest",
 			//	"test.model.map.MapTest",
 				//"test.server.ServerModelFacadeTest"
-				"test.server.CommandsTest2"
+				"test.server.CommandsTest2",
+				"test.server.CommandsTest"
 		};
 		
 		JUnitCore.main(classes);
