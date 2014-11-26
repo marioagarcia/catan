@@ -72,39 +72,6 @@ public class ServerModelFacadeTest extends TestCase {
 
     }
 
-  /*  @Test
-    public void testSaveGame() throws Exception {
-
-    	
-        assertTrue(serverModelFacade.createNewGame("test5", true, true, true));
-
-        assertTrue(serverModelFacade.createNewGame("test6", false, true, true));
-
-        assertTrue(serverModelFacade.createNewGame("test7", true, false, true));
-        
-        int before_size = serverModelFacade.getGameList().size();
-
-        //save game
-        assertTrue(serverModelFacade.saveGame(2));
-
-        int after_size = serverModelFacade.getGameList().size();
-        
-        assertEquals(before_size + 1, after_size);
-        
-        before_size = serverModelFacade.getGameList().size();
-        assertTrue(serverModelFacade.saveGame(3));
-        after_size = serverModelFacade.getGameList().size();
-        
-        assertEquals(before_size + 1, after_size);
-        
-        before_size = serverModelFacade.getGameList().size();
-        assertFalse(serverModelFacade.saveGame(300));
-        after_size = serverModelFacade.getGameList().size();
-        
-        assertEquals(before_size, after_size);
-
-    }
-*/
     @Test
     public void testCanJoinGame() throws Exception {
     	

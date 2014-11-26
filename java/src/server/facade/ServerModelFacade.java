@@ -215,7 +215,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	        
 	        new_game = (ServerGameManager) in.readObject();
 	        
-	        
+	   /*     
 	        boolean exists = false;
 	        
 	        for (Map.Entry<Integer, ServerGameManager> game : gamesList.entrySet()){
@@ -226,10 +226,10 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				}	
 			}
 	                
-	        if (!exists){
+	        if (!exists){*/
 				new_game.setGameId(currentGameId++);
 				gamesList.put(new_game.getGameId(), new_game);
-	        }
+	   //     }
 			
 			in.close();
 	        fileIn.close();

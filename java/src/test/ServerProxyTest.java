@@ -172,7 +172,7 @@ public class ServerProxyTest {
 		
 		param = "{"
 			  + "\"type\": \"acceptTrade\","
-			  + "\"playerIndex\": 0,"
+			  + "\"playerIndex\": 2,"
 			  + "\"willAccept\": true"
 			  + "}";
 		

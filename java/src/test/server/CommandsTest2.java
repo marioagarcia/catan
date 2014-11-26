@@ -22,6 +22,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.card.ResourceList;
+import shared.model.player.Player;
 import shared.serialization.parameters.AcceptTradeParameters;
 import shared.serialization.parameters.BuildCityParameters;
 import shared.serialization.parameters.BuildRoadParameters;
@@ -141,14 +142,43 @@ public class CommandsTest2 {
 		return roll_command.wasSuccessful();
 	}
 	
+	private Player getPlayer(int index, int game_id){
+		return facade.getGameModel(game_id).getPlayers().getPlayer(index);
+	}
+	
 	@Test
 	public void testRoads(){
+		
+		int roads_before = getPlayer(0, 1).getRoads();
+		int wood_before = getPlayer(0, 1).getResourceList().getWood();
+		int brick_before = getPlayer(0, 1).getResourceList().getBrick();
 		
 		//Has resources, but wrong location
 		assertFalse(buildRoadCommand(0, 1, 1, -2, EdgeDirection.SouthEast));
 		
+		int roads_after = getPlayer(0, 1).getRoads();
+		int wood_after = getPlayer(0, 1).getResourceList().getWood();
+		int brick_after = getPlayer(0, 1).getResourceList().getBrick();
+		
+		assertTrue(roads_before == roads_after);
+		assertTrue(wood_before == wood_after);
+		assertTrue(brick_before == brick_after);
+		
 		//Has resources. Right location
-		assertTrue(buildRoadCommand(0, 1, 1, -1, EdgeDirection.SouthEast));
+		roads_before = getPlayer(0, 1).getRoads();
+		wood_before = getPlayer(0, 1).getResourceList().getWood();
+		brick_before = getPlayer(0, 1).getResourceList().getBrick();
+		
+		assertTrue(buildRoadCommand(0, 1, -1, -1, EdgeDirection.SouthEast));
+		
+		roads_after = getPlayer(0, 1).getRoads();
+		wood_after = getPlayer(0, 1).getResourceList().getWood();
+		brick_after = getPlayer(0, 1).getResourceList().getBrick();
+		
+		assertTrue(roads_before - 1 == roads_after);
+		
+		assertTrue(wood_before - 1 == wood_after);
+		assertTrue(brick_before - 1 == brick_after);
 		
 		//Has resources, location not connected to other roads
 		assertFalse(buildRoadCommand(3, 3, 0, -2, EdgeDirection.North));
@@ -177,14 +207,43 @@ public class CommandsTest2 {
 		assertFalse(buildSettlementCommand(0, 4, -1, -1, VertexDirection.East));
 		
 		//Valid
+		int settlements_before = getPlayer(3, 6).getSettlements();
+		int wood_before = getPlayer(3, 6).getResourceList().getWood();
+		int brick_before = getPlayer(3, 6).getResourceList().getBrick();
+		int wheat_before = getPlayer(3, 6).getResourceList().getWheat();
+		int sheep_before = getPlayer(3, 6).getResourceList().getSheep();
+		
 		assertTrue(buildSettlementCommand(3, 6, 0, -2, VertexDirection.NorthEast));
+		
+		int settlements_after = getPlayer(3, 6).getSettlements();
+		int wood_after = getPlayer(3, 6).getResourceList().getWood();
+		int brick_after = getPlayer(3, 6).getResourceList().getBrick();
+		int wheat_after = getPlayer(3, 6).getResourceList().getWheat();
+		int sheep_after = getPlayer(3, 6).getResourceList().getSheep();
+		
+		assertTrue(settlements_before -1 == settlements_after);
+		assertTrue(wood_before - 1 == wood_after);
+		assertTrue(brick_before - 1 == brick_after);
+		assertTrue(wheat_before - 1 == wheat_after);
+		assertTrue(sheep_before - 1 == sheep_after);
 	}
 	
 	@Test
 	public void testCities(){
 		
 		//Valid
+		int cities_before = getPlayer(3, 7).getCities();
+		int wheat_before = getPlayer(3, 7).getResourceList().getWheat();
+		int ore_before = getPlayer(3, 7).getResourceList().getOre();
+		
 		assertTrue(buildCityCommand(3, 7, 0, -2, VertexDirection.NorthEast));
+		int cities_after = getPlayer(3, 7).getCities();
+		int wheat_after = getPlayer(3, 7).getResourceList().getWheat();
+		int ore_after = getPlayer(3, 7).getResourceList().getOre();
+		
+		assertTrue(cities_before - 1 == cities_after);
+		assertTrue(wheat_before - 2 == wheat_after);
+		assertTrue(ore_before - 3 == ore_after);
 		
 		//Not their turn
 		assertFalse(buildCityCommand(0, 7, 2, -2, VertexDirection.SouthEast));

@@ -141,7 +141,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 
 		boolean turn_condition_met = (turnTracker.getCurrentTurn() != player_index);
 
-		return (player_condition_met && status_met && turn_condition_met);
+		return (player_condition_met && status_met && turn_condition_met && domesticTrade != null);
 	}
 
 	@Override

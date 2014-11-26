@@ -6,12 +6,12 @@ public class TestMain {
 	public static void main(String[] args)
 	{
 		String[] classes = new String[] {
-				//"test.ServerPollerTest",
-				//"test.ServerProxyTest",
-			//	"test.model.map.MapTest",
-				//"test.server.ServerModelFacadeTest"
+				"test.ServerPollerTest",
+				"test.ServerProxyTest",
+				"test.model.map.MapTest",
+				//"test.server.CommandsTest",
 				"test.server.CommandsTest2",
-				"test.server.CommandsTest"
+				"test.server.ServerModelFacadeTest"
 		};
 		
 		JUnitCore.main(classes);
