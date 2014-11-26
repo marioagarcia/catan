@@ -26,6 +26,7 @@ public class CommandsTest extends TestCase {
         super.setUp();
 
         serverModelFacade = ServerModelFacade.getInstance();
+        serverModelFacade.loadTestGames();
     }
 
     private boolean finishTurn(int player_index, int game_id) {
@@ -151,68 +152,24 @@ public class CommandsTest extends TestCase {
         assertEquals(true, this.buildRoad(2, 0, EdgeDirection.North, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
         assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
 
-        assertEquals(true, this.buildRoad(2, 0, EdgeDirection.South, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
+        //assertEquals(true, this.buildRoad(2, 0, EdgeDirection.South, true, 3,serverModelFacade.getGameList().getGameList().get(1).getId()));
         assertEquals(true, this.finishTurn(3,serverModelFacade.getGameList().getGameList().get(1).getId()));
 
 
 
 
 
-        assertEquals(true, this.buildSettlement(2, 0, VertexDirection.SouthWest, 3, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
-    }
-    
-    @Test
-    public void testSendChat(){
-    	
-    }
-    
-    @Test
-    public void testAcceptTrade(){
-    	
-    }
-    
-    @Test
-    public void testDiscardCards(){
-    	
-    }
-    
-    @Test
-    public void testRollNumber(){
-    	
-    }
-    
-    @Test
-    public void testBuildRoad(){
-    	
-    }
-    
-    @Test 
-    public void testBuildSettlement(){
-    	
-    }
-    
-    @Test
-    public void testBuildCity(){
-    	
-    }
-    
-    @Test
-    public void testOfferTrade(){
-    	
-    }
-    
-    @Test
-    public void testMaritimeTrade(){
-    	
+        //assertEquals(true, this.buildSettlement(2, 0, VertexDirection.SouthWest, 3, true,serverModelFacade.getGameList().getGameList().get(1).getId()));
     }
     
     @Test
     public void testFinishTurn(){
     	//Assert false when it's not the player's turn
-    	
-    	//Assert false when it's the player's turn but the game state is not playing
-    	
+    	//FinishTurn command = new FinishTurn(new FinishTurnParameters(1), 13);
+    	//assertFalse(command.wasSuccessful());
     	//Assert true when it's the player's turn and the game state is playing
+    	FinishTurn command = new FinishTurn(new FinishTurnParameters(0), 13);
+    	assertTrue(command.wasSuccessful());
     }
     
     @Test

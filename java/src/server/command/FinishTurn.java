@@ -26,7 +26,7 @@ public class FinishTurn extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		
+System.out.println(facadeInstance.canFinishTurn(gameId, playerIndex));		
 		if (facadeInstance.canFinishTurn(gameId, playerIndex)){
 			
 			success = facadeInstance.finishTurn(gameId, playerIndex);
