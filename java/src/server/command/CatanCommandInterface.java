@@ -20,5 +20,9 @@ public interface CatanCommandInterface{
 	 */
 	public boolean wasSuccessful();
 	
+	/**
+	 * Creates a Data Transfer Object with the relevant data from the Command Object. This DTO will be used to persist commands to a database
+	 * @return An object that packages the parameters of the command object, so they can be reconstituted and applied to a game
+	 */
 	public CommandDTO toDTO();
 }
