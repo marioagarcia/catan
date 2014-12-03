@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface UserDAOInterface {
 
 	/**
-	 * Saves a user, i.e. adds a user to the database
+	 * Serializes a user and stores it in the database
 	 * 
 	 * @param data An object representation of the user being saved/added
 	 * @return True if the save was successful, false otherwise

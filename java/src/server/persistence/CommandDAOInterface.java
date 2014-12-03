@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface CommandDAOInterface {
 
 	/**
-	 * Saves a command in the database
+	 * Serializes a command and saves it in the database
 	 * 
 	 * @param data An object containing the information needed to save a command: a parameter object, a type (string), and an id (int)
 	 * @return True if the save was successful, false otherwise

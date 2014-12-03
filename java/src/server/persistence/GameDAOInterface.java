@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface GameDAOInterface {
 
 	/**
-	 * Saves the current state of a game
+	 * Serializes a game and stores it in the database
 	 * 
 	 * @param data An object representation of a game
 	 * @return True if the save was successful, false otherwise
