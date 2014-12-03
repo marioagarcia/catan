@@ -7,18 +7,21 @@ package server.persistence;
 public interface DatabaseAccessFactoryInterface {
 
 	/**
+	 * Creates a command DAO
 	 * 
 	 * @return An object that will be used to save CatanCommands to the database 
 	 */
 	public abstract CommandDAOInterface createCommandDAO();
 	
 	/**
+	 *Creates a user DAO
 	 *
 	 * @return An object that will be used to save Users to the database
 	 */
 	public abstract UserDAOInterface createUserDAO();
 	
 	/**
+	 * Creates a game DAO
 	 * 
 	 * @return An object that will be used to save games to the database
 	 */
