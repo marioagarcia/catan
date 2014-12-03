@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.model.card.ResourceList;
 import shared.serialization.parameters.DiscardCardsParameters;
 
@@ -21,6 +22,8 @@ public class DiscardCards extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		
 		discards = parameters.getDiscardedCards();
+		
+		this.dto = new CommandDTO(parameters, "DiscardCardsParameters", game_id);
 	}
 	
 	/**

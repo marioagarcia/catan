@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.serialization.parameters.AcceptTradeParameters;
 
 /**
@@ -20,6 +21,8 @@ public class AcceptTrade extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		this.gameId = game_id;
 		this.accept = parameters.getWillAccept();
+		
+		this.dto = new CommandDTO(parameters, "AcceptTradeParameters", game_id);
 	}
 	
 	/**

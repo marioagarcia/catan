@@ -1,6 +1,6 @@
 package server.command;
 
-import shared.serialization.parameters.MessageParameters;
+import server.persistence.CommandDTO;
 import shared.serialization.parameters.SendChatParameters;
 
 /**
@@ -21,6 +21,8 @@ public class SendChat extends CatanCommand {
 		
 		this.playerIndex = parameters.getPlayerIndex();
 		this.chatMessage = parameters.getContent();
+		
+		this.dto = new CommandDTO(parameters, "SendChatParameters", game_id);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.locations.HexLocation;
 import shared.serialization.parameters.RobPlayerParameters;
 
@@ -20,6 +21,8 @@ public class RobPlayer extends CatanCommand {
 		this.gameId = game_id;
 		this.victimIndex = parameters.getVictimIndex();
 		this.location = parameters.getLocation();
+		
+		this.dto = new CommandDTO(parameters, "RobPlayerParameters", game_id);
 	}
 	
 	/**

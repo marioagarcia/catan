@@ -1,5 +1,6 @@
 package server.command;
 
+
 /**
  * Updates the server log to record more or less detail
  * @author Kevin

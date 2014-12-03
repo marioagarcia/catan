@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -40,6 +41,8 @@ public class PlayRoadBuilding extends CatanCommand {
 		EdgeDirection direction2 = EdgeDirection.convertShorthandDirection(parameters.getSpot2().getDirection());
 		
 		location2 = new EdgeLocation(hex_loc2, direction2);
+		
+		this.dto = new CommandDTO(parameters, "RoadBuildingParameters", game_id);
 	}
 	
 	/**

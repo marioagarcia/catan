@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.serialization.parameters.FinishTurnParameters;
 
 /**
@@ -17,6 +18,8 @@ public class FinishTurn extends CatanCommand {
 		
 		this.gameId = game_id;
 		this.playerIndex = parameters.getPlayerIndex();
+		
+		this.dto = new CommandDTO(parameters, "FinishTurnParameters", game_id);
 	}
 	
 	/**

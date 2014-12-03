@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.definitions.ResourceType;
 import shared.serialization.parameters.MonopolyParameters;
 
@@ -22,6 +23,8 @@ public class PlayMonopoly extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		
 		resourceString = parameters.getResource();
+		
+		this.dto = new CommandDTO(parameters, "MonopolyParameters", game_id);
 	}
 	
 	/**

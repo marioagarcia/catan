@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.locations.HexLocation;
 import shared.serialization.parameters.SoldierParameters;
 
@@ -32,6 +33,9 @@ try{
 		
 		victimIndex = parameters.getVictimIndex();
 }catch(Exception e){
+	
+	this.dto = new CommandDTO(parameters, "SoldierParameters", game_id);
+	
 	System.out.println("First Try/Catch Statement");
 	e.printStackTrace();
 }

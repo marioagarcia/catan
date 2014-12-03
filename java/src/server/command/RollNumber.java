@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.serialization.parameters.RollNumberParameters;
 
 /**
@@ -21,6 +22,8 @@ public class RollNumber extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		
 		this.number = parameters.getNumber();
+		
+		this.dto = new CommandDTO(parameters, "RollNumberParameters", game_id);
 	}
 	
 	/**

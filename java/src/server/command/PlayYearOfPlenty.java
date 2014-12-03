@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.definitions.ResourceType;
 import shared.serialization.parameters.YearOfPlentyParameters;
 
@@ -23,6 +24,8 @@ public class PlayYearOfPlenty extends CatanCommand {
 		
 		this.resourceString1 = parameters.getResource1();
 		this.resourceString2 = parameters.getResource2();
+		
+		this.dto = new CommandDTO(parameters, "YearOfPlentyParameters", game_id);
 	}
 	
 	/**

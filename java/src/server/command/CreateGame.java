@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.serialization.parameters.CreateGameRequestParameters;
 
 /**

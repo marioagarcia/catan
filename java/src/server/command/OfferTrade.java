@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.model.card.ResourceList;
 import shared.serialization.parameters.OfferTradeParameters;
 
@@ -22,6 +23,8 @@ public class OfferTrade extends CatanCommand {
 		this.gameId = game_id;
 		this.resourceList = parameters.getOffer();
 		this.otherPlayerIndex = parameters.getReceiver();
+		
+		this.dto = new CommandDTO(parameters, "OfferTradeParameters", game_id);
 	}
 	
 	/**

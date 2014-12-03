@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.definitions.ResourceType;
 import shared.serialization.parameters.MaritimeTradeParameters;
 
@@ -27,6 +28,8 @@ public class MaritimeTrade extends CatanCommand {
 		
 		this.in = ResourceType.valueOf(parameters.getInputResource().toUpperCase());
 		this.out = ResourceType.valueOf(parameters.getOutputResource().toUpperCase());
+		
+		this.dto = new CommandDTO(parameters, "MaritimeTradeParameters", game_id);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.serialization.parameters.MonumentParameters;
 
 /**
@@ -17,6 +18,8 @@ public class PlayMonument extends CatanCommand {
 		
 		this.gameId = game_id;
 		this.playerIndex = parameters.getPlayerIndex();
+		
+		this.dto = new CommandDTO(parameters, "MonumentParameters", game_id);
 	}
 	
 	/**

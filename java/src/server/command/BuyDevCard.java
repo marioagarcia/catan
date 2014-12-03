@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.serialization.parameters.BuyDevCardParameters;
 
 /**
@@ -16,6 +17,8 @@ public class BuyDevCard extends CatanCommand {
 	public BuyDevCard(BuyDevCardParameters parameters, int game_id){
 		this.playerIndex = parameters.getPlayerIndex();
 		this.gameId = game_id;
+		
+		this.dto = new CommandDTO(parameters, "BuyDevCardParameters", game_id);
 	}
 	
 	/**

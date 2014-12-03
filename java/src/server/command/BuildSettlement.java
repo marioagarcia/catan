@@ -1,5 +1,6 @@
 package server.command;
 
+import server.persistence.CommandDTO;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -31,6 +32,8 @@ public class BuildSettlement extends CatanCommand {
 		VertexDirection direction = VertexDirection.convertShorthandDirection(parameters.getVertexLocation().getDirection());
 		
 		this.location = new VertexLocation(hex_loc, direction);
+		
+		this.dto = new CommandDTO(parameters, "BuildSettmentParameters", game_id);
 
 	}
 	
