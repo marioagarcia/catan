@@ -6,7 +6,7 @@ public interface UserDAOInterface {
 
 	public abstract boolean saveUser(UserDTO data);
 	public abstract ArrayList<UserDTO> getAllUsers();
-	public abstract UserDTO getUser(int id);
+	public abstract UserDTO getUser(String username);
 	public abstract boolean updateUser(UserDTO data);
-	public abstract boolean deleteUser(int id);
+	public abstract boolean deleteUser(String username);
 }
