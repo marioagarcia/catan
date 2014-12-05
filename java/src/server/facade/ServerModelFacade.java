@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import server.manager.ServerGameManager;
+import server.persistence.PersistenceInterface;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -36,9 +37,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	private static int currentGameId = 0;
 	private UserManager userList = null;
 	private File relative_file = new File(ServerModelFacade.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+	private PersistenceInterface persistor;
 	
 	protected ServerModelFacade()
 	{
+		//KEVIN, MONSTER, WE ARE CREATING THE DTO'S IN THIS VERY FACADE
+		
 		gamesList = new HashMap<Integer, ServerGameManager>();
 		userList = new UserManager();
 		
@@ -574,5 +578,11 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			HexLocation location) {
 		
 		return gamesList.get(game_id).robPlayer(player_index, victim_index, location);
-	}	
+	}
+	
+	public void configorPersistor(PersistenceInterface persistor, int deltaThreshold){
+		this.persistor = persistor;
+		
+		//Load all of the Users, Games, Commands
+	}
 }

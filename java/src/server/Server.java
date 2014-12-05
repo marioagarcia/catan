@@ -18,6 +18,7 @@ import server.command.facade.real.GamesCommandFacade;
 import server.command.facade.real.MovesCommandFacade;
 import server.command.facade.real.UserCommandFacade;
 import server.command.facade.real.UtilCommandFacade;
+import server.facade.ServerModelFacade;
 import server.handler.GameHandler;
 import server.handler.GamesHandler;
 import server.handler.MovesHandler;
@@ -89,8 +90,19 @@ public class Server {
 		}else if (args[0].equals("mock")){
 			s.setMockCommandFacade();
 			s.run();
+		}else if (args.length == 2){
+			
+			//Find the .jar corresponding to the string in args[0] and create a PersistenceInterface object
+			
+			//Parse args[1] into an int
+			
+			//Call configorPersistor on the server facade and pass in the PersistenceInterface object and int
+			
+			s.setCommandFacade();
+			s.run();
+			
 		}else{
-			System.out.println("The only valid argument is \"mock\".");
+			System.out.println("Error:  Valid arguments are 'mock' or name of jar followed by a space and an int.");
 		}
 	}
 }
