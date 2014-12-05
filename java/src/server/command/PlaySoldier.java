@@ -42,7 +42,6 @@ try{
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#canPlaySoldier(int, int, shared.locations.HexLocation, shared.locations.HexLocation, int) canPlaySoldier} 
 	 * with the parameters provided to the constructor to ensure this move is valid
 	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#playSoldier(int, int, shared.locations.HexLocation, int) playSoldier}
 	 */

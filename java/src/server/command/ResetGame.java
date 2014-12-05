@@ -9,10 +9,7 @@ public class ResetGame extends CatanCommand {
 	public ResetGame(){
 		
 	}
-	
-	/**
-	 * Calls {@link server.facade.ServerModelFacade#resetGame(int) resetGame} 
-	 */
+
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub

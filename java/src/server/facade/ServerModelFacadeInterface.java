@@ -61,6 +61,7 @@ public interface ServerModelFacadeInterface {
 	
 	/**
 	 * Saves the current game
+	 * @param game_id the specific game
 	 * @return true if the server was able to save the game
 	 */
 	public boolean saveGame(int game_id);
@@ -68,7 +69,6 @@ public interface ServerModelFacadeInterface {
 	/**
 	 * Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) 
 	 * The game_name is the same as the original game name.
-	 * @return true if the game was correctly loaded
 	 */
 	public void loadGames();
 	
@@ -226,7 +226,6 @@ public interface ServerModelFacadeInterface {
 	 * called when a trade is offered to a specific player
 	 * @param game_id the specific game 
 	 * @param player_index the specific player in the specific game
-	 * @param trade the set of cards to be traded
 	 * @param otherPlayerIndex self explanatory 
 	 * @return true if the offer was traded correctly
 	 */
@@ -237,8 +236,12 @@ public interface ServerModelFacadeInterface {
 	 * 2 resources corresponding to the type of harbor or 3 resources corresponding to
 	 * the type of harbor
 	 * 
-	 * @param location The location of the port so it can be checked against the player
-	 * @param trade The cards that are being traded with the bank
+	 * * @param game_id the specific game
+	 * @param game_id the specific game
+	 * @param player_index the specific player in the specific game
+	 * @param ratio the ratio
+	 * @param in the in
+	 * @param out the out
 	 * @return true if the player has the resources to make a maritime trade, false
 	 * otherwise
 	 */
@@ -248,8 +251,9 @@ public interface ServerModelFacadeInterface {
 	 * sets a trade with the cardBank and the specific player
 	 * @param game_id the specific game 
 	 * @param player_index the specific player in the specific game
-	 * @param location the location of the port so it can be checked against the player
-	 * @param trade the cards to be traded
+	 * @param ratio the ratio
+	 * @param in the in
+	 * @param out the out
 	 * @return true if the cards were traded correctly
 	 */
 	public boolean maritimeTrade(int game_id, int player_index, int ratio, ResourceType in, ResourceType out);

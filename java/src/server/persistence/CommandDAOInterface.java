@@ -26,5 +26,5 @@ public interface CommandDAOInterface {
 	 * @param game_id The id of the game whose commands are being deleted
 	 * @return True if the deletion was successful, false otherwise.
 	 */
-	public abstract boolean deleteCommand(int id);
+	public abstract boolean deleteGameCommands(int game_id);
 }

@@ -69,7 +69,6 @@ public interface ClientModelFacadeInterface {
 
 	/**
 	 * Saves the current game
-     * @param filename the name of the file that we want to sav the game to
 	 * @return true if the server was able to save the game
 	 */
 	public boolean saveGame();

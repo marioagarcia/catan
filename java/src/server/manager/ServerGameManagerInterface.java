@@ -106,14 +106,14 @@ public interface ServerGameManagerInterface {
 	public boolean offerTrade(int player_index, ResourceList resources, int otherPlayerIndex);
 
 	/**
-	 * Checks that the player has a city or a settlement at the location and has either 
+	 * Checks that the player has a city or a settlement at the location and has either
 	 * 2 resources corresponding to the type of harbor or 3 resources corresponding to
 	 * the type of harbor
-	 * 
-	 * @param location The location of the port so it can be checked against the player
-	 * @param trade The cards that are being traded with the bank
-	 * @return true if the player has the resources to make a maritime trade, false
-	 * otherwise
+	 * @param player_index the player
+	 * @param ratio the ratio
+	 * @param resource_in the resource in
+	 * @param resource_out the resource out
+	 * @return true is you can maritime trade
 	 */
 	public boolean canMaritimeTrade(int player_index, int ratio, ResourceType resource_in, ResourceType resource_out);
 	public boolean maritimeTrade(int player_index, int ratio, ResourceType resource_in, ResourceType resource_out);
@@ -167,8 +167,7 @@ public interface ServerGameManagerInterface {
 	/**
 	 * Checks that the robber isn't being kept in the same place and that the 
 	 * player to rob has cards
-	 * 
-	 * @param oldLocation The location the robber is coming from
+	 * @param player_index The player not being robbed
 	 * @param newLocation The location the robber is going to
 	 * @param victimIndex The player being robbed
 	 * @return true if successful

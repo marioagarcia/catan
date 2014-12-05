@@ -28,9 +28,9 @@ public class OfferTrade extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#canOfferTrade(int, int, shared.model.card.TradeInterface) canOfferTrade} with the parameters provided to the constructor
+	 * Calls {@link server.facade.ServerModelFacade#canOfferTrade(int, int, shared.model.card.ResourceList) canOfferTrade} with the parameters provided to the constructor
 	 * to ensure this move is valid
-	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#offerTrade(int, int, shared.model.manager.interfaces.GMDomesticTradeInterface, int) offerTrade}
+	 * If valid, a call is then made to {@link server.facade.ServerModelFacade#offerTrade(int, int, shared.model.card.ResourceList, int) offerTrade}
 	 */
 	@Override
 	public void execute() {

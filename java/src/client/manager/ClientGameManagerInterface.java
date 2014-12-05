@@ -59,7 +59,6 @@ public interface ClientGameManagerInterface
 
     /**
      * Saves the current game
-     * @param filename the name of the file that we wish to save the game to
      * @return true if the server was able to save the game
      */
 	public boolean saveGame();

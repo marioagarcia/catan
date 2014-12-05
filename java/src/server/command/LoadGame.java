@@ -19,7 +19,7 @@ public class LoadGame extends CatanCommand {
 	}
 	
 	/**
-	 * Calls {@link server.facade.ServerModelFacade#loadGame(int) loadGame} 
+	 * Calls {@link server.facade.ServerModelFacade#loadGames() loadGame}
 	 */
 	@Override
 	public void execute() {

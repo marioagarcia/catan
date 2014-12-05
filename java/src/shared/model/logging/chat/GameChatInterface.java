@@ -7,7 +7,6 @@ public interface GameChatInterface
 	 * gets the message at a particular index in the game chat
 	 * @param messageIndex the location of the message to return
 	 * @return MessageInterface instance if index exists
-	 * @throws MessageDoesNotExistException if index is not valid
 	 */
 	public MessageInterface getMessage(int messageIndex);
 	
