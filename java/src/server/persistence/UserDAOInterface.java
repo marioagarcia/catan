@@ -7,25 +7,26 @@ public interface UserDAOInterface {
 	/**
 	 * Serializes a user and stores it in the database
 	 * 
-	 * @param data An object representation of the user being saved/added
+	 * @param user_blob An object representation of the user being saved/added
+	 * @param username The username to be associated with the given user blob
 	 * @return True if the save was successful, false otherwise
 	 */
-	public abstract boolean saveUser(UserDTO data);
+	public abstract boolean saveUser(String user_blob, String username);
 	
 	/**
-	 * Retrieves a list of all of the users in the database
+	 * Retrieves a serialized list of all of the users in the database
 	 * 
-	 * @return An arraylist containing all of the users in the database
+	 * @return An arraylist containing all of the serialized users in the database
 	 */
-	public abstract ArrayList<UserDTO> getAllUsers();
+	public abstract ArrayList<String> getAllUsers();
 	
 	/**
 	 * Retrieves a user based on the given username
 	 * 
 	 * @param username The username of the user being retrieved
-	 * @return UserDTO an object representation of the user
+	 * @return A serialized representation of the user
 	 */
-	public abstract UserDTO getUser(String username);
+	public abstract String getUser(String username);
 	
 	/**
 	 * Updates a user

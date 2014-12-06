@@ -7,18 +7,20 @@ public interface CommandDAOInterface {
 	/**
 	 * Serializes a command and saves it in the database
 	 * 
-	 * @param data An object containing the information needed to save a command: a parameter object, a type (string), and an id (int)
+	 * @param command_blob A serialized representation of a command object
+	 * @param type The specific type of command object associated with the command blob
+	 * @param game_id The id of the game this command belongs to
 	 * @return True if the save was successful, false otherwise
 	 */
-	public abstract boolean saveCommand(CommandDTO data);
+	public abstract boolean saveCommand(String command_blob, String type, int game_id);
 	
 	/**
-	 * Retrieves a list of commands associated with the given game id
+	 * Retrieves a list of serialized commands associated with the given game id
 	 * 
 	 * @param game_id The id of the game whose commands are being retrieved
-	 * @return An arraylist of the commands associated with the give game id
+	 * @return An arraylist of the serialized commands associated with the give game id
 	 */
-	public abstract ArrayList<CommandDTO> getUnappliedCommands(int game_id);
+	public abstract ArrayList<String> getUnappliedCommands(int game_id);
 	
 	/**
 	 * Deletes the commands associated with a specific game, i.e. resets the list of commands for a game.
