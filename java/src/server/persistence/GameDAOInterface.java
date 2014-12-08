@@ -9,6 +9,7 @@ public interface GameDAOInterface {
 	 * 
 	 * @param game_blob An serialized representation of a game
 	 * @param game_id The id that should be associated with the game blob
+	 * @param title The name of the game being saved
 	 * @return True if the save was successful, false otherwise
 	 */
 	public abstract boolean saveGame(String game_blob, int game_id);

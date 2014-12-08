@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.MonumentParameters;
 
 /**
@@ -18,8 +18,6 @@ public class PlayMonument extends CatanCommand {
 		
 		this.gameId = game_id;
 		this.playerIndex = parameters.getPlayerIndex();
-		
-		this.dto = new CommandDTO(parameters, "MonumentParameters", game_id);
 	}
 	
 	/**
@@ -30,9 +28,14 @@ public class PlayMonument extends CatanCommand {
 	@Override
 	public void execute() {
 
-		if (facadeInstance.canPlayMonument(gameId, playerIndex)){
+		if (ServerModelFacade.getInstance().canPlayMonument(gameId, playerIndex)){
 			
-			success = facadeInstance.playMonument(gameId, playerIndex);
+			success = ServerModelFacade.getInstance().playMonument(gameId, playerIndex);
+			
+			if (success){
+				
+			//	ServerModelFacade.getInstance().persistCommand(this, "PlayMonument", gameId);
+			}
 		}
 		
 	}

@@ -1,5 +1,6 @@
 package server.command;
 
+import server.facade.ServerModelFacade;
 import shared.definitions.CatanColor;
 import shared.serialization.parameters.JoinGameParameters;
 
@@ -30,8 +31,8 @@ public class JoinGame extends CatanCommand {
 	@Override
 	public void execute() {
 					
-		if (facadeInstance.canJoinGame(gameId, playerId, color)){
-			success = facadeInstance.joinGame(gameId, playerId, color);
+		if (ServerModelFacade.getInstance().canJoinGame(gameId, playerId, color)){
+			success = ServerModelFacade.getInstance().joinGame(gameId, playerId, color);
 		}
 		
 	}

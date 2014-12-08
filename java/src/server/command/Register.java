@@ -1,5 +1,6 @@
 package server.command;
 
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.CredentialsParameters;
 
 /**
@@ -26,6 +27,6 @@ public class Register extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		success = facadeInstance.registerPlayer(username, password);
+		success = ServerModelFacade.getInstance().registerPlayer(username, password);
 	}
 }

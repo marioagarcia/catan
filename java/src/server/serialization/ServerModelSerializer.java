@@ -486,8 +486,12 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		//Get the game's version number from gameData
 		int version = gameData.getVersion();
 		
+		int id = gameData.getId();
+		
+		String name = gameData.getName();
+		
 		//Create the serializable game model object: deck, map, players, log, chat, bank, turnTracker, tradeOffer, winner, version
-		GameModelParameters gameModel = new GameModelParameters(deck, map, players, log, chat, bank, turnTracker, tradeOffer, winner, version);
+		GameModelParameters gameModel = new GameModelParameters(deck, map, players, log, chat, bank, turnTracker, tradeOffer, winner, version, id, name);
 		
 		Gson gson = new Gson();
 		return gson.toJson(gameModel);

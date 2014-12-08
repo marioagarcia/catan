@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -30,8 +30,6 @@ public class BuildCity extends CatanCommand {
 		VertexDirection direction = VertexDirection.convertShorthandDirection(parameters.getVertexLocation().getDirection());
 		
 		this.location = new VertexLocation(hex_loc, direction);
-		
-		this.dto = new CommandDTO(parameters, "BuildCityParameters", game_id);
 	}
 	
 	/**
@@ -40,9 +38,14 @@ public class BuildCity extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		if (facadeInstance.canBuildCity(gameId, playerIndex, location)){
+		if (ServerModelFacade.getInstance().canBuildCity(gameId, playerIndex, location)){
 			
-			success = facadeInstance.buildCity(gameId, playerIndex, location);
+			success = ServerModelFacade.getInstance().buildCity(gameId, playerIndex, location);
+			
+			if (success){
+				
+			//	ServerModelFacade.getInstance().persistCommand(this, "BuildCity", gameId);
+			}
 		}
 	}
 }

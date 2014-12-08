@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -31,9 +31,6 @@ public class BuildRoad extends CatanCommand {
 		EdgeDirection direction = EdgeDirection.convertShorthandDirection(parameters.getRoadLocation().getDirection());
 		
 		location = new EdgeLocation(hex_loc, direction);
-		
-		this.dto = new CommandDTO(parameters, "BuildRoadParameters", game_id);
-		
 	}
 	
 	/**
@@ -43,9 +40,14 @@ public class BuildRoad extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canBuildRoad(gameId, playerIndex, location)){
+		if (ServerModelFacade.getInstance().canBuildRoad(gameId, playerIndex, location)){
 			
-			success = facadeInstance.buildRoad(gameId, playerIndex, location);
+			success = ServerModelFacade.getInstance().buildRoad(gameId, playerIndex, location);
+			
+			if (success){
+				
+			//	ServerModelFacade.getInstance().persistCommand(this, "BuildCity", gameId);
+			}
 		}
 		
 	}

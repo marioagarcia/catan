@@ -563,6 +563,10 @@ public class ClientModelSerializer implements ClientModelSerializerInterface {
 		//Version
 		gameData.setVersion(mainObject.get("version").getAsInt());
 		
+		gameData.setName(mainObject.get("name").getAsString());
+		
+		gameData.setId(mainObject.get("id").getAsInt());
+		
 		return gameData;
 	}
 	

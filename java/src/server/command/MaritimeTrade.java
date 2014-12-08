@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.definitions.ResourceType;
 import shared.serialization.parameters.MaritimeTradeParameters;
 
@@ -28,8 +28,6 @@ public class MaritimeTrade extends CatanCommand {
 		
 		this.in = ResourceType.valueOf(parameters.getInputResource().toUpperCase());
 		this.out = ResourceType.valueOf(parameters.getOutputResource().toUpperCase());
-		
-		this.dto = new CommandDTO(parameters, "MaritimeTradeParameters", game_id);
 	}
 	
 	/**
@@ -40,9 +38,14 @@ public class MaritimeTrade extends CatanCommand {
 	@Override
 	public void execute() {
 
-		if (facadeInstance.canMaritimeTrade(gameId, playerIndex, params.getRatio(), in, out)){
+		if (ServerModelFacade.getInstance().canMaritimeTrade(gameId, playerIndex, params.getRatio(), in, out)){
 			
-			success = facadeInstance.maritimeTrade(gameId, playerIndex, params.getRatio(), in, out);
+			success = ServerModelFacade.getInstance().maritimeTrade(gameId, playerIndex, params.getRatio(), in, out);
+			
+			if (success){
+				
+			//	ServerModelFacade.getInstance().persistCommand(this, "MaritimeTrade", gameId);
+			}
 		}
 		
 	}

@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.AcceptTradeParameters;
 
 /**
@@ -21,8 +21,6 @@ public class AcceptTrade extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		this.gameId = game_id;
 		this.accept = parameters.getWillAccept();
-		
-		this.dto = new CommandDTO(parameters, "AcceptTradeParameters", game_id);
 	}
 	
 	/**
@@ -31,10 +29,9 @@ public class AcceptTrade extends CatanCommand {
 	 */
 	@Override
 	public void execute() {	
-		//if (facadeInstance.canAcceptTrade(gameId, playerIndex)){
 			
-			facadeInstance.acceptTrade(gameId, playerIndex, accept);
-			success = true;
-		//}	
+		ServerModelFacade.getInstance().acceptTrade(gameId, playerIndex, accept);
+	//	ServerModelFacade.getInstance().persistCommand(this, "AcceptTrade", gameId);
+		success = true;
 	}
 }

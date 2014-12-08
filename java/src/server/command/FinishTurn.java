@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.FinishTurnParameters;
 
 /**
@@ -18,8 +18,6 @@ public class FinishTurn extends CatanCommand {
 		
 		this.gameId = game_id;
 		this.playerIndex = parameters.getPlayerIndex();
-		
-		this.dto = new CommandDTO(parameters, "FinishTurnParameters", game_id);
 	}
 	
 	/**
@@ -30,9 +28,14 @@ public class FinishTurn extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canFinishTurn(gameId, playerIndex)){
+		if (ServerModelFacade.getInstance().canFinishTurn(gameId, playerIndex)){
 			
-			success = facadeInstance.finishTurn(gameId, playerIndex);
+			success = ServerModelFacade.getInstance().finishTurn(gameId, playerIndex);
+			
+			if (success){
+				
+			//	ServerModelFacade.getInstance().persistCommand(this, "FinishTurn", gameId);
+			}
 			
 		}
 		

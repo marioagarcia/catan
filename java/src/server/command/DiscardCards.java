@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.model.card.ResourceList;
 import shared.serialization.parameters.DiscardCardsParameters;
 
@@ -22,8 +22,6 @@ public class DiscardCards extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		
 		discards = parameters.getDiscardedCards();
-		
-		this.dto = new CommandDTO(parameters, "DiscardCardsParameters", game_id);
 	}
 	
 	/**
@@ -34,9 +32,14 @@ public class DiscardCards extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canDiscardCards(gameId, playerIndex, discards)){
+		if (ServerModelFacade.getInstance().canDiscardCards(gameId, playerIndex, discards)){
 			
-			success = facadeInstance.discardCards(gameId, playerIndex, discards);
+			success = ServerModelFacade.getInstance().discardCards(gameId, playerIndex, discards);
+			
+			if (success){
+				
+			//	ServerModelFacade.getInstance().persistCommand(this, "DiscardCards", gameId);
+			}
 		}
 		
 	}

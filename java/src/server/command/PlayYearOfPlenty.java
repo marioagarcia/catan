@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.definitions.ResourceType;
 import shared.serialization.parameters.YearOfPlentyParameters;
 
@@ -24,8 +24,6 @@ public class PlayYearOfPlenty extends CatanCommand {
 		
 		this.resourceString1 = parameters.getResource1();
 		this.resourceString2 = parameters.getResource2();
-		
-		this.dto = new CommandDTO(parameters, "YearOfPlentyParameters", game_id);
 	}
 	
 	/**
@@ -36,9 +34,14 @@ public class PlayYearOfPlenty extends CatanCommand {
 	@Override
 	public void execute() {
 
-		if (facadeInstance.canPlayYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1.toUpperCase()), ResourceType.valueOf(resourceString2.toUpperCase()))){
+		if (ServerModelFacade.getInstance().canPlayYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1.toUpperCase()), ResourceType.valueOf(resourceString2.toUpperCase()))){
 			
-			success = facadeInstance.playYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1.toUpperCase()), ResourceType.valueOf(resourceString2.toUpperCase()));
+			success = ServerModelFacade.getInstance().playYearOfPlenty(gameId, playerIndex, ResourceType.valueOf(resourceString1.toUpperCase()), ResourceType.valueOf(resourceString2.toUpperCase()));
+			
+			if (success){
+				
+				//ServerModelFacade.getInstance().persistCommand(this, "PlayYearOfPlenty", gameId);
+			}
 		}
 		
 	}
