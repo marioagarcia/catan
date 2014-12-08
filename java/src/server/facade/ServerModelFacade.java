@@ -605,29 +605,39 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			if (gamesList.get(game_id).getCommandsSinceSave() >= deltaThreshold){
 				
-				String title = gamesList.get(game_id).getGameTitle();
-				String game_blob = gson.toJson(gamesList.get(game_id).getGameData());
-				
-				if (persistor.createGameDAO().saveGame(game_blob, game_id, title)){
+				if (!persistGame(gamesList.get(game_id))){
 					
-					persistor.createCommandDAO().deleteGameCommands(game_id);
-					gamesList.get(game_id).resetCommandCount();
-				}
-				else{
 					//rollback? possibly as a parameter to end transaction
 					persistor.endTransaction();
 					return false;
 				}
 			}
 			
+			//commit
 			persistor.endTransaction();
 			return true;
 		}
 		else{
-			//rollback?
+			//rollback
 			persistor.endTransaction();
 			return false;
 		}
-
+	}
+	
+	//do we want to be able to call this separately? Should it be on its own transaction?
+	public boolean persistGame(ServerGameManager game){
+		
+		Gson gson = new Gson();
+		String game_blob = gson.toJson(game.getGameData());
+		
+		if (persistor.createGameDAO().saveGame(game_blob, game.getGameId(), game.getGameTitle())){
+			
+			persistor.createCommandDAO().deleteGameCommands(game.getGameId());
+			game.resetCommandCount();
+			
+			return true;
+		}
+		
+		return false;
 	}
 }
