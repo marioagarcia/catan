@@ -32,5 +32,10 @@ public interface PersistenceInterface {
 	 * @return The Command DAO that was created
 	 */
 	public CommandDAOInterface createCommandDAO();
+
+	/**
+	 * Resets all persistence
+	 */
+	public void resetAllPersistence();
 	
 }
