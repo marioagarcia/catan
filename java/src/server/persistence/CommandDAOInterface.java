@@ -12,7 +12,7 @@ public interface CommandDAOInterface {
 	 * @param game_id The id of the game this command belongs to
 	 * @return True if the save was successful, false otherwise
 	 */
-	public abstract boolean saveCommand(String command_blob, String type, int game_id);
+	public abstract boolean saveCommand(String command_blob, int game_id);
 	
 	/**
 	 * Retrieves a list of serialized commands associated with the given game id

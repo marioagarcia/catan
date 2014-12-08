@@ -34,7 +34,7 @@ public interface UserDAOInterface {
 	 * @param data An object representation of the user being updated
 	 * @return True if the update was successful, false otherwise
 	 */
-	public abstract boolean updateUser(UserDTO data);
+	public abstract boolean updateUser(String username, String data);
 	
 	/**
 	 * Deletes a user from the database
