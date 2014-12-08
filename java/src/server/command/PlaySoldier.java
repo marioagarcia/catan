@@ -44,7 +44,7 @@ public class PlaySoldier extends CatanCommand {
 				
 				if (success){
 					
-					ServerModelFacade.getInstance().persistCommand(this, "PlaySoldier", gameId);
+					//ServerModelFacade.getInstance().persistCommand(this, "PlaySoldier", gameId);
 				}
 		
 			}

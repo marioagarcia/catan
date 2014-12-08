@@ -39,7 +39,7 @@ public class PlayMonopoly extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "PlayMonopoly", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "PlayMonopoly", gameId);
 			}
 		}
 		

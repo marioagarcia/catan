@@ -40,7 +40,7 @@ public class PlayYearOfPlenty extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "PlayYearOfPlenty", gameId);
+				//ServerModelFacade.getInstance().persistCommand(this, "PlayYearOfPlenty", gameId);
 			}
 		}
 		

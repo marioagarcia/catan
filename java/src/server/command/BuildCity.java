@@ -44,7 +44,7 @@ public class BuildCity extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "BuildCity", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "BuildCity", gameId);
 			}
 		}
 	}

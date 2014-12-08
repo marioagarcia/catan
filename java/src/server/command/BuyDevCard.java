@@ -32,7 +32,7 @@ public class BuyDevCard extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "BuyDevCard", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "BuyDevCard", gameId);
 			}
 		}
 	}

@@ -117,6 +117,8 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		gameData.setWinner(getWinner());
 		gameData.setVersion(getVersion());
 		gameData.setGameLog(gameLog);
+		gameData.setName(title);
+		gameData.setId(gameId);
 
 		return gameData;
 	}

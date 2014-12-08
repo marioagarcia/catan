@@ -34,7 +34,7 @@ public class FinishTurn extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "FinishTurn", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "FinishTurn", gameId);
 			}
 			
 		}

@@ -34,7 +34,7 @@ public class PlayMonument extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "PlayMonument", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "PlayMonument", gameId);
 			}
 		}
 		

@@ -38,7 +38,7 @@ public class DiscardCards extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "DiscardCards", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "DiscardCards", gameId);
 			}
 		}
 		

@@ -37,7 +37,7 @@ public class RollNumber extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "RollNumber", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "RollNumber", gameId);
 			}
 		}
 		

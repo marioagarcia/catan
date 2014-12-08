@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import server.command.CatanCommand;
 import server.manager.ServerGameManager;
 import server.persistence.PersistenceInterface;
+import server.serialization.ServerModelSerializer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -627,10 +628,10 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	//do we want to be able to call this separately? Should it be on its own transaction?
 	public boolean persistGame(ServerGameManager game){
 		
-		Gson gson = new Gson();
-		String game_blob = gson.toJson(game.getGameData());
+		ServerModelSerializer serializer = new ServerModelSerializer();
+		String game_blob = serializer.serializeGameModel(game.getGameData());
 		
-		if (persistor.createGameDAO().saveGame(game_blob, game.getGameId(), game.getGameTitle())){
+		if (persistor.createGameDAO().saveGame(game_blob, game.getGameId())){
 			
 			persistor.createCommandDAO().deleteGameCommands(game.getGameId());
 			game.resetCommandCount();

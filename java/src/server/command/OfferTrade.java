@@ -39,7 +39,7 @@ public class OfferTrade extends CatanCommand {
 			
 			if (success){
 				
-				ServerModelFacade.getInstance().persistCommand(this, "OfferTrade", gameId);
+			//	ServerModelFacade.getInstance().persistCommand(this, "OfferTrade", gameId);
 			}
 		}
 	}

@@ -42,6 +42,10 @@ public class GameData implements Serializable {
 	//Version
 	public int version;
 	
+	public int gameId;
+	
+	public String gameName;
+	
 	public GameData(){
 		
 	}
@@ -123,6 +127,22 @@ public class GameData implements Serializable {
 
 	public void setWinner(int winner_index) {
 		this.winnerIndex = winner_index;
+	}
+	
+	public int getId() {
+		return gameId;
+	}
+
+	public void setId(int id) {
+		this.gameId = id;
+	}
+	
+	public String getName() {
+		return gameName;
+	}
+
+	public void setName(String name) {
+		this.gameName = name;
 	}
 	
 }

@@ -57,7 +57,7 @@ public class PlayRoadBuilding extends CatanCommand {
 					
 					if (success){
 						
-						ServerModelFacade.getInstance().persistCommand(this, "PlayRoadBuilding", gameId);
+					//	ServerModelFacade.getInstance().persistCommand(this, "PlayRoadBuilding", gameId);
 					}
 				}
 		}

@@ -14,11 +14,13 @@ public class GameModelParameters {
 	private TradeOfferParameters tradeOffer;
 	private int winner;
 	private int version;
+	private int id;
+	private String name;
 	
 	public GameModelParameters(DevCardListParameters deck, MapParameters map, PlayerParameters[] players, 
 							   LogParameters log, LogParameters chat, ResourceList bank, 
 							   TurnTrackerParameters turnTracker, TradeOfferParameters tradeOffer,
-							   int winner, int version){
+							   int winner, int version, int id, String name){
 		this.deck = deck;
 		this.map = map;
 		this.players = players;
@@ -29,6 +31,8 @@ public class GameModelParameters {
 		this.tradeOffer = tradeOffer;
 		this.winner = winner;
 		this.version = version;
+		this.id = id;
+		this.name = name;
 	}
 
 	public DevCardListParameters getDeck() {
