@@ -17,9 +17,8 @@ public class SendChat extends CatanCommand {
 	 */
 	public SendChat(SendChatParameters parameters, int game_id){
 		
-		this.gameId = game_id;
+		super(parameters.getPlayerIndex(), game_id);
 		
-		this.playerIndex = parameters.getPlayerIndex();
 		this.chatMessage = parameters.getContent();
 	}
 	
@@ -29,6 +28,7 @@ public class SendChat extends CatanCommand {
 	@Override
 	public void execute() {
 		
+		System.out.println("CHAT EXECUTE");
 		success = ServerModelFacade.getInstance().sendChat(gameId, playerIndex, chatMessage);
 		
 		if (success){

@@ -8,7 +8,6 @@ public interface CommandDAOInterface {
 	 * Serializes a command and saves it in the database
 	 * 
 	 * @param command_blob A serialized representation of a command object
-	 * @param type The specific type of command object associated with the command blob
 	 * @param game_id The id of the game this command belongs to
 	 * @return True if the save was successful, false otherwise
 	 */

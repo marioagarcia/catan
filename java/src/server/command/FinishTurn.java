@@ -16,8 +16,7 @@ public class FinishTurn extends CatanCommand {
 	 */
 	public FinishTurn(FinishTurnParameters parameters, int game_id){
 		
-		this.gameId = game_id;
-		this.playerIndex = parameters.getPlayerIndex();
+		super(parameters.getPlayerIndex(), game_id);
 	}
 	
 	/**

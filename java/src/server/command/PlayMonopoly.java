@@ -19,8 +19,7 @@ public class PlayMonopoly extends CatanCommand {
 	 */
 	public PlayMonopoly(MonopolyParameters parameters, int game_id){
 		
-		this.gameId = game_id;
-		this.playerIndex = parameters.getPlayerIndex();
+		super(parameters.getPlayerIndex(), game_id);
 		
 		resourceString = parameters.getResource();
 	}

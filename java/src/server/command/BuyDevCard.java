@@ -15,8 +15,8 @@ public class BuyDevCard extends CatanCommand {
 	 * @param game_id The integer ID of the game the operation is to be performed on. Must be an ID for an existing game
 	 */
 	public BuyDevCard(BuyDevCardParameters parameters, int game_id){
-		this.playerIndex = parameters.getPlayerIndex();
-		this.gameId = game_id;
+		
+		super(parameters.getPlayerIndex(), game_id);
 	}
 	
 	/**

@@ -17,8 +17,9 @@ public class RobPlayer extends CatanCommand {
 	 * @param game_id The ID of the game this action will be applied to
 	 */
 	public RobPlayer(RobPlayerParameters parameters, int game_id){
-		this.playerIndex = parameters.getPlayerIndex();
-		this.gameId = game_id;
+		
+		super(parameters.getPlayerIndex(), game_id);
+		
 		this.victimIndex = parameters.getVictimIndex();
 		this.location = parameters.getLocation();
 	}

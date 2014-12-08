@@ -8,6 +8,7 @@ public class ResetGame extends CatanCommand {
 
 	public ResetGame(){
 		
+		super(-1, -1);
 	}
 
 	@Override

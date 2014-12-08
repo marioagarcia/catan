@@ -18,7 +18,9 @@ public class JoinGame extends CatanCommand {
 	 * @param parameters an object containing the ID of the game to be joined, and the color the player will use
 	 */
 	public JoinGame(JoinGameParameters parameters, int player_id){	
-		this.gameId = parameters.getId();
+		
+		super(-1, parameters.getId());
+		
 		this.playerId = player_id;
 		this.color = CatanColor.valueOf(parameters.getColor().toUpperCase());
 	}

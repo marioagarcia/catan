@@ -11,7 +11,11 @@ public abstract class CatanCommand implements CatanCommandInterface {
 	protected int playerIndex = -1;
 	protected int gameId = -1;
 
-	@Override
+	public CatanCommand(int index, int id){
+		this.playerIndex = index;
+		this.gameId = id;
+	}
+	
 	public abstract void execute();
 
 	

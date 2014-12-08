@@ -22,8 +22,8 @@ public class MaritimeTrade extends CatanCommand {
 	 */
 	public MaritimeTrade(MaritimeTradeParameters parameters, int game_id){
 		
-		this.gameId = game_id;
-		this.playerIndex = parameters.getPlayerIndex();
+		super(parameters.getPlayerIndex(), game_id);
+		
 		this.params = parameters;
 		
 		this.in = ResourceType.valueOf(parameters.getInputResource().toUpperCase());

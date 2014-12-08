@@ -18,6 +18,8 @@ public class Register extends CatanCommand {
 	 */
 	public Register(CredentialsParameters parameters){
 		
+		super(-1, -1);
+		
 		username = parameters.getUsername();
 		password = parameters.getPassword();
 	}

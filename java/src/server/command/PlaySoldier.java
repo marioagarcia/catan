@@ -20,8 +20,7 @@ public class PlaySoldier extends CatanCommand {
 	 */
 	public PlaySoldier(SoldierParameters parameters, int game_id){
 		
-		this.gameId = game_id;
-		this.playerIndex = parameters.getPlayerIndex();
+		super(parameters.getPlayerIndex(), game_id);
 		
 		int x1 = parameters.getLocation().getX();
 		int y1 = parameters.getLocation().getY();

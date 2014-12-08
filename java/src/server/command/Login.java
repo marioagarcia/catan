@@ -17,6 +17,7 @@ public class Login extends CatanCommand {
 	 */
 	public Login(CredentialsParameters parameters){
 		
+		super(-1, -1);
 		this.username = parameters.getUsername();
 		this.password = parameters.getPassword();
 	}

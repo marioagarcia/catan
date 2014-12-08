@@ -18,8 +18,7 @@ public class AcceptTrade extends CatanCommand {
 	 */
 	public AcceptTrade(AcceptTradeParameters parameters, int game_id){
 		
-		this.playerIndex = parameters.getPlayerIndex();
-		this.gameId = game_id;
+		super(parameters.getPlayerIndex(), game_id);
 		this.accept = parameters.getWillAccept();
 	}
 	

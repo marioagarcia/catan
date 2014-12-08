@@ -21,6 +21,7 @@ public class CreateGame extends CatanCommand {
 	 */
 	public CreateGame(CreateGameRequestParameters parameters){
 		
+		super(-1, -1);
 		name = parameters.getName();
 		randomTiles = parameters.isRandomTiles();
 		randomNumbers = parameters.isRandomNumbers();

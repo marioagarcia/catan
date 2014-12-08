@@ -16,8 +16,7 @@ public class PlayMonument extends CatanCommand {
 	 */
 	public PlayMonument(MonumentParameters parameters, int game_id){
 		
-		this.gameId = game_id;
-		this.playerIndex = parameters.getPlayerIndex();
+		super(parameters.getPlayerIndex(), game_id);
 	}
 	
 	/**

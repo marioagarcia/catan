@@ -20,8 +20,7 @@ public class BuildCity extends CatanCommand {
 	 */
 	public BuildCity(BuildCityParameters parameters, int game_id){
 		
-		this.playerIndex = parameters.getPlayerIndex();
-		this.gameId = game_id;
+		super(parameters.getPlayerIndex(), game_id);
 		
 		int x = parameters.getVertexLocation().getX();
 		int y = parameters.getVertexLocation().getY();

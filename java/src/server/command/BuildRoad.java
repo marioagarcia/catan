@@ -21,8 +21,8 @@ public class BuildRoad extends CatanCommand {
 	 */
 	public BuildRoad(BuildRoadParameters parameters, int game_id){
 		
-		this.playerIndex = parameters.getPlayerIndex();
-		this.gameId = game_id;
+		
+		super(parameters.getPlayerIndex(), game_id);
 		
 		int x = parameters.getRoadLocation().getX();
 		int y = parameters.getRoadLocation().getY();

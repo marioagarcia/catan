@@ -16,7 +16,7 @@ public class LoadGame extends CatanCommand {
 	 * @param parameters An object containing the ID and name of the game to be loaded
 	 */
 	public LoadGame(LoadGameRequestParameters parameters){
-		
+		super(-1, -1);
 	}
 	
 	/**

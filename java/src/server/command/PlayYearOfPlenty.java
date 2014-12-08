@@ -19,8 +19,7 @@ public class PlayYearOfPlenty extends CatanCommand {
 	 */
 	public PlayYearOfPlenty(YearOfPlentyParameters parameters, int game_id){
 		
-		this.gameId = game_id;
-		this.playerIndex = parameters.getPlayerIndex();
+		super(parameters.getPlayerIndex(), game_id);
 		
 		this.resourceString1 = parameters.getResource1();
 		this.resourceString2 = parameters.getResource2();

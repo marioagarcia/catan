@@ -19,8 +19,9 @@ public class OfferTrade extends CatanCommand {
 	 * @param game_id The integer ID of the game this action will applied to
 	 */
 	public OfferTrade(OfferTradeParameters parameters, int game_id){
-		this.playerIndex = parameters.getPlayerIndex();
-		this.gameId = game_id;
+		
+		super(parameters.getPlayerIndex(), game_id);
+		
 		this.resourceList = parameters.getOffer();
 		this.otherPlayerIndex = parameters.getReceiver();
 	}

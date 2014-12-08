@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import server.command.CatanCommand;
 import server.manager.ServerGameManager;
@@ -597,12 +599,21 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	
 	public boolean persistCommand(CatanCommand command, String type, int game_id){
 		
+		
 		Gson gson = new Gson();
 		String command_blob = gson.toJson(command);
 		
+		JsonArray final_array = new JsonArray();
+		
+		JsonElement type_element = gson.toJsonTree("server.command." + type);
+		final_array.add(type_element);
+		
+		JsonElement blob_element = gson.toJsonTree(command_blob);
+		final_array.add(blob_element);
+		
 		persistor.startTransaction();
 		
-		if (persistor.createCommandDAO().saveCommand(command_blob, type, game_id)){
+		if (persistor.createCommandDAO().saveCommand(final_array.toString(), game_id)){
 			
 			if (gamesList.get(game_id).getCommandsSinceSave() >= deltaThreshold){
 				

@@ -16,7 +16,7 @@ public class SaveGame extends CatanCommand {
 	 */
 	public SaveGame(SaveGameParameters parameters){
 		
-		this.gameId = parameters.getId();
+		super(-1, parameters.getId());
 	}
 	
 	/**

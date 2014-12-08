@@ -16,6 +16,7 @@ public class ChangeLogLevel extends CatanCommand {
 	 */
 	public ChangeLogLevel(String parameters, int game_id){
 		
+		super(-1, -1);
 	}
 	
 	/**
