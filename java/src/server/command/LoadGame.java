@@ -1,5 +1,6 @@
 package server.command;
 
+import server.facade.ServerModelFacade;
 import shared.model.manager.GameData;
 import shared.serialization.parameters.LoadGameRequestParameters;
 
@@ -23,7 +24,7 @@ public class LoadGame extends CatanCommand {
 	 */
 	@Override
 	public void execute() {
-		facadeInstance.loadGames();
+		ServerModelFacade.getInstance().loadGames();
 	}
 	
 	public GameData getGameData(){

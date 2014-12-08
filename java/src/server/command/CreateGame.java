@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.CreateGameRequestParameters;
 
 /**
@@ -33,7 +33,7 @@ public class CreateGame extends CatanCommand {
 	@Override
 	public void execute() {
 	
-		success = facadeInstance.createNewGame(name, randomTiles, randomNumbers, randomPorts);
+		success = ServerModelFacade.getInstance().createNewGame(name, randomTiles, randomNumbers, randomPorts);
 		
 	}
 }

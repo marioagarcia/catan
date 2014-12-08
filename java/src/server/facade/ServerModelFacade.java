@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+
+import server.command.CatanCommand;
 import server.manager.ServerGameManager;
 import server.persistence.PersistenceInterface;
 import shared.definitions.CatanColor;
@@ -38,6 +41,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	private UserManager userList = null;
 	private File relative_file = new File(ServerModelFacade.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 	private PersistenceInterface persistor;
+	private int deltaThreshold = -1; //Need a way to get this from the server command arguments
 	
 	protected ServerModelFacade()
 	{
@@ -320,8 +324,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean sendChat(int game_id, int player_index, String chatMessage) {
-		
-		//TODO create sendchat commandDTO, save to database
+
 		return gamesList.get(game_id).sendChat(player_index, chatMessage);
 	}
 
@@ -333,8 +336,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean acceptTrade(int game_id, int player_index, boolean accept) {
-		
-		//TODO create acceptTrade commandDTO, save to database
+
 		return gamesList.get(game_id).acceptTrade(player_index, accept);
 	}
 
@@ -348,7 +350,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean discardCards(int game_id, int player_index, ResourceList list) {
 
-		//TODO create discard commandDTO, save to database
 		return gamesList.get(game_id).discardCards(player_index, list);
 	}
 
@@ -360,8 +361,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean roll(int game_id, int player_index, int number) {
-		
-		//TODO create roll commandDTO, save to database
+
 		return gamesList.get(game_id).roll(player_index, number);
 	}
 
@@ -375,8 +375,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean buildRoad(int game_id, int player_index,
 			EdgeLocation location) {
-		
-		//TODO create buildRoad commandDTO, save to database
+
 		return gamesList.get(game_id).buildRoad(player_index, location);
 	}
 
@@ -390,8 +389,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean buildSettlement(int game_id, int player_index,
 			VertexLocation location) {
-		
-		//TODO create buildSettlement commandDTO, save to database
+
 		return gamesList.get(game_id).buildSettlement(player_index, location);
 	}
 
@@ -405,8 +403,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean buildCity(int game_id, int player_index,
 			VertexLocation location) {
-		
-		//TODO create buildCity commandDTO, save to database
+
 		return gamesList.get(game_id).buildCity(player_index, location);
 	}
 
@@ -420,8 +417,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean offerTrade(int game_id, int player_index,
 			ResourceList resources, int otherPlayerIndex) {
-		
-		//TODO create offerTrade commandDTO, save to database
+
 		return gamesList.get(game_id).offerTrade(player_index, resources, otherPlayerIndex);
 	}
 
@@ -435,8 +431,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean maritimeTrade(int game_id, int player_index,
 			int ratio, ResourceType in, ResourceType out) {
-		
-		//TODO create maritimeTrade commandDTO, save to database
+
 		return gamesList.get(game_id).maritimeTrade(player_index, ratio, in, out);
 	}
 
@@ -449,7 +444,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean finishTurn(int game_id, int player_index) {
 		
-		//TODO create finishTurn commandDTO, save to database
 		return gamesList.get(game_id).finishTurn(player_index);
 	}
 
@@ -462,7 +456,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean buyDevCard(int game_id, int player_index) {
 		
-		//TODO create buyDevCard commandDTO, save to database
 		return gamesList.get(game_id).buyDevCard(player_index);
 	}
 
@@ -477,7 +470,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	public boolean playYearOfPlenty(int game_id, int player_index,
 			ResourceType type1, ResourceType type2) {
 		
-		//TODO create YearOfPlenty commandDTO, save to database
 		return gamesList.get(game_id).playYearOfPlenty(player_index, type1, type2);
 	}
 
@@ -491,8 +483,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean playRoadBuilding(int game_id, int player_index,
 			EdgeLocation location1, EdgeLocation location2) {
-		
-		//TODO create playRoadBuilding commandDTO, save to database
+
 		return gamesList.get(game_id).playRoadBuilding(player_index, location1, location2);
 	}
 
@@ -505,8 +496,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean playSoldier(int game_id, int player_index,
 			HexLocation newLocation, int victimIndex) {
-		
-		//TODO create playSoldier commandDTO, save to database
+
 		return gamesList.get(game_id).playSoldier(player_index, newLocation, victimIndex);
 	}
 
@@ -519,8 +509,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean playMonopoly(int game_id, int player_index,
 			ResourceType resourceType) {
-		
-		//TODO create playMonopoly commandDTO, save to database
+
 		return gamesList.get(game_id).playMonopoly(player_index, resourceType);
 	}
 
@@ -532,8 +521,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean playMonument(int game_id, int player_index) {
-		
-		//TODO create playMonument commandDTO, save to database
+
 		return gamesList.get(game_id).playMonument(player_index);
 	}
 
@@ -595,16 +583,51 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	@Override
 	public boolean robPlayer(int player_index, int game_id, int victim_index,
 			HexLocation location) {
-		
-		//TODO create robPlayer commandDTO, save to database
+
 		return gamesList.get(game_id).robPlayer(player_index, victim_index, location);
 	}
 	
 	public void configorPersistor(PersistenceInterface persistor, int deltaThreshold){
 		this.persistor = persistor;
 		
+		this.deltaThreshold = deltaThreshold;
 		//Load all of the Users, Games, Commands
 	}
 	
-	//TODO Add function for all Do methods to call that will create the command, check N and save the game, if needed.
+	public boolean persistCommand(CatanCommand command, String type, int game_id){
+		
+		Gson gson = new Gson();
+		String command_blob = gson.toJson(command);
+		
+		persistor.startTransaction();
+		
+		if (persistor.createCommandDAO().saveCommand(command_blob, type, game_id)){
+			
+			if (gamesList.get(game_id).getCommandsSinceSave() >= deltaThreshold){
+				
+				String title = gamesList.get(game_id).getGameTitle();
+				String game_blob = gson.toJson(gamesList.get(game_id).getGameData());
+				
+				if (persistor.createGameDAO().saveGame(game_blob, game_id, title)){
+					
+					persistor.createCommandDAO().deleteGameCommands(game_id);
+					gamesList.get(game_id).resetCommandCount();
+				}
+				else{
+					//rollback? possibly as a parameter to end transaction
+					persistor.endTransaction();
+					return false;
+				}
+			}
+			
+			persistor.endTransaction();
+			return true;
+		}
+		else{
+			//rollback?
+			persistor.endTransaction();
+			return false;
+		}
+
+	}
 }

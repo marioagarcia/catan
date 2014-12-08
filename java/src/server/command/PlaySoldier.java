@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.locations.HexLocation;
 import shared.serialization.parameters.SoldierParameters;
 
@@ -19,12 +19,9 @@ public class PlaySoldier extends CatanCommand {
 	 * @param game_id The ID of the game this action will be applied to
 	 */
 	public PlaySoldier(SoldierParameters parameters, int game_id){
-try{		
+		
 		this.gameId = game_id;
 		this.playerIndex = parameters.getPlayerIndex();
-		
-		//Need a way to get the robber's current location for can method. Or assume that this will be checked in the manager/map
-		//oldLocation = map.getRobberLocation()
 		
 		int x1 = parameters.getLocation().getX();
 		int y1 = parameters.getLocation().getY();
@@ -32,13 +29,6 @@ try{
 		newLocation = new HexLocation(x1, y1);
 		
 		victimIndex = parameters.getVictimIndex();
-}catch(Exception e){
-	
-	this.dto = new CommandDTO(parameters, "SoldierParameters", game_id);
-	
-	System.out.println("First Try/Catch Statement");
-	e.printStackTrace();
-}
 	}
 	
 	/**
@@ -47,15 +37,21 @@ try{
 	 */
 	@Override
 	public void execute() {
-System.out.println(facadeInstance.canPlaySoldier(gameId, playerIndex, newLocation, victimIndex));		
-		if (facadeInstance.canPlaySoldier(gameId, playerIndex, newLocation, victimIndex)){
-try{		
-			success = facadeInstance.playSoldier(gameId, playerIndex, newLocation, victimIndex);
 		
-}catch(Exception e){
-	System.out.println("Second Try/Catch Statement");
-	e.printStackTrace();
-}
-	}
+		if (ServerModelFacade.getInstance().canPlaySoldier(gameId, playerIndex, newLocation, victimIndex)){
+			try{		
+				success = ServerModelFacade.getInstance().playSoldier(gameId, playerIndex, newLocation, victimIndex);
+				
+				if (success){
+					
+					ServerModelFacade.getInstance().persistCommand(this, "PlaySoldier", gameId);
+				}
+		
+			}
+			catch(Exception e){
+				System.out.println("Second Try/Catch Statement");
+				e.printStackTrace();
+			}
+		}
 	}
 }

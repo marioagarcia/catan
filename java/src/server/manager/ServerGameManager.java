@@ -41,6 +41,8 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 	DomesticTrade domesticTrade = null;
 	private int version;
 	private int winner = -1;
+	
+	private int commands_since_save;
 
 
 	public ServerGameManager(String gameName, int id, boolean randTiles, boolean randNumbers, boolean randPorts) {
@@ -62,6 +64,30 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		gameLog = new GameLog(new HistoryLog(), new GameChat());
 
 		setupGame();
+		
+		commands_since_save = 0;
+		
+	}
+	
+	public ServerGameManager(String gameName, int id, GameData data){
+		
+		title = gameName;
+		
+		gameId = id;
+		
+		boardMap = data.getBoardMap();
+		
+		turnTracker = data.getTurnTracker();
+		
+		players = data.getPlayers();
+
+		resourceCardBank = data.getResourceCardBank();
+		
+		devCardBank = data.getDevCardBank();
+		
+		gameLog = data.getGameLog();
+		
+		commands_since_save = 0;
 		
 	}
 
@@ -128,6 +154,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		gameLog.getGameChat().addMessage(message);
 
 		version++;
+		applyCommand();
 		
 		return true;
 	}
@@ -168,6 +195,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		domesticTrade = null;
 
 		version++;
+		applyCommand();
 		
 		return true;
 	}
@@ -205,6 +233,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		}
 
 		version++;
+		applyCommand();
 		
 		return true;
 	}
@@ -245,6 +274,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 
 
 		version++;
+		applyCommand();
 		
 		return true;
 	}
@@ -294,6 +324,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log("built a road", player_index);
 
 		version++;
+		applyCommand();
 		
 		return true;
 	}
@@ -366,6 +397,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log("built a settlement", player_index);
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -397,6 +429,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log("upgraded to a city", player_index);
 
 		version++;
+		applyCommand();
 		
 		return true;
 	}
@@ -419,6 +452,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		domesticTrade = new DomesticTrade(player_index, otherPlayerIndex, resources);
 		
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -460,6 +494,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		resourceCardBank.makeMaritimeTrade(maritime_trade);
 
 		version++;
+		applyCommand();
 		
 		log("made a " + ratio + ":1 trade", player_index);
 
@@ -531,6 +566,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		gameLog.getGameHistoryLog().addLogLine(new LogLine(name, (name + "'s turn just ended")));
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -600,6 +636,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log("bought a development card", player_index);
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -637,6 +674,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log(message, player_index);
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -668,6 +706,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log("built two roads", player_index);
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -711,6 +750,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log(("used a soldier and robbed " + victim_player_name), player_index);
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -777,6 +817,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		turnTracker.setStatus(Status.PLAYING);
 
 		version++;
+		applyCommand();
 		
 		return true;
 	}
@@ -811,6 +852,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log(("stole everyone's " + resource_type.name().toLowerCase()), player_index);
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -836,6 +878,7 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 		log("built a monument and gained a victory point", player_index);
 
 		version++;
+		applyCommand();
 
 		return true;
 	}
@@ -885,5 +928,17 @@ public class ServerGameManager implements ServerGameManagerInterface, Serializab
 
 		gameLog.getGameHistoryLog().addLogLine(new LogLine(name, (name + " " + log_message)));
 
+	}
+	
+	public int getCommandsSinceSave(){
+		return commands_since_save;
+	}
+	
+	public void resetCommandCount(){
+		commands_since_save = 0;
+	}
+	
+	private void applyCommand(){
+		commands_since_save++;
 	}
 }

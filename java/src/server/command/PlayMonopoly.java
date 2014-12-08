@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.definitions.ResourceType;
 import shared.serialization.parameters.MonopolyParameters;
 
@@ -23,8 +23,6 @@ public class PlayMonopoly extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		
 		resourceString = parameters.getResource();
-		
-		this.dto = new CommandDTO(parameters, "MonopolyParameters", game_id);
 	}
 	
 	/**
@@ -35,9 +33,14 @@ public class PlayMonopoly extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canPlayMonopoly(gameId, playerIndex)){
+		if (ServerModelFacade.getInstance().canPlayMonopoly(gameId, playerIndex)){
 			
-			success = facadeInstance.playMonopoly(gameId, playerIndex, ResourceType.valueOf(resourceString.toUpperCase()));
+			success = ServerModelFacade.getInstance().playMonopoly(gameId, playerIndex, ResourceType.valueOf(resourceString.toUpperCase()));
+			
+			if (success){
+				
+				ServerModelFacade.getInstance().persistCommand(this, "PlayMonopoly", gameId);
+			}
 		}
 		
 	}

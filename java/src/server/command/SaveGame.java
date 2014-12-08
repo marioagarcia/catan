@@ -1,5 +1,6 @@
 package server.command;
 
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.SaveGameParameters;
 
 
@@ -24,7 +25,7 @@ public class SaveGame extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		success = facadeInstance.saveGame(gameId);
+		success = ServerModelFacade.getInstance().saveGame(gameId);
 		
 	}
 }

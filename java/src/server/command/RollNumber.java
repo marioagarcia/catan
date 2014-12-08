@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.RollNumberParameters;
 
 /**
@@ -22,8 +22,6 @@ public class RollNumber extends CatanCommand {
 		this.playerIndex = parameters.getPlayerIndex();
 		
 		this.number = parameters.getNumber();
-		
-		this.dto = new CommandDTO(parameters, "RollNumberParameters", game_id);
 	}
 	
 	/**
@@ -33,9 +31,14 @@ public class RollNumber extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if (facadeInstance.canRoll(gameId, playerIndex)){
+		if (ServerModelFacade.getInstance().canRoll(gameId, playerIndex)){
 			
-			success = facadeInstance.roll(gameId, playerIndex, number);
+			success = ServerModelFacade.getInstance().roll(gameId, playerIndex, number);
+			
+			if (success){
+				
+				ServerModelFacade.getInstance().persistCommand(this, "RollNumber", gameId);
+			}
 		}
 		
 	}

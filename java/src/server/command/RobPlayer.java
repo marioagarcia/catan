@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.locations.HexLocation;
 import shared.serialization.parameters.RobPlayerParameters;
 
@@ -21,8 +21,6 @@ public class RobPlayer extends CatanCommand {
 		this.gameId = game_id;
 		this.victimIndex = parameters.getVictimIndex();
 		this.location = parameters.getLocation();
-		
-		this.dto = new CommandDTO(parameters, "RobPlayerParameters", game_id);
 	}
 	
 	/**
@@ -31,6 +29,11 @@ public class RobPlayer extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		success = facadeInstance.robPlayer(playerIndex, gameId, victimIndex, location);
+		success = ServerModelFacade.getInstance().robPlayer(playerIndex, gameId, victimIndex, location);
+		
+		if (success){
+			
+			ServerModelFacade.getInstance().persistCommand(this, "RobPlayer", gameId);
+		}
 	}
 }

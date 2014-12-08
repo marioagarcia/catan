@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.model.card.ResourceList;
 import shared.serialization.parameters.OfferTradeParameters;
 
@@ -23,8 +23,6 @@ public class OfferTrade extends CatanCommand {
 		this.gameId = game_id;
 		this.resourceList = parameters.getOffer();
 		this.otherPlayerIndex = parameters.getReceiver();
-		
-		this.dto = new CommandDTO(parameters, "OfferTradeParameters", game_id);
 	}
 	
 	/**
@@ -35,9 +33,14 @@ public class OfferTrade extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if(facadeInstance.canOfferTrade(gameId, playerIndex, resourceList)){
+		if(ServerModelFacade.getInstance().canOfferTrade(gameId, playerIndex, resourceList)){
 			
-			success = facadeInstance.offerTrade(gameId, playerIndex, resourceList, otherPlayerIndex);
+			success = ServerModelFacade.getInstance().offerTrade(gameId, playerIndex, resourceList, otherPlayerIndex);
+			
+			if (success){
+				
+				ServerModelFacade.getInstance().persistCommand(this, "OfferTrade", gameId);
+			}
 		}
 	}
 }

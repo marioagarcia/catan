@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.SendChatParameters;
 
 /**
@@ -21,8 +21,6 @@ public class SendChat extends CatanCommand {
 		
 		this.playerIndex = parameters.getPlayerIndex();
 		this.chatMessage = parameters.getContent();
-		
-		this.dto = new CommandDTO(parameters, "SendChatParameters", game_id);
 	}
 	
 	/**
@@ -31,6 +29,11 @@ public class SendChat extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		success = facadeInstance.sendChat(gameId, playerIndex, chatMessage);
+		success = ServerModelFacade.getInstance().sendChat(gameId, playerIndex, chatMessage);
+		
+		if (success){
+			
+			ServerModelFacade.getInstance().persistCommand(this, "SendChat", gameId);
+		}
 	}
 }

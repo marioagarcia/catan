@@ -1,6 +1,6 @@
 package server.command;
 
-import server.persistence.CommandDTO;
+import server.facade.ServerModelFacade;
 import shared.serialization.parameters.BuyDevCardParameters;
 
 /**
@@ -17,8 +17,6 @@ public class BuyDevCard extends CatanCommand {
 	public BuyDevCard(BuyDevCardParameters parameters, int game_id){
 		this.playerIndex = parameters.getPlayerIndex();
 		this.gameId = game_id;
-		
-		this.dto = new CommandDTO(parameters, "BuyDevCardParameters", game_id);
 	}
 	
 	/**
@@ -28,9 +26,14 @@ public class BuyDevCard extends CatanCommand {
 	@Override
 	public void execute() {
 		
-		if(facadeInstance.canBuyDevCard(gameId, playerIndex)){
+		if(ServerModelFacade.getInstance().canBuyDevCard(gameId, playerIndex)){
 			
-			success = facadeInstance.buyDevCard(gameId, playerIndex);
+			success = ServerModelFacade.getInstance().buyDevCard(gameId, playerIndex);
+			
+			if (success){
+				
+				ServerModelFacade.getInstance().persistCommand(this, "BuyDevCard", gameId);
+			}
 		}
 	}
 }
