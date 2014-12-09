@@ -1,30 +1,72 @@
 package server.RDBMSPlugin;
 
+import server.RDBMSPlugin.DAO.CommandDAO;
+import server.RDBMSPlugin.DAO.GameDAO;
+import server.RDBMSPlugin.DAO.UserDAO;
 import server.persistence.CommandDAOInterface;
 import server.persistence.GameDAOInterface;
 import server.persistence.PersistenceInterface;
 import server.persistence.UserDAOInterface;
+import java.io.InputStream;
+
+import java.sql.*;
 
 /**
  * Created by christopherbelyeu on 12/5/14.
  */
 public class RDBMSPersistence implements PersistenceInterface {
 
+    private String dburl = "sqlite.db";
+    private Connection connection;
+
+    //you should verify tht the db has not been set up before calling this
+    private void setupDB()
+    {
+        try{
+            Statement statement = connection.createStatement();
+
+            statement.execute("DROP TABLE IF EXISTS users");
+            statement.execute("DROP TABLE IF EXISTS deltas");
+            statement.execute("DROP TABLE IF EXISTS games");
+
+            statement.execute("CREATE TABLE users ( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, value BLOB)");
+            statement.execute("CREATE TABLE deltas ( id INTEGER PRIMARY KEY AUTOINCREMENT, game_id INTEGER, value BLOB)");
+            statement.execute("CREATE TABLE games ( id INTEGER PRIMARY KEY AUTOINCREMENT, value BLOB)");
+
+        } catch(Exception e) { e.printStackTrace(); System.exit(0); }
+    }
+
     /**
      * Starts a transaction with the database
      */
     public void startTransaction()
     {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + this.dburl);
 
+            ResultSet result = connection.createStatement().executeQuery("SELECT * FROM sqlite_master");
+
+            int size = 0;
+
+            while(result.next())
+                size++;
+
+            if(size == 0)
+                this.setupDB();
+
+        }catch(Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
-
 
     /**
      * Ends a transaction with the database
      */
     public void endTransaction()
     {
-
+        try { connection.close(); } catch(Exception e) { }
     }
 
     /**
@@ -34,7 +76,7 @@ public class RDBMSPersistence implements PersistenceInterface {
      */
     public UserDAOInterface createUserDAO()
     {
-        return null;
+        return new UserDAO(this.connection);
     }
 
     /**
@@ -44,7 +86,7 @@ public class RDBMSPersistence implements PersistenceInterface {
      */
     public GameDAOInterface createGameDAO()
     {
-        return null;
+        return new GameDAO(this.connection);
     }
 
     /**
@@ -54,6 +96,12 @@ public class RDBMSPersistence implements PersistenceInterface {
      */
     public CommandDAOInterface createCommandDAO()
     {
-        return null;
+        return new CommandDAO(this.connection);
     }
+
+    public void resetAllPersistence()
+    {
+        this.setupDB();
+    }
+
 }
