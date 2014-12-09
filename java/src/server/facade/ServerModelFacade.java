@@ -609,7 +609,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	
 	private void retrievePersistedGames(){
 		
-		//SHould I be starting and ending a transaction around these method calls, or around the whole thing in the configure method
+		//Should I be starting and ending a transaction around these method calls, or around the whole thing in the configure method
 		ArrayList<String> serialized_games = persistor.createGameDAO().getAllGames();
 		
 		ClientModelSerializer deserializer = new ClientModelSerializer();
