@@ -605,11 +605,11 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		//Should these clear out data structures, or add to them?
 		retrievePersistedGames();
 		retrievePersistedUsers();
-		//Load all of the Users, Games, Commands
 	}
 	
 	private void retrievePersistedGames(){
 		
+		//SHould I be starting and ending a transaction around these method calls, or around the whole thing in the configure method
 		ArrayList<String> serialized_games = persistor.createGameDAO().getAllGames();
 		
 		ClientModelSerializer deserializer = new ClientModelSerializer();
