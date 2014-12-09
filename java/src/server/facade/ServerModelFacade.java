@@ -602,7 +602,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		this.deltaThreshold = deltaThreshold;
 		
+		//Should these clear out data structures, or add to them?
 		retrievePersistedGames();
+		retrievePersistedUsers();
 		//Load all of the Users, Games, Commands
 	}
 	
@@ -622,6 +624,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			ServerGameManager new_game = new ServerGameManager(name, id, new_game_data);
 			gamesList.put(id, new_game);
 			
+			//Is it a problem if these will count as commands being applied towards a checkpoint?
 			updateGame(id);
 		}
 	}
@@ -649,6 +652,20 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			catch (JsonSyntaxException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	private void retrievePersistedUsers(){
+		
+		ArrayList<String> serialized_users = persistor.createUserDAO().getAllUsers();
+		
+		Gson gson = new Gson();
+		
+		for (String user_string : serialized_users){
+			
+			User new_user = gson.fromJson(user_string, User.class);
+			
+			userList.insertUser(new_user);
 		}
 	}
 	
