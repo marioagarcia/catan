@@ -15,9 +15,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import client.serialization.ClientModelSerializer;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import server.command.CatanCommand;
 import server.manager.ServerGameManager;
@@ -120,9 +124,12 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		}
 		
 		if (!exists){
-			gamesList.put(currentGameId, new ServerGameManager(gameName, currentGameId, randTiles, randNumbers, randPorts));
+			ServerGameManager new_game = new ServerGameManager(gameName, currentGameId, randTiles, randNumbers, randPorts);
+			gamesList.put(currentGameId, new_game);
 			currentGameId++;
-			//TODO create game dto and persist to database
+			
+			persistGame(new_game);
+			
 			return true;
 		}
 		
@@ -594,7 +601,55 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		this.persistor = persistor;
 		
 		this.deltaThreshold = deltaThreshold;
+		
+		retrievePersistedGames();
 		//Load all of the Users, Games, Commands
+	}
+	
+	private void retrievePersistedGames(){
+		
+		ArrayList<String> serialized_games = persistor.createGameDAO().getAllGames();
+		
+		ClientModelSerializer deserializer = new ClientModelSerializer();
+		
+		for (String game_string : serialized_games){
+			
+			GameData new_game_data = deserializer.deserializeGameModel(game_string);
+			
+			String name = new_game_data.getName();
+			int id = new_game_data.getId();
+			
+			ServerGameManager new_game = new ServerGameManager(name, id, new_game_data);
+			gamesList.put(id, new_game);
+			
+			updateGame(id);
+		}
+	}
+	
+	private void updateGame(int id){
+		
+		ArrayList<String> serialized_commands = persistor.createCommandDAO().getUnappliedCommands(id);
+		
+		Gson gson = new Gson();
+		
+		for (String command_string : serialized_commands){
+			
+			JsonParser parser = new JsonParser();
+			
+			JsonArray command_array = parser.parse(command_string).getAsJsonArray();
+			
+			String command_type = command_array.get(0).getAsString();
+			String serialized_command = command_array.get(1).getAsString();
+			
+			try {
+				
+				CatanCommand new_command = (CatanCommand) gson.fromJson(serialized_command, Class.forName(command_type));
+				new_command.execute();
+			} 
+			catch (JsonSyntaxException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public boolean persistCommand(CatanCommand command, String type, int game_id){
