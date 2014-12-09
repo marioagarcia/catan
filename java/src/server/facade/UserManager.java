@@ -45,6 +45,11 @@ public class UserManager {
 		}
 	}
 	
+	public void insertUser(User new_user){
+		
+		userList.put(new_user.getUsername(), new_user);
+	}
+	
 	public int getPlayerId(String name){
 		
 		if (userList.containsKey(name)){
