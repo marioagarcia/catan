@@ -322,10 +322,10 @@ public class ServerModelSerializer implements ServerModelSerializerInterface{
 		
 		//Convert the dev card bank into a deck parameters object
 		DevCardListParameters deck = new DevCardListParameters(devCardBank.numberOfType(DevCardType.YEAR_OF_PLENTY),
-												 devCardBank.numberOfType(DevCardType.MONOPOLY),
-												 devCardBank.numberOfType(DevCardType.SOLDIER),
-												 devCardBank.numberOfType(DevCardType.ROAD_BUILD),
-												 devCardBank.numberOfType(DevCardType.MONUMENT));
+															   devCardBank.numberOfType(DevCardType.MONOPOLY),
+															   devCardBank.numberOfType(DevCardType.SOLDIER),
+															   devCardBank.numberOfType(DevCardType.ROAD_BUILD),
+															   devCardBank.numberOfType(DevCardType.MONUMENT));
 		
 	//Convert hexes, roads, cities, settlements, radius, ports, and robber into a MapParameters object
 		//Get the board map from gameData

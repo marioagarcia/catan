@@ -2,6 +2,11 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import server.command.facade.GameCommandFacadeInterface;
 import server.command.facade.GamesCommandFacadeInterface;
@@ -24,6 +29,7 @@ import server.handler.GamesHandler;
 import server.handler.MovesHandler;
 import server.handler.UserHandler;
 import server.handler.UtilHandler;
+import server.persistence.PersistenceInterface;
 import client.main.Catan;
 
 import com.sun.net.httpserver.*;
@@ -91,18 +97,56 @@ public class Server {
 			s.setMockCommandFacade();
 			s.run();
 		}else if (args.length == 2){
+			String pluginName = args[0];
 			
-			//Find the .jar corresponding to the string in args[0] and create a PersistenceInterface object
+			//File pluginFile = new File("Plugins/" + "server.TestPlugin.jar");
 			
-			//Parse args[1] into an int
+			//Create a file from the name that was provided
+			File pluginFile = new File("Plugins/" + pluginName + ".jar"); 
+			
+			//If the file (based on the name provided) doesn't exist, tell the user and get the rock out of there
+			if(!pluginFile.exists()){
+				System.out.println(args[0] + " does not exist.");
+				System.exit(0);
+			}
+			
+			PersistenceInterface persistor = null;
+			
+			try {
+				//Create a URL from the file we just created
+				URL pluginURL = pluginFile.toURI().toURL();
+				
+				//Create a class loader from the plugin url
+				URLClassLoader classLoader = new URLClassLoader(new URL[] { pluginURL });
+				//Load the class represented by pluginName (the parameter passed in)
+				classLoader.loadClass(pluginName);
+				
+				//Load the class (that implements the PeristenceInterface) and create a PersistenceInterface with it
+				persistor = (PersistenceInterface)Class.forName(pluginName, true, classLoader).newInstance();
+				
+				//Code to run the test plugin
+				//URL pluginURL = pluginFile.toURI().toURL();
+				//URLClassLoader classLoader = new URLClassLoader(new URL[] { pluginURL });
+				//classLoader.loadClass("server.TestPlugin");
+				//PersistenceInterface persistor = (PersistenceInterface)Class.forName("server.TestPlugin", true, classLoader).newInstance();
+				//System.out.println(persistor.createCommandDAO());
+				
+			} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//Parse args[1] into an int; Grab the N that was passed in as a parameter
+			int deltaThreshold = Integer.parseInt(args[1]);
 			
 			//Call configorPersistor on the server facade and pass in the PersistenceInterface object and int
+			ServerModelFacade.getInstance().configorPersistor(persistor, deltaThreshold);
 			
 			s.setCommandFacade();
 			s.run();
 			
 		}else{
-			System.out.println("Error:  Valid arguments are 'mock' or name of jar followed by a space and an int.");
+			System.out.println("Error:  Valid arguments are 'mock' or name of jar followed by a space and an integer.");
 		}
 	}
 }
