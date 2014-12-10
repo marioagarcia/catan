@@ -48,7 +48,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 	private UserManager userList = null;
 	private File relative_file = new File(ServerModelFacade.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 	private PersistenceInterface persistor;
-	private int deltaThreshold = -1; //Need a way to get this from the server command arguments
+	private int deltaThreshold = -1;
 	
 	protected ServerModelFacade()
 	{
@@ -602,7 +602,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		this.deltaThreshold = deltaThreshold;
 		
-		//Should these clear out data structures, or add to them?
 		retrievePersistedGames();
 		retrievePersistedUsers();
 	}
@@ -708,7 +707,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		}
 	}
 	
-	//do we want to be able to call this separately? Should it be on its own transaction?
 	public boolean persistGame(ServerGameManager game){
 		
 		ServerModelSerializer serializer = new ServerModelSerializer();
