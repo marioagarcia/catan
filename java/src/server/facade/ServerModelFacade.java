@@ -115,7 +115,9 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			gamesList.put(currentGameId, new_game);
 			currentGameId++;
 			
+			persistor.startTransaction();
 			persistGame(new_game);
+			persistor.endTransaction();
 			
 			return true;
 		}
