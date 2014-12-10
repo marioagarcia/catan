@@ -34,7 +34,7 @@ public class RobPlayer extends CatanCommand {
 		
 		if (success){
 			
-		//	ServerModelFacade.getInstance().persistCommand(this, "RobPlayer", gameId);
+			ServerModelFacade.getInstance().persistCommand(this, "RobPlayer", gameId);
 		}
 	}
 }

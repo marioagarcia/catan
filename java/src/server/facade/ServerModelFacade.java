@@ -56,6 +56,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		gamesList = new HashMap<Integer, ServerGameManager>();
 		userList = new UserManager();
 		
+		//Need a way to start current id at the right number
 	//	loadGames();
 	}
 	
@@ -605,20 +606,21 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		joinGame(0, 3, CatanColor.GREEN);
 		
 		
-		persistor.startTransaction();
 		retrievePersistedGames();
 		retrievePersistedUsers();
-		persistor.endTransaction();
 	}
 	
 	private void retrievePersistedGames(){
 		
+		persistor.startTransaction();
 		ArrayList<String> serialized_games = persistor.createGameDAO().getAllGames();
+		persistor.endTransaction();
 		
 		ClientModelSerializer deserializer = new ClientModelSerializer();
 		
 		for (String game_string : serialized_games){
 			
+			System.out.println("Loading game");
 			GameData new_game_data = deserializer.deserializeGameModel(game_string);
 			
 			String name = new_game_data.getName();
@@ -629,46 +631,61 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			//Is it a problem if these will count as commands being applied towards a checkpoint?
 			updateGame(id);
+			
+			persistor.startTransaction();
+			persistor.createCommandDAO().deleteGameCommands(id);
+			persistor.endTransaction();
 		}
 	}
 	
 	private void updateGame(int id){
 		
+		persistor.startTransaction();
 		ArrayList<String> serialized_commands = persistor.createCommandDAO().getUnappliedCommands(id);
+		persistor.endTransaction();
 		
-		Gson gson = new Gson();
-		
-		for (String command_string : serialized_commands){
+		if (serialized_commands != null){
 			
-			JsonParser parser = new JsonParser();
+			Gson gson = new Gson();
 			
-			JsonArray command_array = parser.parse(command_string).getAsJsonArray();
-			
-			String command_type = command_array.get(0).getAsString();
-			String serialized_command = command_array.get(1).getAsString();
-			
-			try {
+			for (String command_string : serialized_commands){
 				
-				CatanCommand new_command = (CatanCommand) gson.fromJson(serialized_command, Class.forName(command_type));
-				new_command.execute();
-			} 
-			catch (JsonSyntaxException | ClassNotFoundException e) {
-				e.printStackTrace();
+				System.out.println("Applying command to game " + id);
+				JsonParser parser = new JsonParser();
+				
+				JsonArray command_array = parser.parse(command_string).getAsJsonArray();
+				
+				String command_type = command_array.get(0).getAsString();
+				String serialized_command = command_array.get(1).getAsString();
+				
+				try {
+					
+					CatanCommand new_command = (CatanCommand) gson.fromJson(serialized_command, Class.forName(command_type));
+					new_command.execute();
+				} 
+				catch (JsonSyntaxException | ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 	
 	private void retrievePersistedUsers(){
 		
+		persistor.startTransaction();
 		ArrayList<String> serialized_users = persistor.createUserDAO().getAllUsers();
+		persistor.endTransaction();
 		
 		Gson gson = new Gson();
 		
-		for (String user_string : serialized_users){
+		if (serialized_users != null){
 			
-			User new_user = gson.fromJson(user_string, User.class);
-			
-			userList.insertUser(new_user);
+			for (String user_string : serialized_users){
+				
+				User new_user = gson.fromJson(user_string, User.class);
+				
+				userList.insertUser(new_user);
+			}
 		}
 	}
 	
@@ -687,31 +704,31 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		final_array.add(blob_element);
 		
 		persistor.startTransaction();
+		boolean saved_command = persistor.createCommandDAO().saveCommand(final_array.toString(), game_id);
+		persistor.endTransaction();
 		
-		if (persistor.createCommandDAO().saveCommand(final_array.toString(), game_id)){
+		if (saved_command){
 			
+			System.out.println("Command saved successfully");
 			if (gamesList.get(game_id).getCommandsSinceSave() >= deltaThreshold){
 				
 				if (!persistGame(gamesList.get(game_id))){
 					
 					//rollback? possibly as a parameter to end transaction
-					persistor.endTransaction();
 					return false;
 				}
 			}
 			
-			//commit
-			persistor.endTransaction();
 			return true;
 		}
 		else{
-			//rollback
-			persistor.endTransaction();
 			return false;
 		}
 	}
 	
 	public boolean persistGame(ServerGameManager game){
+		
+		persistor.startTransaction();
 		
 		ServerModelSerializer serializer = new ServerModelSerializer();
 		String game_blob = serializer.serializeGameModel(game.getGameData());
@@ -719,11 +736,14 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		if (persistor.createGameDAO().saveGame(game_blob, game.getGameId())){
 			
 			persistor.createCommandDAO().deleteGameCommands(game.getGameId());
+			
+			persistor.endTransaction();
 			game.resetCommandCount();
 			
 			return true;
 		}
 		
+		persistor.endTransaction();
 		return false;
 	}
 }

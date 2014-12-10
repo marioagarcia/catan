@@ -35,6 +35,10 @@ public class JoinGame extends CatanCommand {
 					
 		if (ServerModelFacade.getInstance().canJoinGame(gameId, playerId, color)){
 			success = ServerModelFacade.getInstance().joinGame(gameId, playerId, color);
+			
+			if (success){
+				ServerModelFacade.getInstance().persistCommand(this, "JoinGame", gameId);
+			}
 		}
 		
 	}

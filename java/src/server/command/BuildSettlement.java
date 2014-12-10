@@ -46,7 +46,7 @@ public class BuildSettlement extends CatanCommand {
 			
 			if (success){
 				
-				//ServerModelFacade.getInstance().persistCommand(this, "BuildSettlement", gameId);
+				ServerModelFacade.getInstance().persistCommand(this, "BuildSettlement", gameId);
 			}
 
 		}

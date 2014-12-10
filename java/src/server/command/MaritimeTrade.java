@@ -44,7 +44,7 @@ public class MaritimeTrade extends CatanCommand {
 			
 			if (success){
 				
-			//	ServerModelFacade.getInstance().persistCommand(this, "MaritimeTrade", gameId);
+				ServerModelFacade.getInstance().persistCommand(this, "MaritimeTrade", gameId);
 			}
 		}
 		

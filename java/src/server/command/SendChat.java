@@ -33,7 +33,7 @@ public class SendChat extends CatanCommand {
 		
 		if (success){
 			
-		//	ServerModelFacade.getInstance().persistCommand(this, "SendChat", gameId);
+			ServerModelFacade.getInstance().persistCommand(this, "SendChat", gameId);
 		}
 	}
 }

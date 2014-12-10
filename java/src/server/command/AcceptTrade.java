@@ -30,7 +30,7 @@ public class AcceptTrade extends CatanCommand {
 	public void execute() {	
 			
 		ServerModelFacade.getInstance().acceptTrade(gameId, playerIndex, accept);
-	//	ServerModelFacade.getInstance().persistCommand(this, "AcceptTrade", gameId);
+		ServerModelFacade.getInstance().persistCommand(this, "AcceptTrade", gameId);
 		success = true;
 	}
 }
