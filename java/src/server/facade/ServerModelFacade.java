@@ -69,7 +69,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		joinGame(0, 3, CatanColor.GREEN);
 		
 		
-		loadGames();
+	//	loadGames();
 	}
 	
 	public static ServerModelFacade getInstance(){
