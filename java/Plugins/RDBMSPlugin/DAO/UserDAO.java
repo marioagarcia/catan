@@ -1,7 +1,6 @@
-package server.RDBMSPlugin.DAO;
+package Plugins.RDBMSPlugin.DAO;
 
-import server.persistence.UserDAOInterface;
-import server.persistence.UserDTO;
+import Plugins.RDBMSPlugin.DAO.UserDAOInterface;
 
 import java.util.ArrayList;
 import java.sql.*;

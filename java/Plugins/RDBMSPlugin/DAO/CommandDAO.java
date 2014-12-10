@@ -1,6 +1,6 @@
-package server.RDBMSPlugin.DAO;
+package Plugins.RDBMSPlugin.DAO;
 
-import server.persistence.CommandDAOInterface;
+import Plugins.RDBMSPlugin.DAO.CommandDAOInterface;
 
 import java.util.ArrayList;
 import java.sql.*;

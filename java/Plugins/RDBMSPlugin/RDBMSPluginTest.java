@@ -1,13 +1,8 @@
-package server.RDBMSPlugin;
-
-import static org.junit.Assert.*;
-
-import java.util.Date;
+package Plugins.RDBMSPlugin;
 
 import org.junit.Test;
-import server.persistence.CommandDAOInterface;
-import server.persistence.PersistenceInterface;
-import server.persistence.UserDAOInterface;
+import Plugins.Interfaces.PersistenceInterface;
+import Plugins.Interfaces.UserDAOInterface;
 
 /**
  * Created by christopherbelyeu on 12/8/14.

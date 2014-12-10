@@ -1,6 +1,6 @@
-package server.RDBMSPlugin.DAO;
+package Plugins.RDBMSPlugin.DAO;
 
-import server.persistence.UserDTO;
+import Plugins.RDBMSPlugin.DAO.UserDTO;
 
 import java.sql.ResultSet;
 import java.sql.Statement;

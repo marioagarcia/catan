@@ -1,10 +1,8 @@
-package server.RDBMSPlugin.DAO;
+package Plugins.RDBMSPlugin.DAO;
 
 
-import server.persistence.GameDAOInterface;
+import Plugins.RDBMSPlugin.DAO.GameDAOInterface;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.*;
 

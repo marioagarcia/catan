@@ -1,13 +1,12 @@
-package server.RDBMSPlugin;
+package Plugins.RDBMSPlugin;
 
-import server.RDBMSPlugin.DAO.CommandDAO;
-import server.RDBMSPlugin.DAO.GameDAO;
-import server.RDBMSPlugin.DAO.UserDAO;
-import server.persistence.CommandDAOInterface;
-import server.persistence.GameDAOInterface;
-import server.persistence.PersistenceInterface;
-import server.persistence.UserDAOInterface;
-import java.io.InputStream;
+import Plugins.RDBMSPlugin.DAO.CommandDAO;
+import Plugins.RDBMSPlugin.DAO.GameDAO;
+import Plugins.RDBMSPlugin.DAO.UserDAO;
+import Plugins.Interfaces.CommandDAOInterface;
+import Plugins.Interfaces.GameDAOInterface;
+import Plugins.Interfaces.PersistenceInterface;
+import Plugins.Interfaces.UserDAOInterface;
 
 import java.sql.*;
 
