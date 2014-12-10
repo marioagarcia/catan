@@ -56,19 +56,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		gamesList = new HashMap<Integer, ServerGameManager>();
 		userList = new UserManager();
 		
-		this.createNewGame("Default", true, true, true);
-		
-		registerPlayer("Sam", "sam");
-		registerPlayer("Brooke", "brooke");
-		registerPlayer("Bob", "bob");
-		registerPlayer("Joe", "joe");
-		
-		joinGame(0, 0, CatanColor.ORANGE);
-		joinGame(0, 1, CatanColor.BLUE);
-		joinGame(0, 2, CatanColor.RED);
-		joinGame(0, 3, CatanColor.GREEN);
-		
-		
 	//	loadGames();
 	}
 	
@@ -602,13 +589,28 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		this.deltaThreshold = deltaThreshold;
 		
+		//Default game cannot be created until persistence is initialized
+		this.createNewGame("Default", true, true, true);
+		
+		registerPlayer("Sam", "sam");
+		registerPlayer("Brooke", "brooke");
+		registerPlayer("Bob", "bob");
+		registerPlayer("Joe", "joe");
+		
+		joinGame(0, 0, CatanColor.ORANGE);
+		joinGame(0, 1, CatanColor.BLUE);
+		joinGame(0, 2, CatanColor.RED);
+		joinGame(0, 3, CatanColor.GREEN);
+		
+		
+		persistor.startTransaction();
 		retrievePersistedGames();
 		retrievePersistedUsers();
+		persistor.endTransaction();
 	}
 	
 	private void retrievePersistedGames(){
 		
-		//Should I be starting and ending a transaction around these method calls, or around the whole thing in the configure method
 		ArrayList<String> serialized_games = persistor.createGameDAO().getAllGames();
 		
 		ClientModelSerializer deserializer = new ClientModelSerializer();
