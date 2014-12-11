@@ -91,12 +91,21 @@ public class MDBPersistence implements PersistenceInterface {
 //        System.out.println(blob);
 //        }
 //
+//        p.resetAllPersistence();
+//
 //        p.createGameDAO().saveGame("description : this is a game", 0);
 //        System.out.println(p.createGameDAO().getGame(0));
-//        p.createGameDAO().updateGame("description: this is the real game", 0);
+//        p.createGameDAO().saveGame("description: this is the real game", 0);
+//        p.createGameDAO().saveGame("description: this is the ral game", 0);
+//        p.createGameDAO().saveGame("description: this is the rally game", 0);
 //        System.out.println(p.createGameDAO().getGame(0));
 //        p.createGameDAO().deleteGame(0);
 //        System.out.println(p.createGameDAO().getGame(0));
+//
+//        for (String blob : p.createGameDAO().getAllGames()) {
+//
+//            System.out.println(blob);
+//        }
 //
 //        p.createCommandDAO().saveCommand("description : this is mario", 0);
 //        p.createCommandDAO().saveCommand("description : this is mario", 0);
@@ -117,7 +126,6 @@ public class MDBPersistence implements PersistenceInterface {
 //            System.out.println(blob);
 //        }
 //
-//        p.resetAllPersistence();
 //
 //
 //    }

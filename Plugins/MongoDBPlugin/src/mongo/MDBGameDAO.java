@@ -19,6 +19,8 @@ public class MDBGameDAO implements GameDAOInterface {
     @Override
     public boolean saveGame(String game_blob, int game_id) {
 
+        deleteGame(game_id);
+
         DBCollection games =  db.getCollection("games");
 
         BasicDBObject game = new BasicDBObject("gameId", game_id).append("blob", game_blob);
@@ -67,8 +69,6 @@ public class MDBGameDAO implements GameDAOInterface {
 
     @Override
     public boolean updateGame(String game_blob, int game_id) {
-
-        deleteGame(game_id);
 
         return saveGame(game_blob, game_id);
     }
