@@ -79,17 +79,18 @@ public class Server {
 		movesHandler.setMovesCommandFacadeInterface(new MovesCommandFacade());
 		utilHandler.setUtilCommandHandler(new UtilCommandFacade());
 	}
-	
+	//plugin N clear//
 	public static void main(String[] args) {
 	
 		Server s = new Server();
-		if(args.length == 0){
+		//if(args.length == 0){
+		if(args[0].equals("plugin") && args[1].equals("N") && args[2].equals("clear")){
 			s.setCommandFacade();
 			s.run();
 		}else if (args[0].equals("mock")){
 			s.setMockCommandFacade();
 			s.run();
-		}else if (args.length == 2){
+		}else if (!args[0].equals("plugin") && !args[1].equals("N")){
 
             Map<String, String> config_data = new HashMap<String, String> ();
 
@@ -142,6 +143,10 @@ public class Server {
 				
 				//Load the class (that implements the PeristenceInterface) and create a PersistenceInterface with it
 				persistor = (PersistenceInterface)Class.forName(pluginName, true, classLoader).newInstance();
+				
+				if(args[2].equals("true")){
+					persistor.resetAllPersistence();
+				}
 				
 			} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
