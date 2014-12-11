@@ -15,6 +15,10 @@ public class UserManager {
 		userList = new HashMap<String, User>(); 
 	}
 	
+	public void setNextAvailableId(int next_id){
+		currentID = next_id;
+	}
+	
 	public boolean canRegister(String name){
 		
 		return !userList.containsKey(name);
@@ -49,6 +53,9 @@ public class UserManager {
 	
 	public void insertUser(User new_user){
 		
+		if (new_user.getID() >= currentID){
+			currentID = new_user.getID() + 1;
+		}
 		userList.put(new_user.getUsername(), new_user);
 	}
 	
