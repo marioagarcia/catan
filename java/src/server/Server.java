@@ -83,14 +83,13 @@ public class Server {
 	public static void main(String[] args) {
 	
 		Server s = new Server();
-		//if(args.length == 0){
-		if(args[0].equals("plugin") && args[1].equals("N") && args[2].equals("clear")){
+		if(args.length == 0){
 			s.setCommandFacade();
 			s.run();
 		}else if (args[0].equals("mock")){
 			s.setMockCommandFacade();
 			s.run();
-		}else if (!args[0].equals("plugin") && !args[1].equals("N")){
+		}else if (args.length >= 2){
 
             Map<String, String> config_data = new HashMap<String, String> ();
 
@@ -98,7 +97,7 @@ public class Server {
             BufferedReader bufferedReader = null;
             try
             {
-                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(relative_path + "RegisteredPlugins" + File.separator + "config.catan"), Charset.forName("UTF-8")));
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("RegisteredPlugins" + File.separator + "config.catan"), Charset.forName("UTF-8")));
                 String line;
                 while((line = bufferedReader.readLine()) != null)
                 {
@@ -128,7 +127,7 @@ public class Server {
 			//File pluginFile = new File("Plugins/" + "server.TestPlugin.jar");
 			
 			//Create a file from the name that was provided
-			File pluginFile = new File(relative_path + "RegisteredPlugins" + File.separator + args[0]);
+			File pluginFile = new File("RegisteredPlugins" + File.separator + args[0]);
 			
 			//If the file (based on the name provided) doesn't exist, tell the user and get the rock out of there
 			if(!pluginFile.exists()){
@@ -150,7 +149,7 @@ public class Server {
 				//Load the class (that implements the PeristenceInterface) and create a PersistenceInterface with it
 				persistor = (PersistenceInterface)Class.forName(pluginName, true, classLoader).newInstance();
 				
-				if(args[2].equals("true")){
+				if(args.length == 3){
 					persistor.resetAllPersistence();
 				}
 				
