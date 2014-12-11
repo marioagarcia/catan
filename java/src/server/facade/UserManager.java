@@ -3,6 +3,8 @@ package server.facade;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+
 public class UserManager {
 	
 	private Map<String, User> userList = null;
@@ -70,6 +72,18 @@ public class UserManager {
 		}
 		
 		return null;
+	}
+	
+	public String serializeUser(String username){
+		
+		if (userList.containsKey(username)){
+			Gson gson = new Gson();
+			
+			return gson.toJson(userList.get(username));
+		}
+		else{
+			return null;
+		}
 	}
 	
 	

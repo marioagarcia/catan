@@ -78,12 +78,22 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 
 	@Override
 	public boolean registerPlayer(String username, String password) {
-		/*TODO if successful, should also create user dto and persist to database
-		persistor.startTransaction();
-		persistor.createUserDAO().saveUser(user_blob, username);
-		persistor.endTransaction();
-		*/
-		return userList.register(username, password);
+		
+		boolean registered = userList.register(username, password);
+		
+		if (registered){
+			persistor.startTransaction();
+			
+			String user_blob = userList.serializeUser(username);
+			persistor.createUserDAO().saveUser(user_blob, username);
+			
+			persistor.endTransaction();
+			
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	@Override
@@ -116,9 +126,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			gamesList.put(currentGameId, new_game);
 			currentGameId++;
 			
-			persistor.startTransaction();
 			persistGame(new_game);
-			persistor.endTransaction();
 			
 			return true;
 		}
@@ -592,20 +600,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		this.deltaThreshold = deltaThreshold;
 		
-		//Default game cannot be created until persistence is initialized
-		this.createNewGame("Default", true, true, true);
-		
-		registerPlayer("Sam", "sam");
-		registerPlayer("Brooke", "brooke");
-		registerPlayer("Bob", "bob");
-		registerPlayer("Joe", "joe");
-		
-		joinGame(0, 0, CatanColor.ORANGE);
-		joinGame(0, 1, CatanColor.BLUE);
-		joinGame(0, 2, CatanColor.RED);
-		joinGame(0, 3, CatanColor.GREEN);
-		
-		
 		retrievePersistedGames();
 		retrievePersistedUsers();
 	}
@@ -625,6 +619,11 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			String name = new_game_data.getName();
 			int id = new_game_data.getId();
+			
+			if (id >= currentGameId){
+				
+				currentGameId = id + 1;
+			}
 			
 			ServerGameManager new_game = new ServerGameManager(name, id, new_game_data);
 			gamesList.put(id, new_game);
