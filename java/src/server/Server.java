@@ -94,7 +94,7 @@ public class Server {
 
             try
             {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("config.catan"), Charset.forName("UTF-8")));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("RegisteredPlugins" + File.separator + "config.catan"), Charset.forName("UTF-8")));
                 String line;
                 while((line = bufferedReader.readLine()) != null)
                 {
@@ -105,7 +105,10 @@ public class Server {
 
                     config_data.put(data[0], data[1]);
                 }
+                
+                bufferedReader.close();
             } catch (Exception e ) { e.printStackTrace(); System.exit(0);}
+
 
             if(!config_data.containsKey(args[0])){
                 System.out.println("invalid plugin name passed to Server. Verify that your plugin has been registered in the config.catan file");
@@ -117,7 +120,7 @@ public class Server {
 			//File pluginFile = new File("Plugins/" + "server.TestPlugin.jar");
 			
 			//Create a file from the name that was provided
-			File pluginFile = new File("RegisteredPlugins/" + pluginName);
+			File pluginFile = new File("RegisteredPlugins" + File.separator + args[0]);
 			
 			//If the file (based on the name provided) doesn't exist, tell the user and get the rock out of there
 			if(!pluginFile.exists()){
