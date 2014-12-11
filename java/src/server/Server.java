@@ -94,13 +94,15 @@ public class Server {
 
             Map<String, String> config_data = new HashMap<String, String> ();
 
+            String relative_path = ".." + File.separator + ".." + File.separator;
+            BufferedReader bufferedReader = null;
             try
             {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("RegisteredPlugins" + File.separator + "config.catan"), Charset.forName("UTF-8")));
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(relative_path + "RegisteredPlugins" + File.separator + "config.catan"), Charset.forName("UTF-8")));
                 String line;
                 while((line = bufferedReader.readLine()) != null)
                 {
-                    String[] data = line.split(" " );
+                    String[] data = line.split(" ");
 
                     if(data.length != 2)
                         throw new Exception("you suck");
@@ -109,7 +111,11 @@ public class Server {
                 }
                 
                 bufferedReader.close();
-            } catch (Exception e ) { e.printStackTrace(); System.exit(0);}
+            } 
+            catch (Exception e ) { 
+            	e.printStackTrace(); 
+            	System.exit(0);
+            }
 
 
             if(!config_data.containsKey(args[0])){
@@ -122,7 +128,7 @@ public class Server {
 			//File pluginFile = new File("Plugins/" + "server.TestPlugin.jar");
 			
 			//Create a file from the name that was provided
-			File pluginFile = new File("RegisteredPlugins" + File.separator + args[0]);
+			File pluginFile = new File(relative_path + "RegisteredPlugins" + File.separator + args[0]);
 			
 			//If the file (based on the name provided) doesn't exist, tell the user and get the rock out of there
 			if(!pluginFile.exists()){
