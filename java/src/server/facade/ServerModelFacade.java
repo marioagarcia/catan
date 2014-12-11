@@ -600,8 +600,8 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		this.deltaThreshold = deltaThreshold;
 		
-		retrievePersistedGames();
 		retrievePersistedUsers();
+		retrievePersistedGames();
 	}
 	
 	private void retrievePersistedGames(){
@@ -631,9 +631,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			//Is it a problem if these will count as commands being applied towards a checkpoint?
 			updateGame(id);
 			
-			persistor.startTransaction();
-			persistor.createCommandDAO().deleteGameCommands(id);
-			persistor.endTransaction();
+			persistGame(new_game);
 		}
 	}
 	
@@ -683,6 +681,7 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				
 				User new_user = gson.fromJson(user_string, User.class);
 				
+				System.out.println("Adding: " + new_user.getUsername() + " from database");
 				userList.insertUser(new_user);
 			}
 		}
