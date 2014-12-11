@@ -102,7 +102,7 @@ public class Server {
 			//File pluginFile = new File("Plugins/" + "server.TestPlugin.jar");
 			
 			//Create a file from the name that was provided
-			File pluginFile = new File("Plugins/" + "MongoDBPlugin" + ".jar"); 
+			File pluginFile = new File("RegisteredPlugins/" + "MongoDBPlugin" + ".jar"); 
 			
 			//If the file (based on the name provided) doesn't exist, tell the user and get the rock out of there
 			if(!pluginFile.exists()){
