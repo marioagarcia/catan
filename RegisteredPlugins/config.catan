@@ -1,0 +1,2 @@
+MongoDBPlugin.jar server.persistence.Mongo.MDBPersistence
+RDBMSPlugin.jar server.persistence.RDBMSPlugin.RDBMSPersistence
