@@ -614,7 +614,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		for (String game_string : serialized_games){
 			
-			System.out.println("Loading game");
 			GameData new_game_data = deserializer.deserializeGameModel(game_string);
 			
 			String name = new_game_data.getName();
@@ -647,7 +646,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 			
 			for (String command_string : serialized_commands){
 				
-				System.out.println("Applying command to game " + id);
 				JsonParser parser = new JsonParser();
 				
 				JsonArray command_array = parser.parse(command_string).getAsJsonArray();
@@ -681,7 +679,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 				
 				User new_user = gson.fromJson(user_string, User.class);
 				
-				System.out.println("Adding: " + new_user.getUsername() + " from database");
 				userList.insertUser(new_user);
 			}
 		}
@@ -707,7 +704,6 @@ public class ServerModelFacade implements ServerModelFacadeInterface {
 		
 		if (saved_command){
 			
-			System.out.println("Command saved successfully");
 			if (gamesList.get(game_id).getCommandsSinceSave() >= deltaThreshold){
 				
 				if (!persistGame(gamesList.get(game_id))){
