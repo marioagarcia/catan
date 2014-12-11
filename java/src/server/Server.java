@@ -112,13 +112,6 @@ public class Server {
 				//Load the class (that implements the PeristenceInterface) and create a PersistenceInterface with it
 				persistor = (PersistenceInterface)Class.forName(pluginName, true, classLoader).newInstance();
 				
-				//Code to run the test plugin
-				//URL pluginURL = pluginFile.toURI().toURL();
-				//URLClassLoader classLoader = new URLClassLoader(new URL[] { pluginURL });
-				//classLoader.loadClass("server.TestPlugin");
-				//PersistenceInterface persistor = (PersistenceInterface)Class.forName("server.TestPlugin", true, classLoader).newInstance();
-				//System.out.println(persistor.createCommandDAO());
-				
 			} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
