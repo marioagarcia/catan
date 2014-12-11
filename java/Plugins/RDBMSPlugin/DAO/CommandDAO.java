@@ -2,6 +2,7 @@ package Plugins.RDBMSPlugin.DAO;
 
 import Plugins.RDBMSPlugin.DAO.CommandDAOInterface;
 
+import java.lang.System;
 import java.util.ArrayList;
 import java.sql.*;
 
@@ -51,6 +52,8 @@ public class CommandDAO implements CommandDAOInterface {
      */
     public boolean deleteGameCommands(int game_id)
     {
-        return this.genericDAO.executeSQL("DELETE FROM deltas WHERE game_id='" + game_id + "'");
+        String sql = "DELETE FROM deltas WHERE game_id='" + game_id + "'";
+        System.out.println("deleteGameCommands " + sql);
+        return this.genericDAO.executeSQL(sql);
     }
 }
