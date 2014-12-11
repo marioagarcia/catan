@@ -31,7 +31,7 @@ public class GenericDAO {
                     "SELECT * FROM " + tableName + " WHERE " + primaryKeyName + "='" + primary_key_value + "';");
 
             if (!result.isClosed() && result.getRow() != 0)
-                return false;
+                return this.update(data, primary_key_value)
 
             Statement statement = this.connection.createStatement();
             statement.execute(
