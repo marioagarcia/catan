@@ -47,19 +47,18 @@ public class ServerModelFacadeTest extends TestCase {
 			//Load the class (that implements the PeristenceInterface) and create a PersistenceInterface with it
 			persistor = (PersistenceInterface)Class.forName("server.persistence.RDBMSPlugin.RDBMSPersistence", true, classLoader).newInstance();
 			
+			persistor.startTransaction();
+			persistor.resetAllPersistence();
+			persistor.endTransaction();
+			
 			serverModelFacade.configorPersistor(persistor, 5);
+			
+			serverModelFacade.createNewGame("Blah", true, true, true);
 			
 		} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        
-        
-        
-        
-        
-        serverModelFacade.configorPersistor(persistor, 5);
     }
 
     @After
@@ -118,6 +117,7 @@ public class ServerModelFacadeTest extends TestCase {
     @Test
     public void testCanJoinGame() throws Exception {
     	
+    	serverModelFacade.registerPlayer("Sam", "sam");
     	assertTrue(serverModelFacade.loginPlayer("Sam", "sam"));
     	assertFalse(serverModelFacade.joinGame(300, 0, CatanColor.ORANGE));
     	assertTrue(serverModelFacade.joinGame(0, 0, CatanColor.ORANGE));
