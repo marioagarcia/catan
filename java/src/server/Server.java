@@ -2,6 +2,10 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
+
 import server.command.facade.mock.MockGameCommandFacade;
 import server.command.facade.mock.MockGamesCommandFacade;
 import server.command.facade.mock.MockMovesCommandFacade;
@@ -85,12 +89,35 @@ public class Server {
 			s.setMockCommandFacade();
 			s.run();
 		}else if (args.length == 2){
-			String pluginName = args[0];
+
+            Map<String, String> config_data = new HashMap<String, String> ();
+
+            try
+            {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("config.catan"), Charset.forName("UTF-8")));
+                String line;
+                while((line = bufferedReader.readLine()) != null)
+                {
+                    String[] data = line.split(" " );
+
+                    if(data.length != 2)
+                        throw new Exception("you suck");
+
+                    config_data.put(data[0], data[1]);
+                }
+            } catch (Exception e ) { e.printStackTrace(); System.exit(0);}
+
+            if(!config_data.containsKey(args[0])){
+                System.out.println("invalid plugin name passed to Server. Verify that your plugin has been registered in the config.catan file");
+                System.exit(0);
+            }
+
+			String pluginName = config_data.get(args[0]);
 			
 			//File pluginFile = new File("Plugins/" + "server.TestPlugin.jar");
 			
 			//Create a file from the name that was provided
-			File pluginFile = new File("RegisteredPlugins/" + "MongoDBPlugin" + ".jar"); 
+			File pluginFile = new File("RegisteredPlugins/" + pluginName);
 			
 			//If the file (based on the name provided) doesn't exist, tell the user and get the rock out of there
 			if(!pluginFile.exists()){
