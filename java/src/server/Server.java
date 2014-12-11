@@ -2,17 +2,6 @@ package server;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import server.command.facade.GameCommandFacadeInterface;
-import server.command.facade.GamesCommandFacadeInterface;
-import server.command.facade.MovesCommandFacadeInterface;
-import server.command.facade.UserCommandFacadeInterface;
-import server.command.facade.UtilCommandFacadeInterface;
 import server.command.facade.mock.MockGameCommandFacade;
 import server.command.facade.mock.MockGamesCommandFacade;
 import server.command.facade.mock.MockMovesCommandFacade;
@@ -30,7 +19,6 @@ import server.handler.MovesHandler;
 import server.handler.UserHandler;
 import server.handler.UtilHandler;
 import server.persistence.PersistenceInterface;
-import client.main.Catan;
 
 import com.sun.net.httpserver.*;
 
