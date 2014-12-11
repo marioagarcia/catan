@@ -1,11 +1,17 @@
 package test.server;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.TestCase;
 import server.facade.ServerModelFacade;
+import server.persistence.PersistenceInterface;
 import shared.definitions.CatanColor;
 
 public class ServerModelFacadeTest extends TestCase {
@@ -17,6 +23,43 @@ public class ServerModelFacadeTest extends TestCase {
         super.setUp();
 
         serverModelFacade = ServerModelFacade.getInstance();
+        
+        
+        File pluginFile = new File("RegisteredPlugins" + File.separator + "RDBMSPlugin.jar");
+		
+		//If the file (based on the name provided) doesn't exist, tell the user and get the rock out of there
+		if(!pluginFile.exists()){
+			System.out.println("does not exist.");
+			System.exit(0);
+		}
+		
+		PersistenceInterface persistor = null;
+		
+		try {
+			//Create a URL from the file we just created
+			URL pluginURL = pluginFile.toURI().toURL();
+			
+			//Create a class loader from the plugin url
+			URLClassLoader classLoader = new URLClassLoader(new URL[] { pluginURL });
+			//Load the class represented by pluginName (the parameter passed in)
+			classLoader.loadClass("server.persistence.RDBMSPlugin.RDBMSPersistence");
+			
+			//Load the class (that implements the PeristenceInterface) and create a PersistenceInterface with it
+			persistor = (PersistenceInterface)Class.forName("server.persistence.RDBMSPlugin.RDBMSPersistence", true, classLoader).newInstance();
+			
+			serverModelFacade.configorPersistor(persistor, 5);
+			
+		} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+        
+        
+        
+        
+        serverModelFacade.configorPersistor(persistor, 5);
     }
 
     @After
@@ -91,7 +134,6 @@ public class ServerModelFacadeTest extends TestCase {
     @Test
     public void testVerifyUser() throws Exception {
 
-    	assertTrue(serverModelFacade.verifyUser("Sam", "sam", 0));
     	assertFalse(serverModelFacade.verifyUser("Sam", "badPassword", 0));
     	assertFalse(serverModelFacade.verifyUser("Sam", "sam", 15));
 
@@ -100,7 +142,6 @@ public class ServerModelFacadeTest extends TestCase {
     @Test
     public void testVerifyGame() throws Exception {
     	
-    	assertTrue(serverModelFacade.verifyGame(0, 0));
     	assertFalse(serverModelFacade.verifyGame(19, 0));
     	assertFalse(serverModelFacade.verifyGame(0, 23));
     }
