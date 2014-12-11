@@ -40,7 +40,7 @@ public class CommandDAO implements CommandDAOInterface {
      */
     public ArrayList<String> getUnappliedCommands(int game_id)
     {
-        return this.genericDAO.executeBatchQuery("SELECT * from deltas WHERE game_id='" + game_id + "'", 3);
+        return this.genericDAO.executeBatchQuery("SELECT * from deltas WHERE game_id='" + game_id + "' ORDER BY id ASC;", 3);
     }
 
     /**
